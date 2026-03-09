@@ -1,0 +1,60 @@
+.section {
+  background: linear-gradient(180deg, #003859 0%, #00B0FE 119.12%);
+  padding: 60px 24px 0px 24px;
+  overflow: hidden;
+}
+
+.container {
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.title {
+  font-family: Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(28px, 3.5vw, 40px);
+  line-height: 1.2;
+  color: #FFFFFF;
+  text-align: center;
+  margin: 0 0 48px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  border-radius: 14px 14px 0px 0px;
+border-top: 1px solid #C2CDD6;
+border-left: 1px solid #C2CDD6;
+border-right: 1px solid #C2CDD6;
+border-bottom: none;
+background: rgba(0, 0, 0, 0.25);
+
+  height: 250px;
+  padding: 32px 40px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.result {
+  font-family: Arial, sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.4;
+  color: #FFFFFF;
+  margin: 0 0 12px;
+}
+
+.company {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.4;
+  color: #FFFFFF;
+  margin: 0;
+}

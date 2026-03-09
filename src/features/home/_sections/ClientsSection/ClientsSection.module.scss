@@ -1,0 +1,85 @@
+/* Seamless transition from hero white (#ffffff at bottom) into solid white */
+.clientsSection {
+  background: #ffffff;
+  padding: 40px 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+ 
+
+}
+
+.title {
+    color:  #52697A;
+    text-align: center;
+    font-family: Arial;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 20px; /* 142.857% */
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: center;
+  justify-items: center;
+
+  @media (max-width: 900px) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  @media (max-width: 600px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.card {
+  perspective: 1000px;
+  width: 140px;
+  height: 90px;
+}
+
+.cardInner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  animation: flipCard 8s ease-in-out infinite;
+}
+
+@keyframes flipCard {
+  0%,
+  45% {
+    transform: rotateX(0deg);
+  }
+  50%,
+  95% {
+    transform: rotateX(180deg);
+  }
+  100% {
+    transform: rotateX(360deg);
+  }
+}
+
+.cardFace {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backface-visibility: hidden;
+
+  border-radius: 8px;
+
+  padding: 0px 5px;
+
+  &[data-face="back"] {
+    transform: rotateX(180deg);
+  }
+}

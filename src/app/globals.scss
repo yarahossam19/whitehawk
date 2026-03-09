@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  /* WhiteHawk UI - used by PrimaryButton and NavBar module.scss */
+  --primary-900: #002439;
+  --primary-700: #005283;
+  --primary-light: #abe0ff;
+  --ui-colored-bg: #e7f6ff;
+  --ui-stroke-grey: #c2cdd6;
+  --text-secondary: #52697a;
+  --nav-bg: rgba(196, 224, 255, 0.4);
+  --nav-border: rgba(196, 224, 255, 0.3);
+  --button-hover-bg:#E7F6FF;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}

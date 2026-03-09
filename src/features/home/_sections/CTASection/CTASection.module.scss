@@ -1,0 +1,51 @@
+.section {
+  padding: 72px 24px 80px;
+  background: #E7F6FF;
+}
+
+.container {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.title {
+  font-family: Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(28px, 3.5vw, 40px);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--primary-900, #003859);
+  margin: 0 0 12px;
+}
+
+.subtitle {
+  font-family: Arial, sans-serif;
+  font-size: 18px;
+  line-height: 1.55;
+  color: #52697a;
+  margin: 0 0 32px;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.primaryBtn {
+  min-width: 160px;
+}
+
+.secondaryBtn {
+  min-width: 160px;
+}
+
+.disclaimer {
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  color: #52697a;
+  margin: 0;
+}
