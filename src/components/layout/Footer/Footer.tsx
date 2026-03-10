@@ -93,7 +93,7 @@ export function Footer() {
         <div className={styles.bottom}>
           <p className={styles.copyright}>© 2026 WhiteHawk Security. All rights reserved.</p>
           <div className={styles.legal}>
-            <Link href="#">Privacy Policy</Link>
+            <Link href="/privacy">Privacy Policy</Link>
             <Link href="#">Terms of Service</Link>
           </div>
         </div>

@@ -2,8 +2,10 @@
 
 import styles from "./CTASection.module.scss";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
+import { useDemoModal } from "@/contexts/DemoModalContext";
 
 export function CTASection() {
+  const { openDemoModal } = useDemoModal();
   return (
     <section className={styles.section}>
       <div className={styles.container}>
@@ -16,13 +18,13 @@ export function CTASection() {
           <PrimaryButton
             title="Start Free Trial"
             variant="primary"
-            href="#"
+            onClick={openDemoModal}
             className={styles.primaryBtn}
           />
           <PrimaryButton
             title="Schedule Demo"
             variant="secondary"
-            href="#"
+            onClick={openDemoModal}
             className={styles.secondaryBtn}
           />
         </div>

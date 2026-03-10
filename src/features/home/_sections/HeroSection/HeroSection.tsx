@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
+import { useDemoModal } from "@/contexts/DemoModalContext";
 import styles from "./HeroSection.module.scss";
 import defensive from "@/../public/assets/icons/navbar/Defensive.svg";
 import offensive from "@/../public/assets/icons/navbar/Offensive.svg";
@@ -13,6 +14,7 @@ import shield from "@/../public/assets/icons/Shield.svg";
 import list from "@/../public/assets/icons/List.svg";
 import hacker from "@/../public/assets/icons/Hacker.svg";
 export function HeroSection() {
+  const { openDemoModal } = useDemoModal();
   return (
     <section className={styles.hero}>
       <div className={styles.heroContent}>
@@ -26,8 +28,8 @@ export function HeroSection() {
             Automate vulnerability management, streamline compliance, and proactively detect threats across your organization – all in one integrated platform
           </p>
           <div className={styles.heroButtons}>
-            <PrimaryButton title="Get Demo" variant="primary" href="#" />
-            <PrimaryButton title="Start free trial" variant="secondary" href="#" />
+            <PrimaryButton title="Get Demo" variant="primary" onClick={openDemoModal} />
+            <PrimaryButton title="Start free trial" variant="secondary" onClick={openDemoModal} />
           </div>
         </div>
         <div className={styles.heroRight}>

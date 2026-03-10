@@ -1,0 +1,151 @@
+.section {
+  background: #ffffff;
+  padding: 80px 24px 100px;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  max-width: 1312px;
+  margin: 0 auto;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.challengeCard {
+  position: relative;
+  background: rgba(254, 242, 242, 0.50);
+  border-left: 6px solid #e7000b;
+  border-right:1px solid #FFE2E2;
+  border-bottom:1px solid #FFE2E2;
+  border-top:1px solid #FFE2E2;
+  border-radius: 12px;
+  padding: 32px;
+}
+
+.solutionCard {
+  position: relative;
+  border-radius: 14px;
+  background: var(--UI-Colors-Background-dark-bg, #003859);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.10), 0 8px 10px -6px rgba(0, 0, 0, 0.10);
+
+  padding: 32px;
+}
+
+
+
+.cardTitleWrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.challengeTitleIcon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffe2e2;
+  border-radius: 10px;
+  color: #e7000b;
+}
+
+.cardTitle {
+  font-family: Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(20px, 2.5vw, 24px);
+  line-height: 1.3;
+  color: #e7000b;
+  margin: 0;
+}
+
+.solutionCardTitle {
+  font-family: Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(20px, 2.5vw, 24px);
+  line-height: 1.3;
+  color: #ffffff;
+  margin: 0 0 24px;
+}
+
+.challengeList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.challengeItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 16px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--primary-900, #003859);
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.challengeItemIcon {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #ffe2e2;
+  color: #e7000b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.solutionItems {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.solutionItem {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(255, 255, 255, 0.05);
+
+}
+
+.solutionIcon {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #e7f6ff;
+}
+
+.solutionItemTitle {
+  font-family: Arial, sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.3;
+  color: #ffffff;
+  margin: 0 0 4px;
+}
+
+.solutionItemDescription {
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+}

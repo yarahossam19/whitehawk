@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
+import { useDemoModal } from "@/contexts/DemoModalContext";
 import styles from "./NavBar.module.scss";
 import logo from "@/../public/assets/icons/logo/whitehawk-logo.svg";
 import menuIcon from "@/../public/assets/icons/navbar/menu-icon.svg";
@@ -96,6 +97,7 @@ const MOBILE_BREAKPOINT = 901;
 
 export function NavBar() {
   const pathname = usePathname();
+  const { openDemoModal } = useDemoModal();
   const [platformOpen, setPlatformOpen] = useState(false);
   const [solutionsOpen, setSolutionsOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -239,7 +241,7 @@ export function NavBar() {
 
         <div className={styles.actions}>
           <PrimaryButton title="Sign in" variant="secondary" href="#" className={styles.signInButton}/>
-          <PrimaryButton title="Request a Demo" variant="primary" href="#" className={styles.requestDemoButton}/>
+          <PrimaryButton title="Request a Demo" variant="primary" onClick={openDemoModal} className={styles.requestDemoButton}/>
         </div>
       </nav>
 

@@ -29,3 +29,41 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* PrimeReact Dropdown overlay panel (portaled to body) - match Request Demo form */
+.p-dropdown-panel {
+  background: #ffffff;
+  border: 2px solid var(--primary-100, #abe0ff);
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.p-dropdown-items-wrapper {
+  padding: 0;
+}
+
+.p-dropdown-items {
+  padding: 8px 0 !important;
+  margin: 0 !important;
+  list-style: none;
+}
+
+.p-dropdown-item {
+  padding: 12px 16px;
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.2;
+  color: var(--text-secondary, #52697a);
+  cursor: pointer;
+}
+
+.p-dropdown-item:hover {
+  background: var(--primary-50, #e7f6ff);
+}
+
+.p-dropdown-item.p-highlight {
+  background: var(--primary-50, #e7f6ff);
+  color: var(--primary-900, #003859);
+}

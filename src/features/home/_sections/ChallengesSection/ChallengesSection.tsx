@@ -3,6 +3,7 @@
 import { useState } from "react";
 import styles from "./ChallengesSection.module.scss";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
+import { useDemoModal } from "@/contexts/DemoModalContext";
 import itIcon from "@/../public/assets/icons/it-icon.svg";
 import securityIcon from "@/../public/assets/icons/security-icon.svg";
 import enterpriseIcon from "@/../public/assets/icons/enterprise-icon.svg";
@@ -23,6 +24,7 @@ const BULLETS = [
 
 export function ChallengesSection() {
   const [activeTab, setActiveTab] = useState("all");
+  const { openDemoModal } = useDemoModal();
 
   return (
     <section className={styles.challengesSection}>
@@ -67,7 +69,7 @@ export function ChallengesSection() {
                 </li>
               ))}
             </ul>
-            <PrimaryButton title="Request Demo" variant="secondary" href="#" className={styles.button}/>
+            <PrimaryButton title="Request Demo" variant="secondary" onClick={openDemoModal} className={styles.button}/>
           </div>
           <div className={styles.cardRight}>
             <div className={styles.imagePlaceholder} aria-hidden>
