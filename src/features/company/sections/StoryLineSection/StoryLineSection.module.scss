@@ -1,0 +1,128 @@
+.section {
+  background: #ffffff;
+  padding: 120px 24px;
+}
+
+.inner {
+  max-width: 1506px;
+  margin: 0 auto;
+  position: relative;
+  min-height: 640px;
+}
+
+.lineWrap {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  pointer-events: none;
+}
+
+.line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 2px;
+  background: transparent;
+  overflow: hidden;
+}
+
+.line::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 0;
+  background: var(--primary-900, #003859);
+  transition: height 1.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.lineVisible::before {
+  height: 100%;
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  position: relative;
+}
+
+.left,
+.right {
+  padding-top: 48px;
+}
+
+.card {
+  max-width: 500px;
+  border-radius: 18px;
+  border: 2px solid var(--ui-stroke-grey, #c2cdd6);
+  box-shadow: 8px 8px 0 0 var(--primary-900, #003859);
+  padding: 34px;
+}
+
+.cardHeading {
+  font-family: "Times New Roman", Arial, sans-serif;
+  font-size: 40px;
+  line-height: 1.2;
+  color: var(--primary-900, #003859);
+  margin: 0 0 16px;
+}
+
+.card p {
+  font-family: Arial, sans-serif;
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--text-secondary, #52697a);
+  margin: 0 0 16px;
+}
+
+.cardSubHeading {
+  font-family: "Times New Roman", Arial, sans-serif;
+  font-size: 40px;
+  line-height: 1.2;
+  color: var(--primary-900, #003859);
+  margin: 24px 0 0;
+}
+
+.spec {
+  margin-bottom: 48px;
+}
+
+.specLabel {
+  display: block;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-secondary, #52697a);
+  margin-bottom: 12px;
+}
+
+.specCard {
+  border-left: 2px solid var(--primary-900, #003859);
+  padding-left: 32px;
+}
+
+.specCard p {
+  font-family: Arial, sans-serif;
+  font-size: 24px;
+  line-height: 1.6;
+  color: var(--primary-900, #003859);
+  margin: 0 0 18px;
+}
+
+@media (max-width: 900px) {
+  .columns {
+    grid-template-columns: 1fr;
+  }
+
+  .lineWrap {
+    display: none;
+  }
+}
+

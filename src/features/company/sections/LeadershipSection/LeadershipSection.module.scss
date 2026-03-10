@@ -1,0 +1,110 @@
+.section {
+  background: #ffffff;
+  padding: 128px 24px;
+}
+
+.inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 128px;
+}
+
+.card {
+  display: grid;
+  grid-template-columns: 384px 1fr;
+  gap: 64px;
+  align-items: center;
+}
+
+.cardRight {
+  grid-template-columns: 1fr 384px;
+}
+
+.portraitWrap {
+  position: relative;
+  width: 384px;
+  height: 384px;
+}
+
+.portraitBg {
+  position: absolute;
+  inset: 19px;
+  border-radius: 999px;
+  background: rgba(224, 230, 235, 0.25);
+}
+
+.portraitCircle {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.portraitImg {
+  object-fit: cover;
+}
+
+.text,
+.textRight {
+  position: relative;
+}
+
+.watermark,
+.watermarkRight {
+  position: absolute;
+  top: -32px;
+  left: 0;
+  font-family: Arial, sans-serif;
+  font-weight: 700;
+  font-size: 72px;
+  line-height: 1;
+  color: rgba(0, 56, 89, 0.12);
+}
+
+.watermarkRight {
+  right: 0;
+  left: auto;
+  text-align: right;
+}
+
+.name {
+  font-family: Arial, sans-serif;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 1.2;
+  color: var(--primary-900, #003859);
+  margin: 40px 0 24px;
+}
+
+.bio {
+  font-family: Arial, sans-serif;
+  font-size: 20px;
+  line-height: 1.6;
+  color: var(--text-secondary, #52697a);
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  .inner {
+    gap: 80px;
+  }
+
+  .card,
+  .cardRight {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .watermark,
+  .watermarkRight {
+    display: none;
+  }
+
+  .name {
+    margin-top: 24px;
+  }
+}
+
