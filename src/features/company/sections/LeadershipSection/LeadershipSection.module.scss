@@ -1,44 +1,59 @@
+// Match Figma node 864-8361: Leadership section, two profiles, alternating layout
 .section {
   background: #ffffff;
   padding: 128px 24px;
 }
 
 .inner {
-  max-width: 1200px;
+  max-width: 932px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   gap: 128px;
+  padding: 0 24px;
 }
 
 .card {
-  display: grid;
-  grid-template-columns: 384px 1fr;
-  gap: 64px;
-  align-items: center;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 0;
+  width: 100%;
+  max-width: 932px;
+  min-height: 384px;
+  position: relative;
 }
 
-.cardRight {
-  grid-template-columns: 1fr 384px;
+.cardReversed {
+  flex-direction: row-reverse;
 }
 
 .portraitWrap {
   position: relative;
+  flex-shrink: 0;
   width: 384px;
   height: 384px;
 }
 
 .portraitBg {
   position: absolute;
-  inset: 19px;
-  border-radius: 999px;
+  left: 19.2px;
+  top: 19.2px;
+  width: 345.6px;
+  height: 345.6px;
+  border-radius: 9999px;
   background: rgba(224, 230, 235, 0.25);
 }
 
 .portraitCircle {
   position: absolute;
-  inset: 0;
-  border-radius: 999px;
+  left: 0;
+  top: 0;
+  width: 384px;
+  height: 384px;
+  border-radius: 9999px;
   overflow: hidden;
 }
 
@@ -46,56 +61,130 @@
   object-fit: cover;
 }
 
-.text,
-.textRight {
+.textBlock {
   position: relative;
+  flex: 1;
+  min-width: 0;
+  max-width: 512px;
+  padding-top: 27.5px;
+  margin-left: 36px;
+  padding-left: 48px;
+}
+
+.cardReversed .textBlock {
+  margin-left: 0;
+  margin-right: 36px;
+  padding-left: 0;
+  padding-right: 48px;
+}
+
+.textContent {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  margin-top: 31px;
+}
+
+.cardReversed .textContent {
+  align-items: flex-end;
+  text-align: right;
 }
 
 .watermark,
 .watermarkRight {
   position: absolute;
-  top: -32px;
+  top: -9.5px;
   left: 0;
   font-family: Arial, sans-serif;
   font-weight: 700;
-  font-size: 72px;
-  line-height: 1;
-  color: rgba(0, 56, 89, 0.12);
+  font-size: 96px;
+  line-height: 96px;
+  color: var(--primary-900, #003859);
+  opacity: 0.2;
+  white-space: nowrap;
+  pointer-events: none;
 }
 
 .watermarkRight {
-  right: 0;
   left: auto;
+  right: 0;
   text-align: right;
+  transform: translateX(0);
 }
 
 .name {
   font-family: Arial, sans-serif;
   font-weight: 700;
   font-size: 48px;
-  line-height: 1.2;
+  line-height: 48px;
   color: var(--primary-900, #003859);
-  margin: 40px 0 24px;
+  margin: 0;
 }
 
 .bio {
   font-family: Arial, sans-serif;
   font-size: 20px;
-  line-height: 1.6;
+  line-height: 32.5px;
   color: var(--text-secondary, #52697a);
   margin: 0;
+  max-width: 423px;
+}
+
+.cardReversed .bio {
+  max-width: 429px;
+  margin-left: auto;
 }
 
 @media (max-width: 900px) {
+  .section {
+    padding: 80px 24px;
+  }
+
   .inner {
     gap: 80px;
+    padding: 0 16px;
   }
 
   .card,
-  .cardRight {
-    grid-template-columns: 1fr;
-    justify-items: center;
+  .cardReversed {
+    flex-direction: column;
+    align-items: center;
     text-align: center;
+  }
+
+  .portraitWrap {
+    width: 280px;
+    height: 280px;
+  }
+
+  .portraitBg {
+    left: 14px;
+    top: 14px;
+    width: 252px;
+    height: 252px;
+  }
+
+  .portraitCircle {
+    width: 280px;
+    height: 280px;
+  }
+
+  .textBlock {
+    padding: 24px 0 0;
+    padding-left: 0;
+    padding-right: 0;
+    max-width: 100%;
+  }
+
+  .cardReversed .textBlock {
+    padding-right: 0;
+  }
+
+  .textContent,
+  .cardReversed .textContent {
+    align-items: center;
+    text-align: center;
+    margin-top: 16px;
   }
 
   .watermark,
@@ -104,7 +193,12 @@
   }
 
   .name {
-    margin-top: 24px;
+    font-size: clamp(32px, 5vw, 48px);
+    line-height: 1.2;
+  }
+
+  .bio {
+    max-width: 100%;
+    margin-left: 0;
   }
 }
-

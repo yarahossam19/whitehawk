@@ -7,9 +7,16 @@
 
 .leftStrip {
   position: absolute;
-
+  left: 0;
+  top: 0;
+  bottom: 0;
   width: 373px;
-  background: #003859;
+
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  padding: 48px 24px 48px 32px;
+  box-sizing: border-box;
 }
 
 .aurora {
@@ -35,33 +42,25 @@
 .inner {
   position: relative;
   z-index: 1;
-  left:-300px;
-  width: 100%;
+  margin-left: 373px;
+  width: calc(100% - 373px);
   min-height: 90vh;
-  padding: 48px 24px 48px calc(373px + 24px);
+  padding: 48px 24px 48px 24px;
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 40px;
-  box-sizing: border-box;
-}
-
-.bottomLeft {
-  display: flex;
+  align-items: bottom;
   flex-direction: column;
-  gap: 32px;
-  max-width: 520px;
+
+  gap: 56px;
+  box-sizing: border-box;
 }
 
 .bodyText {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  width:250px;
-  margin-bottom: 20px;
-  position:absolute;
-  right:550px;
-  bottom:20%;
+  max-width: 260px;
+  flex-shrink: 0;
+  margin-bottom: 32px;
 }
 
 .bodyBar {
@@ -97,30 +96,33 @@
   gap: 4px;
 }
 
-.bottomRight {
+.headTextTop {
   font-family: Arial, sans-serif;
   color: #ffffff;
   display: flex;
   gap: 12px;
   font-weight: 700;
   align-items: baseline;
+  flex-shrink: 0;
 }
 
 .brand {
   font-size: 35px;
   letter-spacing: -0.05em;
+  color: #ffffff;
 }
 
 .builtTo {
   font-size: 24px;
+  color: #ffffff;
 }
 
 .simplify,
 .cyber {
   font-family: Arial, sans-serif;
   font-weight: 700;
-  font-size: clamp(48px, 7vw, 90px);
-  letter-spacing: 0.18em;
+  font-size: clamp(42px, 5.4vw, 80px);
+  letter-spacing: 0.12em;
   color: #003859;
   white-space: nowrap;
   opacity: 0;
@@ -150,12 +152,15 @@
 @media (max-width: 900px) {
   .leftStrip {
     width: 220px;
+    padding: 48px 16px 48px 20px;
   }
 
   .inner {
+    margin-left: 220px;
+    width: calc(100% - 220px);
     flex-direction: column;
     align-items: flex-start;
-    padding: 48px 24px 40px calc(220px + 24px);
+    padding: 48px 24px 40px 24px;
   }
 }
 

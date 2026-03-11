@@ -13,13 +13,13 @@ export function CompanyHero() {
           blend={0.5}
         />
       </div>
+      <div className={styles.leftStrip}>
+        <div className={styles.headTextTop}>
+          <span className={styles.brand}>White Hawk</span>
+          <span className={styles.builtTo}>Built To</span>
+        </div>
+      </div>
       <div className={styles.inner}>
-      <div className={styles.headTextTop}>
-            <span className={styles.brand}>White Hawk</span>
-            <span className={styles.builtTo}>Built To</span>
-          </div>
-      
-        <div className={styles.headlineBlock}>
         <div className={styles.bodyText}>
           <span className={styles.bodyBar} />
           <p className={styles.bodyLine}>One platform to manage</p>
@@ -28,10 +28,9 @@ export function CompanyHero() {
           <p className={styles.bodyLineStrong}>Compliance &amp; Assets</p>
           <p className={styles.bodyLineSmall}>in a clear, structured way.</p>
         </div>
-          <div className={styles.headlineLines}>
-            <span className={styles.simplify}>SIMPLIFY</span>
-            <span className={styles.cyber}>CYBERSECURITY.</span>
-          </div>
+        <div className={styles.headlineLines}>
+          <span className={styles.simplify}>SIMPLIFY</span>
+          <span className={styles.cyber}>CYBERSECURITY.</span>
         </div>
       </div>
     </section>

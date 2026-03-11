@@ -5,45 +5,57 @@ import styles from "./LeadershipSection.module.scss";
 import leader1 from "@/../public/assets/icons/investors/investor1.svg";
 import leader2 from "@/../public/assets/icons/investors/investor2.svg";
 
+const LEADERS = [
+  {
+    id: "youssef",
+    name: "Youssef S. Ghoniem",
+    watermark: "LEADER",
+    bio: "Visionary architect behind the platform. With 10 years in offensive security, Youssef realized the industry needed a bridge between chaos and structure.",
+    image: leader1,
+    alt: "Youssef S. Ghoniem",
+    align: "left" as const,
+  },
+  {
+    id: "mohamed",
+    name: "Mohamed Mamdouh",
+    watermark: "BUILDER",
+    bio: "Operational mastermind. Mohamed ensures that every feature we build translates into real-world efficiency for our partners and clients.",
+    image: leader2,
+    alt: "Mohamed Mamdouh",
+    align: "right" as const,
+  },
+];
+
 export function LeadershipSection() {
   return (
     <section className={styles.section}>
       <div className={styles.inner}>
-        <article className={styles.card}>
-          <div className={styles.portraitWrap}>
-            <div className={styles.portraitBg} />
-            <div className={styles.portraitCircle}>
-              <Image src={leader1} alt="Leader" fill className={styles.portraitImg} />
+        {LEADERS.map((leader) => (
+          <article
+            key={leader.id}
+            className={leader.align === "right" ? `${styles.card} ${styles.cardReversed}` : styles.card}
+          >
+            <div className={styles.portraitWrap}>
+              <div className={styles.portraitBg} aria-hidden />
+              <div className={styles.portraitCircle}>
+                <Image src={leader.image} alt={leader.alt} fill className={styles.portraitImg} />
+              </div>
             </div>
-          </div>
-          <div className={styles.text}>
-            <div className={styles.watermark}>LEADER</div>
-            <h3 className={styles.name}>Youssef S. Ghoniem</h3>
-            <p className={styles.bio}>
-              Visionary architect behind the platform. With 10 years in offensive security, Youssef realized the
-              industry needed a bridge between chaos and structure.
-            </p>
-          </div>
-        </article>
-
-        <article className={`${styles.card} ${styles.cardRight}`}>
-          <div className={styles.portraitWrap}>
-            <div className={styles.portraitBg} />
-            <div className={styles.portraitCircle}>
-              <Image src={leader2} alt="Leader" fill className={styles.portraitImg} />
+            <div className={styles.textBlock}>
+              <div
+                className={leader.align === "right" ? styles.watermarkRight : styles.watermark}
+                aria-hidden
+              >
+                {leader.watermark}
+              </div>
+              <div className={styles.textContent}>
+                <h3 className={styles.name}>{leader.name}</h3>
+                <p className={styles.bio}>{leader.bio}</p>
+              </div>
             </div>
-          </div>
-          <div className={styles.textRight}>
-            <div className={styles.watermarkRight}>BUILDER</div>
-            <h3 className={styles.name}>Mohamed Mamdouh</h3>
-            <p className={styles.bio}>
-              Operational mastermind. Mohamed ensures that every feature we build translates into real-world
-              efficiency for our partners and clients.
-            </p>
-          </div>
-        </article>
+          </article>
+        ))}
       </div>
     </section>
   );
 }
-
