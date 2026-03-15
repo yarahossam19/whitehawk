@@ -43,7 +43,7 @@ $icon-inner: 50px;
   max-width: 768px;
 }
 
-// Track wrapper - connected grid container (Figma: 406px total, we use 218px for grid)
+// Track wrapper  
 .trackWrap {
   position: relative;
   margin: 0 20px;
@@ -392,6 +392,10 @@ $icon-inner: 50px;
 }
 
 @media (max-width: 768px) {
+  .section {
+    padding: 48px 0 40px;
+  }
+
   .title {
     font-size: 28px;
     line-height: 1.2;
@@ -400,13 +404,81 @@ $icon-inner: 50px;
   .subtitle {
     font-size: 16px;
     line-height: 1.5;
+    margin-bottom: 32px;
+  }
+
+  .trackWrap {
+    min-height: auto;
+    padding: 20px 16px;
+    margin: 0 12px;
+  }
+
+  // Vertical layout: track becomes column
+  .track {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    min-height: auto;
+  }
+
+  // Each item: row layout (icon left, content right when open)
+  .item {
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    min-height: auto;
+    width: 100%;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba($grey-stroke, 0.3);
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .itemOpen {
+    flex: none;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px 0;
+  }
+
+  // Icon column stays on left, vertical line connects items
+  .iconColumn {
+    min-height: auto;
+    flex-shrink: 0;
+  }
+
+  // Vertical line: extend to connect with adjacent items
+  .verticalLine {
+    top: -100%;
+    bottom: -100%;
+  }
+
+  .cardBody {
+    flex: 1;
+    min-width: 0;
+    text-align: left;
+    align-items: flex-start;
+    justify-content: flex-start;
   }
 
   .cardTitle {
-    font-size: 20px;
+    font-size: 18px;
+    text-align: left;
   }
 
   .cardDescription {
-    font-size: 16px;
+    font-size: 14px;
+    max-width: none;
+    text-align: left;
+  }
+
+  // Horizontal lines: narrower on mobile
+  .lineTop,
+  .lineBottom {
+    width: 80%;
   }
 }
