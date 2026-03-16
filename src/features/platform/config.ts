@@ -6,8 +6,10 @@ export interface ActivityItem {
 }
 
 export interface SuccessStory {
-  result: string;
   company: string;
+  result: string;
+  /** Subtext shown in quotation style under the result */
+  quote: string;
 }
 
 export interface MissionCard {
@@ -43,7 +45,7 @@ export const PLATFORM_CONFIG: Record<PlatformType, PlatformPageConfig> = {
     hero: {
       title: "Stay Ahead of Threats with Proactive Offensive Security",
       subtitle:
-        "WhiteHawk simulates real-world vulnerabilities to uncover weaknesses before exploitation, ensuring your systems stay secure.",
+"Simulate real-world cyberattacks to uncover vulnerabilities before they are exploited. White Hawk’s Offensive Security module ensures your systems are always tested and secure",
       ctaLabel: "Get Demo",
     },
     activities: {
@@ -107,147 +109,152 @@ export const PLATFORM_CONFIG: Record<PlatformType, PlatformPageConfig> = {
     successStories: {
       sectionTitle: "Success Stories",
       items: [
-        { result: "Reduced vulnerability window by 75%", company: "Fintech Enterprise" },
-        { result: "HIPAA compliance achieved in record time", company: "Healthcare Provider" },
+        {
+          company: "Fintech Enterprise",
+          result: "Reduced vulnerability window by 75%",
+          quote:
+"WhiteHawk's offensive simulations helped us identify a critical API flaw that traditional scanners missed. We patched it within hours."        },
+        {
+          company: "Healthcare Provider",
+          result: "HIPAA compliance achieved in record time",
+          quote:
+            "Automated reporting from the offensive module gave auditors exactly what they needed, saving weeks of manual documentation.",
+        },
       ],
     },
   },
   defensive: {
     title: "Defensive Security",
     hero: {
-      title: "Strengthen Your Defenses with 24/7 Protection",
+      title: "Strengthen Your Defenses with Proactive Offensive Security",
       subtitle:
-        "Continuous monitoring and rapid response to keep your organization secure against evolving threats.",
-      ctaLabel: "Get Demo",
+      "Detect threats in real-time and automate responses to keep your systems secure. White Hawk’s Defensive Security module ensures you can respond quickly and effectively to emerging risks",
+            ctaLabel: "Get Demo",
     },
     activities: {
-      sectionTitle: "Defensive Capabilities",
-      sectionSubtitle: "Around-the-clock surveillance and response.",
+      sectionTitle: "Security Activities",
+      sectionSubtitle: "Comprehensive testing and assessment capabilities.",
       items: [
         {
-          title: "Continuous Monitoring",
+          title: "SOC Alerts and Management",
           description:
-            "24/7 automated surveillance that never sleeps, ensuring threats are detected as they emerge.",
-        },
-        {
-          title: "Incident Response",
-          description:
-            "Rapid detection and response workflows to contain and remediate security incidents.",
-        },
+          "Receive real-time alerts for suspicious activity and manage incidents to protect your organization from potential breaches",        },
         {
           title: "Threat Intelligence",
           description:
-            "Leverage real-time threat intelligence to stay ahead of known and emerging attack patterns.",
-        },
+"Integrate threat feeds to stay ahead of emerging attack techniques and vulnerabilities, ensuring proactive protection"        },
         {
-          title: "Security Operations Center",
+          title: "Threat Hunting",
           description:
-            "Centralized visibility and control across your entire security infrastructure.",
-        },
+"Continuously search for signs of malicious activity within your network, identifying risks before they escalate into serious breaches"        },
         {
-          title: "Endpoint Detection",
+          title: "Data Breach Monitoring",
           description:
-            "Detect and respond to threats across endpoints, servers, and cloud workloads.",
-        },
+"Monitor for signs of data leakage or breach activity to reduce impact and response time"        },
         {
-          title: "Log Management & Analytics",
+          title: "Ticketing and Reporting",
           description:
-            "Correlate logs and events to uncover hidden threats and support compliance reporting.",
-        },
+"Manage incidents end-to-end and generate operational and executive reports"        },
+  
       ],
     },
     mission: {
       cards: [
         {
-          title: "Detect and Respond Faster",
+          title: "Detect Threats in Real-Time",
           description:
-            "We provide continuous monitoring and intelligent alerting so your team can respond to threats before they impact the business.",
-          icon: "simulate",
+"We use continuous monitoring to detect suspicious activities immediately, allowing your team to respond quickly and prevent damage",          icon: "simulate",
         },
         {
-          title: "Track",
+          title: "Integrate Threat Intelligence for Proactive Defense",
           description:
-            "We provide detailed reports—both executive summaries and technical assessments—to track progress, document vulnerabilities, and ensure compliance.",
-          icon: "track",
+"We integrate up-to-date threat feeds to ensure your organization is always prepared to face the latest attack vectors",          icon: "track",
         },
         {
-          title: "Generate",
+          title: "Automate Security Responses",
           description:
-            "Generate audit-ready reports and compliance documentation to streamline assessments and demonstrate due care.",
-          icon: "generate",
+"With SOC integration and automated playbooks, we streamline response times and reduce human error, ensuring a faster and more accurate reaction to threats",          icon: "generate",
         },
       ],
     },
     successStories: {
       sectionTitle: "Success Stories",
       items: [
-        { result: "Mean time to detect reduced by 60%", company: "Financial Services" },
-        { result: "Zero critical incidents in 12 months", company: "Retail Enterprise" },
+        {
+          company: "FinTech Enterprise",
+          result: "Reduced vulnerability window by 75%",
+          quote:
+"WhiteHawk's offensive simulations helped us identify a critical API flaw that traditional scanners missed. We patched it within hours.",        },
+        {
+          company: "Retail Enterprise",
+          result: "HIPAA compliance achieved in record time",
+          quote:
+            "Proactive monitoring caught issues at the edge before they hit stores. Leadership sees security as a business enabler now.",
+        },
       ],
     },
   },
   grc: {
     title: "GRC",
     hero: {
-      title: "Governance, Risk, and Compliance Made Simple",
-      subtitle:
-        "Unify policies, risk assessments, and compliance in one platform so you can prove and improve your security posture.",
-      ctaLabel: "Get Demo",
+      title: "Simplify Compliance and Mitigate Risk",
+      subtitle:"Ensure your organization meets regulatory standards and effectively manages risk with White Hawk’s GRC module. Automate your compliance checks and risk assessments for continuous security",      ctaLabel: "Get Demo",
     },
     activities: {
-      sectionTitle: "GRC Capabilities",
-      sectionSubtitle: "See every corner of your program in one place.",
+      sectionTitle: "Security Activities",
+      sectionSubtitle: "Comprehensive testing and assessment capabilities.",
       items: [
         {
-          title: "Policy Management",
+          title: "Data Collection",
           description:
-            "Create, distribute, and attest to policies with automated workflows and version control.",
+            "Collect and consolidate data from all your systems, ensuring visibility and access to critical security metrics in one place.",
         },
         {
-          title: "Risk Assessment",
+          title: "Gap Assessment",
           description:
-            "Identify, assess, and prioritize risks with consistent frameworks and clear reporting.",
+            "Perform comprehensive assessments to identify security vulnerabilities and get actionable recommendations to improve your security posture.",
         },
         {
-          title: "Compliance Frameworks",
+          title: "Risk Management",
           description:
-            "Map controls to multiple frameworks (SOC 2, ISO 27001, NIST, HIPAA) and streamline audits.",
+            "Assess, prioritize, and mitigate security risks to ensure that your organization is protected against potential threats and vulnerabilitie.",
         },
         {
-          title: "Control Testing",
+          title: "Governance Management",
           description:
-            "Schedule and track control tests with evidence collection and remediation follow-up.",
+            "Manage security policies, roles, and responsibilities across the organization."},
+        {
+          title: "Compliance Management",
+          description:
+            "Monitor compliance status across frameworks and regulations in real time.",
         },
         {
-          title: "Audit Readiness",
+          title: "Audit Management",
           description:
-            "Generate audit-ready reports and dashboards for auditors and leadership.",
-        },
-        {
-          title: "Vendor Risk",
-          description:
-            "Assess and monitor third-party risk with questionnaires and continuous monitoring.",
-        },
-      ],
+"Prepare for internal and external audits with centralized evidence and audit trails"        },
+{
+  title: "Ticketing and Reporting",
+  description:
+"Track compliance tasks and generate audit-ready reports with full traceability.",    }  ],
     },
     mission: {
       cards: [
         {
-          title: "One Source of Truth",
+          title: "Automate Compliance Monitoring and Reporting",
           description:
-            "We bring policies, risk, and compliance into a single workspace so you can demonstrate due care and pass audits with confidence.",
-          icon: "simulate",
+"We automate the process of tracking and reporting compliance with key industry standards (e.g., NIST, ISO, PCI), saving you time and reducing human errors.",   
+       icon: "simulate",
         },
         {
-          title: "Track",
+          title: "Identify, Assess, and Mitigate Risks",
           description:
-            "We provide detailed reports—both executive summaries and technical assessments—to track progress, document vulnerabilities, and ensure compliance.",
+"White Hawk continuously monitors and assesses risk across your organization, providing a comprehensive view and actionable steps to mitigate identified threats",
           icon: "track",
         },
         {
-          title: "Generate",
+          title: "Provide Audit-Ready Documentation",
           description:
-            "Generate audit-ready reports and compliance documentation to streamline assessments and demonstrate due care.",
+"We generate detailed, compliance-driven reports, ensuring you are always prepared for internal or external audits, and reducing audit-related stress",
           icon: "generate",
         },
       ],
@@ -255,73 +262,66 @@ export const PLATFORM_CONFIG: Record<PlatformType, PlatformPageConfig> = {
     successStories: {
       sectionTitle: "Success Stories",
       items: [
-        { result: "SOC 2 Type II in 6 months", company: "SaaS Provider" },
-        { result: "Unified view across 4 frameworks", company: "Global Enterprise" },
+        {
+          company: "SaaS Provider",
+          result: "SOC 2 Type II in 6 months",
+          quote:
+            "We mapped controls once and reused evidence across audits. What used to take quarters now takes weeks.",
+        },
+        {
+          company: "Global Enterprise",
+          result: "Unified view across 4 frameworks",
+          quote:
+            "Risk, policy, and compliance live in one workspace. No more spreadsheets or duplicate questionnaires.",
+        },
       ],
     },
   },
   "asset-management": {
     title: "Asset Management",
     hero: {
-      title: "Complete Visibility Across Every Asset",
+      title: "Gain Full Control  Over Your IT and Non-IT Assets",
       subtitle:
-        "Discover, inventory, and secure IT and non-IT assets so nothing slips through the cracks.",
+"Monitor and secure all your assets—from IoT devices to critical infrastructure—using White Hawk’s Asset Management module. Ensure nothing goes unprotected, inside or outside your network",
       ctaLabel: "Get Demo",
     },
     activities: {
-      sectionTitle: "Asset Capabilities",
-      sectionSubtitle: "Full lifecycle visibility and control.",
+      sectionTitle: "Security Activities",
+      sectionSubtitle: "Comprehensive testing and assessment capabilities.",
       items: [
         {
-          title: "Asset Discovery",
+          title: "IT Assets Management",
           description:
-            "Automatically discover and classify assets across your network, cloud, and endpoints.",
+            "Continuously monitor your network devices, servers, and workstations to ensure they are secure and compliant with your internal policies.",
         },
         {
-          title: "Unified Inventory",
+          title: "Non-IT Assets Management",
           description:
-            "Single inventory for hardware, software, cloud resources, and critical business assets.",
-        },
-        {
-          title: "Vulnerability Mapping",
+"Gain visibility and security over IoT devices, machinery, and other non-IT assets, ensuring all devices are protected from cyber threats",     }
+,   {
+          title: "Automated Asset Discovery",
           description:
-            "Map vulnerabilities to specific assets and prioritize remediation by criticality.",
-        },
-        {
-          title: "Lifecycle Tracking",
-          description:
-            "Track procurement, deployment, changes, and retirement for every asset.",
-        },
-        {
-          title: "Software Compliance",
-          description:
-            "Monitor license usage and ensure compliance with software agreements.",
-        },
-        {
-          title: "Reporting & Dashboards",
-          description:
-            "Dashboards and reports for asset coverage, risk, and compliance status.",
-        },
+"Automatically detect and catalog new assets as they come online, providing real-time updates to your asset inventory",        },
+
       ],
     },
     mission: {
       cards: [
         {
-          title: "Know What You Have",
+          title: "Achieve Complete Visibility of All Assets",
           description:
-            "You can't secure what you can't see. We help you maintain an accurate, up-to-date view of every asset so security and IT stay aligned.",
-          icon: "simulate",
+"We ensure full visibility across both IT and non-IT assets, giving you the ability to monitor everything connected to your network and improve security posture",          icon: "simulate",
         },
         {
-          title: "Track",
+          title: "Automate Asset Discovery and Classification",
           description:
-            "We provide detailed reports—both executive summaries and technical assessments—to track progress, document vulnerabilities, and ensure compliance.",
+            "White Hawk automatically identifies and categorizes assets as they come online, so you’re always aware of your network’s state in real-time",
           icon: "track",
         },
         {
-          title: "Generate",
+          title: "Monitor and Secure All Devices",
           description:
-            "Generate audit-ready reports and compliance documentation to streamline assessments and demonstrate due care.",
+            "From IT infrastructure to IoT devices, we continuously monitor assets to identify vulnerabilities and ensure compliance with security policies.",
           icon: "generate",
         },
       ],
@@ -329,8 +329,18 @@ export const PLATFORM_CONFIG: Record<PlatformType, PlatformPageConfig> = {
     successStories: {
       sectionTitle: "Success Stories",
       items: [
-        { result: "40% of previously unknown assets discovered", company: "Manufacturing" },
-        { result: "Unified asset view across 3 clouds", company: "Technology Company" },
+        {
+          company: "Manufacturing",
+          result: "40% of previously unknown assets discovered",
+          quote:
+            "Shadow IT and OT devices showed up in the first scan. We finally know what we need to protect.",
+        },
+        {
+          company: "Technology Company",
+          result: "Unified asset view across 3 clouds",
+          quote:
+            "One inventory across AWS, Azure, and on-prem. Security and IT finally agree on the same source of truth.",
+        },
       ],
     },
   },

@@ -33,6 +33,14 @@
   justify-content: center;
   gap: 16px;
   margin-bottom: 20px;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    align-items: stretch;
+    max-width: 388px;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
 .primaryBtn {

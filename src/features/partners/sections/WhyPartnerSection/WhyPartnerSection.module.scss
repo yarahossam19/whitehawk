@@ -1,0 +1,352 @@
+// Figma 864:7551 — first card: no bottom padding, clipped preview, hover lifts + color crossfade
+
+.section {
+  background: rgba(224, 230, 235, 0.25);
+  padding: 96px 24px 100px;
+}
+
+.inner {
+  max-width: 1232px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  max-width: 768px;
+  margin: 0 auto 64px;
+}
+
+.title {
+  font-family: Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(32px, 4vw, 48px);
+  line-height: 48px;
+  color: #003859;
+  margin: 0 0 24px;
+}
+
+.subtitle {
+  font-family: Arial, sans-serif;
+  font-size: clamp(17px, 2vw, 20px);
+  line-height: 28px;
+  color: #52697a;
+  margin: 0;
+}
+
+.bento {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+  align-items: stretch;
+}
+
+.cardHero {
+  grid-column: 1 / span 8;
+  grid-row: 1;
+  background: #ffffff;
+  border: 1px solid #f1f5f9;
+  border-radius: 24px;
+  border-bottom-left-radius: 24px;
+  border-bottom-right-radius: 24px;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.1),
+    0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding-bottom: 0;
+  margin-bottom: 0;
+  position: relative;
+  z-index: 0;
+  transform: translateY(0);
+  transition:
+    transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    box-shadow 0.5s ease,
+    z-index 0s linear 0.5s;
+}
+
+.cardHero:hover {
+  z-index: 2;
+  transform: translateY(-18px);
+  box-shadow:
+    0 28px 50px rgba(0, 56, 89, 0.12),
+    0 12px 24px rgba(0, 0, 0, 0.08),
+    0 1px 3px rgba(0, 0, 0, 0.06);
+  transition:
+    transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    box-shadow 0.5s ease,
+    z-index 0s;
+}
+
+.cardHeroCopy {
+  padding: 32px 32px 0;
+  flex-shrink: 0;
+}
+
+.cardHeroTitle {
+  font-family: Arial, sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 32px;
+  color: #003859;
+  margin: 0 0 12px;
+}
+
+.cardHeroText {
+  font-family: Arial, sans-serif;
+  font-size: 18px;
+  line-height: 28px;
+  color: #62748e;
+  margin: 0;
+  max-width: 576px;
+}
+
+.dashboardFrame {
+  margin: 24px 32px 0;
+  padding: 16px 16px 0;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-bottom: none;
+  border-radius: 32px 32px 0 0;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: stretch;
+  transition: padding-bottom 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.cardHero:hover .dashboardFrame {
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e2e8f0;
+  border-radius: 32px;
+}
+
+.dashboardImageWrap {
+  position: relative;
+  width: 100%;
+  border-radius: 16px 16px 0 0;
+  overflow: hidden;
+  background: #e2e8f0;
+  isolation: isolate;
+  /* Clipped “partial page” — not the full dashboard */
+  max-height: 220px;
+  transition: max-height 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.cardHero:hover .dashboardImageWrap {
+  max-height: 420px;
+  border-radius: 16px;
+}
+
+.dashboardLayerLuma,
+.dashboardLayerColor {
+  width: 100%;
+  height: auto;
+  min-height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.dashboardLayerLuma {
+  position: relative;
+  z-index: 0;
+  mix-blend-mode: luminosity;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+.dashboardLayerColor {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  z-index: 1;
+  mix-blend-mode: normal;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.cardHero:hover .dashboardLayerLuma {
+  opacity: 0;
+}
+
+.cardHero:hover .dashboardLayerColor {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.cardTall {
+  grid-column: 9 / span 4;
+  grid-row: 1;
+  background: #ffffff;
+  border: 1px solid #f1f5f9;
+  border-radius: 24px;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.1),
+    0 1px 2px rgba(0, 0, 0, 0.1);
+  padding: 33px 32px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.iconWrap {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: #ecfeff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #003859;
+  flex-shrink: 0;
+}
+
+.iconLg {
+  width: 28px;
+  height: 28px;
+}
+
+.cardTitle {
+  font-family: Arial, sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 32px;
+  color: #003859;
+  margin: 0;
+}
+
+.cardBody {
+  font-family: Arial, sans-serif;
+  font-size: 18px;
+  line-height: 29px;
+  color: #52697a;
+  margin: 0;
+  max-width: 320px;
+}
+
+.cardCompact {
+  grid-column: span 4;
+  grid-row: 2;
+  background: #ffffff;
+  border: 1px solid #f1f5f9;
+  border-radius: 24px;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.1),
+    0 1px 2px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  box-sizing: border-box;
+  min-height: 131px;
+}
+
+.iconWrapSm {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: #ecfeff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #003859;
+  flex-shrink: 0;
+}
+
+.iconSm {
+  width: 24px;
+  height: 24px;
+}
+
+.cardCompactCopy {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cardCompactTitle {
+  font-family: Arial, sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 28px;
+  color: #003859;
+  margin: 0;
+}
+
+.cardCompactText {
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  line-height: 23px;
+  color: #52697a;
+  margin: 0;
+}
+
+@media (max-width: 1100px) {
+  .bento {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .cardHero {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+
+  .cardTall {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .cardCompact {
+    grid-column: span 1;
+    grid-row: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .bento {
+    grid-template-columns: 1fr;
+  }
+
+  .cardCompact {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cardHero,
+  .dashboardFrame,
+  .dashboardImageWrap,
+  .dashboardLayerLuma,
+  .dashboardLayerColor {
+    transition: none;
+  }
+
+  .cardHero:hover {
+    transform: none;
+  }
+
+  .dashboardImageWrap {
+    max-height: none;
+  }
+
+  .dashboardLayerLuma {
+    opacity: 0;
+  }
+
+  .dashboardLayerColor {
+    opacity: 1;
+    position: relative;
+    pointer-events: auto;
+  }
+}

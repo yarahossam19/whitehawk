@@ -24,8 +24,8 @@ export function HeroSection() {
             Automate vulnerability management, streamline compliance, and proactively detect threats across your organization – all in one integrated platform
           </p>
           <div className={styles.heroButtons}>
-            <PrimaryButton title="Get Demo" variant="primary" onClick={openDemoModal} />
-            <PrimaryButton title="Start free trial" variant="secondary" onClick={openDemoModal} />
+            <PrimaryButton title="Get Demo" variant="primary" onClick={openDemoModal} className={styles.heroButton} />
+            <PrimaryButton title="Start free trial" variant="secondary" onClick={openDemoModal} className={styles.heroButton} />
           </div>
         </div>
         <div className={styles.heroRight}>
@@ -119,7 +119,15 @@ function HeroDiagram() {
         </circle>
       </svg>
       <div className={styles.diagramCenter}>
-        <Image src={whitehawkLogo} alt="" width={420} height={200} />
+        <Image
+          src={whitehawkLogo}
+          alt=""
+          width={420}
+          height={200}
+          priority
+          fetchPriority="high"
+          sizes="(max-width: 700px) 280px, 420px"
+        />
       </div>
       {/* Icons at cardinal positions: top, right, bottom, left */}
       <div className={styles.diagramIcon} style={{ top: "12%", left: "45%", transform: "translate(-50%, -50%)" }}>

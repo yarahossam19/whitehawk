@@ -35,8 +35,9 @@
   width: 448px;
   height: 597px;
   padding: 32px;
-  z-index: 3;
+  z-index: 4;
   cursor: pointer;
+  pointer-events: auto;
 
   &:hover .clickHint {
     text-decoration: underline;
@@ -59,14 +60,35 @@
   width: 403.2px;
   height: 538px;
   padding: 30px 30px 2px 30px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* 4th card — behind back (Figma stack is 3 visible + 1 depth) */
+.cardDeepest {
+  left: 33.6px;
+  top: 29.5px;
+  width: 384px;
+  height: 518px;
+  padding: 28px 28px 2px 28px;
   z-index: 1;
   pointer-events: none;
+}
+
+.cardDeepest .badge {
+  width: 54px;
+  height: 54px;
+}
+
+.cardDeepest .badgeIcon {
+  width: 26px;
+  height: 26px;
 }
 
 .cardTop {
   display: flex;
   align-items: flex-start;
-  justify-content: space-between;
+  justify-content: flex-start;
   flex-shrink: 0;
 }
 
@@ -78,6 +100,7 @@
   align-items: center;
   justify-content: center;
   background: #ffffff;
+  overflow: hidden;
 }
 
 .cardFront .badge {
@@ -95,39 +118,38 @@
   height: 57.6px;
 }
 
-.cardFront .badge::after {
-  content: "";
+.badgeIcon {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
+
+.cardMiddle .badgeIcon {
   width: 32px;
   height: 32px;
-  border-radius: 9999px;
-  border: 4px solid var(--primary-900, #003859);
 }
 
-.cardMiddle .badge::after {
-  content: "";
-  width: 30.4px;
-  height: 30.4px;
-  border-radius: 9999px;
-  border: 3px solid var(--primary-900, #003859);
+.cardBack .badgeIcon {
+  width: 28px;
+  height: 28px;
 }
 
-.cardBack .badge::after {
-  content: "";
-  width: 28.8px;
-  height: 28.8px;
-  border-radius: 9999px;
-  border: 3px solid var(--primary-900, #003859);
-}
-
+/* Figma 864:8359 — top right inside front card */
 .clickHint {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  left: auto;
   font-family: Arial, sans-serif;
   font-weight: 700;
   font-size: 12px;
   line-height: 16px;
-  letter-spacing: 1.2px;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--text-secondary, #52697a);
+  color: #52697a;
   flex-shrink: 0;
+  user-select: none;
+  z-index: 2;
 }
 
 .cardContent {
@@ -192,5 +214,19 @@
     width: calc(100% - 32px);
     max-width: 404px;
     min-height: 380px;
+  }
+
+  .cardDeepest {
+    left: 22px;
+    top: 28px;
+    width: calc(100% - 44px);
+    max-width: 384px;
+    min-height: 360px;
+  }
+
+  .clickHint {
+    right: 16px;
+    top: 14px;
+    font-size: 11px;
   }
 }

@@ -1,10 +1,14 @@
 "use client";
 
+import Image from "next/image";
 import styles from "./TrustSection.module.scss";
 
 const CERTS = ["ISO 27001", "ISO 9001:2015", "SOC 2", "CREST", "PCI DSS", "GDPR"];
 
-const BACKERS = ["BEC", "Plug and Play", "XS", "DEIN", "Others"];
+const INVESTOR_ICONS = [1, 2, 3, 4, 5, 6, 7, 8].map((n) => ({
+  src: `/assets/icons/investors/investor${n}.svg`,
+  alt: `Backer ${n}`,
+}));
 
 export function TrustSection() {
   return (
@@ -13,9 +17,17 @@ export function TrustSection() {
         <div className={styles.packedBy}>
           <p className={styles.packedByLabel}>Packed by</p>
           <div className={styles.logos}>
-            {BACKERS.map((name) => (
-              <div key={name} className={styles.logo}>
-                {name}
+            {INVESTOR_ICONS.map(({ src, alt }) => (
+              <div key={src} className={styles.logo}>
+                <Image
+                  src={src}
+                  alt={alt}
+                  width={160}
+                  height={48}
+                  className={styles.logoImg}
+                  loading="lazy"
+                  decoding="async"
+                />
               </div>
             ))}
           </div>
@@ -40,4 +52,3 @@ export function TrustSection() {
     </section>
   );
 }
-

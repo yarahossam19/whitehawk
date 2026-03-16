@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type { MissionCard } from "../../config";
+import type { MissionCard } from "../config";
 import styles from "./MissionSection.module.scss";
 
 interface MissionSectionProps {
@@ -62,7 +62,9 @@ export function MissionSection({ cards }: MissionSectionProps) {
                   <span className={styles.icon}>
                     <CardIcon icon={card.icon} />
                   </span>
-                  <h3 className={styles.cardTitle}>{card.title}</h3>
+                  <h3 className={styles.cardTitle}>
+                    {isOpen ? card.title : (card.title.split(/\s+/)[0] ?? card.title)}
+                  </h3>
                   <div className={styles.cardContent}>
                     <p className={styles.cardDescription}>{card.description}</p>
                   </div>

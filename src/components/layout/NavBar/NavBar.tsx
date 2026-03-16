@@ -16,6 +16,7 @@ import assetManagement from "@/../public/assets/icons/navbar/Asset Management.sv
 import fintechCompany from "@/../public/assets/icons/navbar/Money.svg";
 import publicSectors from "@/../public/assets/icons/navbar/Gavel.svg";
 import healthcareOrganizations from "@/../public/assets/icons/navbar/Hospital.svg";
+
 const PLATFORM_ITEMS: { name: string; description: string; slug: string; icon: string }[] = [
   { name: "Offensive", description: "Identify and simulate real-world attacks", slug: "offensive", icon: offensive },
   { name: "Defensive", description: "Strengthen defenses across systems", slug: "defensive", icon: defensive },
@@ -60,10 +61,7 @@ function NavLink({
   isActive?: boolean;
 }) {
   return (
-    <Link
-      href={href}
-      className={`${styles.navLink} ${isActive ? styles.active : ""}`}
-    >
+    <Link href={href} className={`${styles.navLink} ${isActive ? styles.active : ""}`}>
       {children}
     </Link>
   );
@@ -90,7 +88,7 @@ function DropdownItem({
         <span className={styles.dropdownItemDesc}>{description}</span>
       </div>
     </Link>
-  );  
+  );
 }
 
 const MOBILE_BREAKPOINT = 901;
@@ -101,7 +99,7 @@ export function NavBar() {
   const [platformOpen, setPlatformOpen] = useState(false);
   const [solutionsOpen, setSolutionsOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [mobilePlatformOpen, setMobilePlatformOpen] = useState(false);
+  const [mobilePlatformOpen, setMobilePlatformOpen] = useState(true);
   const [mobileSolutionsOpen, setMobileSolutionsOpen] = useState(false);
 
   const closeAll = useCallback(() => {
@@ -122,7 +120,7 @@ export function NavBar() {
   const openMobile = useCallback(() => setMobileOpen(true), []);
   const closeMobile = useCallback(() => {
     setMobileOpen(false);
-    setMobilePlatformOpen(false);
+    setMobilePlatformOpen(true);
     setMobileSolutionsOpen(false);
   }, []);
 
@@ -136,16 +134,23 @@ export function NavBar() {
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileOpen]);
+
   const isPlatformActive = pathname?.startsWith("/platform");
   const isSolutionsActive = pathname?.startsWith("/solutions");
 
   return (
     <header className={styles.header}>
       <nav className={styles.nav} role="navigation" aria-label="Main">
-        <Link href="/" className={styles.logoWrap}>
-          <Image src={logo} alt="WhiteHawk" width={141} height={20} className={styles.logo} />
-        </Link>
-
         <button
           type="button"
           className={styles.menuToggle}
@@ -155,6 +160,18 @@ export function NavBar() {
         >
           <Image src={menuIcon} alt="" width={40} height={40} />
         </button>
+
+        <Link href="/" className={styles.logoWrap}>
+          <Image
+            src={logo}
+            alt="WhiteHawk"
+            width={141}
+            height={20}
+            priority
+            fetchPriority="high"
+            className={styles.logo}
+          />
+        </Link>
 
         <div className={styles.links}>
           <NavLink href="/" isActive={pathname === "/"}>
@@ -240,37 +257,49 @@ export function NavBar() {
         </div>
 
         <div className={styles.actions}>
-          <PrimaryButton title="Sign in" variant="secondary" href="#" className={styles.signInButton}/>
-          <PrimaryButton title="Request a Demo" variant="primary" onClick={openDemoModal} className={styles.requestDemoButton}/>
+          <PrimaryButton title="Sign in" variant="secondary" href="#" className={styles.signInButton} />
+          <PrimaryButton
+            title="Request a Demo"
+            variant="primary"
+            onClick={openDemoModal}
+            className={styles.requestDemoButton}
+          />
         </div>
       </nav>
 
-      {/* Mobile overlay menu (Figma: Menu Interface - Tablet View) */}
+      {/* Tablet / mobile: backdrop + drawer from right (Figma 1310:8904 / 1309:7393) */}
       <div
-        className={`${styles.mobileOverlay} ${mobileOpen ? styles.open : ""}`}
+        className={`${styles.drawerRoot} ${mobileOpen ? styles.drawerRootOpen : ""}`}
         aria-hidden={!mobileOpen}
-        role="dialog"
-        aria-modal="true"
-        aria-label="Menu"
       >
-        <div className={styles.mobileOverlayInner}>
-          <button
-            type="button"
-            className={styles.mobileClose}
-            onClick={closeMobile}
-            aria-label="Close menu"
-          >
+        <button
+          type="button"
+          className={styles.drawerBackdrop}
+          aria-label="Close menu"
+          onClick={closeMobile}
+        />
+        <div
+          className={`${styles.drawerPanel} ${mobileOpen ? styles.drawerPanelOpen : ""}`}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Menu"
+        >
+          <button type="button" className={styles.drawerClose} onClick={closeMobile} aria-label="Close menu">
             <CloseIcon />
           </button>
-          <div className={styles.mobileNav}>
-            <Link href="/" className={`${styles.mobileNavItem} ${pathname === "/" ? styles.active : ""}`} onClick={closeMobile}>
+          <div className={styles.drawerScroll}>
+            <Link
+              href="/"
+              className={`${styles.drawerNavItem} ${pathname === "/" ? styles.drawerNavActive : ""}`}
+              onClick={closeMobile}
+            >
               Home
             </Link>
 
-            <div className={styles.mobileNavItemWithSub}>
+            <div className={styles.drawerGroup}>
               <button
                 type="button"
-                className={styles.mobileNavItemTrigger}
+                className={styles.drawerNavTrigger}
                 onClick={() => setMobilePlatformOpen((v) => !v)}
                 aria-expanded={mobilePlatformOpen}
               >
@@ -278,12 +307,12 @@ export function NavBar() {
                 <ChevronDown open={mobilePlatformOpen} />
               </button>
               {mobilePlatformOpen && (
-                <div className={styles.mobileSubNav}>
+                <div className={styles.drawerSubNav}>
                   {PLATFORM_ITEMS.map((item) => (
                     <Link
                       key={item.slug}
                       href={`/platform/${item.slug}`}
-                      className={styles.mobileSubNavLink}
+                      className={styles.drawerSubLink}
                       onClick={closeMobile}
                     >
                       {item.name}
@@ -293,10 +322,10 @@ export function NavBar() {
               )}
             </div>
 
-            <div className={styles.mobileNavItemWithSub}>
+            <div className={styles.drawerGroup}>
               <button
                 type="button"
-                className={styles.mobileNavItemTrigger}
+                className={styles.drawerNavTrigger}
                 onClick={() => setMobileSolutionsOpen((v) => !v)}
                 aria-expanded={mobileSolutionsOpen}
               >
@@ -304,12 +333,12 @@ export function NavBar() {
                 <ChevronDown open={mobileSolutionsOpen} />
               </button>
               {mobileSolutionsOpen && (
-                <div className={styles.mobileSubNav}>
+                <div className={styles.drawerSubNav}>
                   {SOLUTIONS_ITEMS.map((item) => (
                     <Link
                       key={item.slug}
                       href={`/solutions/${item.slug}`}
-                      className={styles.mobileSubNavLink}
+                      className={styles.drawerSubLink}
                       onClick={closeMobile}
                     >
                       {item.name}
@@ -319,13 +348,21 @@ export function NavBar() {
               )}
             </div>
 
-            <Link href="/partners" className={`${styles.mobileNavItem} ${pathname === "/partners" ? styles.active : ""}`} onClick={closeMobile}>
+            <Link
+              href="/partners"
+              className={`${styles.drawerNavItem} ${pathname === "/partners" ? styles.drawerNavActive : ""}`}
+              onClick={closeMobile}
+            >
               Partners
             </Link>
-            <Link href="/company" className={`${styles.mobileNavItem} ${pathname === "/company" ? styles.active : ""}`} onClick={closeMobile}>
+            <Link
+              href="/company"
+              className={`${styles.drawerNavItem} ${pathname === "/company" ? styles.drawerNavActive : ""}`}
+              onClick={closeMobile}
+            >
               Company
             </Link>
-            <Link href="#" className={styles.mobileNavItem} onClick={closeMobile}>
+            <Link href="#" className={styles.drawerNavItem} onClick={closeMobile}>
               Resources
             </Link>
           </div>
@@ -337,7 +374,17 @@ export function NavBar() {
 
 function CloseIcon() {
   return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <svg
+      width="28"
+      height="28"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
       <path d="M18 6L6 18M6 6l12 12" />
     </svg>
   );

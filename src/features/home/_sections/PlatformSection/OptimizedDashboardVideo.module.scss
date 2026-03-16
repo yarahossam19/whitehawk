@@ -1,0 +1,99 @@
+.wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 280px;
+  border-radius: 15px;
+  overflow: hidden;
+  background: rgba(0, 36, 57, 0.06);
+}
+
+.video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  vertical-align: middle;
+}
+
+.skeleton {
+  width: 100%;
+  height: 100%;
+  min-height: 280px;
+  background: linear-gradient(
+    110deg,
+    rgba(0, 56, 89, 0.06) 0%,
+    rgba(171, 224, 255, 0.12) 45%,
+    rgba(0, 56, 89, 0.06) 90%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}
+
+.playOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border: none;
+  background: rgba(0, 36, 57, 0.35);
+  cursor: pointer;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: rgba(0, 36, 57, 0.45);
+  }
+}
+
+.playIcon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-35%, -50%);
+    border-style: solid;
+    border-width: 14px 0 14px 22px;
+    border-color: transparent transparent transparent var(--primary-900, #003859);
+  }
+}
+
+.playLabel {
+  font-size: 15px;
+  font-weight: 700;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.error {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-secondary, #52697a);
+  background: rgba(255, 255, 255, 0.95);
+  padding: 8px 12px;
+  border-radius: 8px;
+}

@@ -24,7 +24,8 @@ export interface SolutionsPageConfig {
     title: string;
     description: string;
     ctaLabel: string;
-    imageSrc?: string;
+    /** public/assets/imgs/solutions/{fintech|government|healthcare}.png */
+    imageSrc: string;
   };
   challengeSolution: {
     challenge: {
@@ -53,6 +54,7 @@ export const SOLUTIONS_CONFIG: Record<SolutionType, SolutionsPageConfig> = {
       description:
         "Experience peace of mind with intelligent, automated cybersecurity that adapts to your needs. We protect your digital assets so you can focus on growth.",
       ctaLabel: "Get Demo",
+      imageSrc: "/assets/imgs/solutions/fintech.png",
     },
     challengeSolution: {
       challenge: {
@@ -93,85 +95,159 @@ export const SOLUTIONS_CONFIG: Record<SolutionType, SolutionsPageConfig> = {
       ],
     },
   },
+  /* Figma 864:6704 — Government / Public Sector */
   "public-sectors": {
-    title: "Public Sectors",
+    title: "Government & Public Sector",
     hero: {
-      title: "Public Sectors",
+      title: "Government & Public Sector",
       description:
-        "Secure citizen data and critical infrastructure with WhiteHawk. Meet federal and state compliance requirements while defending against advanced threats.",
+        "Defend citizen services and critical infrastructure with one platform. Align to FISMA, NIST, and FedRAMP while giving every program the same real-time picture of risk.",
       ctaLabel: "Get Demo",
+      imageSrc: "/assets/imgs/solutions/government.png",
     },
     challengeSolution: {
       challenge: {
         title: "The Challenge",
         items: [
-          { text: "Strict compliance mandates (FISMA, FedRAMP) with limited resources", icon: "target" },
-          { text: "Legacy systems increasing vulnerability surface", icon: "lightning" },
-          { text: "Sensitive citizen data requiring zero-trust protection", icon: "lock" },
-          { text: "Slow procurement cycles delaying security modernization", icon: "clock" },
-          { text: "Fragmented visibility across departments and agencies", icon: "documents" },
+          {
+            text: "FISMA and NIST SP 800-53 demand continuous evidence—spreadsheets and point tools don’t scale.",
+            icon: "documents",
+          },
+          {
+            text: "Legacy systems and decades of technical debt leave gaps attackers already know how to exploit.",
+            icon: "clock",
+          },
+          {
+            text: "Citizen PII and mission-critical services must stay available and trustworthy under constant scrutiny.",
+            icon: "lock",
+          },
+          {
+            text: "Nation-state and ransomware campaigns target public infrastructure and shared service providers.",
+            icon: "lightning",
+          },
+          {
+            text: "Siloed tools across bureaus, contractors, and cloud tenants make it hard to see one true risk posture.",
+            icon: "target",
+          },
         ],
       },
       solution: {
         title: "The White Hawk Solution",
         items: [
-          { title: "Centralized Ops", description: "Unified security view across agencies", icon: "dashboard" },
-          { title: "Offensive Security", description: "Continuous vulnerability assessment", icon: "lightning" },
-          { title: "Defensive Security (SOC)", description: "24/7 monitoring for critical assets", icon: "lock" },
-          { title: "GRC Modules", description: "Compliance mapping for FISMA and FedRAMP", icon: "report" },
-          { title: "Asset Management", description: "Complete inventory of government assets", icon: "data" },
+          {
+            title: "Unified command view",
+            description: "One dashboard for security operations, findings, and compliance status across environments.",
+            icon: "dashboard",
+          },
+          {
+            title: "Continuous offensive assurance",
+            description: "Automated and guided testing so configuration drift and critical vulns surface before adversaries do.",
+            icon: "lightning",
+          },
+          {
+            title: "24/7 defensive coverage",
+            description: "SOC-ready monitoring, alerting, and response workflows aligned to public-sector runbooks.",
+            icon: "lock",
+          },
+          {
+            title: "GRC built for FISMA & FedRAMP",
+            description: "Control mapping, evidence collection, and reporting that match how auditors and ATO teams work.",
+            icon: "report",
+          },
+          {
+            title: "Authoritative asset inventory",
+            description: "Discover and classify every system—on-prem, cloud, and contractor-hosted—that touches mission data.",
+            icon: "data",
+          },
         ],
       },
     },
     benefits: {
-      sectionTitle: "The Benefits",
-      sectionSubtitle: "Measurable impact within the first 90 days",
+      sectionTitle: "Outcomes that matter to public missions",
+      sectionSubtitle: "Less manual evidence work, faster decisions, stronger citizen trust",
       items: [
-        { value: "100%", title: "Compliance Readiness", description: "Audit Preparation", icon: "eye" },
-        { value: "2x", title: "Faster Assessment", description: "Scan Cycle Time", icon: "lightning" },
-        { value: "50%", title: "Reduced Manual Reviews", description: "Evidence Collection", icon: "clock" },
-        { value: "24/7", title: "Continuous Protection", description: "Threat Detection", icon: "infinity" },
+        { value: "100%", title: "ATO-ready traceability", description: "Evidence tied to controls", icon: "eye" },
+        { value: "2×", title: "Faster risk reviews", description: "Shared data, one workflow", icon: "lightning" },
+        { value: "50%", title: "Less manual collection", description: "Automated GRC evidence", icon: "clock" },
+        { value: "24/7", title: "Always-on visibility", description: "Critical systems covered", icon: "infinity" },
       ],
     },
   },
+  /* Figma 864:6861 — Healthcare */
   "healthcare-organizations": {
     title: "Healthcare Organizations",
     hero: {
       title: "Healthcare Organizations",
       description:
-        "Protect patient data and meet HIPAA requirements with WhiteHawk. Secure PHI, medical devices, and cloud systems while maintaining clinical workflows.",
+        "Keep patient care running while you harden PHI, medical devices, and cloud. WhiteHawk ties HIPAA-ready controls to real-time visibility—without slowing clinicians down.",
       ctaLabel: "Get Demo",
+      imageSrc: "/assets/imgs/solutions/healthcare.png",
     },
     challengeSolution: {
       challenge: {
         title: "The Challenge",
         items: [
-          { text: "HIPAA compliance requiring strict access controls and audit trails", icon: "target" },
-          { text: "Connected medical devices creating new attack surfaces", icon: "lightning" },
-          { text: "Third-party vendors with varying security postures", icon: "lock" },
-          { text: "Ransomware targeting healthcare with critical uptime demands", icon: "clock" },
-          { text: "PHI scattered across EHR, imaging, and ancillary systems", icon: "documents" },
+          {
+            text: "HIPAA and breach rules require provable access control, audit trails, and BA oversight—manual processes break under volume.",
+            icon: "lock",
+          },
+          {
+            text: "IoMT, bedside devices, and vendor-managed systems multiply entry points most inventories never see.",
+            icon: "lightning",
+          },
+          {
+            text: "Ransomware and downtime directly threaten patient safety; recovery windows are measured in minutes, not days.",
+            icon: "target",
+          },
+          {
+            text: "PHI lives across EHRs, imaging, labs, SaaS, and backups—fragmented tools hide where data actually flows.",
+            icon: "documents",
+          },
+          {
+            text: "Security teams are lean; proving readiness for OCR, payers, and boards steals time from real defense.",
+            icon: "clock",
+          },
         ],
       },
       solution: {
         title: "The White Hawk Solution",
         items: [
-          { title: "Centralized Ops", description: "Single pane for all security and compliance", icon: "dashboard" },
-          { title: "Offensive Security", description: "Continuous penetration testing", icon: "lightning" },
-          { title: "Defensive Security (SOC)", description: "24/7 monitoring for PHI and systems", icon: "lock" },
-          { title: "GRC Modules", description: "HIPAA and HITRUST compliance automation", icon: "report" },
-          { title: "Asset Management", description: "Discover and secure all connected devices", icon: "data" },
+          {
+            title: "Clinical-aware operations hub",
+            description: "One place for alerts, vulns, and compliance tasks so IT, security, and privacy share the same truth.",
+            icon: "dashboard",
+          },
+          {
+            title: "Offensive testing for care environments",
+            description: "Prioritize exploitable issues in networks, apps, and cloud that touch PHI and connected devices.",
+            icon: "lightning",
+          },
+          {
+            title: "Always-on defensive monitoring",
+            description: "Detect anomalous access and lateral movement across systems that store or transmit patient data.",
+            icon: "lock",
+          },
+          {
+            title: "HIPAA-aligned GRC",
+            description: "Map safeguards to HIPAA (and HITRUST where you need it), with evidence that survives audits.",
+            icon: "report",
+          },
+          {
+            title: "Full-spectrum asset discovery",
+            description: "Find unmanaged devices and shadow SaaS so nothing with PHI sits outside your control set.",
+            icon: "data",
+          },
         ],
       },
     },
     benefits: {
-      sectionTitle: "The Benefits",
-      sectionSubtitle: "Measurable impact within the first 90 days",
+      sectionTitle: "Why healthcare teams choose WhiteHawk",
+      sectionSubtitle: "Stronger posture without disrupting care delivery",
       items: [
-        { value: "100%", title: "PHI Visibility", description: "Data Coverage", icon: "eye" },
-        { value: "4x", title: "Faster Breach Detection", description: "MTTD Improvement", icon: "lightning" },
-        { value: "70%", title: "Faster Compliance", description: "Audit Preparation", icon: "clock" },
-        { value: "24/7", title: "Always-On Protection", description: "Patient Safety", icon: "infinity" },
+        { value: "100%", title: "PHI touchpoint coverage", description: "Know where data lives", icon: "eye" },
+        { value: "4×", title: "Faster mean-time-to-detect", description: "Earlier containment", icon: "lightning" },
+        { value: "70%", title: "Less audit prep time", description: "Evidence on demand", icon: "clock" },
+        { value: "24/7", title: "Patient-safe monitoring", description: "Always watching", icon: "infinity" },
       ],
     },
   },

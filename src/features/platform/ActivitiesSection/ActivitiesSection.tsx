@@ -1,15 +1,33 @@
 "use client";
 
-import type { ActivityItem } from "../../config";
+import Image from "next/image";
+import type { ActivityItem, PlatformType } from "../config";
 import styles from "./ActivitiesSection.module.scss";
 
+/** Max sectionN.png available per platform folder (defensive has 5; assets has 3). */
+const MAX_SECTION: Record<PlatformType, number> = {
+  offensive: 6,
+  defensive: 5,
+  grc: 7,
+  "asset-management": 3,
+};
+
+function sectionSrc(imageDir: string, platformType: PlatformType, index: number): string {
+  const n = Math.min(index + 1, MAX_SECTION[platformType]);
+  return `${imageDir}/section${n}.png`;
+}
+
 interface ActivitiesSectionProps {
+  platformType: PlatformType;
+  imageDir: string;
   sectionTitle: string;
   sectionSubtitle?: string;
   items: ActivityItem[];
 }
 
 export function ActivitiesSection({
+  platformType,
+  imageDir,
   sectionTitle,
   sectionSubtitle,
   items,
@@ -33,7 +51,19 @@ export function ActivitiesSection({
               <p className={styles.rowDescription}>{item.description}</p>
             </div>
             <div className={styles.media}>
-              <div className={styles.imagePlaceholder} aria-hidden />
+              <div className={styles.imageFrame}>
+                <Image
+                  src={sectionSrc(imageDir, platformType, index)}
+                  alt=""
+                  width={640}
+                  height={400}
+                  className={styles.rowImage}
+                  sizes="(max-width: 900px) 100vw, 50vw"
+                  loading={index < 1 ? "eager" : "lazy"}
+                  fetchPriority={index < 1 ? "high" : "low"}
+                  decoding="async"
+                />
+              </div>
             </div>
           </div>
         ))}

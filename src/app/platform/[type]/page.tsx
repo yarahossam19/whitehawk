@@ -1,5 +1,10 @@
 import { notFound } from "next/navigation";
-import { PlatformPage, getPlatformConfig, PLATFORM_TYPES } from "@/features/platform";
+import {
+  PlatformPage,
+  getPlatformConfig,
+  PLATFORM_TYPES,
+  type PlatformType,
+} from "@/features/platform";
 
 export function generateStaticParams() {
   return PLATFORM_TYPES.map((type) => ({ type }));
@@ -13,7 +18,7 @@ export default async function PlatformVariantPage({
   const { type } = await params;
   const config = getPlatformConfig(type);
   if (!config) notFound();
-  return <PlatformPage config={config} />;
+  return <PlatformPage platformType={type as PlatformType} config={config} />;
 }
 
 export async function generateMetadata({
@@ -27,5 +32,9 @@ export async function generateMetadata({
   return {
     title: `${config.title} | WhiteHawk Platform`,
     description: config.hero.subtitle,
+    openGraph: {
+      title: `${config.title} | WhiteHawk`,
+      description: config.hero.subtitle,
+    },
   };
 }

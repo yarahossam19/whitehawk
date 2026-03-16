@@ -2,16 +2,15 @@
 
 import Image from "next/image";
 import styles from "./LeadershipSection.module.scss";
-import leader1 from "@/../public/assets/icons/investors/investor1.svg";
-import leader2 from "@/../public/assets/icons/investors/investor2.svg";
-
+import ceo from "@/../public/assets/imgs/ceo.png";
+import cto from "@/../public/assets/imgs/cto.png";
 const LEADERS = [
   {
     id: "youssef",
     name: "Youssef S. Ghoniem",
     watermark: "LEADER",
     bio: "Visionary architect behind the platform. With 10 years in offensive security, Youssef realized the industry needed a bridge between chaos and structure.",
-    image: leader1,
+    image: ceo,
     alt: "Youssef S. Ghoniem",
     align: "left" as const,
   },
@@ -20,7 +19,7 @@ const LEADERS = [
     name: "Mohamed Mamdouh",
     watermark: "BUILDER",
     bio: "Operational mastermind. Mohamed ensures that every feature we build translates into real-world efficiency for our partners and clients.",
-    image: leader2,
+    image: cto,
     alt: "Mohamed Mamdouh",
     align: "right" as const,
   },

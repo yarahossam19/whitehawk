@@ -1,0 +1,221 @@
+// Match Figma 864:7560 — How Partners Engage
+.section {
+  background: rgba(224, 230, 235, 0.25);
+  padding: clamp(80px, 12vw, 200px) 24px;
+}
+
+.inner {
+  max-width: 1232px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: clamp(64px, 10vw, 150px);
+}
+
+.title {
+  font-family: Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(28px, 3.5vw, 36px);
+  line-height: 40px;
+  color: var(--primary-900, #003859);
+  margin: 0 0 16px;
+}
+
+.subtitle {
+  font-family: Arial, sans-serif;
+  font-size: clamp(17px, 2vw, 20px);
+  line-height: 28px;
+  color: var(--text-secondary, #52697a);
+  margin: 0 auto;
+  max-width: 632px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 48px 64px;
+  max-width: 1070px;
+  margin: 0 auto;
+}
+
+.leftCol {
+  flex: 0 1 496px;
+  display: flex;
+  flex-direction: column;
+  gap: 96px;
+  text-align: left;
+}
+
+.textBlock {
+  display: block;
+  width: 100%;
+  padding: 0 0 0 24px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  opacity: 0.3;
+  transition: opacity 0.25s ease;
+}
+
+.textBlockActive {
+  opacity: 1;
+}
+
+.textBlockHead {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.iconCircle {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-900, #003859);
+  background: transparent;
+  transition: background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+}
+
+.iconCircleActive {
+  background: var(--primary-900, #003859);
+  color: #ffffff;
+  box-shadow:
+    0 0 12px rgba(0, 58, 87, 0.12),
+    0 0 8px rgba(0, 58, 87, 0.24),
+    0 0 4px rgba(0, 58, 87, 0.5);
+}
+
+.iconImg {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  display: block;
+}
+
+/* Dark circle behind icon — show asset as white */
+.iconImgActive {
+  filter: brightness(0) invert(1);
+}
+
+.textTitle {
+  font-family: Arial, sans-serif;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 36px;
+  color: var(--primary-900, #003859);
+}
+
+.textBody {
+  font-family: Arial, sans-serif;
+  font-size: 18px;
+  line-height: 29.25px;
+  color: var(--text-secondary, #52697a);
+  margin: 0;
+  padding-left: 64px;
+  max-width: 423px;
+}
+
+.diagramWrap {
+  position: relative;
+  flex-shrink: 0;
+  width: min(387px, 100%);
+  aspect-ratio: 1;
+  max-width: 387px;
+}
+
+.diagram {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.arcMuted {
+  stroke: #e0e6eb;
+}
+
+.arcBlue {
+  stroke: #02a1ff;
+
+  transition: stroke-dashoffset 0.95s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.nodeDot {
+  fill: #859cad;
+}
+
+.nodeDotActive {
+  fill: #02a1ff;
+
+}
+
+.nodeHit {
+  fill: transparent;
+  stroke: none;
+}
+
+.centerCard {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 96px;
+  height: 96px;
+  background: #e0e6eb;
+  border-radius: 10px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.centerBtn {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-900, #003859);
+  border-radius: 10px;
+}
+
+.centerBtn:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.centerIcon {
+  width: 40px;
+  height: 40px;
+}
+
+@media (max-width: 900px) {
+  .row {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .leftCol {
+    width: 100%;
+    gap: 48px;
+  }
+
+  .textBody {
+    padding-left: 0;
+    max-width: none;
+  }
+
+  .textBlock {
+    padding-left: 0;
+  }
+}

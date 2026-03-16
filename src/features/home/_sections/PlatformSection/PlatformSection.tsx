@@ -9,6 +9,8 @@ import grc from "@/../public/assets/icons/navbar/GRC.svg";
 import assetManagement from "@/../public/assets/icons/navbar/Asset Management.svg";
 import bg from "@/../public/assets/imgs/platform-bg.png";
 import greenShield from "@/../public/assets/icons/green-shield.svg";
+import { OptimizedDashboardVideo } from "./OptimizedDashboardVideo";
+
 const FEATURES = [
   { label: "Offensive Security", icon: offensive },
   { label: "Defensive Security", icon: defensive },
@@ -45,7 +47,7 @@ export function PlatformSection() {
         <div className={styles.right}>
           <div className={styles.dashboardFrame}>
             <div className={styles.dashboardPlaceholder}>
-              <span className={styles.placeholderText}>Dashboard</span>
+              <OptimizedDashboardVideo />
             </div>
             <div className={styles.badge}>
               <span className={styles.badgeIcon}><Image src={greenShield} alt="" width={25} height={25} /></span>

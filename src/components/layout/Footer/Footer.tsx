@@ -5,6 +5,15 @@ import Link from "next/link";
 import styles from "./Footer.module.scss";
 import whitehawkLogo from "@/../public/assets/icons/logo/whitehawk-logo.svg";
 
+const CERTIFICATE_BADGES: { path: string; label: string }[] = [
+  { path: "/assets/icons/certificates/colored-certificate1.svg", label: "ISO 27001" },
+  { path: "/assets/icons/certificates/colored-certificate2.svg", label: "ISO 9001:2015" },
+  { path: "/assets/icons/certificates/colored-certificate3.svg", label: "SOC 2" },
+  { path: "/assets/icons/certificates/colored-certificate4.svg", label: "CREST" },
+  { path: "/assets/icons/certificates/colored-certificate5.svg", label: "PCI DSS" },
+  { path: "/assets/icons/certificates/colored-certificate6.svg", label: "GDPR" },
+];
+
 function XIcon({ className }: { className?: string }) {
   return (
     <svg className={className} width="23" height="28" viewBox="0 0 23 28" fill="none" aria-hidden>
@@ -34,6 +43,7 @@ export function Footer() {
     <footer className={styles.footer}>
       <div className={styles.container}>
         <div className={styles.main}>
+          {/* Tablet/desktop: first column. Mobile: moves below badges, centered */}
           <div className={styles.brand}>
             <Link href="/" className={styles.logoLink}>
               <Image src={whitehawkLogo} alt="WhiteHawk" width={169} height={24} />
@@ -54,48 +64,62 @@ export function Footer() {
             </div>
           </div>
 
-          <nav className={styles.navColumn}>
-            <p className={styles.navHeading}>Home</p>
-            <ul className={styles.navList}>
-              <li><Link href="/partners">Partners</Link></li>
-              <li><Link href="#">Pricing</Link></li>
-              <li><Link href="/company">Company</Link></li>
-              <li><Link href="#">Resources</Link></li>
-            </ul>
-          </nav>
+          {/* Mobile: two columns (general | platform). Tablet+: display:contents → three nav columns in row */}
+          <div className={styles.navRowMobile}>
+            <nav className={styles.navColumn} aria-label="General">
+              <ul className={styles.navList}>
+                <li><Link href="/">Home</Link></li>
+                <li><Link href="/partners">Partners</Link></li>
+                <li><Link href="#">Pricing</Link></li>
+                <li><Link href="/company">Company</Link></li>
+                <li><Link href="#">Resources</Link></li>
+              </ul>
+            </nav>
+            <nav className={styles.navColumn} aria-label="Platform">
+              <p className={styles.navHeading}>Platform</p>
+              <ul className={styles.navList}>
+                <li><Link href="/platform/offensive">Offensive</Link></li>
+                <li><Link href="/platform/defensive">Defensive</Link></li>
+                <li><Link href="/platform/grc">GRC</Link></li>
+                <li><Link href="/platform/asset-management">Asset Management</Link></li>
+              </ul>
+            </nav>
+          </div>
 
-          <nav className={styles.navColumn}>
-            <p className={styles.navHeading}>Platform</p>
-            <ul className={styles.navList}>
-              <li><Link href="#">Offensive</Link></li>
-              <li><Link href="#">Defensive</Link></li>
-              <li><Link href="#">GRC</Link></li>
-              <li><Link href="#">Asset Management</Link></li>
-            </ul>
-          </nav>
-
-          <nav className={styles.navColumn}>
+          <nav className={`${styles.navColumn} ${styles.navSolutions}`} aria-label="Solutions">
             <p className={styles.navHeading}>Solutions</p>
             <ul className={styles.navList}>
-              <li><Link href="#">Fintech Company</Link></li>
-              <li><Link href="#">Public Sectors</Link></li>
-              <li><Link href="#">Healthcare Organizations</Link></li>
+              <li><Link href="/solutions/fintech-company">Fintech Company</Link></li>
+              <li><Link href="/solutions/public-sectors">Public Sectors</Link></li>
+              <li><Link href="/solutions/healthcare-organizations">Healthcare Organizations</Link></li>
             </ul>
           </nav>
 
           <div className={styles.badges} aria-label="Certifications">
-            {["ISO 27001", "ISO 9001:2015", "SOC 2", "CREST", "PCI DSS", "GDPR"].map((title) => (
-              <div key={title} className={styles.badge} title={title} role="img" aria-label={title} />
+            {CERTIFICATE_BADGES.map(({ path, label }) => (
+              <div key={label} className={styles.badge} title={label}>
+                {/* eslint-disable-next-line @next/next/no-img-element -- public SVG; mask URL was unreliable */}
+                <img
+                  src={path}
+                  alt=""
+                  width={59}
+                  height={58}
+                  className={styles.badgeImg}
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span className={styles.visuallyHidden}>{label}</span>
+              </div>
             ))}
           </div>
         </div>
 
         <div className={styles.bottom}>
-          <p className={styles.copyright}>© 2026 WhiteHawk Security. All rights reserved.</p>
           <div className={styles.legal}>
             <Link href="/privacy">Privacy Policy</Link>
             <Link href="#">Terms of Service</Link>
           </div>
+          <p className={styles.copyright}>© 2026 WhiteHawk Security. All rights reserved.</p>
         </div>
       </div>
     </footer>

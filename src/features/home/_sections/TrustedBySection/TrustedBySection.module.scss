@@ -1,11 +1,19 @@
 .section {
   padding: 56px 24px 64px;
   background: #ffffff;
+
+  @media (max-width: 1024px) {
+    padding: 48px var(--pad-tablet) 56px;
+  }
 }
 
 .container {
   max-width: 1200px;
   margin: 0 auto;
+
+  @media (max-width: 1024px) {
+    max-width: var(--content-max-tablet);
+  }
 }
 
 .subtitle {

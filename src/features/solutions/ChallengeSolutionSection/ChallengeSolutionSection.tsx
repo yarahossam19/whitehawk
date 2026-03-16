@@ -1,6 +1,6 @@
 "use client";
 
-import type { ChallengeItem, SolutionItem } from "../../config";
+import type { ChallengeItem, SolutionItem } from "../config";
 import styles from "./ChallengeSolutionSection.module.scss";
 import { ChallengeIcon, ChallengeTitleIcon, SolutionIcon } from "./ChallengeSolutionIcons";
 

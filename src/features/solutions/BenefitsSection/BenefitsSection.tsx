@@ -1,6 +1,6 @@
 "use client";
 
-import type { BenefitItem } from "../../config";
+import type { BenefitItem } from "../config";
 import styles from "./BenefitsSection.module.scss";
 import { BenefitIcon } from "./BenefitsIcons";
 

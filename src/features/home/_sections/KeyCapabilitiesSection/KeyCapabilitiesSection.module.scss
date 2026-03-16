@@ -5,16 +5,29 @@
   border-radius: 16px;
   margin: 0 24px 80px;
 
-  @media (max-width: 900px) {
-    margin-left: 16px;
-    margin-right: 16px;
-    padding: 40px 16px 56px;
+  @media (max-width: 1024px) {
+    margin-left: var(--pad-tablet);
+    margin-right: var(--pad-tablet);
+    padding: 40px 20px 56px;
+    max-width: calc(var(--content-max-tablet) + 48px);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  @media (max-width: 600px) {
+    margin-left: var(--pad-mobile);
+    margin-right: var(--pad-mobile);
+    padding: 32px 14px 48px;
   }
 }
 
 .container {
   max-width: 1200px;
   margin: 0 auto;
+
+  @media (max-width: 1024px) {
+    max-width: 738px;
+  }
 }
 
 .eyebrow {
@@ -32,11 +45,16 @@
   font-family: Arial, sans-serif;
   font-weight: 700;
   font-size: clamp(24px, 3.5vw, 36px);
-  line-height: 1.25;
+  line-height: 1.2;
   letter-spacing: -0.01em;
   color: var(--primary-900, #003859);
   text-align: center;
   margin: 0 0 16px;
+
+  @media (max-width: 1024px) {
+    font-size: clamp(22px, 4.5vw, 36px);
+    line-height: 1.15;
+  }
 }
 
 .description {

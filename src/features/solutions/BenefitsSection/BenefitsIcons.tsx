@@ -1,6 +1,6 @@
 "use client";
 
-import type { BenefitItem } from "../../config";
+import type { BenefitItem } from "../config";
 
 const BENEFIT_ICONS: Record<BenefitItem["icon"], React.ReactNode> = {
   eye: (

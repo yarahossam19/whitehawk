@@ -1,0 +1,209 @@
+/* Section shell */
+.section {
+  background: #f8fafb;
+  padding: 80px 24px 96px;
+  border-top: 1px solid rgba(0, 56, 89, 0.06);
+
+  @media (max-width: 600px) {
+    padding: 56px var(--pad-mobile, 20px) 72px;
+  }
+}
+
+.inner {
+  max-width: 1200px;
+  margin: 0 auto;
+
+  @media (max-width: 1024px) {
+    max-width: var(--content-max-tablet, 834px);
+  }
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.title {
+  font-family: Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(28px, 4vw, 36px);
+  line-height: 1.2;
+  color: #003859;
+  margin: 0 0 16px;
+}
+
+.subtitle {
+  font-family: Arial, sans-serif;
+  font-size: 18px;
+  line-height: 28px;
+  color: #52697a;
+  margin: 0 auto;
+  max-width: 731px;
+}
+
+/* ——— Tabs: match ChallengesSection exactly ——— */
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 21px;
+}
+
+.tab {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 400;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #3d4f5c;
+  background: #ffffff;
+  border: 1px solid #e0e6eb;
+  padding: 13px 19px;
+  border-radius: 300px;
+  cursor: pointer;
+  transition: color 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+
+  &:hover {
+    background: #f0f9ff;
+    border-color: #c2cdd6;
+  }
+}
+
+.tabActive {
+  color: #ffffff;
+  background: #003859;
+  border-color: #003859;
+
+  &:hover {
+    background: #002439;
+    border-color: #002439;
+  }
+}
+
+.tabIconWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.tabIconSvg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  display: block;
+}
+
+/* Inactive: icon follows tab text color; active: white strokes */
+.tab:not(.tabActive) .tabIconSvg {
+  color: #3d4f5c;
+}
+
+.tabActive .tabIconSvg {
+  color: #ffffff;
+}
+
+/* ——— Card: Figma 751:8669 ——— */
+.card {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 49px;
+  border: 1px solid #c2cdd6;
+  box-shadow:
+    0 20px 25px rgba(226, 232, 240, 0.5),
+    0 8px 10px rgba(226, 232, 240, 0.5);
+  max-width: 896px;
+  margin: 0 auto;
+}
+
+.cardIcon {
+  flex-shrink: 0;
+  width: 96px;
+  height: 96px;
+  border-radius: 16px;
+  background: #e7f6ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #003859;
+}
+
+.cardIconSvg {
+  width: 40px;
+  height: 40px;
+}
+
+.cardBody {
+  min-width: 0;
+  flex: 1;
+}
+
+.cardTitle {
+  font-family: Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(22px, 3vw, 30px);
+  line-height: 1.2;
+  color: #003859;
+  margin: 0 0 16px;
+}
+
+.cardText {
+  font-family: Arial, sans-serif;
+  font-size: 18px;
+  line-height: 1.625;
+  color: #52697a;
+  margin: 0 0 16px;
+  max-width: 662px;
+}
+
+.bullets {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.bullets li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  color: #52697a;
+}
+
+.bulletDot {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #02a1ff;
+}
+
+@media (max-width: 700px) {
+  .card {
+    flex-direction: column;
+    padding: 32px 24px;
+    gap: 24px;
+  }
+
+  .tabs {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .tab {
+    justify-content: center;
+  }
+}

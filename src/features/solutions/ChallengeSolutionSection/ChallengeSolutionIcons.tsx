@@ -1,6 +1,6 @@
 "use client";
 
-import type { ChallengeItem, SolutionItem } from "../../config";
+import type { ChallengeItem, SolutionItem } from "../config";
 
 const CHALLENGE_ICONS: Record<ChallengeItem["icon"], React.ReactNode> = {
   target: (

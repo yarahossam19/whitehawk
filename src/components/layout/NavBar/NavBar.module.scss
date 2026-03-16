@@ -7,7 +7,13 @@
   display: flex;
   width: 100%;
   justify-content: center;
-  padding: 16px;
+  padding: 18px 16px;
+  pointer-events: none;
+
+  .nav,
+  .drawerRoot {
+    pointer-events: auto;
+  }
 }
 
 .nav {
@@ -16,6 +22,8 @@
   max-width: 1300px;
   align-items: center;
   justify-content: space-between;
+  /* Reserve row height so font swap / hydration does not shift layout */
+  min-height: 52px;
   border-radius: 32px;
   border: 1px solid var(--nav-border);
   background: var(--nav-bg);
@@ -25,8 +33,33 @@
   backdrop-filter: blur(12.5px);
   container-type: inline-size;
   container-name: nav;
+
   @media (max-width: 1180px) {
     padding: 12px 20px;
+  }
+
+  /* Figma tablet / mobile pill (1310:9475 / 1309:7401) */
+  @media (max-width: 900px) {
+    max-width: 786px;
+    width: calc(100% - 40px);
+    margin: 0 auto;
+    padding: 8px 16px;
+    border-radius: 24px;
+    border: 1px solid rgba(196, 224, 255, 0.3);
+    background: rgba(196, 224, 255, 0.41);
+    box-shadow:
+      inset 4px 4px 4px 0 rgba(255, 255, 255, 0.25),
+      inset -4px -4px 4px 0 rgba(207, 207, 207, 0.25);
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    grid-template-rows: auto;
+    align-items: center;
+    justify-content: stretch;
+  }
+
+  @media (max-width: 480px) {
+    width: calc(100% - 40px);
+    max-width: none;
   }
 }
 
@@ -37,10 +70,27 @@
   object-fit: contain;
 }
 
+.logoWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+
+  @media (max-width: 900px) {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: center;
+  }
+}
+
 .links {
   display: flex;
   align-items: center;
   gap: 4px;
+
+  @media (max-width: 900px) {
+    display: none;
+  }
 }
 
 .navLink {
@@ -57,6 +107,7 @@
   color: black;
   text-decoration: none;
   transition: background-color 0.2s;
+
   @media (max-width: 1180px) {
     font-size: 16px;
     padding: 8px 8px;
@@ -75,19 +126,19 @@
   position: relative;
 }
 
-.signInButton, .requestDemoButton {
+.signInButton,
+.requestDemoButton {
   @media (max-width: 1180px) {
     font-size: 14px;
     padding: 7px 12px;
   }
 }
 
-
 .dropdownTrigger {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0px;
+  gap: 0;
   border-radius: 8px;
   padding: 8px 16px;
   font-weight: 500;
@@ -99,10 +150,12 @@
   border: none;
   cursor: pointer;
   transition: background-color 0.2s;
+
   @media (max-width: 1180px) {
     font-size: 16px;
     padding: 8px 8px;
   }
+
   &:hover {
     background-color: var(--ui-colored-bg);
   }
@@ -140,7 +193,6 @@
     0 32px 19px 0 rgba(0, 0, 0, 0.05),
     0 14px 14px 0 rgba(0, 0, 0, 0.09),
     0 4px 8px 0 rgba(0, 0, 0, 0.1);
-
 }
 
 .menuInner {
@@ -197,12 +249,16 @@
   display: flex;
   align-items: center;
   gap: 24px;
+
   @media (max-width: 1180px) {
     gap: 12px;
   }
+
+  @media (max-width: 900px) {
+    display: none;
+  }
 }
 
-// ----- Mobile (< 1100px): show only logo + collapse icon -----
 .menuToggle {
   display: none;
   align-items: center;
@@ -215,59 +271,83 @@
   cursor: pointer;
   color: var(--primary-900);
 
-  @media (max-width: 901px) {
+  @media (max-width: 900px) {
     display: flex;
+    grid-column: 1;
+    grid-row: 1;
   }
 }
 
-.logoWrap {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-}
-
-@media (max-width: 901px) {
-  .links,
-  .actions {
-    display: none;
-  }
-}
-
-// ----- Mobile overlay menu (Figma: Menu Interface - Tablet View) -----
-.mobileOverlay {
+// ----- Drawer: backdrop + panel from right -----
+.drawerRoot {
   display: none;
   position: fixed;
   inset: 0;
-  z-index: 100;
-  background: rgba(171, 224, 255, 0.8);
-  backdrop-filter: blur(10px);
-  overflow: auto;
+  z-index: 1001;
 
-  @media (max-width: 1099px) {
-    &.open {
-      display: block;
-    }
+  @media (max-width: 900px) {
+    display: block;
+    visibility: hidden;
+    pointer-events: none;
   }
 }
 
-.mobileOverlayInner {
-  width: 100%;
-  max-width: 834px;
-  margin: 0 auto;
-  min-height: 100%;
-  padding: 16px 20px 40px;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 16px;
-  position: relative;
-  padding-top: 72px; // space for close button
+.drawerRootOpen {
+  visibility: visible;
+  pointer-events: auto;
 }
 
-.mobileClose {
+.drawerBackdrop {
+  position: absolute;
+  inset: 0;
+  border: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 36, 57, 0.35);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.drawerRootOpen .drawerBackdrop {
+  opacity: 1;
+}
+
+.drawerPanel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  max-height: 100dvh;
+  width: min(462px, 100%);
+  background: #e7f6ff;
+  box-shadow: 0 0 16px 2px rgba(0, 0, 0, 0.25);
+  border-radius: 20px 0 0 20px;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+  will-change: transform;
+
+  @media (max-width: 480px) {
+    width: 100%;
+    border-radius: 0;
+  }
+}
+
+.drawerPanelOpen {
+  transform: translateX(0);
+}
+
+.drawerClose {
   position: absolute;
   top: 16px;
-  right: 20px;
+  right: 16px;
+  z-index: 2;
   width: 50px;
   height: 50px;
   padding: 0;
@@ -278,57 +358,69 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 2;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background: rgba(171, 224, 255, 0.5);
+  }
 }
 
-.mobileNav {
+.drawerScroll {
+  flex: 1;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 72px 20px 40px;
   display: flex;
   flex-direction: column;
   gap: 16px;
-  flex: 1;
+  align-items: stretch;
   justify-content: center;
+  min-height: 0;
 }
 
-.mobileNavItem {
+/* Keep same font sizes as before */
+.drawerNavItem {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 4px 16px;
+  padding: 4px 20px;
   border-radius: 8px;
   text-decoration: none;
   color: var(--primary-800, #003859);
   font-size: clamp(20px, 6vw, 32px);
   line-height: 1.2;
   font-weight: 400;
-  background: none;
-  border: none;
-  cursor: pointer;
   width: 100%;
   text-align: left;
+  box-sizing: border-box;
   transition: background-color 0.2s;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
 
   &:hover {
-    background: rgba(171, 224, 255, 0.5);
-  }
-
-  &.active {
-    background: var(--primary-light);
+    background: rgba(171, 224, 255, 0.45);
   }
 }
 
-.mobileNavItemWithSub {
+.drawerNavActive {
+  background: #abe0ff;
+}
+
+.drawerGroup {
+  display: flex;
   flex-direction: column;
-  align-items: stretch;
-  gap: 0;
-  padding: 0;
+  width: 100%;
 }
 
-.mobileNavItemTrigger {
+.drawerNavTrigger {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: 4px 16px;
+  padding: 4px 20px;
   border-radius: 8px;
   background: none;
   border: none;
@@ -338,27 +430,28 @@
   line-height: 1.2;
   font-weight: 400;
   text-align: left;
+  font-family: inherit;
   transition: background-color 0.2s;
 
   &:hover {
-    background: rgba(171, 224, 255, 0.5);
+    background: rgba(171, 224, 255, 0.35);
   }
 }
 
-.mobileSubNav {
+.drawerSubNav {
   background: #f3f5f7;
   border-radius: 8px;
-  padding: 8px 16px 8px 16px;
+  padding: 8px 20px;
   margin-top: 0;
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-.mobileSubNavLink {
+.drawerSubLink {
   display: block;
   padding: 2px 0;
-  color: var(--text-secondary);
+  color: var(--text-secondary, #52697a);
   font-size: clamp(18px, 4vw, 24px);
   line-height: 1.2;
   text-decoration: none;
@@ -366,5 +459,23 @@
 
   &:hover {
     color: var(--primary-900);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drawerPanel {
+    transition: none;
+  }
+
+  .drawerBackdrop {
+    transition: none;
+  }
+
+  .drawerRootOpen .drawerBackdrop {
+    opacity: 1;
+  }
+
+  .drawerPanelOpen {
+    transform: translateX(0);
   }
 }

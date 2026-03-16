@@ -46,6 +46,10 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  /* Figma tablet ~834px content width */
+  --content-max-tablet: 786px;
+  --pad-tablet: 24px;
+  --pad-mobile: 16px;
 }
 
 @theme inline {
@@ -172,5 +176,7 @@
   }
   html {
     @apply font-sans;
+    /* Avoid horizontal CLS when scrollbar toggles (e.g. modal) */
+    scrollbar-gutter: stable;
   }
 }

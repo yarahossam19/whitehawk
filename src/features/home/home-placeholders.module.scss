@@ -1,0 +1,6 @@
+/* Reserves space while dynamic sections load — avoids desktop CLS */
+.hold {
+  width: 100%;
+  box-sizing: border-box;
+  contain: layout style;
+}

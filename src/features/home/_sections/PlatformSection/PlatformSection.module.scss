@@ -4,6 +4,14 @@
   justify-content: center;
   padding: 95px 24px 100px;
   overflow: hidden;
+
+  @media (max-width: 1024px) {
+    padding: 64px var(--pad-tablet) 72px;
+  }
+
+  @media (max-width: 600px) {
+    padding: 48px var(--pad-mobile) 56px;
+  }
 }
 
 .bgPattern {
@@ -15,17 +23,20 @@
 
 .container {
   position: relative;
-
+  max-width: 1312px;
   margin: 0 auto;
   display: flex;
   gap: 64px;
   align-items: center;
   justify-content: center;
+  padding: 0 var(--pad-tablet);
+  box-sizing: border-box;
 
   @media (max-width: 1024px) {
     flex-direction: column;
     align-items: stretch;
     gap: 48px;
+    max-width: var(--content-max-tablet);
   }
 }
 
@@ -117,18 +128,9 @@
 .dashboardPlaceholder {
   width: 100%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.9);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: rgba(255, 255, 255, 0.92);
   border-radius: 15px;
   overflow: hidden;
-}
-
-.placeholderText {
-  font-family: Arial, sans-serif;
-  font-size: 18px;
-  color: var(--text-secondary, #52697a);
 }
 
 .badge {
@@ -184,4 +186,12 @@
 }
 .button{
   width:220px;
+  @media (max-width: 1024px) {
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    display: flex;
+    order:1;
+    box-sizing: border-box;
+  }
 }

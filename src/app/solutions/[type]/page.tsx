@@ -27,5 +27,9 @@ export async function generateMetadata({
   return {
     title: `${config.title} | WhiteHawk Solutions`,
     description: config.hero.description,
+    openGraph: {
+      title: `${config.title} | WhiteHawk`,
+      description: config.hero.description,
+    },
   };
 }

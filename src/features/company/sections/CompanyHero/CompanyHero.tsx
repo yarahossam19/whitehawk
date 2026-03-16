@@ -20,20 +20,21 @@ export function CompanyHero() {
         </div>
       </div>
       <div className={styles.inner}>
-        <div className={styles.bodyText}>
-          <span className={styles.bodyBar} />
-          <p className={styles.bodyLine}>One platform to manage</p>
-          <p className={styles.bodyLineStrong}>Cybersecurity Operations</p>
-          <p className={styles.bodyLineStrong}>Risk</p>
-          <p className={styles.bodyLineStrong}>Compliance &amp; Assets</p>
-          <p className={styles.bodyLineSmall}>in a clear, structured way.</p>
-        </div>
-        <div className={styles.headlineLines}>
-          <span className={styles.simplify}>SIMPLIFY</span>
-          <span className={styles.cyber}>CYBERSECURITY.</span>
+        <div className={styles.bottomCluster}>
+          <div className={styles.bodyText}>
+            <span className={styles.bodyBar} aria-hidden />
+            <p className={styles.bodyLine}>One platform to manage</p>
+            <p className={styles.bodyLineStrong}>Cybersecurity Operations</p>
+            <p className={styles.bodyLineStrong}>Risk</p>
+            <p className={styles.bodyLineStrong}>Compliance &amp; Assets</p>
+            <p className={styles.bodyLineSmall}>in a clear, structured way.</p>
+          </div>
+          <div className={styles.headlineLines}>
+            <span className={styles.simplify}>SIMPLIFY</span>
+            <span className={styles.cyber}>CYBERSECURITY.</span>
+          </div>
         </div>
       </div>
     </section>
   );
 }
-

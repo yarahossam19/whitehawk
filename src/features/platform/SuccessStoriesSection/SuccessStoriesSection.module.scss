@@ -1,6 +1,6 @@
 .section {
-  background: linear-gradient(180deg, #003859 0%, #00B0FE 119.12%);
-  padding: 60px 24px 0px 24px;
+  background: linear-gradient(180deg, #003859 0%, #00b0fe 119.12%);
+  padding: 60px 24px 0;
   overflow: hidden;
 }
 
@@ -14,7 +14,7 @@
   font-weight: 700;
   font-size: clamp(28px, 3.5vw, 40px);
   line-height: 1.2;
-  color: #FFFFFF;
+  color: #ffffff;
   text-align: center;
   margin: 0 0 48px;
 }
@@ -30,16 +30,43 @@
 }
 
 .card {
-  border-radius: 14px 14px 0px 0px;
-border-top: 1px solid #C2CDD6;
-border-left: 1px solid #C2CDD6;
-border-right: 1px solid #C2CDD6;
-border-bottom: none;
-background: rgba(0, 0, 0, 0.25);
-
-  height: 250px;
+  border-radius: 14px 14px 0 0;
+  border-top: 1px solid #c2cdd6;
+  border-left: 1px solid #c2cdd6;
+  border-right: 1px solid #c2cdd6;
+  border-bottom: none;
+  @media (max-width: 768px) {
+    border-radius: 14px 14px 0 0;
+    border-top: 1px solid #c2cdd6;
+    border-left: 1px solid #c2cdd6;
+    border-right: 1px solid #c2cdd6;
+    border-bottom: 1px solid #c2cdd6;
+    border-radius: 14px;
+    margin-bottom: 5px;
+  }
+  background: rgba(0, 0, 0, 0.25);
+  min-height: 250px;
   padding: 32px 40px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+/* First card: company in accent / “colored” */
+.cardFirst .company {
+  color: #abe0ff;
+  font-weight: 700;
+}
+
+/* Second card: company in lighter blue */
+.cardSecond .company {
+  color: #c8ecff;
+  font-weight: 700;
+}
+
+.company {
+  font-family: Arial, sans-serif;
+  font-size: 18px;
+  line-height: 1.3;
+  margin: 0 0 16px;
 }
 
 .result {
@@ -47,14 +74,19 @@ background: rgba(0, 0, 0, 0.25);
   font-weight: 700;
   font-size: 20px;
   line-height: 1.4;
-  color: #FFFFFF;
-  margin: 0 0 12px;
+  color: #ffffff;
+  margin: 0 0 16px;
 }
 
-.company {
+.quote {
   font-family: Arial, sans-serif;
-  font-size: 16px;
-  line-height: 1.4;
-  color: #FFFFFF;
+  font-size: 15px;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.82);
   margin: 0;
+}
+
+.quoteMark {
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 1.1em;
 }
