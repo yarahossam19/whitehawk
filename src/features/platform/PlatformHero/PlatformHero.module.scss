@@ -1,13 +1,12 @@
 .hero {
   position: relative;
   background: white;
-  padding: 150px 24px 100px;
+  padding: 200px 24px 100px;
   overflow: hidden;
-  height: 80vh;
-
-  @media (max-width: 700px) {
-    padding: 100px 0 48px;
-    height: auto;
+  min-height: min(891px, 92vh);
+align-items: center;
+  @media (max-width: 850px) {
+    padding: 100px 24px 64px;
     min-height: auto;
   }
 }

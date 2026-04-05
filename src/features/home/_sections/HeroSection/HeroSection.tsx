@@ -1,18 +1,33 @@
 "use client";
-
-import Image from "next/image";
+ 
+import { useEffect, useMemo, useRef, useState } from "react";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import { useDemoModal } from "@/contexts/DemoModalContext";
 import styles from "./HeroSection.module.scss";
-import whitehawkLogo from "@/../public/assets/icons/logo/whitehawk-logo.svg";
-import router from "@/../public/assets/icons/Router.svg";
-import shield from "@/../public/assets/icons/Shield.svg";
-import list from "@/../public/assets/icons/List.svg";
-import hacker from "@/../public/assets/icons/Hacker.svg";
 export function HeroSection() {
   const { openDemoModal } = useDemoModal();
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const [isActive, setIsActive] = useState(false);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    const obs = new IntersectionObserver(
+      ([entry]) => setIsActive(entry.isIntersecting),
+      { root: null, threshold: 0.15, rootMargin: "200px 0px 200px 0px" },
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  const prefersReducedMotion = useMemo(() => {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  }, []);
+
   return (
-    <section className={styles.hero}>
+    <section ref={sectionRef} className={styles.hero}>
       <div className={styles.heroContent}>
         <div className={styles.heroLeft}>
           <h1 className={styles.heroTitle}>
@@ -29,9 +44,38 @@ export function HeroSection() {
           </div>
         </div>
         <div className={styles.heroRight}>
-          <HeroDiagram />
+          <HeroRightVideo isActive={isActive} prefersReducedMotion={prefersReducedMotion} />
         </div>
       </div>
+    </section>
+  );
+}
+
+function HeroRightVideo({
+  isActive,
+  prefersReducedMotion,
+}: {
+  isActive: boolean;
+  prefersReducedMotion: boolean;
+}) {
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const src = isActive && !prefersReducedMotion ? "/assets/videos/V-website%20Hero%202.webm" : undefined;
+
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+
+    if (!isActive || prefersReducedMotion) {
+      v.pause();
+      return;
+    }
+
+    const p = v.play();
+    if (p && typeof p.catch === "function") p.catch(() => {});
+  }, [isActive, prefersReducedMotion]);
+
+  if (prefersReducedMotion) {
+    return (
       <div className={styles.cloudWrap} aria-hidden>
         <svg
           viewBox="0 0 1200 200"
@@ -54,7 +98,6 @@ export function HeroSection() {
               </feMerge>
             </filter>
           </defs>
-          {/* Cloud edge - varying heights (tall / medium / short peaks), tapers at sides */}
           <path
             className={styles.cloud}
             fill="url(#hero-cloud-gradient)"
@@ -69,79 +112,21 @@ export function HeroSection() {
           />
         </svg>
       </div>
-    </section>
-  );
-}
+    );
+  }
 
-function HeroDiagram() {
-
-        const cx = 50;
-        const cy = 50;
-        const corner = 20; // L-shaped bend distance from center
-        const top = { x: 50, y: 12 };
-        const right = { x: 88, y: 50 };
-        const bottom = { x: 50, y: 88 };
-        const left = { x: 12, y: 50 };
-        const iconSize = 80;
-
-        // L-shaped paths: bend perpendicular first, then to icon (no cross)
-        const pathTop = `M ${cx} ${cy} L ${cx + corner} ${cy} L ${cx + corner} ${top.y} L ${top.x} ${top.y}`;
-        const pathRight = `M ${cx} ${cy} L ${cx} ${cy - corner} L ${right.x} ${cy - corner} L ${right.x} ${right.y}`;
-        const pathBottom = `M ${cx} ${cy} L ${cx - corner} ${cy} L ${cx - corner} ${bottom.y} L ${bottom.x} ${bottom.y}`;
-        const pathLeft = `M ${cx} ${cy} L ${cx} ${cy + corner} L ${left.x} ${cy + corner} L ${left.x} ${left.y}`;
-
-        const pathTopBack = `M ${top.x} ${top.y} L ${cx + corner} ${top.y} L ${cx + corner} ${cy} L ${cx} ${cy}`;
-        const pathRightBack = `M ${right.x} ${right.y} L ${right.x} ${cy - corner} L ${cx} ${cy - corner} L ${cx} ${cy}`;
-        const pathBottomBack = `M ${bottom.x} ${bottom.y} L ${cx - corner} ${bottom.y} L ${cx - corner} ${cy} L ${cx} ${cy}`;
-        const pathLeftBack = `M ${left.x} ${left.y} L ${left.x} ${cy + corner} L ${cx} ${cy + corner} L ${cx} ${cy}`;
-      
-        const motionPath = `
-          ${pathTop} ${pathTopBack}
-          ${pathRight} ${pathRightBack}
-          ${pathBottom} ${pathBottomBack}
-          ${pathLeft} ${pathLeftBack}
-        `;
-      
-       
   return (
-    <div className={styles.diagramWrap}>
-      <svg className={styles.diagramSvg} viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
-        <defs>
-          <path id="hero-diagram-path" d={motionPath} fill="none" />
-        </defs>
-        {/* Curved dashed lines: center -> icon (like first image) */}
-        <path d={pathTop} className={styles.diagramLine} fill="none" />
-        <path d={pathRight} className={styles.diagramLine} fill="none" />
-        <path d={pathBottom} className={styles.diagramLine} fill="none" />
-        <path d={pathLeft} className={styles.diagramLine} fill="none" />
-        <circle r="2" fill="#abe0ff" className={styles.diagramDot}>
-          <animateMotion dur="15s" repeatCount="indefinite" path={motionPath} />
-        </circle>
-      </svg>
-      <div className={styles.diagramCenter}>
-        <Image
-          src={whitehawkLogo}
-          alt=""
-          width={420}
-          height={200}
-          priority
-          fetchPriority="high"
-          sizes="(max-width: 700px) 280px, 420px"
-        />
-      </div>
-      {/* Icons at cardinal positions: top, right, bottom, left */}
-      <div className={styles.diagramIcon} style={{ top: "12%", left: "45%", transform: "translate(-50%, -50%)" }}>
-        <Image src={router} alt="" width={iconSize} height={iconSize} />
-      </div>
-      <div className={styles.diagramIcon} style={{ top: "57%", right: "20%", transform: "translate(50%, -50%)" }}>
-        <Image src={list} alt="" width={iconSize} height={iconSize} />
-      </div>
-      <div className={styles.diagramIcon} style={{ bottom: "12%", left: "55%", transform: "translate(-50%, 50%)" }}>
-        <Image src={shield} alt="" width={iconSize} height={iconSize} />
-      </div>
-      <div className={styles.diagramIcon} style={{ top: "43%", left: "21%", transform: "translate(-50%, -50%)" }}>
-        <Image src={hacker} alt="" width={iconSize} height={iconSize} />
-      </div>
+    <div className={styles.heroVideoWrap} aria-hidden>
+      <video
+        ref={videoRef}
+        className={styles.heroVideo}
+        muted
+        loop
+        playsInline
+        preload={isActive ? "metadata" : "none"}
+      >
+        {src ? <source src={src} type="video/webm" /> : null}
+      </video>
     </div>
   );
 }

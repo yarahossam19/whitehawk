@@ -1,4 +1,5 @@
-import { HeroButtons, HeroDiagramSlot } from "./_sections/HeroSection/HeroInteractive";
+import { HeroButtons } from "./_sections/HeroSection/HeroInteractive";
+import { HeroVideoIsland } from "./HeroVideoIsland";
 import styles from "./_sections/HeroSection/HeroSection.module.scss";
 
 /**
@@ -21,7 +22,7 @@ export function HeroShell() {
           </p>
           <HeroButtons />
         </div>
-        <HeroDiagramSlot />
+        <HeroVideoIsland />
       </div>
       <div className={styles.cloudWrap} aria-hidden>
         <svg

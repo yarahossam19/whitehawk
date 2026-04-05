@@ -35,10 +35,10 @@ export function PlatformPage({ platformType, config }: PlatformPageProps) {
         items={config.activities.items}
       />
       <MissionSection cards={config.mission.cards} />
-      <SuccessStoriesSection
+      {/* <SuccessStoriesSection
         sectionTitle={config.successStories.sectionTitle}
         items={config.successStories.items}
-      />
+      /> */}
     </main>
   );
 }

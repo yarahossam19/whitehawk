@@ -27,18 +27,19 @@ export function ChallengeSolutionSection({ challenge, solution }: ChallengeSolut
         <div className={styles.challengeCard}>
           <CornerDots />
           <div className={styles.cardTitleWrap}>
-            <span className={styles.challengeTitleIcon} aria-hidden>
-              <ChallengeTitleIcon />
-            </span>
+         
             <h3 className={styles.cardTitle}>{challenge.title}</h3>
           </div>
           <ul className={styles.challengeList}>
             {challenge.items.map((item) => (
-              <li key={item.text} className={styles.challengeItem}>
+              <li key={item.title} className={styles.challengeItem}>
                 <span className={styles.challengeItemIcon} aria-hidden>
                   <ChallengeIcon icon={item.icon} />
                 </span>
-                <span>{item.text}</span>
+                <div>
+                  <h4 className={styles.challengeItemTitle}>{item.title}</h4>
+                  <p className={styles.challengeItemDescription}>{item.description}</p>
+                </div>
               </li>
             ))}
           </ul>

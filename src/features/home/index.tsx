@@ -13,8 +13,7 @@ const HomeBelowFold = dynamic(() => import("./HomeBelowFold"), {
 });
 
 /**
- * Hero: server HTML (h1/subtitle/cloud) + tiny client islands → fast mobile LCP.
- * Below-fold: one dynamic chunk → one network + lower TBT than 10× dynamic().
+ * Hero: server HTML + small client islands. Below-fold: one dynamic chunk.
  */
 export default function Home() {
   return (

@@ -26,7 +26,7 @@ export function PackedBySection() {
   return (
     <section className={styles.section}>
       <div className={styles.container}>
-        <h2 className={styles.title}>Packed by</h2>
+        <h2 className={styles.title}>Backed by</h2>
         <div className={styles.logos} role="list">
           {INVESTORS.map(({ src, alt }, i) => (
             <div key={i} className={styles.logoWrap} role="listitem">

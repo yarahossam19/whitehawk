@@ -10,9 +10,7 @@ import { PackedBySection } from "./_sections/PackedBySection/PackedBySection";
 import { CTASection } from "./_sections/CTASection/CTASection";
 
 /**
- * Single chunk for all below-fold sections:
- * - One network round-trip instead of 10 (mobile)
- * - One parse/hydration wave → lower TBT vs many dynamic() boundaries
+ * Single below-fold chunk: predictable layout, no deferred “part B” hydration gaps.
  */
 export default function HomeBelowFold() {
   return (
@@ -21,8 +19,8 @@ export default function HomeBelowFold() {
       <DisconnectedSection />
       <PlatformSection />
       <TrustedBySection />
-      <WhyChooseSection />
       <KeyCapabilitiesSection />
+      <WhyChooseSection />
       <ChallengesSection />
       <TestimonialsSection />
       <PackedBySection />

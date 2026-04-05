@@ -38,10 +38,10 @@ function ClientFlipCard({
     <div className={styles.card}>
       <div className={styles.cardInner}>
         <div className={styles.cardFace} data-face="front">
-          <Image src={icon1} alt="" width={120} height={80} />
+          <Image src={icon1} alt="" width={160} height={50} sizes="160px" />
         </div>
         <div className={styles.cardFace} data-face="back">
-          <Image src={icon2} alt="" width={120} height={80} />
+          <Image src={icon2} alt="" width={160} height={50} sizes="160px" />
         </div>
       </div>
     </div>

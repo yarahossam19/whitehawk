@@ -71,11 +71,7 @@ export function RequestDemoModal() {
               <label className={styles.label} htmlFor="fullName">
                 Full Name <span className={styles.required}>*</span>
               </label>
-              <InputText
-                id="fullName"
-                placeholder="Abdo Salem"
-                className={styles.input}
-              />
+              <InputText id="fullName" placeholder="Abdo Salem" className={styles.input} />
             </div>
             <div className={styles.field}>
               <label className={styles.label} htmlFor="email">
@@ -110,11 +106,7 @@ export function RequestDemoModal() {
               />
             </div>
           </div>
-          <Button
-            type="submit"
-            label="Submit"
-            className={styles.submitBtn}
-          />
+          <Button type="submit" label="Submit" className={styles.submitBtn} />
         </form>
       </div>
     </Dialog>

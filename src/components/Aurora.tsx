@@ -16,6 +16,9 @@ uniform float uAmplitude;
 uniform vec3 uColorStops[3];
 uniform vec2 uResolution;
 uniform float uBlend;
+uniform float uRampAxis; /* 0 = x, 1 = y */
+uniform float uRampFlip; /* 0 = normal, 1 = reversed */
+uniform float uStrength;
 
 out vec4 fragColor;
 
@@ -91,12 +94,14 @@ void main() {
   colors[2] = ColorStop(uColorStops[2], 1.0);
   
   vec3 rampColor;
-  COLOR_RAMP(colors, uv.x, rampColor);
+  float factor = mix(uv.x, uv.y, step(0.5, uRampAxis));
+  factor = mix(factor, 1.0 - factor, step(0.5, uRampFlip));
+  COLOR_RAMP(colors, factor, rampColor);
   
   float height = snoise(vec2(uv.x * 2.0 + uTime * 0.1, uTime * 0.25)) * 0.5 * uAmplitude;
   height = exp(height);
   height = (uv.y * 2.0 - height + 0.2);
-  float intensity = 0.6 * height;
+  float intensity = uStrength * height;
   
   float midPoint = 0.20;
   float auroraAlpha = smoothstep(midPoint - uBlend * 0.5, midPoint + uBlend * 0.5, intensity);
@@ -113,10 +118,47 @@ interface AuroraProps {
   blend?: number;
   time?: number;
   speed?: number;
+  rampAxis?: "x" | "y";
+  rampFlip?: boolean;
+  strength?: number;
+}
+
+const DEFAULT_STOPS = ["#5227FF", "#7CFF67", "#5227FF"] as const;
+
+function normalizeStops(input: unknown): [string, string, string] {
+  const arr = Array.isArray(input) ? input : [];
+  const out: string[] = [];
+  for (const v of arr) {
+    if (typeof v !== "string") continue;
+    const s = v.trim();
+    // OGL Color supports hex strings like #RGB or #RRGGBB reliably.
+    if (/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/.test(s)) out.push(s);
+  }
+  while (out.length < 3) out.push(DEFAULT_STOPS[out.length] ?? DEFAULT_STOPS[2]);
+  return [out[0]!, out[1]!, out[2]!];
+}
+
+function toColorTriples(stops: [string, string, string]) {
+  return stops.map((hex) => {
+    try {
+      const c = new Color(hex);
+      return [c.r, c.g, c.b];
+    } catch {
+      const c = new Color(DEFAULT_STOPS[0]);
+      return [c.r, c.g, c.b];
+    }
+  });
 }
 
 export default function Aurora(props: AuroraProps) {
-  const { colorStops = ['#5227FF', '#7cff67', '#5227FF'], amplitude = 1.0, blend = 0.5 } = props;
+  const {
+    colorStops = DEFAULT_STOPS as unknown as string[],
+    amplitude = 1.0,
+    blend = 0.5,
+    rampAxis = "x",
+    rampFlip = false,
+    strength = 0.6,
+  } = props;
   const propsRef = useRef<AuroraProps>(props);
   propsRef.current = props;
 
@@ -155,10 +197,7 @@ export default function Aurora(props: AuroraProps) {
       delete geometry.attributes.uv;
     }
 
-    const colorStopsArray = colorStops.map(hex => {
-      const c = new Color(hex);
-      return [c.r, c.g, c.b];
-    });
+    const colorStopsArray = toColorTriples(normalizeStops(colorStops));
 
     program = new Program(gl, {
       vertex: VERT,
@@ -168,7 +207,10 @@ export default function Aurora(props: AuroraProps) {
         uAmplitude: { value: amplitude },
         uColorStops: { value: colorStopsArray },
         uResolution: { value: [ctn.offsetWidth, ctn.offsetHeight] },
-        uBlend: { value: blend }
+        uBlend: { value: blend },
+        uRampAxis: { value: rampAxis === "y" ? 1 : 0 },
+        uRampFlip: { value: rampFlip ? 1 : 0 },
+        uStrength: { value: strength },
       }
     });
 
@@ -183,11 +225,11 @@ export default function Aurora(props: AuroraProps) {
         program.uniforms.uTime.value = time * speed * 0.1;
         program.uniforms.uAmplitude.value = propsRef.current.amplitude ?? 1.0;
         program.uniforms.uBlend.value = propsRef.current.blend ?? blend;
-        const stops = propsRef.current.colorStops ?? colorStops;
-        program.uniforms.uColorStops.value = stops.map((hex: string) => {
-          const c = new Color(hex);
-          return [c.r, c.g, c.b];
-        });
+        program.uniforms.uRampAxis.value = (propsRef.current.rampAxis ?? rampAxis) === "y" ? 1 : 0;
+        program.uniforms.uRampFlip.value = (propsRef.current.rampFlip ?? rampFlip) ? 1 : 0;
+        program.uniforms.uStrength.value = propsRef.current.strength ?? strength;
+        const stops = normalizeStops(propsRef.current.colorStops ?? colorStops);
+        program.uniforms.uColorStops.value = toColorTriples(stops);
         renderer.render({ scene: mesh });
       }
     };
@@ -198,9 +240,10 @@ export default function Aurora(props: AuroraProps) {
     return () => {
       cancelAnimationFrame(animateId);
       window.removeEventListener('resize', resize);
-      if (ctn && gl.canvas.parentNode === ctn) {
-        ctn.removeChild(gl.canvas);
-      }
+      // Guard against StrictMode/double-unmount or container teardown
+      try {
+        gl.canvas.remove();
+      } catch {}
       gl.getExtension('WEBGL_lose_context')?.loseContext();
     };
   }, [amplitude]);

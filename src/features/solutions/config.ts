@@ -1,7 +1,9 @@
 export type SolutionType = "fintech-company" | "public-sectors" | "healthcare-organizations";
 
 export interface ChallengeItem {
-  text: string;
+
+  title: string;
+  description: string;
   icon: "target" | "lightning" | "lock" | "clock" | "documents";
 }
 
@@ -60,15 +62,17 @@ export const SOLUTIONS_CONFIG: Record<SolutionType, SolutionsPageConfig> = {
       challenge: {
         title: "The Challenge",
         items: [
-          { text: "Limited visibility into rapidly expanding cloud infrastructure", icon: "target" },
-          { text: "Manual penetration testing slowing down release cycles", icon: "lightning" },
+          { title: "Limited visibility into rapidly expanding cloud infrastructure", description: "Limited visibility into rapidly expanding cloud infrastructure", icon: "target" },
+          { title: "Manual penetration testing slowing down release cycles", description: "Manual penetration testing slowing down release cycles", icon: "lightning" },
           {
-            text: "High regulatory pressure (SOC 2, PCI DSS) requiring constant evidence",
+            title: "High regulatory pressure (SOC 2, PCI DSS) requiring constant evidence",
+            description: "High regulatory pressure (SOC 2, PCI DSS) requiring constant evidence",
             icon: "lock",
           },
-          { text: "Time-consuming audits draining engineering resources", icon: "clock" },
+          { title: "Time-consuming audits draining engineering resources", description: "Time-consuming audits draining engineering resources", icon: "clock" },
           {
-            text: "Scattered data across multiple tools making incident response difficult",
+            title: "Scattered data across multiple tools making incident response difficult",
+            description: "Scattered data across multiple tools making incident response difficult",
             icon: "documents",
           },
         ],
@@ -110,23 +114,28 @@ export const SOLUTIONS_CONFIG: Record<SolutionType, SolutionsPageConfig> = {
         title: "The Challenge",
         items: [
           {
-            text: "FISMA and NIST SP 800-53 demand continuous evidence—spreadsheets and point tools don’t scale.",
+            title: "FISMA and NIST SP 800-53 demand continuous evidence",
+            description: "Spreadsheets and point tools don’t scale for continuous evidence and compliance.",
             icon: "documents",
           },
           {
-            text: "Legacy systems and decades of technical debt leave gaps attackers already know how to exploit.",
+            title: "Legacy systems and technical debt create exploitable gaps",
+            description: "Decades of drift and outdated systems expand the attack surface.",
             icon: "clock",
           },
           {
-            text: "Citizen PII and mission-critical services must stay available and trustworthy under constant scrutiny.",
+            title: "Citizen PII and services must stay available and trustworthy",
+            description: "Availability and trust are mandatory under constant oversight and scrutiny.",
             icon: "lock",
           },
           {
-            text: "Nation-state and ransomware campaigns target public infrastructure and shared service providers.",
+            title: "Nation-state and ransomware campaigns target public infrastructure",
+            description: "Attackers focus on shared services and critical systems across agencies.",
             icon: "lightning",
           },
           {
-            text: "Siloed tools across bureaus, contractors, and cloud tenants make it hard to see one true risk posture.",
+            title: "Siloed tools prevent one true risk posture",
+            description: "Bureaus, contractors, and cloud tenants fragment visibility and ownership.",
             icon: "target",
           },
         ],
@@ -188,23 +197,33 @@ export const SOLUTIONS_CONFIG: Record<SolutionType, SolutionsPageConfig> = {
         title: "The Challenge",
         items: [
           {
-            text: "HIPAA and breach rules require provable access control, audit trails, and BA oversight—manual processes break under volume.",
+            title: "HIPAA demands provable access control and audit trails",
+            description:
+              "Breach rules and BA oversight require evidence; manual processes break under volume.",
             icon: "lock",
           },
           {
-            text: "IoMT, bedside devices, and vendor-managed systems multiply entry points most inventories never see.",
+            title: "IoMT and vendor systems multiply unseen entry points",
+            description:
+              "Bedside devices and vendor-managed systems expand risk beyond what inventories capture.",
             icon: "lightning",
           },
           {
-            text: "Ransomware and downtime directly threaten patient safety; recovery windows are measured in minutes, not days.",
+            title: "Ransomware and downtime directly threaten patient safety",
+            description:
+              "Recovery windows are measured in minutes, not days, across clinical operations.",
             icon: "target",
           },
           {
-            text: "PHI lives across EHRs, imaging, labs, SaaS, and backups—fragmented tools hide where data actually flows.",
+            title: "PHI is scattered across systems and backups",
+            description:
+              "EHRs, imaging, labs, SaaS, and backups fragment visibility into how PHI actually flows.",
             icon: "documents",
           },
           {
-            text: "Security teams are lean; proving readiness for OCR, payers, and boards steals time from real defense.",
+            title: "Lean teams lose time proving readiness",
+            description:
+              "OCR, payers, and boards require proof; manual reporting steals time from real defense.",
             icon: "clock",
           },
         ],

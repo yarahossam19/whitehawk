@@ -1,8 +1,16 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  compiler: {
+    removeConsole:
+      process.env.NODE_ENV === "production"
+        ? { exclude: ["error", "warn"] }
+        : false,
+  },
   experimental: {
     optimizePackageImports: ["lucide-react", "primereact"],
+    /** Inlines App Router CSS in production → fewer render-blocking `<link>` requests (Lighthouse). */
+    inlineCss: true,
   },
   images: {
     formats: ["image/avif", "image/webp"],

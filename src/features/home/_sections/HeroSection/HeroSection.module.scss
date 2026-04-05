@@ -1,12 +1,11 @@
 .hero {
   position: relative;
-  background: linear-gradient(to bottom, #002439 97%, #ffffff 100%);
-  min-height: 80vh;
+  background: linear-gradient(to bottom, #003859 97%, #ffffff 100%);
+  min-height: min(891px, 92vh);
   overflow: hidden;
 
-  /* Shorter hero on mobile → less main-thread layout work + faster LCP paint */
-  @media (max-width: 700px) {
-    min-height: min(72vh, 620px);
+  @media (max-width: 850px) {
+    min-height: auto;
   }
 }
 
@@ -19,13 +18,13 @@
   gap: 48px;
   max-width: 1300px;
   margin: 0 auto;
-  padding: 150px 24px 100px;
+  padding: 200px 24px 100px;
   box-sizing: border-box;
 
 
 
-  @media (max-width: 700px) {
-    padding: 120px var(--pad-mobile) 64px;
+  @media (max-width: 850px) {
+    padding: 100px 24px 64px;
     gap: 24px;
     flex-direction: column;
     align-items: center;
@@ -116,9 +115,14 @@
   @media (max-width: 1024px) {
     width: 100%;
     min-width: 0;
-    max-width: 310px;
+    max-width: 400px;
     margin: 0 auto;
     order: 0;
+  }
+
+  @media (max-width: 850px) {
+    /* Stack: video above copy */
+    order: -1;
   }
 
   @media (max-width: 600px) {
@@ -227,6 +231,49 @@
   width: 150%;
   height: 240px;
   z-index: 1;
+}
+
+.heroVideoWrap {
+  position: relative;
+  width: 100%;
+  max-width: 720px;
+  height: 350px;
+  aspect-ratio: 14 / 10;
+  overflow: hidden;
+  background: #003859;
+  contain: content;
+  @media (max-width: 850px) {
+    /* Stack: video above copy */
+height: auto;
+  }
+}
+
+.heroVideoStill {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 120px;
+  background: #003859;
+}
+
+.heroVideo {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 102%;
+  height: 100%;
+  object-fit: cover;
+  background: transparent;
+  transform: translateX(-5%) translateY(-5%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 200ms ease;
+  will-change: opacity;
+}
+
+.heroVideoReady {
+  opacity: 1;
 }
 
 .cloudSvg {

@@ -135,8 +135,11 @@
 }
 
 .cardHero:hover .dashboardImageWrap {
-  max-height: 420px;
-  border-radius: 16px;
+  /* Reveal a bit more, not the full image */
+  max-height: 250px;
+  /* Keep only top corners rounded when expanded */
+  border-radius: 16px 16px 0 0;
+
 }
 
 .dashboardLayerLuma,

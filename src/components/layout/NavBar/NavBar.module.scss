@@ -22,6 +22,7 @@
   max-width: 1300px;
   align-items: center;
   justify-content: space-between;
+  font-family: Arial, Helvetica, sans-serif;
   /* Reserve row height so font swap / hydration does not shift layout */
   min-height: 52px;
   border-radius: 32px;
@@ -224,6 +225,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 8px;
+  font-family: Arial, sans-serif;
   background: var(--ui-colored-bg);
 }
 
@@ -237,12 +239,14 @@
   font-size: 20px;
   line-height: 24px;
   color: black;
+  font-family: Arial, sans-serif;
 }
 
 .dropdownItemDesc {
   font-size: 16px;
   line-height: 20px;
   color: var(--text-secondary);
+  font-family: Arial, sans-serif;
 }
 
 .actions {
@@ -270,7 +274,7 @@
   background: none;
   cursor: pointer;
   color: var(--primary-900);
-
+  font-family: Arial, sans-serif;
   @media (max-width: 900px) {
     display: flex;
     grid-column: 1;
@@ -398,7 +402,7 @@
   border: none;
   background: none;
   cursor: pointer;
-  font-family: inherit;
+  font-family: Arial, Helvetica, sans-serif;
 
   &:hover {
     background: rgba(171, 224, 255, 0.45);
@@ -430,7 +434,7 @@
   line-height: 1.2;
   font-weight: 400;
   text-align: left;
-  font-family: inherit;
+  font-family: Arial, sans-serif;
   transition: background-color 0.2s;
 
   &:hover {

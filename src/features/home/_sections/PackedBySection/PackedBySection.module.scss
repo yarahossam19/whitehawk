@@ -27,24 +27,11 @@
 }
 
 .logos {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  display: flex;
+  flex-wrap: wrap;
   gap: 24px 32px;
   align-items: center;
-  justify-items: center;
-
-  @media (max-width: 1024px) {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
-  @media (max-width: 768px) {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px 24px;
-  }
-
-  @media (max-width: 480px) {
-    grid-template-columns: 1fr;
-  }
+  justify-content: center;
 }
 
 .logoWrap {

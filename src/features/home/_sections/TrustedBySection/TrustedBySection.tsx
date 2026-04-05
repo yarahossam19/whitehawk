@@ -10,8 +10,8 @@ import cert5 from "@/../public/assets/icons/certificates/colored-certificate5.sv
 import cert6 from "@/../public/assets/icons/certificates/colored-certificate6.svg";
 
 const CERTIFICATES = [
-  { src: cert1, alt: "ISO 27001 Certified" },
   { src: cert2, alt: "Certified ISO 9001:2015 Company" },
+  { src: cert1, alt: "ISO 27001 Certified" },
   { src: cert3, alt: "AICPA SOC 2" },
   { src: cert4, alt: "CREST" },
   { src: cert5, alt: "PCI DSS Compliant" },
@@ -28,7 +28,7 @@ export function TrustedBySection() {
         <div className={styles.logos} role="list">
           {CERTIFICATES.map(({ src, alt }) => (
             <div key={alt} className={styles.logoWrap} role="listitem">
-              <Image src={src} alt={alt} width={120} height={120} className={styles.logo} />
+              <Image src={src} alt={alt} width={140} height={100} className={styles.logo} />
             </div>
           ))}
         </div>

@@ -57,6 +57,17 @@
   height: 90px;
 }
 
+.card :global(span) {
+  height: 60px !important;
+  width: auto !important;
+}
+
+.card :global(img) {
+  height: 60px !important;
+  width: auto !important;
+  object-fit: contain;
+}
+
 .cardInner {
   position: relative;
   width: 100%;
@@ -64,6 +75,7 @@
   transform-style: preserve-3d;
   animation: flipCard 8s ease-in-out infinite;
 }
+
 
 @keyframes flipCard {
   0%,

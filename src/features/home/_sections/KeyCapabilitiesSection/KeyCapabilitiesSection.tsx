@@ -3,6 +3,8 @@
 import Image from "next/image";
 import styles from "./KeyCapabilitiesSection.module.scss";
 import offensive from "@/../public/assets/icons/navbar/Offensive.svg";
+import hacker from "@/../public/assets/icons/cards/Hacker.svg";
+import notes from "@/../public/assets/icons/cards/note.svg";
 import defensive from "@/../public/assets/icons/navbar/Defensive.svg";
 import grc from "@/../public/assets/icons/navbar/GRC.svg";
 import assetManagement from "@/../public/assets/icons/navbar/Asset Management.svg";
@@ -13,7 +15,7 @@ const CAPABILITIES = [
     title: "Offensive Security",
     description:
       "Simulate real-world attacks to identify weaknesses in your network, systems, and applications. Regularly run assessments to stay ahead of potential threats",
-    icon: offensive,
+    icon: hacker,
     iconBg: "red",
   },
   {
@@ -29,7 +31,7 @@ const CAPABILITIES = [
     title: "GRC",
     description:
       "Ensure you stay compliant with regulations like NIST, ISO, and PCI. Automate risk assessments, compliance checks, and generate audit-ready reports",
-    icon: grc,
+    icon: notes,
     iconBg: "purple",
   },
   {
