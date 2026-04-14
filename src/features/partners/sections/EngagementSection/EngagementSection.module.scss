@@ -11,7 +11,7 @@
 
 .header {
   text-align: center;
-  margin-bottom: clamp(64px, 10vw, 150px);
+
 }
 
 .title {
@@ -19,7 +19,7 @@
   font-weight: 700;
   font-size: clamp(28px, 3.5vw, 36px);
   line-height: 40px;
-  color: var(--primary-900, #003859);
+  color: #003859;
   margin: 0 0 16px;
 }
 
@@ -27,9 +27,26 @@
   font-family: Arial, sans-serif;
   font-size: clamp(17px, 2vw, 20px);
   line-height: 28px;
-  color: var(--text-secondary, #52697a);
+  color: #52697a;
   margin: 0 auto;
   max-width: 632px;
+}
+
+.scrollStage {
+  position: relative;
+  width: 100%;
+}
+
+.stickyWrap {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+  padding: clamp(24px, 4vh, 48px) 0;
+  box-sizing: border-box;
 }
 
 .row {
@@ -39,14 +56,32 @@
   gap: 48px 64px;
   max-width: 1070px;
   margin: 0 auto;
+  width: 100%;
 }
 
-.leftCol {
+.textViewport {
+  --slide-h: min(72vh, 520px);
   flex: 0 1 496px;
+  align-self: center;
+  width: 100%;
+  max-width: 496px;
+  height: var(--slide-h);
+  overflow: hidden;
+}
+
+.textTrack {
   display: flex;
   flex-direction: column;
-  gap: 96px;
-  text-align: left;
+  transition: transform 0.65s cubic-bezier(0.32, 0.72, 0, 1);
+  will-change: transform;
+}
+
+.textSlide {
+  flex: 0 0 var(--slide-h);
+  height: var(--slide-h);
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
 }
 
 .textBlock {
@@ -205,9 +240,10 @@
     align-items: center;
   }
 
-  .leftCol {
-    width: 100%;
-    gap: 48px;
+  .textViewport {
+    max-width: none;
+    flex: none;
+    align-self: stretch;
   }
 
   .textBody {
@@ -217,5 +253,12 @@
 
   .textBlock {
     padding-left: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .textTrack {
+    transition: none;
+    will-change: auto;
   }
 }

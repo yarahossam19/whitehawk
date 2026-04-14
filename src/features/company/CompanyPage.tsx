@@ -6,6 +6,7 @@ import { StoryLineSection } from "./sections/StoryLineSection/StoryLineSection";
 import { PrinciplesSection } from "./sections/PrinciplesSection/PrinciplesSection";
 import { LeadershipSection } from "./sections/LeadershipSection/LeadershipSection";
 import { TrustSection } from "./sections/TrustSection/TrustSection";
+import { CompanyCTASection } from "./sections/CompanyCTASection/CompanyCTASection";
 
 export function CompanyPage() {
   return (
@@ -16,6 +17,7 @@ export function CompanyPage() {
       <PrinciplesSection />
       <LeadershipSection />
       <TrustSection />
+      <CompanyCTASection />
     </main>
   );
 }

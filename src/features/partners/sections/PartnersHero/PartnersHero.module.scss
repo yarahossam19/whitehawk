@@ -33,7 +33,7 @@ background: linear-gradient(to bottom, #003859 97%, #ffffff 100%);
   padding: 150px 24px 100px;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(280px, 472px);
-  gap: 48px 64px;
+
   align-items: center;
   min-height: min(891px, 92vh);
   box-sizing: border-box;
@@ -103,7 +103,8 @@ background: linear-gradient(to bottom, #003859 97%, #ffffff 100%);
 
 .visual {
   position: relative;
-  height: 365px;
+  height: 400px;
+  width: 500px;
 
   overflow: hidden;
   /* Sit in the darker band so the video has no visible backing plate */
@@ -113,7 +114,7 @@ background: linear-gradient(to bottom, #003859 97%, #ffffff 100%);
 
 .videoShell {
   position: absolute;
-  inset: 0;
+  
   border-radius: inherit;
   overflow: hidden;
   /* Transparent so the aurora/base gradient shows through */
@@ -176,7 +177,7 @@ background: linear-gradient(to bottom, #003859 97%, #ffffff 100%);
 
   .visual {
     order: -1;
-    width: 70%;
+    width: 80%;
     max-width: none;
     height: auto;
     margin: 0 auto;

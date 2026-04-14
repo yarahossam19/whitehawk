@@ -12,9 +12,12 @@ const MAX_SECTION: Record<PlatformType, number> = {
   "asset-management": 3,
 };
 
+/** Bump this when replacing same-named section images to force a refetch. */
+const IMAGE_VERSION = "2026-04-14-1";
+
 function sectionSrc(imageDir: string, platformType: PlatformType, index: number): string {
-  const n = Math.min(index + 1, MAX_SECTION[platformType]);
-  return `${imageDir}/section${n}.png`;
+  const n = Math.min(index, MAX_SECTION[platformType]);
+  return `${imageDir}/sect${n}.png?v=${IMAGE_VERSION}`;
 }
 
 interface ActivitiesSectionProps {
@@ -57,6 +60,7 @@ export function ActivitiesSection({
                   alt=""
                   width={640}
                   height={400}
+                  unoptimized
                   className={styles.rowImage}
                   sizes="(max-width: 900px) 100vw, 50vw"
                   loading={index < 1 ? "eager" : "lazy"}

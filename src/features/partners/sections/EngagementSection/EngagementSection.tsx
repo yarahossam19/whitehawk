@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import styles from "./EngagementSection.module.scss";
 import sell from "@/../public/assets/icons/Sell.svg";
 import deliver from "@/../public/assets/icons/Deliver.svg";
@@ -77,7 +77,13 @@ export function EngagementSection() {
     ARC_LEN_APPROX,
   ]);
   const pathRefs = useRef<(SVGPathElement | null)[]>([null, null, null]);
+  const sectionRef = useRef<HTMLDivElement | null>(null);
+  const activeRef = useRef(0);
   const step = STEPS[active];
+
+  useEffect(() => {
+    activeRef.current = active;
+  }, [active]);
 
   useLayoutEffect(() => {
     const L: [number, number, number] = [0, 0, 0];
@@ -99,54 +105,48 @@ export function EngagementSection() {
     }
   }, []);
 
-  const animateArcIn = useCallback((arcIndex: number) => {
+  const syncStepState = useCallback((stepIndex: number) => {
     const L = lengthsRef.current;
-    setOffsets((o) => {
-      const next = [...o] as [number, number, number];
-      for (let j = 0; j < arcIndex; j++) next[j] = 0;
-      next[arcIndex] = L[arcIndex];
-      return next;
-    });
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        setOffsets((o) => {
-          const next = [...o] as [number, number, number];
-          for (let j = 0; j <= arcIndex; j++) next[j] = 0;
-          return next;
-        });
-      });
-    });
+    const nextActive = Math.max(0, Math.min(STEPS.length - 1, stepIndex));
+    setActive(nextActive);
+    setFilledCount(nextActive + 1);
+    setOffsets([0, 1, 2].map((i) => (i <= nextActive ? 0 : L[i])) as [number, number, number]);
   }, []);
 
   const onPick = useCallback(
     (stepIndex: number) => {
-      const L = lengthsRef.current;
-
-      if (filledCount === 3) {
-        setFilledCount(1);
-        setActive(stepIndex);
-        setOffsets([0, L[1], L[2]]);
-        return;
-      }
-
       if (stepIndex === active) return;
-
-      setActive(stepIndex);
-      setFilledCount((n) => {
-        const next = Math.min(3, n + 1);
-        if (next > n) {
-          const arcIndex = next - 1;
-          animateArcIn(arcIndex);
-        }
-        return next;
-      });
+      syncStepState(stepIndex);
     },
-    [active, filledCount, animateArcIn]
+    [active, syncStepState]
   );
 
-  const centerNext = useCallback(() => {
-    onPick((active + 1) % 3);
-  }, [active, onPick]);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const updateActiveFromScroll = () => {
+      const sectionEl = sectionRef.current;
+      if (!sectionEl) return;
+
+      const rect = sectionEl.getBoundingClientRect();
+      const vh = window.innerHeight || 0;
+      const scrollableDistance = Math.max(1, rect.height - vh);
+      const progress = Math.min(1, Math.max(0, -rect.top / scrollableDistance));
+      const nextStep = Math.min(STEPS.length - 1, Math.floor(progress * STEPS.length));
+
+      if (nextStep !== activeRef.current) {
+        syncStepState(nextStep);
+      }
+    };
+
+    updateActiveFromScroll();
+    window.addEventListener("scroll", updateActiveFromScroll, { passive: true });
+    window.addEventListener("resize", updateActiveFromScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", updateActiveFromScroll);
+      window.removeEventListener("resize", updateActiveFromScroll);
+    };
+  }, [syncStepState]);
 
   return (
     <section className={styles.section} aria-labelledby="engage-heading">
@@ -160,105 +160,118 @@ export function EngagementSection() {
           </p>
         </header>
 
-        <div className={styles.row}>
-          <div className={styles.leftCol}>
-            {STEPS.map((s, i) => {
-              const isActive = i === active;
-              return (
-                <button
-                  key={s.id}
-                  type="button"
-                  className={`${styles.textBlock} ${isActive ? styles.textBlockActive : ""}`}
-                  onClick={() => onPick(i)}
-                  aria-pressed={isActive}
-                >
-                  <div className={styles.textBlockHead}>
-                    <span className={`${styles.iconCircle} ${isActive ? styles.iconCircleActive : ""}`}>
-                      <Image
-                        src={ICON_SRC[i]}
-                        alt=""
-                        width={24}
-                        height={24}
-                        className={`${styles.iconImg} ${isActive ? styles.iconImgActive : ""}`}
-                      />
-                    </span>
-                    <span className={styles.textTitle}>{s.title}</span>
-                  </div>
-                  <p className={styles.textBody}>{s.body}</p>
-                </button>
-              );
-            })}
-          </div>
-
-          <div className={styles.diagramWrap}>
-            <svg className={styles.diagram} viewBox="0 0 386 386" aria-hidden>
-              {[0, 1, 2].map((i) => (
-                <path
-                  key={`g-${i}`}
-                  d={ARC_PATHS[i]}
-                  fill="none"
-                  strokeWidth={10}
-                  strokeLinecap="round"
-                  className={styles.arcMuted}
-                />
-              ))}
-              {[0, 1, 2].map((i) => (
-                <path
-                  key={`b-${i}`}
-                  ref={(el) => {
-                    pathRefs.current[i] = el;
-                  }}
-                  d={ARC_PATHS[i]}
-                  fill="none"
-                  strokeWidth={10}
-                  strokeLinecap="round"
-                  className={styles.arcBlue}
+        <div
+          ref={sectionRef}
+          className={styles.scrollStage}
+          style={{ minHeight: `calc(${STEPS.length} * 100vh)` }}
+        >
+          <div className={styles.stickyWrap}>
+            <div className={styles.row}>
+              <div className={styles.textViewport}>
+                <div
+                  className={styles.textTrack}
                   style={{
-                    strokeDasharray: dashLengths[i],
-                    strokeDashoffset: offsets[i],
+                    transform: `translateY(calc(-${active} * var(--slide-h)))`,
                   }}
-                />
-              ))}
-              {NODES.map((n, i) => {
-                const p = pt(n.deg);
-                const nodeFilled =
-                  filledCount >= 2 || (filledCount >= 1 && (i === 0 || i === 1));
-                const stepForNode = i === 0 ? 2 : i === 1 ? 0 : 1;
-                return (
-                  <g key={n.deg}>
-                    <circle
-                      cx={p.x}
-                      cy={p.y}
-                      r={18}
-                      className={styles.nodeHit}
-                      onClick={() => onPick(stepForNode)}
-                      style={{ cursor: "pointer" }}
+                >
+                  {STEPS.map((s, i) => {
+                    const isActive = i === active;
+                    return (
+                      <div key={s.id} className={styles.textSlide}>
+                        <button
+                          type="button"
+                          className={`${styles.textBlock} ${isActive ? styles.textBlockActive : ""}`}
+                          onClick={() => onPick(i)}
+                          aria-pressed={isActive}
+                        >
+                          <div className={styles.textBlockHead}>
+                            <span
+                              className={`${styles.iconCircle} ${isActive ? styles.iconCircleActive : ""}`}
+                            >
+                              <Image
+                                src={ICON_SRC[i]}
+                                alt=""
+                                width={24}
+                                height={24}
+                                className={`${styles.iconImg} ${isActive ? styles.iconImgActive : ""}`}
+                              />
+                            </span>
+                            <span className={styles.textTitle}>{s.title}</span>
+                          </div>
+                          <p className={styles.textBody}>{s.body}</p>
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className={styles.diagramWrap}>
+                <svg className={styles.diagram} viewBox="0 0 386 386" aria-hidden>
+                  {[0, 1, 2].map((i) => (
+                    <path
+                      key={`g-${i}`}
+                      d={ARC_PATHS[i]}
+                      fill="none"
+                      strokeWidth={10}
+                      strokeLinecap="round"
+                      className={styles.arcMuted}
                     />
-                    <circle
-                      cx={p.x}
-                      cy={p.y}
-                      r={11}
-                      className={nodeFilled ? styles.nodeDotActive : styles.nodeDot}
+                  ))}
+                  {[0, 1, 2].map((i) => (
+                    <path
+                      key={`b-${i}`}
+                      ref={(el) => {
+                        pathRefs.current[i] = el;
+                      }}
+                      d={ARC_PATHS[i]}
+                      fill="none"
+                      strokeWidth={10}
+                      strokeLinecap="round"
+                      className={styles.arcBlue}
+                      style={{
+                        strokeDasharray: dashLengths[i],
+                        strokeDashoffset: offsets[i],
+                      }}
                     />
-                  </g>
-                );
-              })}
-            </svg>
-            <div className={styles.centerCard}>
-              <button
-                type="button"
-                className={styles.centerBtn}
-                aria-label={`${step.title} engagement — next`}
-                onClick={centerNext}
-              >
-                <Image
-                  src={ICON_SRC[active]}
-                  alt=""
-                  width={40}
-                  height={40}
-                  className={styles.centerIcon}
-                />
-              </button>
+                  ))}
+                  {NODES.map((n, i) => {
+                    const p = pt(n.deg);
+                    const nodeFilled =
+                      filledCount >= 2 || (filledCount >= 1 && (i === 0 || i === 1));
+                    const stepForNode = i === 0 ? 2 : i === 1 ? 0 : 1;
+                    return (
+                      <g key={n.deg}>
+                        <circle
+                          cx={p.x}
+                          cy={p.y}
+                          r={18}
+                          className={styles.nodeHit}
+                          onClick={() => onPick(stepForNode)}
+                          style={{ cursor: "pointer" }}
+                        />
+                        <circle
+                          cx={p.x}
+                          cy={p.y}
+                          r={11}
+                          className={nodeFilled ? styles.nodeDotActive : styles.nodeDot}
+                        />
+                      </g>
+                    );
+                  })}
+                </svg>
+                <div className={styles.centerCard}>
+                  <div className={styles.centerBtn} aria-label={`${step.title} engagement`}>
+                    <Image
+                      src={ICON_SRC[active]}
+                      alt=""
+                      width={40}
+                      height={40}
+                      className={styles.centerIcon}
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

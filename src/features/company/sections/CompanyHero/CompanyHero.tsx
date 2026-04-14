@@ -8,9 +8,9 @@ export function CompanyHero() {
     <section className={styles.hero}>
       <div className={styles.aurora} aria-hidden>
         <Aurora
-          colorStops={["#003859", "#003859", "#E1E8EB"]}
-          amplitude={0.5}
-          blend={0.5}
+          colorStops={["#003859", "#0071B3", "#0081C2"]}
+          amplitude={0.8}
+          blend={0.4}
         />
       </div>
       <div className={styles.leftStrip}>

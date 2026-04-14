@@ -1,7 +1,7 @@
 .hero {
   position: relative;
   background: white;
-  padding: 200px 24px 100px;
+  padding: 200px 24px 0px 24px;
   overflow: hidden;
   min-height: min(891px, 92vh);
 align-items: center;
@@ -113,8 +113,7 @@ align-items: center;
   max-height: 365px;
   border-radius: 12px;
   overflow: hidden;
-  border: 1px solid rgba(0, 56, 89, 0.08);
-  box-shadow: 0 12px 40px rgba(0, 56, 89, 0.08);
+
 
   @media (max-width: 850px) {
     width: 100%;
@@ -132,6 +131,6 @@ align-items: center;
 .heroImg {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
 }

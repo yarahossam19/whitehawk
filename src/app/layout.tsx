@@ -24,6 +24,11 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
+  icons: {
+    icon: "/assets/icons/logo/wh-light.svg",
+    shortcut: "/assets/icons/logo/wh-light.svg",
+    apple: "/assets/icons/logo/wh-light.svg",
+  },
   title: {
     default: "WhiteHawk | Unified Cybersecurity Platform",
     template: "%s | WhiteHawk",

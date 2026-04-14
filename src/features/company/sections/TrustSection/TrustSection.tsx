@@ -3,9 +3,9 @@
 import Image from "next/image";
 import styles from "./TrustSection.module.scss";
 
-const CERTS = ["ISO 27001", "ISO 9001:2015", "SOC 2", "CREST", "PCI DSS", "GDPR"];
+const CERTS = ["ISO 27001","SOC 2", "CREST", "GDPR" ];
 
-const INVESTOR_ICONS = [1, 2, 3, 4, 5, 6, 7, 8].map((n) => ({
+const INVESTOR_ICONS = [3, 8,1,4,2,  5, 6].map((n) => ({
   src: `/assets/icons/investors/investor${n}.svg`,
   alt: `Backer ${n}`,
 }));
@@ -15,7 +15,7 @@ export function TrustSection() {
     <section className={styles.section}>
       <div className={styles.inner}>
         <div className={styles.packedBy}>
-          <p className={styles.packedByLabel}>Packed by</p>
+          <p className={styles.packedByLabel}>Backed by</p>
           <div className={styles.logos}>
             {INVESTOR_ICONS.map(({ src, alt }) => (
               <div key={src} className={styles.logo}>

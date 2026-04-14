@@ -100,48 +100,110 @@
   justify-content: center;
 }
 
-.unifiedCard {
+/* Figma 864:8314 — column gap 32px; frame 192×256 + inner blur + type */
+.unifiedStack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
   max-width: 560px;
+  width: 100%;
   text-align: center;
+  box-sizing: border-box;
 }
 
-.iconFrame {
+.unifiedFrame {
+  position: relative;
+  flex-shrink: 0;
   width: 192px;
   height: 256px;
+  box-sizing: border-box;
   border: 4px solid var(--primary-900, #003859);
-  position: relative;
-  margin: 0 auto 32px;
 }
 
-.iconInner {
+.unifiedIconWrap {
   position: absolute;
-  inset: 8px;
-  border-radius: 16px;
+  left: 52px;
+  top: 84px;
+  z-index: 0;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.unifiedShieldIcon {
+  display: block;
+  width: 80px;
+  height: 80px;
+}
+
+/* Figma: full inner area 184×248, backdrop-blur 6.25px, fill rgba(0,56,89,0.05) */
+.unifiedInnerBlur {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 184px;
+  height: 248px;
+  z-index: 1;
+  pointer-events: none;
+  backdrop-filter: blur(6.25px);
+  -webkit-backdrop-filter: blur(6.25px);
   background: rgba(0, 56, 89, 0.05);
+}
+
+.unifiedCardCopy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  color: var(--primary-900, #003859);
 }
 
 .rightTitle {
   font-family: Arial, sans-serif;
   font-weight: 700;
-  font-size: clamp(28px, 4vw, 40px);
-  line-height: 1.2;
+  font-size: clamp(40px, 8vw, 72px);
+  line-height: 1;
+  letter-spacing: -0.02em;
   color: var(--primary-900, #003859);
-  margin: 0 0 12px;
+  margin: 0;
   text-align: center;
 }
 
 .rightSubtitle {
   font-family: Arial, sans-serif;
-  font-size: clamp(18px, 2.5vw, 24px);
-  line-height: 1.5;
-  color: var(--text-secondary, #52697a);
+  font-weight: 400;
+  font-size: clamp(18px, 2.8vw, 24px);
+  line-height: calc(32 / 24);
+  color: var(--primary-900, #003859);
   margin: 0;
+  max-width: 42rem;
   text-align: center;
+}
+
+@media (min-width: 900px) {
+  .rightTitle {
+    font-size: 72px;
+    line-height: 72px;
+  }
+
+  .rightSubtitle {
+    font-size: 24px;
+    line-height: 32px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .panelScattered,
   .panelUnified {
     will-change: auto;
+  }
+
+  .unifiedInnerBlur {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: rgba(0, 56, 89, 0.08);
   }
 }

@@ -32,7 +32,7 @@ export function PlatformHero({ title, subtitle, ctaLabel, heroImageSrc }: Platfo
             <Image
               src={heroImageSrc}
               alt=""
-              width={472}
+              width={550}
               height={365}
               className={styles.heroImg}
               priority
