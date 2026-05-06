@@ -11,13 +11,13 @@ export function HeroButtons() {
   return (
     <div className={styles.heroButtons}>
       <PrimaryButton
-        title="Get Demo"
+        title="Get A Demo"
         variant="primary"
         onClick={openDemoModal}
         className={styles.heroButton}
       />
       <PrimaryButton
-        title="Start free trial"
+        title="Become A Partner"
         variant="secondary"
         onClick={openFreeTrialModal}
         className={styles.heroButton}

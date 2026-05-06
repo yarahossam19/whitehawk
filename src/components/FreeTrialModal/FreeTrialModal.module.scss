@@ -6,23 +6,30 @@
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 
     /* Responsive width */
-    width: calc(100vw - 24px);
-    max-width: 100%;
+   
+  /* Responsive width — mobile-first. */
+  width: calc(100vw - 24px) !important;
+  max-width: 100% !important;
 
-    @media (min-width: 600px) {
-      width: 90vw;
-      max-width: 560px;
-    }
+  @media (min-width: 600px) {
+    width: 92vw !important;
+    max-width: 640px !important;
+  }
 
-    @media (min-width: 900px) {
-      width: 70vw;
-      max-width: 640px;
-    }
+  @media (min-width: 900px) {
+    width: 80vw !important;
+    max-width: 800px !important;
+  }
 
-    @media (min-width: 1280px) {
-      width: 50vw;
-      max-width: 720px;
-    }
+  @media (min-width: 1280px) {
+    width: 55vw !important;
+
+  }
+
+  @media (min-width: 1600px) {
+    width: 50vw !important;
+
+  }
   }
 
   :global(.p-dialog-content) {
