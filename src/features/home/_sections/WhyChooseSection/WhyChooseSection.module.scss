@@ -391,6 +391,18 @@ $icon-inner: 50px;
   color: $primary-text;
 }
 
+@media (max-width:950px) {
+    .cardTitle {
+    font-size: 20px !important;
+    line-height: 1.2;
+  }
+  .cardDescription {
+    font-size: 16px !important;
+    line-height: 1.5;
+    max-width: none;
+  }
+
+}
 @media (max-width: 768px) {
   .section {
     padding: 48px 0 40px;

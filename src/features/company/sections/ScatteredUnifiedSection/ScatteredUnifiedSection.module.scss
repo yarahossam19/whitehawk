@@ -119,6 +119,8 @@
   height: 256px;
   box-sizing: border-box;
   border: 4px solid var(--primary-900, #003859);
+  overflow: hidden;
+  isolation: isolate;
 }
 
 .unifiedIconWrap {
@@ -131,6 +133,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  /* Keep a visible blur even when backdrop-filter fails under transformed parents */
+  filter: blur(6.25px);
+  opacity: 0.9;
+  transform: translateZ(0);
 }
 
 .unifiedShieldIcon {
@@ -142,15 +148,19 @@
 /* Figma: full inner area 184×248, backdrop-blur 6.25px, fill rgba(0,56,89,0.05) */
 .unifiedInnerBlur {
   position: absolute;
-  left: 0;
-  top: 0;
-  width: 184px;
-  height: 248px;
+  inset: 4px;
   z-index: 1;
   pointer-events: none;
   backdrop-filter: blur(6.25px);
   -webkit-backdrop-filter: blur(6.25px);
-  background: rgba(0, 56, 89, 0.05);
+  background: rgba(0, 56, 89, 0.08);
+  transform: translateZ(0);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .unifiedInnerBlur {
+    background: rgba(0, 56, 89, 0.14);
+  }
 }
 
 .unifiedCardCopy {

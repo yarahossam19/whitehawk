@@ -21,6 +21,7 @@ export interface PrimaryButtonProps {
   href?: string;
   /** Optional disabled state */
   disabled?: boolean;
+  target?: string;
   /** Optional icon or content after title */
   children?: ReactNode;
 }
@@ -30,6 +31,7 @@ export function PrimaryButton({
   onClick,
   variant = "primary",
   className = "",
+  target,
   type = "button",
   href,
   disabled = false,
@@ -39,7 +41,7 @@ export function PrimaryButton({
 
   if (href && !disabled) {
     return (
-      <Link href={href} className={classNames}>
+      <Link href={href} className={classNames} target={target}>
         {title}
         {children}
       </Link>

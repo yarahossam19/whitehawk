@@ -1,12 +1,12 @@
 "use client";
 
 import styles from "./DisconnectedSection.module.scss";
-import challenge1 from "@/../public/assets/icons/challenges/challenge1.svg";
-import challenge2 from "@/../public/assets/icons/challenges/challenge2.svg";
-import challenge3 from "@/../public/assets/icons/challenges/challenge3.svg";
-import challenge4 from "@/../public/assets/icons/challenges/challenge4.svg";
-import challenge5 from "@/../public/assets/icons/challenges/challenge5.svg";
-import challenge6 from "@/../public/assets/icons/challenges/challenge6.svg";
+import challenge1 from "@/../public/assets/icons/challenges/challenge16.svg";
+import challenge2 from "@/../public/assets/icons/challenges/challenge14.svg";
+import challenge3 from "@/../public/assets/icons/challenges/challenge13.svg";
+import challenge4 from "@/../public/assets/icons/challenges/challenge12.svg";
+import challenge5 from "@/../public/assets/icons/challenges/challenge11.svg";
+import challenge6 from "@/../public/assets/icons/challenges/challenge15.svg";
 
 
 const CARDS = [
@@ -68,8 +68,8 @@ export function DisconnectedSection() {
                 <img
                   src={typeof card.icon === "string" ? card.icon : (card.icon as { src?: string })?.src ?? ""}
                   alt=""
-                  width={40}
-                  height={40}
+                  width={30}
+                  height={30}
                 />
               </div>
       

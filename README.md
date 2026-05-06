@@ -20,6 +20,27 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Demo Request Email ("Request demo" modal)
+
+The API route `POST /api/request-demo` sends an email to `DEMO_RECIPIENT_EMAIL`.
+
+You can configure **either** SMTP (Nodemailer) **or** Microsoft Graph:
+
+- **SMTP (Nodemailer)**
+  - `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE` (`true` for SMTPS/465, `false` for STARTTLS/587)
+  - `SMTP_USER`, `SMTP_PASS`
+  - Optional: `SMTP_FROM`, `DEMO_RECIPIENT_EMAIL`
+
+- **Microsoft Graph (recommended for Microsoft 365 tenants with SMTP AUTH disabled)**
+  - `M365_TENANT_ID`, `M365_CLIENT_ID`, `M365_CLIENT_SECRET`
+  - `M365_SENDER_EMAIL` (the mailbox to send as; the app must be permitted to send mail for it)
+  - Optional: `DEMO_RECIPIENT_EMAIL`
+
+Notes:
+
+- If your Microsoft 365 tenant blocks SMTP client auth, SMTP will fail with `535 5.7.139`.
+- Graph requires an Entra ID app registration with `Mail.Send` **application** permission and admin consent.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

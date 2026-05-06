@@ -3,9 +3,11 @@
 import styles from "./CTASection.module.scss";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import { useDemoModal } from "@/contexts/DemoModalContext";
+import { useFreeTrialModal } from "@/contexts/FreeTrialModalContext";
 
 export function CTASection() {
   const { openDemoModal } = useDemoModal();
+  const { openFreeTrialModal } = useFreeTrialModal();
   return (
     <section className={styles.section}>
       <div className={styles.container}>
@@ -18,7 +20,7 @@ export function CTASection() {
           <PrimaryButton
             title="Start Free Trial"
             variant="primary"
-            onClick={openDemoModal}
+            onClick={openFreeTrialModal}
             className={styles.primaryBtn}
           />
           <PrimaryButton
@@ -28,9 +30,9 @@ export function CTASection() {
             className={styles.secondaryBtn}
           />
         </div>
-        <p className={styles.disclaimer}>
+        {/* <p className={styles.disclaimer}>
           No credit card required. 14-day free trial.
-        </p>
+        </p> */}
       </div>
     </section>
   );

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
-import { useDemoModal } from "@/contexts/DemoModalContext";
+import { useLeadModalOpener } from "@/hooks/useLeadModalOpener";
 import styles from "./SolutionsHero.module.scss";
 
 interface SolutionsHeroProps {
@@ -13,7 +13,7 @@ interface SolutionsHeroProps {
 }
 
 export function SolutionsHero({ title, description, ctaLabel, imageSrc }: SolutionsHeroProps) {
-  const { openDemoModal } = useDemoModal();
+  const { openFromButtonTitle } = useLeadModalOpener();
   return (
     <section className={styles.hero}>
       <div className={styles.heroContent}>
@@ -23,7 +23,7 @@ export function SolutionsHero({ title, description, ctaLabel, imageSrc }: Soluti
           <PrimaryButton
             title={ctaLabel}
             variant="primary"
-            onClick={openDemoModal}
+            onClick={() => openFromButtonTitle(ctaLabel)}
             className={styles.heroCta}
           />
         </div>

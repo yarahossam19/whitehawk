@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Check } from "lucide-react";
 import styles from "./ChallengesSection.module.scss";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
-import { useDemoModal } from "@/contexts/DemoModalContext";
+import { useLeadModalOpener } from "@/hooks/useLeadModalOpener";
 import itIcon from "@/../public/assets/icons/it-icon.svg";
 import securityIcon from "@/../public/assets/icons/security-icon.svg";
 import enterpriseIcon from "@/../public/assets/icons/enterprise-icon.svg";
@@ -22,6 +22,7 @@ type TabConfig = {
   items: TabItem[];
   image: string;
   imageAlt: string;
+  unoptimized?: boolean;
 };
 
 const TABS: TabConfig[] = [
@@ -73,8 +74,9 @@ const TABS: TabConfig[] = [
     label: "MSPs",
     icon: mspIcon,
     cardTitle: "Scale Your Security Offering with Ease",
-    image: "/assets/imgs/home/mcp.png",
+    image: "/assets/imgs/home/msp.png",
     imageAlt: "MSP multi-tenant overview",
+    unoptimized: true,
     items: [
       {
         title: "Multi-Tenant Management",
@@ -116,7 +118,7 @@ const TABS: TabConfig[] = [
 
 export function ChallengesSection() {
   const [activeId, setActiveId] = useState(TABS[0].id);
-  const { openDemoModal } = useDemoModal();
+  const { openFromButtonTitle } = useLeadModalOpener();
   const active = TABS.find((t) => t.id === activeId) ?? TABS[0];
 
   return (
@@ -178,7 +180,7 @@ export function ChallengesSection() {
             <PrimaryButton
               title="Schedule Demo"
               variant="secondary"
-              onClick={openDemoModal}
+              onClick={() => openFromButtonTitle("Schedule Demo")}
               className={styles.button}
             />
           </div>
@@ -196,6 +198,7 @@ export function ChallengesSection() {
                 loading="lazy"
                 fetchPriority="low"
                 decoding="async"
+                unoptimized={active.unoptimized}
               />
             </div>
           </div>

@@ -3,6 +3,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { NavBar } from "@/components/layout/NavBar";
 import { Footer } from "@/components/layout/Footer";
 import { Providers } from "@/components/Providers/Providers";
+import "primereact/resources/themes/lara-light-cyan/theme.css";
+import "primereact/resources/primereact.min.css";
+import "primeicons/primeicons.css";
 import "./globals.scss";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://whitehawk.com";

@@ -12,14 +12,14 @@ import inv7 from "@/../public/assets/icons/investors/investor7.svg";
 import inv8 from "@/../public/assets/icons/investors/investor8.svg";
 
 const INVESTORS = [
-  { src: inv1, alt: "Investor partner 1" },
-  { src: inv2, alt: "Investor partner 2" },
-  { src: inv3, alt: "Investor partner 3" },
+  { src: inv3, alt: "Investor partner 1" },
+  { src: inv8, alt: "Investor partner 2" },
+  { src: inv1, alt: "Investor partner 3" },
   { src: inv4, alt: "Investor partner 4" },
-  { src: inv5, alt: "Investor partner 5" },
-  { src: inv6, alt: "Investor partner 6" },
-  { src: inv7, alt: "Investor partner 7" },
-  { src: inv8, alt: "Investor partner 8" },
+  { src: inv2, alt: "Investor partner 5" },
+  { src: inv5, alt: "Investor partner 6" },
+  { src: inv6, alt: "Investor partner 7" },
+  { src: inv7, alt: "Investor partner 8" },
 ];
 
 export function PackedBySection() {

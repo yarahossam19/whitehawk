@@ -1,11 +1,14 @@
 "use client";
 
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
-import { useDemoModal } from "@/contexts/DemoModalContext";
+import { useLeadModalOpener } from "@/hooks/useLeadModalOpener";
 import styles from "./PartnersCTASection.module.scss";
 
+const PARTNER_TEAM_TITLE = "Talk to Partner Team";
+const PARTNER_BRIEFING_LABEL = "Schedule a partner briefing";
+
 export function PartnersCTASection() {
-  const { openDemoModal } = useDemoModal();
+  const { openFromButtonTitle } = useLeadModalOpener();
 
   return (
     <section className={styles.section}>
@@ -16,9 +19,17 @@ export function PartnersCTASection() {
           White Hawk can power your practice.
         </p>
         <div className={styles.actions}>
-          <PrimaryButton title="Talk to Partner Team" variant="secondary" onClick={openDemoModal} />
-          <button type="button" className={styles.link} onClick={openDemoModal}>
-            Schedule a partner briefing
+          <PrimaryButton
+            title={PARTNER_TEAM_TITLE}
+            variant="secondary"
+            onClick={() => openFromButtonTitle(PARTNER_TEAM_TITLE)}
+          />
+          <button
+            type="button"
+            className={styles.link}
+            onClick={() => openFromButtonTitle(PARTNER_BRIEFING_LABEL)}
+          >
+            {PARTNER_BRIEFING_LABEL}
           </button>
         </div>
       </div>

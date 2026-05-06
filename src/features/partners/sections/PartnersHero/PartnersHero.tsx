@@ -2,13 +2,15 @@
 
 import { useCallback, useEffect, useRef } from "react";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
-import { useDemoModal } from "@/contexts/DemoModalContext";
+import { useLeadModalOpener } from "@/hooks/useLeadModalOpener";
 import styles from "./PartnersHero.module.scss";
 
 const VIDEO_SRC = "/assets/videos/wh-parteners.webm";
 
+const PARTNER_CTA_TITLE = "Become a Partner";
+
 export function PartnersHero() {
-  const { openDemoModal } = useDemoModal();
+  const { openFromButtonTitle } = useLeadModalOpener();
   const sectionRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const srcAttachedRef = useRef(false);
@@ -115,9 +117,9 @@ export function PartnersHero() {
             without fragmenting your stack.
           </p>
           <PrimaryButton
-            title="Become a Partner"
+            title={PARTNER_CTA_TITLE}
             variant="secondary"
-            onClick={openDemoModal}
+            onClick={() => openFromButtonTitle(PARTNER_CTA_TITLE)}
             className={styles.cta}
           />
         </div>

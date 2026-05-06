@@ -3,9 +3,9 @@
 import Image from "next/image";
 import styles from "./TrustSection.module.scss";
 
-const CERTS = ["ISO 27001","SOC 2", "CREST", "GDPR" ];
+const CERTS = ["ISO 27001","SOC 2", "CREST", "GDPR", "PCI DSS" ];
 
-const INVESTOR_ICONS = [3, 8,1,4,2,  5, 6].map((n) => ({
+const INVESTOR_ICONS = [3, 8,1,4,2,  21, 22].map((n) => ({
   src: `/assets/icons/investors/investor${n}.svg`,
   alt: `Backer ${n}`,
 }));

@@ -181,3 +181,14 @@
     scrollbar-gutter: stable;
   }
 }
+/* PrimeReact Toast — extra inner padding */
+.p-toast .p-toast-message {
+  border-radius: 12px;
+}
+.p-toast .p-toast-message-content {
+  padding: 16px 20px;
+  gap: 12px;
+}
+.p-toast .p-toast-message-text {
+  gap: 4px;
+}

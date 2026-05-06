@@ -69,122 +69,31 @@
   position: relative;
   width: 100%;
   height: 100%;
-}
-
-/*
- * 2D “hinge” flip: squash to a line (scaleY) like turning a card — not 3D rotateX.
- * Timeline matches prior behavior: hold → flip → hold → flip (8s).
- * --flip-delay inherited by children for stagger.
- */
-.cardInnerFlip {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  transform-origin: center center;
-  animation-name: flipSquish;
-  animation-duration: 8s;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
-  animation-delay: var(--flip-delay, 0s);
-}
-
-@keyframes flipSquish {
-  0%,
-  45% {
-    transform: scaleY(1);
-  }
-  47.5% {
-    transform: scaleY(0.06);
-  }
-  50%,
-  95% {
-    transform: scaleY(1);
-  }
-  97.5% {
-    transform: scaleY(0.06);
-  }
-  100% {
-    transform: scaleY(1);
-  }
-}
-
-.cardFace {
-  position: absolute;
-  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 8px;
-  padding: 0 5px;
-  background: #fff;
-  animation-duration: 8s;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
-  animation-delay: var(--flip-delay, 0s);
-
-  &[data-face="front"] {
-    animation-name: flipLayerFront;
-  }
-
-  &[data-face="back"] {
-    animation-name: flipLayerBack;
-  }
+  transform-origin: center center;
 }
 
-@keyframes flipLayerFront {
-  0%,
-  46% {
-    opacity: 1;
-    z-index: 2;
-  }
-  47%,
-  96% {
-    opacity: 0;
-    z-index: 0;
-  }
-  97%,
-  100% {
-    opacity: 1;
-    z-index: 2;
-  }
+.cardInnerFlipping {
+  animation: flipSquishStep 560ms cubic-bezier(0.45, 0, 0.2, 1);
 }
 
-@keyframes flipLayerBack {
-  0%,
-  46% {
-    opacity: 0;
-    z-index: 0;
+@keyframes flipSquishStep {
+  0% {
+    transform: scaleY(1);
   }
-  47%,
-  96% {
-    opacity: 1;
-    z-index: 2;
+  50% {
+    transform: scaleY(0.06);
   }
-  97%,
   100% {
-    opacity: 0;
-    z-index: 0;
+    transform: scaleY(1);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cardInnerFlip {
+  .cardInnerFlipping {
     animation: none;
     transform: none;
-  }
-
-  .cardFace {
-    animation: none;
-  }
-
-  .cardFace[data-face="front"] {
-    opacity: 1;
-    z-index: 2;
-  }
-
-  .cardFace[data-face="back"] {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
   }
 }

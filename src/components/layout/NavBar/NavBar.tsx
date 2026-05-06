@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
-import { useDemoModal } from "@/contexts/DemoModalContext";
+import { useLeadModalOpener } from "@/hooks/useLeadModalOpener";
 import styles from "./NavBar.module.scss";
 import logo from "@/../public/assets/icons/logo/whitehawk-logo.svg";
 import menuIcon from "@/../public/assets/icons/navbar/menu-icon.svg";
@@ -24,10 +24,21 @@ const PLATFORM_ITEMS: { name: string; description: string; slug: string; icon: s
   { name: "Asset Management", description: "Track, manage, and secure all assets", slug: "asset-management", icon: assetManagement },
 ];
 
-const SOLUTIONS_ITEMS: { name: string; description: string; slug: string; icon: string }[] = [
+const SOLUTIONS_ITEMS: { name: string; description: string; slug: string; icon: string; subitems?: { name: string; description: string; icon: string }[] }[] = [
   { name: "Fintech Company", description: "Manage risk across financial platforms", slug: "fintech-company", icon: fintechCompany },
   { name: "Public Sectors", description: "Protect critical public infrastructure", slug: "public-sectors", icon: publicSectors },
   { name: "Healthcare Organizations", description: "Protect patient data and systems", slug: "healthcare-organizations", icon: healthcareOrganizations },
+];
+
+const INDUSTRY_CATEGORIES: { name: string; subitems: { name: string; description: string; icon: string }[] }[] = [
+  {
+    name: "Vertical Industries",
+    subitems: [
+      { name: "Fintech Company", description: "Manage risk across financial platforms", icon: fintechCompany },
+      { name: "Public Sectors", description: "Protect critical public infrastructure", icon: publicSectors },
+      { name: "Healthcare Organizations", description: "Protect patient data and systems", icon: healthcareOrganizations },
+    ],
+  },
 ];
 
 function ChevronDown({ open }: { open: boolean }) {
@@ -91,11 +102,33 @@ function DropdownItem({
   );
 }
 
+function SubDropdownItem({
+  name,
+  description,
+  icon,
+}: {
+  name: string;
+  description: string;
+  icon?: string;
+}) {
+  return (
+    <div className={styles.subDropdownItem}>
+      <div className={styles.subDropdownItemIcon}>
+        {icon ? <Image src={icon} alt="" width={30} height={30} /> : null}
+      </div>
+      <div className={styles.subDropdownItemText}>
+        <span className={styles.subDropdownItemName}>{name}</span>
+        <span className={styles.subDropdownItemDesc}>{description}</span>
+      </div>
+    </div>
+  );
+}
+
 const MOBILE_BREAKPOINT = 901;
 
 export function NavBar() {
   const pathname = usePathname();
-  const { openDemoModal } = useDemoModal();
+  const { openFromButtonTitle } = useLeadModalOpener();
   const [platformOpen, setPlatformOpen] = useState(false);
   const [solutionsOpen, setSolutionsOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -257,11 +290,11 @@ export function NavBar() {
         </div>
 
         <div className={styles.actions}>
-          <PrimaryButton title="Sign in" variant="secondary" href="#" className={styles.signInButton} />
+          <PrimaryButton title="Sign in" variant="secondary" href="https://app.whitehawk.io/" target="_blank" className={styles.signInButton} />
           <PrimaryButton
             title="Request a Demo"
             variant="primary"
-            onClick={openDemoModal}
+            onClick={() => openFromButtonTitle("Request a Demo")}
             className={styles.requestDemoButton}
           />
         </div>

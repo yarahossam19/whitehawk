@@ -3,9 +3,11 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import { useDemoModal } from "@/contexts/DemoModalContext";
+import { useFreeTrialModal } from "@/contexts/FreeTrialModalContext";
 import styles from "./HeroSection.module.scss";
 export function HeroSection() {
   const { openDemoModal } = useDemoModal();
+  const { openFreeTrialModal } = useFreeTrialModal();
   const sectionRef = useRef<HTMLElement | null>(null);
   const [isActive, setIsActive] = useState(false);
 
@@ -40,7 +42,7 @@ export function HeroSection() {
           </p>
           <div className={styles.heroButtons}>
             <PrimaryButton title="Get Demo" variant="primary" onClick={openDemoModal} className={styles.heroButton} />
-            <PrimaryButton title="Start free trial" variant="secondary" onClick={openDemoModal} className={styles.heroButton} />
+            <PrimaryButton title="Start free trial" variant="secondary" onClick={openFreeTrialModal} className={styles.heroButton} />
           </div>
         </div>
         <div className={styles.heroRight}>

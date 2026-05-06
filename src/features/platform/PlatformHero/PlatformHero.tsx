@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
-import { useDemoModal } from "@/contexts/DemoModalContext";
+import { useLeadModalOpener } from "@/hooks/useLeadModalOpener";
 import styles from "./PlatformHero.module.scss";
 
 interface PlatformHeroProps {
@@ -13,7 +13,7 @@ interface PlatformHeroProps {
 }
 
 export function PlatformHero({ title, subtitle, ctaLabel, heroImageSrc }: PlatformHeroProps) {
-  const { openDemoModal } = useDemoModal();
+  const { openFromButtonTitle } = useLeadModalOpener();
   return (
     <section className={styles.hero}>
       <div className={styles.heroContent}>
@@ -23,7 +23,7 @@ export function PlatformHero({ title, subtitle, ctaLabel, heroImageSrc }: Platfo
           <PrimaryButton
             title={ctaLabel}
             variant="primary"
-            onClick={openDemoModal}
+            onClick={() => openFromButtonTitle(ctaLabel)}
             className={styles.heroCta}
           />
         </div>

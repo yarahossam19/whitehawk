@@ -21,6 +21,14 @@ const nextConfig: NextConfig = {
   },
   poweredByHeader: false,
   compress: true,
+  async rewrites() {
+    return [
+      {
+        source: "/partner-api/:path*",
+        destination: "https://partner.whiteguard.io/api/:path*",
+      },
+    ];
+  },
 };
 
 export default nextConfig;

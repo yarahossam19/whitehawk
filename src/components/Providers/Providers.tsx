@@ -2,15 +2,23 @@
 
 import { PrimeReactProvider } from "primereact/api";
 import { DemoModalProvider } from "@/contexts/DemoModalContext";
+import { FreeTrialModalProvider } from "@/contexts/FreeTrialModalContext";
+import { ToastProvider } from "@/contexts/ToastContext";
 import { DemoModalLazyHost } from "@/components/Providers/DemoModalLazyHost";
+import { FreeTrialModalLazyHost } from "@/components/Providers/FreeTrialModalLazyHost";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <PrimeReactProvider>
-      <DemoModalProvider>
-        {children}
-        <DemoModalLazyHost />
-      </DemoModalProvider>
+      <ToastProvider>
+        <DemoModalProvider>
+          <FreeTrialModalProvider>
+            {children}
+            <DemoModalLazyHost />
+            <FreeTrialModalLazyHost />
+          </FreeTrialModalProvider>
+        </DemoModalProvider>
+      </ToastProvider>
     </PrimeReactProvider>
   );
 }

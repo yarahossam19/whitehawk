@@ -1,21 +1,14 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { useDemoModal } from "@/contexts/DemoModalContext";
-
-const RequestDemoModal = dynamic(
-  () =>
-    import("@/components/RequestDemoModal/RequestDemoModal").then(
-      (m) => m.RequestDemoModal
-    ),
-  { ssr: false, loading: () => null }
-);
+import { RequestDemoModal } from "@/components/RequestDemoModal/RequestDemoModal";
 
 /**
- * Load PrimeReact + modal only when the user opens the demo dialog.
- * Idle-loading the chunk was causing ~0.2 CLS on desktop when global
- * theme CSS applied late. First open may briefly load the chunk.
+ * Mount the modal only after the user opens it for the first time.
+ * Avoids running PrimeReact Dialog on the initial render so global theme
+ * CSS doesn't shift LCP on first paint. The CSS module ships in the main
+ * client chunk (no dynamic() wrapper) so HMR can update it reliably.
  */
 export function DemoModalLazyHost() {
   const { isOpen } = useDemoModal();
