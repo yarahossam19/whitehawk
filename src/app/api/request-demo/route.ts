@@ -12,6 +12,12 @@ type RequestDemoBody = {
   email?: string;
   company?: string;
   country?: string;
+  service?: {
+    mainType?: string;
+    subType?: string;
+    subSubType?: string;
+    other?: string;
+  };
   captcha?: { token?: string; answer?: string | number };
 };
 
@@ -55,11 +61,18 @@ export async function POST(req: Request) {
   const email = (body.email ?? "").trim();
   const company = (body.company ?? "").trim();
   const country = (body.country ?? "").trim();
+  const serviceMain = (body.service?.mainType ?? "").trim();
+  const serviceSub = (body.service?.subType ?? "").trim();
+  const serviceSubSub = (body.service?.subSubType ?? "").trim();
+  const serviceOther = (body.service?.other ?? "").trim();
   const captchaToken = body.captcha?.token ?? "";
   const captchaAnswer = body.captcha?.answer;
 
   if (!fullName || !email || !company || !country) {
     return bad("All fields are required.");
+  }
+  if (!serviceMain || !serviceSub) {
+    return bad("Please choose a service type and sub-type.");
   }
   if (!EMAIL_RE.test(email)) {
     return bad("Please enter a valid email address.");
@@ -115,6 +128,10 @@ export async function POST(req: Request) {
     email,
     company,
     country,
+    serviceMain,
+    serviceSub,
+    serviceSubSub,
+    serviceOther,
     submittedAt,
     sourceUrl,
   });
@@ -123,6 +140,10 @@ export async function POST(req: Request) {
     email,
     company,
     country,
+    serviceMain,
+    serviceSub,
+    serviceSubSub,
+    serviceOther,
     submittedAt,
     sourceUrl,
   });

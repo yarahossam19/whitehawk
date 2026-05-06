@@ -17,6 +17,11 @@ export type DemoEmailFields = {
   email: string;
   company: string;
   country: string;
+  /** Service taxonomy. `serviceSubSub` and `serviceOther` are optional. */
+  serviceMain?: string;
+  serviceSub?: string;
+  serviceSubSub?: string;
+  serviceOther?: string;
   submittedAt?: Date;
   sourceUrl?: string;
 };
@@ -130,6 +135,10 @@ export function renderDemoEmail(f: DemoEmailFields): string {
                   ${row("Business Email", f.email)}
                   ${row("Company", f.company)}
                   ${row("Country", f.country)}
+                  ${f.serviceMain ? row("Service Type", f.serviceMain) : ""}
+                  ${f.serviceSub ? row("Service", f.serviceSub) : ""}
+                  ${f.serviceSubSub ? row("Specific Service", f.serviceSubSub) : ""}
+                  ${f.serviceOther ? row("Other Services", f.serviceOther) : ""}
                 </table>
               </td>
             </tr>
@@ -176,10 +185,14 @@ export function renderDemoEmailText(f: DemoEmailFields): string {
   return [
     "New Demo Request — WhiteHawk",
     "",
-    `Full Name:      ${f.fullName}`,
-    `Business Email: ${f.email}`,
-    `Company:        ${f.company}`,
-    `Country:        ${f.country}`,
+    `Full Name:        ${f.fullName}`,
+    `Business Email:   ${f.email}`,
+    `Company:          ${f.company}`,
+    `Country:          ${f.country}`,
+    f.serviceMain ? `Service Type:     ${f.serviceMain}` : "",
+    f.serviceSub ? `Service:          ${f.serviceSub}` : "",
+    f.serviceSubSub ? `Specific Service: ${f.serviceSubSub}` : "",
+    f.serviceOther ? `Other Services:   ${f.serviceOther}` : "",
     "",
     `Submitted: ${submittedAt}`,
     f.sourceUrl ? `Source:    ${f.sourceUrl}` : "",
