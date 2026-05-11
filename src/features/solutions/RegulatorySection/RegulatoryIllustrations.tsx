@@ -18,7 +18,7 @@ export type RegulatoryIllustrationName =
   | "healthcare"
   | "fintech"
   | "government";
-
+console.log("RegulatoryIllustrationName:");
 const REGULATORY_ILLUSTRATIONS: Record<RegulatoryIllustrationName, React.ReactNode> = {
   /* Healthcare — HIPAA, SAMA, ISO 27001, CBL, ISO 27799, GDPR around a WH logo. */
   healthcare: (
