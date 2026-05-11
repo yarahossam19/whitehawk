@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
-import nodemailer from "nodemailer";
 import { verifyCaptcha } from "@/lib/captcha";
 import { renderDemoEmail, renderDemoEmailText } from "@/lib/email-template";
-import { isGraphMailerConfigured, sendMail } from "@/lib/mailer";
 
-export const runtime = "nodejs";
+// Runs on Cloudflare Workers / Vercel Edge. Uses Resend's HTTP API instead
+// of SMTP, so it doesn't rely on raw TCP sockets (which Edge can't open).
+export const runtime = "edge";
 export const dynamic = "force-dynamic";
 
 type RequestDemoBody = {
@@ -25,28 +25,6 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function bad(message: string, status = 400) {
   return NextResponse.json({ ok: false, error: message }, { status });
-}
-
-function isM365SmtpAuthDisabled(err: unknown): boolean {
-  const anyErr = err as
-    | {
-        code?: unknown;
-        responseCode?: unknown;
-        response?: unknown;
-        message?: unknown;
-      }
-    | undefined;
-
-  const code = typeof anyErr?.code === "string" ? anyErr.code : "";
-  const responseCode =
-    typeof anyErr?.responseCode === "number" ? anyErr.responseCode : undefined;
-  const response = typeof anyErr?.response === "string" ? anyErr.response : "";
-  const message = typeof anyErr?.message === "string" ? anyErr.message : "";
-
-  if (code !== "EAUTH" || responseCode !== 535) return false;
-  const haystack = `${response}\n${message}`;
-  return haystack.includes("5.7.139") &&
-    haystack.includes("SmtpClientAuthentication is disabled");
 }
 
 export async function POST(req: Request) {
@@ -83,42 +61,27 @@ export async function POST(req: Request) {
   ) {
     return bad("Please solve the captcha.");
   }
-  const captchaResult = verifyCaptcha(captchaToken, captchaAnswer);
+  const captchaResult = await verifyCaptcha(captchaToken, captchaAnswer);
   if (!captchaResult.ok) {
     return bad(captchaResult.reason);
   }
 
-  const recipient =
-    process.env.DEMO_RECIPIENT_EMAIL || "yara.hossam@whiteguard.co.uk";
-
-  const graphConfigured = isGraphMailerConfigured();
-
-  const host = process.env.SMTP_HOST;
-  const user = process.env.SMTP_USER;
-  const pass = process.env.SMTP_PASS;
-
-  const smtpConfigured = Boolean(host && user && pass);
-
-  if (!graphConfigured && !smtpConfigured) {
-    const missing: string[] = [];
-    if (!process.env.SMTP_HOST) missing.push("SMTP_HOST");
-    if (!process.env.SMTP_USER) missing.push("SMTP_USER");
-    if (!process.env.SMTP_PASS) missing.push("SMTP_PASS");
-    console.error(
-      "[request-demo] Mailer not configured (no Graph config; missing SMTP env vars):",
-      missing
-    );
+  // --- Resend config -----------------------------------------------------
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    console.error("[request-demo] RESEND_API_KEY missing.");
     return bad("Mailer is not configured. Please contact the site admin.", 500);
   }
 
-  const transporter = smtpConfigured
-    ? nodemailer.createTransport({
-        host: host as string,
-        port: Number.parseInt(process.env.SMTP_PORT || "587", 10),
-        secure: process.env.SMTP_SECURE === "true",
-        auth: { user: user as string, pass: pass as string },
-      })
-    : null;
+  // Sender. While testing, Resend's sandbox sender `onboarding@resend.dev`
+  // works without verifying a domain (and can only deliver to your own
+  // verified email). For production, verify your domain in Resend and set
+  // MAIL_FROM to "WhiteHawk <demo@your-verified-domain>".
+  const from =
+    process.env.MAIL_FROM ||
+    "WhiteHawk Website <onboarding@resend.dev>";
+  const recipient =
+    process.env.DEMO_RECIPIENT_EMAIL || "yara.hossam@whiteguard.co.uk";
 
   const sourceUrl = req.headers.get("referer") ?? undefined;
   const submittedAt = new Date();
@@ -149,52 +112,33 @@ export async function POST(req: Request) {
   });
 
   try {
-    // Prefer Microsoft Graph when configured (works even if M365 SMTP AUTH is disabled).
-    // If Graph isn't configured, fall back to SMTP via Nodemailer.
-    try {
-      if (graphConfigured) {
-        await sendMail({
-          to: recipient,
-          replyTo: email,
-          subject: `New Demo Request — ${company}`,
-          html,
-          text,
-        });
-        return NextResponse.json({ ok: true });
-      }
-      throw new Error("MAILER_NO_PROVIDER");
-    } catch (graphErr) {
-      const msg = graphErr instanceof Error ? graphErr.message : String(graphErr);
-      if (msg !== "MAILER_NO_PROVIDER") {
-        console.error("[request-demo] Graph sendMail failed:", graphErr);
-      }
-
-      if (!transporter) {
-        throw graphErr;
-      }
-
-      await transporter.sendMail({
-        from: process.env.SMTP_FROM || `"WhiteHawk Website" <${user as string}>`,
-        to: recipient,
-        replyTo: email,
+    const resp = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from,
+        to: [recipient],
+        reply_to: email,
         subject: `New Demo Request — ${company}`,
         html,
         text,
-      });
+      }),
+    });
+
+    if (!resp.ok) {
+      const errText = await resp.text();
+      console.error(
+        "[request-demo] Resend failed:",
+        resp.status,
+        errText.slice(0, 500)
+      );
+      return bad("Failed to send the email. Please try again later.", 502);
     }
   } catch (err) {
-    if (isM365SmtpAuthDisabled(err)) {
-      console.error(
-        "[request-demo] sendMail failed: Microsoft 365 SMTP AUTH is disabled for this tenant/mailbox.",
-        err
-      );
-      return bad(
-        "Email is temporarily unavailable (SMTP authentication is disabled). Please contact the site admin.",
-        500
-      );
-    }
-
-    console.error("[request-demo] sendMail failed:", err);
+    console.error("[request-demo] Resend network error:", err);
     return bad("Failed to send the email. Please try again later.", 502);
   }
 

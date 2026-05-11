@@ -1,12 +1,12 @@
 import { NextResponse } from "next/server";
 import { issueCaptcha } from "@/lib/captcha";
 
-// Each call must be a fresh challenge — never cached.
+// Runs on Cloudflare Workers / Vercel Edge — no Node-specific APIs.
+export const runtime = "edge";
 export const dynamic = "force-dynamic";
-export const runtime = "nodejs";
 
 export async function GET() {
-  const challenge = issueCaptcha();
+  const challenge = await issueCaptcha();
   return NextResponse.json(challenge, {
     headers: {
       "Cache-Control": "no-store, no-cache, must-revalidate",
