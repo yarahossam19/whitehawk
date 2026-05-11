@@ -10,18 +10,26 @@ export function HeroButtons() {
   const { openFreeTrialModal } = useFreeTrialModal();
   return (
     <div className={styles.heroButtons}>
-      <PrimaryButton
-        title="Get A Demo"
-        variant="primary"
-        onClick={openDemoModal}
-        className={styles.heroButton}
-      />
-      <PrimaryButton
-        title="Become A Partner"
-        variant="secondary"
-        onClick={openFreeTrialModal}
-        className={styles.heroButton}
-      />
+      <div className={styles.heroButtonGroup}>
+        <PrimaryButton
+          title="Get A Demo"
+          variant="primary"
+          onClick={openDemoModal}
+          className={styles.heroButton}
+        />
+        <p className={styles.heroButtonHelper}>
+          No credit card required. 14-day free trial
+        </p>
+      </div>
+
+      <div className={styles.heroButtonGroup}>
+        <PrimaryButton
+          title="Become A Partner"
+          variant="secondary"
+          onClick={openFreeTrialModal}
+          className={styles.heroButton}
+        />
+      </div>
     </div>
   );
 }

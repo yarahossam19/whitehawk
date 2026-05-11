@@ -1,0 +1,167 @@
+.section {
+  background: transparent;
+  padding: 80px 24px 100px;
+
+  @media (max-width: 1024px) {
+    padding: 56px var(--pad-tablet, 24px) 72px;
+  }
+
+  @media (max-width: 600px) {
+    padding: 40px var(--pad-mobile, 16px) 56px;
+  }
+}
+
+.container {
+  /* Match the 1300px content box used by PlatformHero, ActivitiesSection,
+     WhyMattersSection and RegulatorySection so the FAQs align with every
+     section above it on both /platform and /solutions pages. */
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.title {
+  font-family: Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(28px, 3.4vw, 40px);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  text-align: center;
+  color: #003859;
+  margin: 0 0 12px;
+}
+
+.subtitle {
+  font-family: Arial, sans-serif;
+  font-size: clamp(14px, 1.2vw, 16px);
+  line-height: 1.5;
+  text-align: center;
+  color: #6b8aa0;
+  max-width: 720px;
+  margin: 0 auto 40px;
+
+  @media (max-width: 600px) {
+    margin-bottom: 24px;
+  }
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.item {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 36, 57, 0.08);
+  overflow: hidden;
+}
+
+.questionRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 16px;
+  padding: 20px 24px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  color: #003859;
+  transition: background 0.15s;
+
+  &:hover {
+    background: rgba(0, 56, 89, 0.04);
+  }
+
+  &:focus-visible {
+    outline: 2px solid #005283;
+    outline-offset: -2px;
+  }
+
+  @media (max-width: 600px) {
+    padding: 16px 18px;
+  }
+}
+
+.question {
+  font-family: Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(15px, 1.3vw, 17px);
+  line-height: 1.35;
+  color: #003859;
+}
+
+.toggleIcon {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #e7f6ff;
+  color: #005283;
+  transition: background 0.2s, transform 0.25s ease;
+}
+
+.toggleIconOpen {
+  background: #abe0ff;
+  transform: rotate(180deg);
+}
+
+/* --- Open / close animation -----------------------------------------
+   Uses the CSS Grid `grid-template-rows: 0fr → 1fr` trick to animate from
+   collapsed to the content's natural height with no JS measurement. The
+   inner `.answerInner` has `min-height: 0; overflow: hidden` so it gets
+   clipped while the row size is animating. Padding lives on `.answerBody`
+   so it animates with the content rather than leaking out when collapsed. */
+.answerWrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.32s ease;
+}
+
+.answerWrapOpen {
+  grid-template-rows: 1fr;
+}
+
+.answerInner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.answerBody {
+  padding: 0 24px 20px;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.25s ease 0.05s, transform 0.25s ease 0.05s;
+
+  @media (max-width: 600px) {
+    padding: 0 18px 16px;
+  }
+}
+
+.answerWrapOpen .answerBody {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.divider {
+  height: 1px;
+  background: #e7f6ff;
+  margin: 0 0 16px;
+}
+
+.answer {
+  font-family: Arial, sans-serif;
+  font-size: clamp(14px, 1.05vw, 15px);
+  line-height: 1.55;
+  color: #52697a;
+  margin: 0;
+}

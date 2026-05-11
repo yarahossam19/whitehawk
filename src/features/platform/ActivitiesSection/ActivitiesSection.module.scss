@@ -1,15 +1,21 @@
+/*
+ * Activities section uses the same `max-width: 1300px` + 24px gutter as the
+ * PlatformHero (.heroContent / .hero), so titles, rows and CTA all line up
+ * vertically across the page.
+ */
 .section {
   background: #ffffff;
-  padding: 0px 200px 100px;
+  padding: 0 24px 100px;
+
   @media (max-width: 850px) {
-    padding: 64px 24px 72px;
+    padding: 0 24px 72px;
   }
 }
 
 .headerWrap {
-  max-width: 1312px;
+  max-width: 1300px;
   margin: 0 auto 48px;
-  padding: 0 24px;
+  padding: 0;
 }
 
 .header {
@@ -36,6 +42,8 @@
 .rows {
   display: flex;
   flex-direction: column;
+  max-width: 1300px;
+  margin: 0 auto;
 }
 
 .row {
@@ -44,7 +52,7 @@
   gap: 48px;
   align-items: center;
   min-height: 320px;
-  padding: 48px 24px;
+  padding: 48px 0;
 
 
   &:last-child {
@@ -63,7 +71,7 @@
     grid-template-columns: 1fr;
     gap: 24px;
     min-height: 0;
-    padding: 32px 24px;
+    padding: 32px 0;
     direction: ltr;
 
     &.rowReverse {
@@ -74,6 +82,11 @@
 
 .content {
   max-width: 600px;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+
 
   @media (max-width: 900px) {
     max-width: none;
@@ -94,7 +107,47 @@
   font-size: 16px;
   line-height: 1.6;
   color: var(--text-secondary, #52697a);
-  margin: 0;
+  margin: 0 0 24px;
+}
+
+.learnMore {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+
+  padding: 14px 28px;
+  font-family: Arial, sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.2;
+  color: var(--primary-900, #003859);
+  background: var(--primary-light, #abe0ff);
+  border: none;
+  border-radius: 16px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+  
+
+  &:hover {
+    background: #8fd2f7;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 22px rgba(0, 82, 131, 0.24);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--primary-700, #005283);
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 900px) {
+    max-width: none;
+  }
 }
 
 .media {

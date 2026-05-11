@@ -5,6 +5,8 @@ import { TrustedBySection } from "./_sections/TrustedBySection/TrustedBySection"
 import { WhyChooseSection } from "./_sections/WhyChooseSection/WhyChooseSection";
 import { KeyCapabilitiesSection } from "./_sections/KeyCapabilitiesSection/KeyCapabilitiesSection";
 import { ChallengesSection } from "./_sections/ChallengesSection/ChallengesSection";
+import { MeasurableOutcomesSection } from "./_sections/MeasurableOutcomesSection/MeasurableOutcomesSection";
+import { LeadingOrganizationsSection } from "./_sections/LeadingOrganizationsSection/LeadingOrganizationsSection";
 import { TestimonialsSection } from "./_sections/TestimonialsSection/TestimonialsSection";
 import { PackedBySection } from "./_sections/PackedBySection/PackedBySection";
 import { CTASection } from "./_sections/CTASection/CTASection";
@@ -22,7 +24,9 @@ export default function HomeBelowFold() {
       <KeyCapabilitiesSection />
       <WhyChooseSection />
       <ChallengesSection />
-      <TestimonialsSection />
+      <MeasurableOutcomesSection />
+      <LeadingOrganizationsSection />
+      {/* <TestimonialsSection /> */}
       <PackedBySection />
       <CTASection />
     </>

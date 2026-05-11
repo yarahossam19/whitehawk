@@ -168,9 +168,7 @@ export function WhyChooseSection() {
           Why Choose White Hawk?
         </h2>
         <p className={styles.subtitle}>
-          With White Hawk, you don&apos;t just get a tool—you get a
-          comprehensive, proactive cybersecurity solution that scales with your
-          business.
+    Why this cybersecurity system replaces traditional tool sprawl: <span style={{fontWeight:700}}>30% lower total cost of ownership</span> versus traditional consultancies;<span style={{fontWeight:700}}> 40% reduction in mean-time-to-respond</span>; sub-200 millisecond telemetry processing; <span style={{fontWeight:700}}>64+ enterprises across MENA</span> running on WhiteGuard managed services; <span style={{fontWeight:700}}>built-in intrusion prevention system controls</span>; integrated threat intelligence platforms feeds; zero rip-and-replace required for existing tooling.
         </p>
 
         <div className={styles.trackWrap}>

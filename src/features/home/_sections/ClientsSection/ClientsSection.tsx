@@ -28,25 +28,85 @@ import group7client1 from "@/../public/assets/icons/clients/group7-1.svg";
 import group7client2 from "@/../public/assets/icons/clients/group7-2.svg";
 import group7client3 from "@/../public/assets/icons/clients/group7-3.svg";
 
-const GROUPS: { id: number; icons: StaticImageData[] }[] = [
-  { id: 1, icons: [group1client1, group1client2, group1client3, group1client4] },
-  { id: 2, icons: [group2client1, group2client2, group2client3, group2client4] },
-  { id: 3, icons: [group3client1, group3client2, group3client3, group5client1] },
-  { id: 4, icons: [group4client1, group4client2, group4client3, group6client2] },
-  { id: 5, icons: [group5client1, group5client2, group5client3, group1client1] },
-  { id: 6, icons: [group6client1, group6client2, group6client3, group3client2 ] },
-  { id: 7, icons: [group7client1, group7client2, group7client3, group4client3] },
+type ClientIcon = { src: StaticImageData; alt: string };
+
+const ICON = (src: StaticImageData, alt: string): ClientIcon => ({ src, alt });
+
+const GROUPS: { id: number; icons: ClientIcon[] }[] = [
+  {
+    id: 1,
+    icons: [
+      ICON(group1client1, "A.T. Lease"),
+      ICON(group1client2, "Andalusia"),
+      ICON(group1client3, "Paxera Health"),
+      ICON(group1client4, "Easy Cash"),
+    ],
+  },
+  {
+    id: 2,
+    icons: [
+      ICON(group2client1, "Edraky"),
+      ICON(group2client2, "Al Seraj Islamic Bank"),
+      ICON(group2client3, "Client logo (group2-3)"),
+      ICON(group2client4, "Muheel"),
+    ],
+  },
+  {
+    id: 3,
+    icons: [
+      ICON(group3client1, "ELkheir"),
+      ICON(group3client2, "Grand Egyptian Museum"),
+      ICON(group3client3, "ORA"),
+      ICON(group5client1, "Orascom"),
+    ],
+  },
+  {
+    id: 4,
+    icons: [
+      ICON(group4client1, "Enmaa Finance"),
+      ICON(group4client2, "Bank Next"),
+      ICON(group4client3, "Ezz Elarab"),
+      ICON(group6client2, "Egyptian Cement"),
+    ],
+  },
+  {
+    id: 5,
+    icons: [
+      ICON(group5client1, "Orascom"),
+      ICON(group5client2, "Global Brands"),
+      ICON(group5client3, "Oliv"),
+      ICON(group1client1, "A.T. Lease"),
+    ],
+  },
+  {
+    id: 6,
+    icons: [
+      ICON(group6client1, "mdp"),
+      ICON(group6client2, "Egyptian Cement"),
+      ICON(group6client3, "Click Group"),
+      ICON(group3client2, "Grand Egyptian Museum"),
+    ],
+  },
+  {
+    id: 7,
+    icons: [
+      ICON(group7client1, "Jockey Club of Saudi Arabia "),
+      ICON(group7client2, "Plastic Bank"),
+      ICON(group7client3, "MLF Finance"),
+      ICON(group4client3, "Ezz Elarab"),
+    ],
+  },
 ];
 
 const SWAP_INTERVAL_MS = 3000;
 const FLIP_ANIMATION_MS = 560;
 
-function FaceImg({ src }: { src: StaticImageData }) {
+function FaceImg({ src, alt }: { src: StaticImageData; alt: string }) {
   return (
     <Image
       className={styles.faceImg}
       src={src}
-      alt=""
+      alt={alt}
       width={160}
       height={50}
       loading="lazy"
@@ -58,7 +118,7 @@ function FaceImg({ src }: { src: StaticImageData }) {
 function ClientFlipCard({
   icons,
 }: {
-  icons: StaticImageData[];
+  icons: ClientIcon[];
 }) {
   const n = icons.length;
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -67,7 +127,7 @@ function ClientFlipCard({
   useEffect(() => {
     icons.forEach((ic) => {
       const im = new window.Image();
-      im.src = ic.src;
+      im.src = ic.src.src;
     });
   }, [icons]);
 
@@ -105,7 +165,7 @@ function ClientFlipCard({
       <div className={styles.card}>
         <div className={styles.cardInner}>
           <div className={styles.cardFace} data-face="front">
-            <FaceImg src={icons[0]} />
+            <FaceImg src={icons[0].src} alt={icons[0].alt} />
           </div>
         </div>
       </div>
@@ -115,7 +175,10 @@ function ClientFlipCard({
   return (
     <div className={styles.card}>
       <div className={`${styles.cardInner} ${isFlipping ? styles.cardInnerFlipping : ""}`}>
-        <FaceImg src={icons[currentIndex]} />
+        <FaceImg
+          src={icons[currentIndex].src}
+          alt={icons[currentIndex].alt}
+        />
       </div>
     </div>
   );

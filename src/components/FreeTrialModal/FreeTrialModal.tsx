@@ -375,7 +375,7 @@ export function FreeTrialModal() {
           )}
           <Button
             type="submit"
-            label={submitting ? "Submitting..." : "Start free trial"}
+            label={submitting ? "Submitting..." : "Submit"}
             className={styles.submitBtn}
             disabled={submitting}
             loading={submitting}

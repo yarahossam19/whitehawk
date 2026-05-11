@@ -6,19 +6,31 @@ import { useLeadModalOpener } from "@/hooks/useLeadModalOpener";
 import styles from "./SolutionsHero.module.scss";
 
 interface SolutionsHeroProps {
-  title: string;
+  /** Each entry renders on its own line inside the H1. */
+  titleLines: string[];
   description: string;
   ctaLabel: string;
   imageSrc: string;
 }
 
-export function SolutionsHero({ title, description, ctaLabel, imageSrc }: SolutionsHeroProps) {
+export function SolutionsHero({ titleLines, description, ctaLabel, imageSrc }: SolutionsHeroProps) {
   const { openFromButtonTitle } = useLeadModalOpener();
   return (
     <section className={styles.hero}>
       <div className={styles.heroContent}>
         <div className={styles.heroLeft}>
-          <h1 className={styles.heroTitle}>{title}</h1>
+          <h1 className={styles.heroTitle}>
+            {titleLines.map((line, i) => (
+              <span
+                key={i}
+                className={`${styles.heroTitleLine} ${
+                  i === 0 ? styles.heroTitleLineLead : styles.heroTitleLineRest
+                }`}
+              >
+                {line}
+              </span>
+            ))}
+          </h1>
           <p className={styles.heroSubtitle}>{description}</p>
           <PrimaryButton
             title={ctaLabel}

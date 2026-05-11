@@ -5,6 +5,7 @@ import { PlatformHero } from "./PlatformHero/PlatformHero";
 import { ActivitiesSection } from "./ActivitiesSection/ActivitiesSection";
 import { MissionSection } from "./MissionSection/MissionSection";
 import { SuccessStoriesSection } from "./SuccessStoriesSection/SuccessStoriesSection";
+import { FaqsSection } from "./FaqsSection/FaqsSection";
 
 /** Public path prefix for platform imagery (hero.png, section1.png, …) */
 export function platformImageDir(type: PlatformType): string {
@@ -22,7 +23,7 @@ export function PlatformPage({ platformType, config }: PlatformPageProps) {
   return (
     <main>
       <PlatformHero
-        title={config.hero.title}
+        titleLines={config.hero.titleLines}
         subtitle={config.hero.subtitle}
         ctaLabel={config.hero.ctaLabel}
         heroImageSrc={`${imgDir}/hero.png`}
@@ -39,6 +40,11 @@ export function PlatformPage({ platformType, config }: PlatformPageProps) {
         sectionTitle={config.successStories.sectionTitle}
         items={config.successStories.items}
       /> */}
+      <FaqsSection
+        sectionTitle={config.faqs.sectionTitle}
+        sectionSubtitle={config.faqs.sectionSubtitle}
+        items={config.faqs.items}
+      />
     </main>
   );
 }

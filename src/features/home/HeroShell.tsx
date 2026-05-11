@@ -12,13 +12,12 @@ export function HeroShell() {
       <div className={styles.heroContent}>
         <div className={styles.heroLeft}>
           <h1 className={styles.heroTitle}>
-            Manage your entire cybersecurity program
-            <br />
-            in one platform
+            The Cybersecurity System That Replaces
+            <br />    
+           Five Tools With <span style={{ color: "#ABE0FF" }}> One</span>
           </h1>
           <p className={styles.heroSubtitle}>
-            Automate vulnerability management, streamline compliance, and proactively detect
-            threats across your organization – all in one integrated platform
+            WhiteHawk is the AI-powered cybersecurity system that unifies offensive testing, defensive monitoring, asset management, and GRC into one cybersecurity platform.
           </p>
           <HeroButtons />
         </div>

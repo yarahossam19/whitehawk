@@ -20,19 +20,20 @@ export function CTASection() {
           <PrimaryButton
             title="Start Free Trial"
             variant="primary"
-            onClick={openFreeTrialModal}
+             onClick={openDemoModal}
+     
             className={styles.primaryBtn}
           />
           <PrimaryButton
-            title="Schedule Demo"
+            title="Become A Partner"
             variant="secondary"
-            onClick={openDemoModal}
+                  onClick={openFreeTrialModal}
             className={styles.secondaryBtn}
           />
         </div>
-        {/* <p className={styles.disclaimer}>
+        <p className={styles.disclaimer}>
           No credit card required. 14-day free trial.
-        </p> */}
+        </p>
       </div>
     </section>
   );

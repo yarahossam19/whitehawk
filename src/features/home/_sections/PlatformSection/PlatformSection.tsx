@@ -26,11 +26,10 @@ export function PlatformSection() {
         <div className={styles.left}>
           <div className={styles.content}>
             <h2 className={styles.title}>
-              One platform to run your cybersecurity program
+            One Cybersecurity System to Run Your Entire Program
             </h2>
             <p className={styles.subtitle}>
-              A unified workspace for tasks, evidence, risk, assets, findings, and reporting
-            </p>
+A unified cybersecurity system for offensive testing, defensive monitoring, asset management, GRC, and reporting. One subscription. One dashboard. One source of truth that aligns your SOC, your auditors, your engineers, and your board on the same risk picture every day            </p>
             <ul className={styles.featureList}>
               {FEATURES.map(({ label, icon }) => (
                 <li key={label} className={styles.featureItem}>

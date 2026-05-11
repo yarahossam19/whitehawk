@@ -6,7 +6,7 @@ import { BenefitIcon } from "./BenefitsIcons";
 
 interface BenefitsSectionProps {
   sectionTitle: string;
-  sectionSubtitle: string;
+  sectionSubtitle?: string;
   items: BenefitItem[];
 }
 
@@ -19,7 +19,7 @@ export function BenefitsSection({
     <section className={styles.section}>
       <div className={styles.headerWrap}>
         <h2 className={styles.title}>{sectionTitle}</h2>
-        <p className={styles.subtitle}>{sectionSubtitle}</p>
+        {sectionSubtitle && <p className={styles.subtitle}>{sectionSubtitle}</p>}
       </div>
       <div className={styles.cards}>
         {items.map((item) => (

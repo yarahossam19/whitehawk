@@ -2,9 +2,11 @@ import type { Metadata } from "next";
 import Home from "@/features/home";
 
 export const metadata: Metadata = {
-  title: "Home",
+  title: {
+    absolute: "Cybersecurity System for MENA Enterprises | WhiteHawk",
+  },
   description:
-    "Manage your entire cybersecurity program in one platform—offensive, defensive, GRC, and asset visibility with automated workflows and audit-ready reporting.",
+    "WhiteHawk is the AI cybersecurity system unifying offensive, defensive, asset management, and GRC into one cybersecurity platform. MENA-built.",
   openGraph: {
     title: "WhiteHawk | Unified Cybersecurity Platform",
     description:
