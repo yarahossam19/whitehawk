@@ -99,8 +99,12 @@ async function decryptPayload(token: string): Promise<TokenPayload | null> {
   }
   // 12 byte IV + 16 byte tag + at least 1 byte ciphertext
   if (raw.length < 12 + 16 + 1) return null;
-  const iv = raw.subarray(0, 12);
-  const ctTag = raw.subarray(12);
+  // Copy into fresh ArrayBuffer-backed Uint8Arrays. TS 5.7+ requires
+  // `Uint8Array<ArrayBuffer>` (not the generic `Uint8Array<ArrayBufferLike>`)
+  // for `crypto.subtle.encrypt/decrypt`'s `BufferSource` parameter, and
+  // `subarray()` returns the looser generic type.
+  const iv = new Uint8Array(raw.subarray(0, 12));
+  const ctTag = new Uint8Array(raw.subarray(12));
   try {
     const key = await getKey();
     const plain = new Uint8Array(
