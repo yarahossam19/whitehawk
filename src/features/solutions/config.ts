@@ -58,11 +58,25 @@ export interface BenefitItem {
   value: string;
   title: string;
   description: string;
-  icon: "eye" | "lightning" | "clock" | "infinity";
+  icon:
+    | "eye"
+    | "lightning"
+    | "clock"
+    | "infinity"
+    | "bolt"
+    | "uptime"
+    | "confidence"
+    | "coverage"
+    |"report"
+    | "scale"
+    | "data";
+
 }
 
 export interface SolutionsPageConfig {
   title: string;
+  metaTitle: string;
+  metaDescription: string;
   hero: {
     /** Each entry renders on its own line inside the H1. */
     titleLines: string[];
@@ -96,6 +110,9 @@ export const SOLUTION_TYPES: SolutionType[] = ["fintech-company", "public-sector
 export const SOLUTIONS_CONFIG: Record<SolutionType, SolutionsPageConfig> = {
   "fintech-company": {
     title: "Fintech & Digital Payments",
+    metaTitle: "Fintech & Digital Payments | WhiteHawk Solutions",
+    metaDescription:
+      "Cybersecurity in fintech moves at the speed of an API call. So do attackers. Cybersecurity in fintech has to match that tempo — payment fraud detection in milliseconds, PCI-DSS evidence on demand, and regulator-grade incident reporting when something goes wrong. WhiteHawk is the cybersecurity platform built for fintech companies operating under CBE, SAMA, and CBL oversight.",
     hero: {
       titleLines: ["Cybersecurity in Fintech","Built for MENA's Payment & Lending Operators"],
       description:"Cybersecurity in fintech moves at the speed of an API call. So do attackers. Cybersecurity in fintech has to match that tempo — payment fraud detection in milliseconds, PCI-DSS evidence on demand, and regulator-grade incident reporting when something goes wrong. WhiteHawk is the cybersecurity platform built for fintech companies operating under CBE, SAMA, and CBL oversight.",
@@ -134,7 +151,7 @@ export const SOLUTIONS_CONFIG: Record<SolutionType, SolutionsPageConfig> = {
         { value: "Faster", title: "Banking Partnerships", description: "Pre-built compliance evidence for CBE, SAMA, and PCI-DSS shortens KYC and security review with sponsoring banks from months to weeks", icon: "eye" },
         { value: "Safe", title: "Lower Fraud Loss", description: "Real-time behavioral defenses cut chargeback rates and reduce reserves required by payment processors operating across MENA corridors", icon: "infinity" },
         { value: "Trust", title: "Customer Trust", description: "Public security posture (SOC 2, PCI-DSS, ISO 27001) becomes a marketing asset that wins enterprise contracts, not a hidden cost", icon: "lightning" },
-        { value: "Confidence", title: "Investor Confidence", description: "Mature security and fintech and cybersecurity is now a Series A diligence requirement across MENA fintech investors, not a Series C polish", icon: "clock" },
+        { value: "Confidence", title: "Investor Confidence", description: "Mature security and fintech and cybersecurity is now a Series A diligence requirement across MENA fintech investors, not a Series C polish", icon: "confidence" },
       ],
     },
     whyMatters: {
@@ -218,72 +235,61 @@ export const SOLUTIONS_CONFIG: Record<SolutionType, SolutionsPageConfig> = {
   /* Figma 864:6704 — Government / Public Sector */
   "public-sectors": {
     title: "Government & Public Sector",
+    metaTitle: "Government & Public Sector | WhiteHawk Solutions",
+    metaDescription:
+      "Government cybersecurity is national security. Citizen data, critical infrastructure, electoral systems, and public services are now permanent targets. WhiteHawk delivers government cybersecurity for ministries and public sector cybersecurity teams across MENA — aligned to NCA ECC, NCA CCC, NCA OTCC, and ISO 27001, and trusted by institutions like the Grand Egyptian Museum.",
     hero: {
-      titleLines: ["Government & Public Sector"],
+      titleLines: ["Government & Public ","Sector Cybersecurity Across MENA"],
       description:
-        "Defend citizen services and critical infrastructure with one platform. Align to FISMA, NIST, and FedRAMP while giving every program the same real-time picture of risk.",
-      ctaLabel: "Get Demo",
+"Government cybersecurity is national security. Citizen data, critical infrastructure, electoral systems, and public services are now permanent targets. WhiteHawk delivers government cybersecurity for ministries and public sector cybersecurity teams across MENA — aligned to NCA ECC, NCA CCC, NCA OTCC, and ISO 27001, and trusted by institutions like the Grand Egyptian Museum.",      ctaLabel: "Get Demo",
       imageSrc: "/assets/imgs/solutions/government.png",
     },
     challengeSolution: {
       challenge: {
-        title: "The Challenge",
+        title: "Top Cybersecurity Risks Facing Government & Public Infrastructure",
         items: [
           {
-            title: "FISMA and NIST SP 800-53 demand continuous evidence",
-            description: "Spreadsheets and point tools don’t scale for continuous evidence and compliance.",
-            icon: "documents",
-          },
-          {
-            title: "Legacy systems and technical debt create exploitable gaps",
-            description: "Decades of drift and outdated systems expand the attack surface.",
-            icon: "clock",
-          },
-          {
-            title: "Citizen PII and services must stay available and trustworthy",
-            description: "Availability and trust are mandatory under constant oversight and scrutiny.",
-            icon: "lock",
-          },
-          {
-            title: "Nation-state and ransomware campaigns target public infrastructure",
-            description: "Attackers focus on shared services and critical systems across agencies.",
-            icon: "lightning",
-          },
-          {
-            title: "Siloed tools prevent one true risk posture",
-            description: "Bureaus, contractors, and cloud tenants fragment visibility and ownership.",
+            title: "Nation-State Campaigns",
+            description: "Long-dwell intrusions targeting ministries, defense, and energy operators. Detection requires behavioral analytics and threat hunting, not signature-based tools — exactly what cyber security public sector teams now demand.",
             icon: "target",
           },
+          {
+            title: "Ransomware on Critical Services",
+            description: "Hospitals, utilities, and municipal services are increasingly ransomware targets across the region. Recovery without backups can take weeks.",
+            icon: "stroke",
+          },
+          {
+            title: "Citizen Data Exposure",
+            description: "Misconfigured cloud storage and weak access controls have produced some of the largest public-sector data leaks in MENA in the last 24 months.",
+            icon: "documents",
+          },
+         
         ],
       },
       solution: {
-        title: "The White Hawk Solution",
+        title: "Government Cybersecurity Solutions",
         items: [
           {
-            title: "Unified command view",
-            description: "One dashboard for security operations, findings, and compliance status across environments.",
+            title: "Threat Detection & National Security Monitoring",
+            description: "24/7 SOC operations with regional coverage across Egypt, KSA, the UK, the US, and Libya. Behavioral analytics tuned to nation-state TTPs and threat-intel feeds focused on adversaries active in MENA's public sector.",
             icon: "dashboard",
           },
           {
-            title: "Continuous offensive assurance",
-            description: "Automated and guided testing so configuration drift and critical vulns surface before adversaries do.",
+            title: "Critical Infrastructure & Public Network Protection",
+            description: "OT and ICS security for utilities, transportation, and public-service operators. Network segmentation, secure remote access, and continuous monitoring of operational technology — the systems that fail most catastrophically when attacked.",
             icon: "lightning",
           },
           {
-            title: "24/7 defensive coverage",
-            description: "SOC-ready monitoring, alerting, and response workflows aligned to public-sector runbooks.",
+            title: "Government Compliance, Governance & Risk Management",
+            description: "Continuous control mapping for NCA ECC, NCA CCC, NCA OTCC, ISO/IEC 27001, and sovereign cloud requirements. Audit evidence collected continuously, not assembled in panic the week the assessor arrives.",
             icon: "lock",
           },
           {
-            title: "GRC built for FISMA & FedRAMP",
-            description: "Control mapping, evidence collection, and reporting that match how auditors and ATO teams work.",
-            icon: "report",
-          },
-          {
-            title: "Authoritative asset inventory",
-            description: "Discover and classify every system—on-prem, cloud, and contractor-hosted—that touches mission data.",
+            title: "Identity, Access & Citizen Data Protection",
+            description: "Privileged access management, multi-factor authentication, role-based access control, and data-loss prevention for citizen records. Zero-trust architectures designed for both employee and citizen-facing services.",
             icon: "data",
           },
+         
         ],
       },
     },
@@ -291,10 +297,10 @@ export const SOLUTIONS_CONFIG: Record<SolutionType, SolutionsPageConfig> = {
       sectionTitle: "Outcomes that matter to public missions",
       sectionSubtitle: "Less manual evidence work, faster decisions, stronger citizen trust",
       items: [
-        { value: "100%", title: "ATO-ready traceability", description: "Evidence tied to controls", icon: "eye" },
-        { value: "2×", title: "Faster risk reviews", description: "Shared data, one workflow", icon: "lightning" },
-        { value: "50%", title: "Less manual collection", description: "Automated GRC evidence", icon: "clock" },
-        { value: "24/7", title: "Always-on visibility", description: "Critical systems covered", icon: "infinity" },
+        { value: "Trusted", title: "Citizen Confidence", description: "Audited cybersecurity posture builds public trust and drives adoption of secure digital government services across the region.", icon: "eye" },
+        { value: "Resilient", title: "Always-On Services", description: "Continuous monitoring ensures service availability under attack — measured in minutes of downtime, not hours", icon: "infinity" },
+        { value: "Aligned", title: "Compliance Ready", description: "Evidence-on-demand simplifies compliance with NCA frameworks and ISO standards — no more last-minute audit rush.", icon: "report" },
+        { value: "Protected", title: "Data Sovereignty", description: "Citizen data stays local, encrypted, and fully controlled — aligned with sovereignty and residency requirements", icon: "data" },
       ],
     },
     whyMatters: {
@@ -303,9 +309,7 @@ export const SOLUTIONS_CONFIG: Record<SolutionType, SolutionsPageConfig> = {
         "Government cybersecurity has to balance two things that pull in opposite directions: open access for citizens and ironclad protection of sovereign data. WhiteHawk gives govt cyber security teams the platform and the expertise to do both — without the vendor sprawl that plagued public-sector IT historically",
       illustration: "government",
       bottomTitle: "Why Cybersecurity Matters in Government & Public Sector",
-      bottomDescription:
-        "A breach inside a government agency is not just an IT incident — it is a sovereign-trust event. Citizen records, regulatory data, defense communications, and critical-service availability are all at stake. Cybersecurity and government can no longer be separate procurement tracks; they have to be one continuously assessed program",
-      features: [
+      bottomDescription:" A breach inside a government agency is not just an IT incident — it is a sovereign-trust event. Citizen records, regulatory data, defense communications, and critical-service availability are all at stake. Cybersecurity and government can no longer be separate procurement tracks; they have to be one continuously assessed program",      features: [
         {
           title: "Sovereign Crisis",
           description: "Not just IT incident, but a direct threat to national trust",
@@ -329,130 +333,104 @@ export const SOLUTIONS_CONFIG: Record<SolutionType, SolutionsPageConfig> = {
       ],
     },
     regulatory: {
-      title: "Regulatory Compliance for Public Sector Cybersecurity",
+      title: "Regulatory Compliance for Government Cybersecurity.",
       description:
-        "WhiteHawk maintains continuous evidence for the frameworks that govern public-sector cybersecurity in MENA and globally: NCA ECC and Essential Cybersecurity Controls for KSA agencies, FISMA and NIST SP 800-53 for federal-aligned programs, FedRAMP authorisation packages for cloud workloads, ISO/IEC 27001 for information-security management, and GDPR for cross-border citizen data",
-      illustration: "government",
+"WhiteHawk maintains continuous evidence for the frameworks that govern public-sector security in MENA: NCA ECC, NCA CCC, NCA OTCC for operational technology, sovereign data residency requirements, and international standards including ISO 27001 and NIST CSF where applicable to multi-national engagements.",      illustration: "government",
     },
     faqs: {
-      sectionTitle: "Frequently Asked Questions About Public Sector Cybersecurity",
+      sectionTitle: "What are advanced cybersecurity platforms for public sector protection?",
       sectionSubtitle:
-        "A quick answer to the most common platform comparison question",
+      "WhiteHawk is the cybersecurity platform purpose-built for cyber security public sector environments — combining 24/7 SOC, OT security, NCA-aligned GRC, and DFIR under one continuously assessed program.",
       items: [
         {
-          question: "What is public-sector cybersecurity?",
+          question: "Who needs government & public sector cybersecurity?",
           answer:
-            "It's the continuous protection of citizen-facing services, sovereign data, and critical-infrastructure systems — combining 24/7 SOC, offensive assurance, NCA / FISMA evidence automation, and DFIR under one platform built for regulated public agencies",
-        },
+"Ministries, agencies, sovereign-cloud operators, public-service providers, defense contractors, cultural institutions, and any entity whose compromise would have national-level consequences. Government cyber security agencies typically lead procurement.",        },
         {
-          question: "Who needs Public Sector Cybersecurity?",
+          question: "How often should government organizations conduct cybersecurity assessments?",
           answer:
-            "Ministries, regulators, federal and municipal agencies, public hospitals, defense-adjacent contractors, judicial systems, and any operator of critical national infrastructure — across MENA and beyond",
-        },
+"NCA ECC and NCA CCC frameworks require annual readiness reviews plus continuous monitoring. Mature government cybersecurity programs run quarterly red-team exercises against high-criticality assets.",        },
         {
           question:
-            "How often should government agencies perform cybersecurity assessments?",
+            "What role does cybersecurity play in protecting national critical infrastructure?",
           answer:
-            "FISMA mandates continuous monitoring. NCA ECC expects ongoing control evaluation. Mature public-sector programs add annual third-party penetration testing, quarterly red-team exercises against high-value targets, and continuous vulnerability scanning across legacy and cloud estates",
-        },
+"Critical infrastructure is the highest-stakes attack surface. NCA OTCC mandates specific OT security controls; public sector cybersecurity teams must apply them across utilities, transport, and energy.",        },
         {
-          question: "How does the platform protect citizen data and services?",
+          question: "How can public sector organizations improve resilience against cyberattacks?",
           answer:
-            "Through identity-based access, network segmentation, encryption at rest and in transit, DLP, and 24/7 SOC monitoring tuned to nation-state and ransomware TTPs — so citizen PII stays confidential and citizen services stay available",
-        },
+"Continuous monitoring, validated incident-response playbooks, segmented networks, and tested recovery procedures. The cybersecurity and government playbook is now 'assume breach,' not 'prevent every intrusion'",        },
         {
-          question: "What are the biggest cybersecurity threats to government?",
+          question: "What is the importance of citizen data protection in government cybersecurity?",
           answer:
-            "Nation-state intrusions, ransomware against critical services, supplier supply-chain compromise, insider misuse, and legacy-system exploitation. Each one triggers sovereign-trust review and regulator notification",
-        },
+"Citizen trust is the foundation of digital government. A single major leak can set digital-services adoption back years. Privacy-by-design, encryption, and access controls are non-negotiable.",        },
         {
-          question: "Does the platform help with FISMA, NCA ECC, and FedRAMP evidence?",
+          question: "What should government organizations look for in a cybersecurity partner?",
           answer:
-            "Yes. Controls map directly to FISMA, NCA ECC, FedRAMP, NIST SP 800-53, and ISO 27001 — with continuous evidence collection and audit/ATO-ready reports, so accreditation cycles compress from quarters to weeks",
-        },
-        {
-          question:
-            "What should a public-sector body look for in a cybersecurity partner?",
-          answer:
-            "Regulator depth (NCA, FISMA, FedRAMP), cleared personnel where required, sovereign data-handling discipline, real public-sector client references, and a 24/7 SOC that understands mission-critical service availability — not just generic enterprise alerts",
-        },
+"NCA registration, sovereign-cloud capability, public-sector references, OT security depth, and continuous evidence collection. The partners trusted by government cyber security agencies share these traits.",        },
+        
       ],
     },
   },
   /* Figma 864:6861 — Healthcare */
   "healthcare-organizations": {
     title: "Healthcare Organizations",
+    metaTitle: "Healthcare Organizations | WhiteHawk Solutions",
+    metaDescription:
+      "Healthcare Cybersecurity is patient safety. Connected medical devices, electronic health records, and remote consultation platforms are now permanent targets for ransomware crews and data brokers. WhiteHawk delivers healthcare cybersecurity solutions for hospitals, imaging companies, insurers, and medical-tourism providers — including current clients like PaxeraHealth and Andalusia Medical Tourism — aligned to HIPAA, GDPR, and regional health regulators.",
     hero: {
-      titleLines: ["Healthcare Organizations"],
+      titleLines: ["Healthcare Cybersecurity","for Hospitals,Clinics & Health-Tech"],
       description:
-        "Keep patient care running while you harden PHI, medical devices, and cloud. WhiteHawk ties HIPAA-ready controls to real-time visibility—without slowing clinicians down.",
-      ctaLabel: "Get Demo",
+"Healthcare Cybersecurity is patient safety. Connected medical devices, electronic health records, and remote consultation platforms are now permanent targets for ransomware crews and data brokers. WhiteHawk delivers healthcare cybersecurity solutions for hospitals, imaging companies, insurers, and medical-tourism providers — including current clients like PaxeraHealth and Andalusia Medical Tourism — aligned to HIPAA, GDPR, and regional health regulators.",      ctaLabel: "Get Demo",
       imageSrc: "/assets/imgs/solutions/healthcare.png",
     },
     challengeSolution: {
       challenge: {
-        title: "The Challenge",
+        title: "Top Cybersecurity Risks Facing Healthcare Providers",
         items: [
           {
-            title: "HIPAA demands provable access control and audit trails",
+            title: "Ransomware on Clinical Systems",
             description:
-              "Breach rules and BA oversight require evidence; manual processes break under volume.",
-            icon: "lock",
-          },
+"Hospital ransomware is growing fastest in MENA. Outage windows directly impact patient care and trigger mandatory regulatory reporting under regional health cybersecurity rules.",       
+     icon: "target",
+      },
           {
-            title: "IoMT and vendor systems multiply unseen entry points",
+            title: "Patient Data Theft",
             description:
-              "Bedside devices and vendor-managed systems expand risk beyond what inventories capture.",
+"Medical records sell for 10x more than payment cards on criminal marketplaces. Leaks trigger HIPAA, GDPR, and local-regulator penalties simultaneously.",
             icon: "lightning",
           },
           {
-            title: "Ransomware and downtime directly threaten patient safety",
+            title: "Medical Device Compromise",
             description:
-              "Recovery windows are measured in minutes, not days, across clinical operations.",
-            icon: "target",
-          },
-          {
-            title: "PHI is scattered across systems and backups",
-            description:
-              "EHRs, imaging, labs, SaaS, and backups fragment visibility into how PHI actually flows.",
-            icon: "documents",
-          },
-          {
-            title: "Lean teams lose time proving readiness",
-            description:
-              "OCR, payers, and boards require proof; manual reporting steals time from real defense.",
-            icon: "clock",
+"IV pumps, imaging systems, and patient monitors are connected, often unpatched, and rarely covered by traditional endpoint protection — a core medical cybersecurity blind spot",           
+ icon: "data",
           },
         ],
       },
       solution: {
-        title: "The White Hawk Solution",
+        title: "Healthcare Cybersecurity Solutions",
         items: [
           {
-            title: "Clinical-aware operations hub",
-            description: "One place for alerts, vulns, and compliance tasks so IT, security, and privacy share the same truth.",
+            title: "Threat Detection for Healthcare Systems",
+            description: "24/7 SOC monitoring tuned to clinical workflows. Behavioral analytics distinguish nurse-station shift changes from credential misuse, and clinical-system alerts route to staff who understand both technology and patient impact.",
             icon: "dashboard",
           },
           {
-            title: "Offensive testing for care environments",
-            description: "Prioritize exploitable issues in networks, apps, and cloud that touch PHI and connected devices.",
+            title: "Patient Data Privacy & Medical Record Protection",
+            description: "Encryption at rest and in transit, data-loss prevention across email and storage, role-based access for electronic health records, and audit logging detailed enough to satisfy HIPAA and regional data-protection regulators on demand.",
             icon: "lightning",
           },
           {
-            title: "Always-on defensive monitoring",
-            description: "Detect anomalous access and lateral movement across systems that store or transmit patient data.",
+            title: "HIPAA Compliance, Governance & Risk Management",
+            description: "Continuous HIPAA control mapping, GDPR alignment for cross-border patient data, and ISO 27001 evidence — collected automatically through WhiteHawk's GRC module instead of manually reassembled at every audit cycle.",
             icon: "lock",
           },
           {
-            title: "HIPAA-aligned GRC",
-            description: "Map safeguards to HIPAA (and HITRUST where you need it), with evidence that survives audits.",
-            icon: "report",
-          },
-          {
-            title: "Full-spectrum asset discovery",
-            description: "Find unmanaged devices and shadow SaaS so nothing with PHI sits outside your control set.",
+            title: "Medical Device, Cloud & Hospital Network Security",
+            description: "Network segmentation isolating connected medical devices from administrative networks, cloud-posture monitoring across Azure and AWS, and continuous vulnerability assessment for the hospital network's actual living asset inventory.",
             icon: "data",
           },
+         
         ],
       },
     },
@@ -460,10 +438,10 @@ export const SOLUTIONS_CONFIG: Record<SolutionType, SolutionsPageConfig> = {
       sectionTitle: "Why healthcare teams choose WhiteHawk",
       sectionSubtitle: "Stronger posture without disrupting care delivery",
       items: [
-        { value: "100%", title: "PHI touchpoint coverage", description: "Know where data lives", icon: "eye" },
-        { value: "4×", title: "Faster mean-time-to-detect", description: "Earlier containment", icon: "lightning" },
-        { value: "70%", title: "Less audit prep time", description: "Evidence on demand", icon: "clock" },
-        { value: "24/7", title: "Patient-safe monitoring", description: "Always watching", icon: "infinity" },
+        { value: "Uptime", title: "Clinical Continuity", description: "Continuous healthcare cybersecurity monitoring keeps EHR, imaging, and clinical systems running — even during regional disruptions or active attacks.", icon: "uptime" },
+        { value: "Confidence", title: "Patient Confidence", description: "Strong security posture now influences patient choice for healthcare and medical tourism across the Gulf region.", icon: "confidence" },
+        { value: "Compliance", title: "Compliance Simplicity", description: "On-demand evidence for HIPAA, GDPR, ISO 27001, ISO 27799, and regional regulators removes audit-season pressure", icon: "clock" },
+        { value: "Coverage", title: "Better Coverage", description: "Cyber insurers require proven controls — automated evidence generation helps reduce friction and improve underwriting outcomes", icon: "coverage" },
       ],
     },
     whyMatters: {

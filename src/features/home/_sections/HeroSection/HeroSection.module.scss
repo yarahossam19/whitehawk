@@ -21,7 +21,9 @@
   padding: 200px 24px 100px;
   box-sizing: border-box;
 
-
+  @media (max-width: 1024px) {
+    gap:20px;
+  }
 
   @media (max-width: 850px) {
     padding: 100px 24px 64px;
@@ -54,8 +56,12 @@
   color: white;
   margin: 0 0 16px;
 
+  @media (max-width:1380px) {
+    font-size: 35px;
+    max-width:500px;
+  }
   @media (max-width: 1024px) {
-    font-size: clamp(30px, 6vw, 40px);
+    font-size: 32px;
     max-width: 407px;
   }
 
@@ -74,7 +80,10 @@
   line-height: 1.4;
   color: rgba(255, 255, 255, 0.9);
   margin: 0 0 40px;
-
+  @media (max-width:1380px) {
+    font-size: 16px;
+    max-width: 500px;
+  }
   @media (max-width: 1024px) {
     max-width: 407px;
     margin-bottom: 28px;
@@ -133,12 +142,12 @@
 }
 .heroRight {
   flex-shrink: 0;
-  min-width: 500px;
+  min-width: 600px;
 
   @media (max-width: 1024px) {
     width: 100%;
     min-width: 0;
-    max-width: 400px;
+    max-width: 500px;
     margin: 0 auto;
     order: 0;
   }
@@ -146,82 +155,18 @@
   @media (max-width: 850px) {
     /* Stack: video above copy */
     order: -1;
+    max-width: 600px;
   }
 
-  @media (max-width: 600px) {
-    max-width: min(280px, 100%);
-    margin-left: auto;
-    margin-right: auto;
-  }
 }
 
-.diagramWrap {
-  position: relative;
-  width: 100%;
-  max-width: 1100px;
-  min-width: 550px;
-  aspect-ratio: 472 / 365;
 
-  @media (max-width: 1024px) {
-    min-width: 0;
-    max-width: 310px;
-    margin: 0 auto;
-    aspect-ratio: 310 / 240;
-  }
-  @media (max-width: 700px) {
-    max-width: 100%;
-    min-width: 0;
-    order: -1;
-    max-width: none;
-    display: flex;
-    box-sizing: border-box;
-  }
-}
 
-.diagramSvg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  mix-blend-mode: lighten;
-  z-index: 2; /* above logo so all 4 lines (incl. horizontal) are visible */
-}
 
-.diagramLine {
-  stroke: #abe0ff;
-  stroke-width: 0.2;
-  stroke-dasharray: 0.5 0.5;
-  stroke-opacity: 0.9;
-}
 
-.diagramDot {
-  filter: drop-shadow(0 0 4px #abe0ff);
-  animation: diagramDotShadow 10s linear infinite;
-}
 
-@keyframes diagramDotShadow {
-  /* Synced with motion: dim at center (0,25,50,75,100%), bright at icons (12.5,37.5,62.5,87.5%) */
-  0%, 25%, 50%, 75%, 100% { filter: drop-shadow(0 0 1px rgba(171, 224, 255, 0.25)); }
-  12.5%, 37.5%, 62.5%, 87.5% { filter: drop-shadow(0 0 6px #abe0ff); }
-}
 
-.diagramCenter {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 
-  background-color: #002439 !important;
-  z-index: 4;
-
-  /* Match logo Image aspect box so LCP element does not resize after load */
-  width: min(250px, 55%);
-  min-height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
 
 .diagramCenter img,
 .diagramCenter span {
@@ -266,9 +211,13 @@
   background: #003859;
   contain: content;
   @media (max-width: 850px) {
-    /* Stack: video above copy */
+    max-width:600px;
+height: 360px;
+  }@media (max-width: 600px) {
+    max-width:100%;
 height: auto;
   }
+
 }
 
 .heroVideoStill {
@@ -284,11 +233,11 @@ height: auto;
   position: absolute;
   inset: 0;
   display: block;
-  width: 102%;
+  width: 100%;
   height: 100%;
   object-fit: cover;
   background: transparent;
-  transform: translateX(-5%) translateY(-5%);
+
   pointer-events: none;
   opacity: 0;
   transition: opacity 200ms ease;

@@ -24,12 +24,16 @@ export async function generateMetadata({
   const { type } = await params;
   const config = getSolutionsConfig(type);
   if (!config) return { title: "Solutions", description: "WhiteHawk Solutions" };
+
+  const title = config.metaTitle || `${config.title} | WhiteHawk Solutions`;
+  const description = config.metaDescription || config.hero.description;
+
   return {
-    title: `${config.title} | WhiteHawk Solutions`,
-    description: config.hero.description,
+    title,
+    description,
     openGraph: {
-      title: `${config.title} | WhiteHawk`,
-      description: config.hero.description,
+      title,
+      description,
     },
   };
 }

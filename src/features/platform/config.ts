@@ -27,6 +27,10 @@ export interface FaqEntry {
 
 export interface PlatformPageConfig {
   title: string;
+  /** HTML <title> for this platform page (used by next/metadata). */
+  metaTitle: string;
+  /** Meta description for this platform page (used by next/metadata). */
+  metaDescription: string;
   hero: {
     /** Each entry renders on its own line inside the H1. */
     titleLines: string[];
@@ -55,6 +59,9 @@ export interface PlatformPageConfig {
 export const PLATFORM_CONFIG: Record<PlatformType, PlatformPageConfig> = {
   offensive: {
     title: "Offensive Security",
+    metaTitle: "Offensive Security | WhiteHawk Platform",
+    metaDescription:
+      "WhiteHawk's offensive security module simulates real-world attackers against your environment. Our offensive security team holds OSCP, OSWE, OSEP, OSWP, CEH, CRTP, C|PENT, and GPEN certifications and has run engagements against banks, fintechs, museums, and healthcare networks across MENA.",
     hero: {
       titleLines: [
         "Offensive Security",
@@ -182,6 +189,9 @@ export const PLATFORM_CONFIG: Record<PlatformType, PlatformPageConfig> = {
   },
   defensive: {
     title: "Defensive Security",
+    metaTitle: "Defensive Security | WhiteHawk Platform",
+    metaDescription:
+      "WhiteHawk's defensive security module combines 24/7 SOC operations with AI-driven correlation, automated containment, and continuous threat hunting to reduce mean-time-to-respond without flooding your team with low-fidelity noise — cyber defense at MENA scale.",
     hero: {
       titleLines: [
         "Cyber Defense",
@@ -290,6 +300,9 @@ export const PLATFORM_CONFIG: Record<PlatformType, PlatformPageConfig> = {
   },
   grc: {
     title: "GRC",
+    metaTitle: "GRC | WhiteHawk Platform",
+    metaDescription:
+      "WhiteHawk's GRC module maps controls to frameworks, collects evidence continuously, and produces audit-ready reports so compliance stays current across ISO 27001, NCA ECC/CCC/OTCC, HIPAA, GDPR, and more.",
     hero: {
       titleLines: ["GRC Compliance", "Without the Audit-Season Panic"],
       subtitle:"GRC compliance is where most security programs lose money — manual evidence collection, last-minute audit prep, and policy documents nobody reads. WhiteHawk's GRC compliance module continuously maps governance risk and compliance controls to the frameworks your regulator audits against, so the evidence is already there when the auditor walks in.",
@@ -402,6 +415,9 @@ export const PLATFORM_CONFIG: Record<PlatformType, PlatformPageConfig> = {
   },
   "asset-management": {
     title: "Asset Management",
+    metaTitle: "Asset Management | WhiteHawk Platform",
+    metaDescription:
+      "WhiteHawk's asset management module discovers, classifies, and tracks your technology footprint across cloud, on-prem, and third parties — creating a continuously updated inventory that powers risk prioritization and compliance.",
     hero: {
       titleLines: [
         "Asset Management",

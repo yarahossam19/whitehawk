@@ -15,6 +15,9 @@ $icon-inner: 50px;
 .section {
   padding: 64px 0px 56px 0px;
   background: transparent;
+    @media (max-width: 600px) {
+    padding: 40px var(--pad-mobile, 16px) 56px;
+  }
 }
 
 .container {
@@ -25,9 +28,9 @@ $icon-inner: 50px;
 .title {
   font-family: Arial, sans-serif;
   font-weight: 700;
-  font-size: 40px;
-  line-height: 60px;
-  letter-spacing: -0.02em;
+  font-size: clamp(26px, 3.4vw, 40px);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
   color: $primary-text;
   text-align: center;
   margin: 0 0 0;
@@ -35,12 +38,15 @@ $icon-inner: 50px;
 
 .subtitle {
   font-family: Arial, sans-serif;
-  font-size: 18px;
-  line-height: 28px;
+  font-size: clamp(14px, 1.4vw, 18px);
+  line-height: 1.5;
   color: $secondary-text;
   text-align: center;
   margin: 0 auto 50px;
-  max-width:100%;
+  max-width: 880px;
+  @media (max-width: 900px) {
+    max-width:80%;
+  }
 }
 
 // Track wrapper  

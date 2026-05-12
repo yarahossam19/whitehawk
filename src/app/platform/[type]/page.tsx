@@ -29,12 +29,16 @@ export async function generateMetadata({
   const { type } = await params;
   const config = getPlatformConfig(type);
   if (!config) return { title: "Platform", description: "WhiteHawk Platform" };
+
+  const title = config.metaTitle || `${config.title} | WhiteHawk Platform`;
+  const description = config.metaDescription || config.hero.subtitle;
+
   return {
-    title: `${config.title} | WhiteHawk Platform`,
-    description: config.hero.subtitle,
+    title,
+    description,
     openGraph: {
-      title: `${config.title} | WhiteHawk`,
-      description: config.hero.subtitle,
+      title,
+      description,
     },
   };
 }
