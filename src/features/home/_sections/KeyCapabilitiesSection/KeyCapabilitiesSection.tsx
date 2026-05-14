@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import styles from "./KeyCapabilitiesSection.module.scss";
 import offensive from "@/../public/assets/icons/navbar/Offensive.svg";

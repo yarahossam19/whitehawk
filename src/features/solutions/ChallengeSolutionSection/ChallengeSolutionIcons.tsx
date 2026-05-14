@@ -45,6 +45,21 @@ const CHALLENGE_ICONS: Record<ChallengeItem["icon"], React.ReactNode> = {
   <path d="M13.3329 14.1719H6.66626" stroke="#E7000B" strokeWidth="1.33333" strokeLinecap="round" strokeLinejoin="round"/>
 </svg>
   ),
+  data: (
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+  <g clipPath="url(#clip0_2256_1579)">
+    <path d="M16.6665 1.66797H3.33317C2.4127 1.66797 1.6665 2.41416 1.6665 3.33464V6.66797C1.6665 7.58844 2.4127 8.33464 3.33317 8.33464H16.6665C17.587 8.33464 18.3332 7.58844 18.3332 6.66797V3.33464C18.3332 2.41416 17.587 1.66797 16.6665 1.66797Z" stroke="#02A1FF" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M16.6665 11.668H3.33317C2.4127 11.668 1.6665 12.4142 1.6665 13.3346V16.668C1.6665 17.5884 2.4127 18.3346 3.33317 18.3346H16.6665C17.587 18.3346 18.3332 17.5884 18.3332 16.668V13.3346C18.3332 12.4142 17.587 11.668 16.6665 11.668Z" stroke="#02A1FF" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M5 5H5.00833" stroke="#02A1FF" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M5 15H5.00833" stroke="#02A1FF" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round"/>
+  </g>
+  <defs>
+    <clipPath id="clip0_2256_1579">
+      <rect width="20" height="20" fill="white"/>
+    </clipPath>
+  </defs>
+</svg>
+  ),
 };
 
 function ChallengeTitleIconSvg() {

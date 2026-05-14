@@ -8,7 +8,7 @@ export interface ChallengeItem {
 
   title: string;
   description: string;
-  icon: "target" | "lightning" | "lock" | "clock" | "stroke" | "documents";
+  icon: "target" | "lightning" | "lock" | "clock" | "stroke" | "documents" | "data";
 }
 
 export interface WhyMattersFeatureConfig {
@@ -110,9 +110,9 @@ export const SOLUTION_TYPES: SolutionType[] = ["fintech-company", "public-sector
 export const SOLUTIONS_CONFIG: Record<SolutionType, SolutionsPageConfig> = {
   "fintech-company": {
     title: "Fintech & Digital Payments",
-    metaTitle: "Fintech & Digital Payments | WhiteHawk Solutions",
+    metaTitle: "Cybersecurity in Fintech: PCI-DSS & CBE | WhiteHawk",
     metaDescription:
-      "Cybersecurity in fintech moves at the speed of an API call. So do attackers. Cybersecurity in fintech has to match that tempo — payment fraud detection in milliseconds, PCI-DSS evidence on demand, and regulator-grade incident reporting when something goes wrong. WhiteHawk is the cybersecurity platform built for fintech companies operating under CBE, SAMA, and CBL oversight.",
+      "Cybersecurity in fintech — PCI-DSS 4.0, CBE, SAMA, FRA 139, API security, fraud detection, 24/7 SOC. WhiteHawk for MENA fintechs.",
     hero: {
       titleLines: ["Cybersecurity in Fintech","Built for MENA's Payment & Lending Operators"],
       description:"Cybersecurity in fintech moves at the speed of an API call. So do attackers. Cybersecurity in fintech has to match that tempo — payment fraud detection in milliseconds, PCI-DSS evidence on demand, and regulator-grade incident reporting when something goes wrong. WhiteHawk is the cybersecurity platform built for fintech companies operating under CBE, SAMA, and CBL oversight.",
@@ -235,10 +235,9 @@ export const SOLUTIONS_CONFIG: Record<SolutionType, SolutionsPageConfig> = {
   /* Figma 864:6704 — Government / Public Sector */
   "public-sectors": {
     title: "Government & Public Sector",
-    metaTitle: "Government & Public Sector | WhiteHawk Solutions",
+    metaTitle: "Government Cybersecurity: NCA ECC & CCC | WhiteHawk",
     metaDescription:
-      "Government cybersecurity is national security. Citizen data, critical infrastructure, electoral systems, and public services are now permanent targets. WhiteHawk delivers government cybersecurity for ministries and public sector cybersecurity teams across MENA — aligned to NCA ECC, NCA CCC, NCA OTCC, and ISO 27001, and trusted by institutions like the Grand Egyptian Museum.",
-    hero: {
+"Government cybersecurity by WhiteHawk — NCA ECC, NCA CCC, NCA OTCC, OT security, citizen data protection, sovereign-aware SOC for MENA.",    hero: {
       titleLines: ["Government & Public ","Sector Cybersecurity Across MENA"],
       description:
 "Government cybersecurity is national security. Citizen data, critical infrastructure, electoral systems, and public services are now permanent targets. WhiteHawk delivers government cybersecurity for ministries and public sector cybersecurity teams across MENA — aligned to NCA ECC, NCA CCC, NCA OTCC, and ISO 27001, and trusted by institutions like the Grand Egyptian Museum.",      ctaLabel: "Get Demo",
@@ -374,11 +373,11 @@ export const SOLUTIONS_CONFIG: Record<SolutionType, SolutionsPageConfig> = {
   /* Figma 864:6861 — Healthcare */
   "healthcare-organizations": {
     title: "Healthcare Organizations",
-    metaTitle: "Healthcare Organizations | WhiteHawk Solutions",
+    metaTitle: "Healthcare Cybersecurity: HIPAA & ISO 27799 | WhiteHawk",
     metaDescription:
-      "Healthcare Cybersecurity is patient safety. Connected medical devices, electronic health records, and remote consultation platforms are now permanent targets for ransomware crews and data brokers. WhiteHawk delivers healthcare cybersecurity solutions for hospitals, imaging companies, insurers, and medical-tourism providers — including current clients like PaxeraHealth and Andalusia Medical Tourism — aligned to HIPAA, GDPR, and regional health regulators.",
-    hero: {
-      titleLines: ["Healthcare Cybersecurity","for Hospitals,Clinics & Health-Tech"],
+
+"Healthcare cybersecurity solutions — HIPAA, GDPR, ISO 27799, medical device security, 24/7 SOC. PaxeraHealth & Andalusia trust WhiteHawk.",    hero: {
+      titleLines: ["Healthcare Cybersecurity","for Hospitals, Clinics & Health-Tech"],
       description:
 "Healthcare Cybersecurity is patient safety. Connected medical devices, electronic health records, and remote consultation platforms are now permanent targets for ransomware crews and data brokers. WhiteHawk delivers healthcare cybersecurity solutions for hospitals, imaging companies, insurers, and medical-tourism providers — including current clients like PaxeraHealth and Andalusia Medical Tourism — aligned to HIPAA, GDPR, and regional health regulators.",      ctaLabel: "Get Demo",
       imageSrc: "/assets/imgs/solutions/healthcare.png",
@@ -445,32 +444,32 @@ export const SOLUTIONS_CONFIG: Record<SolutionType, SolutionsPageConfig> = {
       ],
     },
     whyMatters: {
-      topTitle: "Protecting Patient Care with End-to-End Cybersecurity",
+      topTitle: "Securing Healthcare Systems, Patients & Critical Data",
       topDescription:
-        "Healthcare lives between two non-negotiables: keep patient care running and keep PHI safe. WhiteHawk gives clinical and security teams a single platform that ties HIPAA-ready controls to real-time visibility — across EHRs, IoMT, cloud, and the long tail of vendor systems — without slowing clinicians down.",
+        "Healthcare cybersecurity has to protect three things at once: clinical operations that cannot stop, patient data that cannot leak, and connected devices that cannot be tampered with. WhiteHawk Healthcare Cybersecurity is the only platform that tackles all three under a single continuously assessed program.",
       illustration: "healthcare",
-      bottomTitle: "Why Cybersecurity Matters in Healthcare",
+      bottomTitle: "Why Cybersecurity Matters in Healthcare Organizations",
       bottomDescription:
-        "A breach in a healthcare environment is not just an IT incident — it is a patient-safety event. PHI, medical devices, and clinical workflows are all interlinked, and downtime measured in minutes can translate to delayed care. Cybersecurity here has to be continuous, evidence-rich, and never disruptive to bedside operations.",
+        "A ransomware event inside a hospital is not measured in dollars. It is measured in delayed surgeries, rerouted ambulances, and patient outcomes. Health cybersecurity has to meet clinical-quality standards — regulators across MENA, the EU, and the US now treat Healthcare Cybersecurity as a patient-safety obligation, not an IT checkbox.",
       features: [
         {
-          title: "Patient Safety",
-          description: "Downtime in clinical systems can translate to delayed or compromised care",
+          title: "Clinical Impact",
+          description: "Downtime in clinical systems can directly translate into delayed or compromised patient care.",
           icon: "patient-safety",
         },
         {
-          title: "PHI at Risk",
-          description: "Patient records and imaging are high-value targets across systems and backups",
+          title: "Patient Safety",
+          description: "Medical devices and EHR systems are high-value ransomware targets with direct bedside consequences.",
           icon: "phi-risk",
         },
         {
-          title: "HIPAA Pressure",
-          description: "OCR oversight and BA scrutiny require provable, continuous controls",
+          title: "Beyond Compliance",
+          description: "Healthcare providers face simultaneous HIPAA, GDPR, and regional-regulator obligations on every audit cycle.",
           icon: "hipaa-pressure",
         },
         {
-          title: "IoMT Exposure",
-          description: "Connected medical devices expand the attack surface beyond traditional IT",
+          title: "Global Regulation",
+          description: "Cross-border patient data and medical tourism mean multiple regulatory frameworks apply at once.",
           icon: "iomt-exposure",
         },
       ],

@@ -1,8 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
 import { useFreeTrialModal } from "@/contexts/FreeTrialModalContext";
-import { FreeTrialModal } from "@/components/FreeTrialModal/FreeTrialModal";
+
+const FreeTrialModal = dynamic(() => import("@/components/FreeTrialModal/FreeTrialModal").then(m => ({ default: m.FreeTrialModal })), {
+  ssr: false,
+  loading: () => null,
+});
 
 export function FreeTrialModalLazyHost() {
   const { isOpen } = useFreeTrialModal();
@@ -13,5 +18,5 @@ export function FreeTrialModalLazyHost() {
   }, [isOpen]);
 
   if (!isOpen && !everOpened) return null;
-  return <FreeTrialModal />;
+  return <FreeTrialModal />
 }

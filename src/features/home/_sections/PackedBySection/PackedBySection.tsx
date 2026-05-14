@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import styles from "./PackedBySection.module.scss";
 import inv1 from "@/../public/assets/icons/investors/investor1.svg";

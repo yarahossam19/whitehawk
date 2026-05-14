@@ -87,6 +87,7 @@
   border: 2px dashed rgba(0, 56, 89, 0.6);
   opacity: 0.6;
   animation: orbitSpin 16s linear infinite;
+  will-change: transform;
 }
 
 .certInner {

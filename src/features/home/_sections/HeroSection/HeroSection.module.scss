@@ -267,19 +267,19 @@ height: auto;
   opacity: 0.8;
 }
 
-// Slow organic movement - cloud edge drifts (reversed X so edge/border doesn't show)
+// Composited-only animation — translate stays on the GPU layer
 @keyframes cloudDrift {
   0%,
   100% {
-    transform: translateX(2%) translateY(4px) scaleX(1.02);
+    transform: translateX(2%) translateY(4px);
   }
   25% {
-    transform: translateX(-3%) translateY(-6px) scaleX(0.98);
+    transform: translateX(-3%) translateY(-6px);
   }
   50% {
-    transform: translateX(3%) translateY(2px) scaleX(1.03);
+    transform: translateX(3%) translateY(2px);
   }
   75% {
-    transform: translateX(-2%) translateY(-4px) scaleX(0.99);
+    transform: translateX(-2%) translateY(-4px);
   }
 }

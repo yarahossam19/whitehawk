@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import styles from "./TrustedBySection.module.scss";
 import cert1 from "@/../public/assets/icons/certificates/colored-certificate1.svg";

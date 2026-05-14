@@ -218,8 +218,12 @@ export default function Aurora(props: AuroraProps) {
     ctn.appendChild(gl.canvas);
 
     let animateId = 0;
+    let isVisible = true;
+    let isInView = true;
+
     const update = (t: number) => {
       animateId = requestAnimationFrame(update);
+      if (!isVisible || !isInView) return;
       const { time = t * 0.01, speed = 1.0 } = propsRef.current;
       if (program) {
         program.uniforms.uTime.value = time * speed * 0.1;
@@ -235,12 +239,22 @@ export default function Aurora(props: AuroraProps) {
     };
     animateId = requestAnimationFrame(update);
 
+    const onVisibility = () => { isVisible = document.visibilityState === 'visible'; };
+    document.addEventListener('visibilitychange', onVisibility);
+
+    const observer = new IntersectionObserver(
+      ([entry]) => { isInView = entry?.isIntersecting ?? true; },
+      { threshold: 0 }
+    );
+    observer.observe(ctn);
+
     resize();
 
     return () => {
       cancelAnimationFrame(animateId);
       window.removeEventListener('resize', resize);
-      // Guard against StrictMode/double-unmount or container teardown
+      document.removeEventListener('visibilitychange', onVisibility);
+      observer.disconnect();
       try {
         gl.canvas.remove();
       } catch {}

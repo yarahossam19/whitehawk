@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import styles from "./PlatformSection.module.scss";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
@@ -9,7 +7,7 @@ import grc from "@/../public/assets/icons/navbar/GRC.svg";
 import assetManagement from "@/../public/assets/icons/navbar/Asset Management.svg";
 import bg from "@/../public/assets/imgs/platform-bg.png";
 import greenShield from "@/../public/assets/icons/green-shield.svg";
-import { OptimizedDashboardVideo } from "./OptimizedDashboardVideo";
+import PlatformVideoClient from "./PlatformVideoClient";
 
 const FEATURES = [
   { label: "Offensive Security", icon: offensive },
@@ -46,7 +44,7 @@ A unified cybersecurity system for offensive testing, defensive monitoring, asse
         <div className={styles.right}>
           <div className={styles.dashboardFrame}>
             <div className={styles.dashboardPlaceholder}>
-              <OptimizedDashboardVideo />
+              <PlatformVideoClient />
             </div>
             <div className={styles.badge}>
               <span className={styles.badgeIcon}><Image src={greenShield} alt="" width={25} height={25} /></span>

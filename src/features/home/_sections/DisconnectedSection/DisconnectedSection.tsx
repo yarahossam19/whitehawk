@@ -1,5 +1,3 @@
-"use client";
-
 import styles from "./DisconnectedSection.module.scss";
 import challenge1 from "@/../public/assets/icons/challenges/challenge16.svg";
 import challenge2 from "@/../public/assets/icons/challenges/challenge14.svg";

@@ -1,3 +1,5 @@
+"use client";
+
 import { ClientsSection } from "./_sections/ClientsSection/ClientsSection";
 import { DisconnectedSection } from "./_sections/DisconnectedSection/DisconnectedSection";
 import { PlatformSection } from "./_sections/PlatformSection/PlatformSection";
@@ -10,24 +12,42 @@ import { LeadingOrganizationsSection } from "./_sections/LeadingOrganizationsSec
 import { TestimonialsSection } from "./_sections/TestimonialsSection/TestimonialsSection";
 import { PackedBySection } from "./_sections/PackedBySection/PackedBySection";
 import { CTASection } from "./_sections/CTASection/CTASection";
+import { LazyLoadSection } from "@/components/LazyLoadSection";
 
 /**
- * Single below-fold chunk: predictable layout, no deferred “part B” hydration gaps.
+ * Balanced lazy-loading: Keep Clients & Disconnected as critical.
+ * Defer everything from PlatformSection onwards.
  */
 export default function HomeBelowFold() {
   return (
     <>
       <ClientsSection />
       <DisconnectedSection />
-      <PlatformSection />
-      <TrustedBySection />
-      <KeyCapabilitiesSection />
-      <WhyChooseSection />
-      <ChallengesSection />
-      <MeasurableOutcomesSection />
-      <LeadingOrganizationsSection />
+      <LazyLoadSection minHeight={800}>
+        <PlatformSection />
+      </LazyLoadSection>
+      <LazyLoadSection minHeight={600}>
+        <TrustedBySection />
+      </LazyLoadSection>
+      <LazyLoadSection minHeight={700}>
+        <KeyCapabilitiesSection />
+      </LazyLoadSection>
+      <LazyLoadSection minHeight={600}>
+        <WhyChooseSection />
+      </LazyLoadSection>
+      <LazyLoadSection minHeight={700}>
+        <ChallengesSection />
+      </LazyLoadSection>
+      <LazyLoadSection minHeight={600}>
+        <MeasurableOutcomesSection />
+      </LazyLoadSection>
+      <LazyLoadSection minHeight={700}>
+        <LeadingOrganizationsSection />
+      </LazyLoadSection>
       {/* <TestimonialsSection /> */}
-      <PackedBySection />
+      <LazyLoadSection minHeight={600}>
+        <PackedBySection />
+      </LazyLoadSection>
       <CTASection />
     </>
   );

@@ -59,10 +59,9 @@ export interface PlatformPageConfig {
 export const PLATFORM_CONFIG: Record<PlatformType, PlatformPageConfig> = {
   offensive: {
     title: "Offensive Security",
-    metaTitle: "Offensive Security | WhiteHawk Platform",
+    metaTitle: "Offensive Security & Penetration Testing | WhiteHawk",
     metaDescription:
-      "WhiteHawk's offensive security module simulates real-world attackers against your environment. Our offensive security team holds OSCP, OSWE, OSEP, OSWP, CEH, CRTP, C|PENT, and GPEN certifications and has run engagements against banks, fintechs, museums, and healthcare networks across MENA.",
-    hero: {
+"Offensive security from WhiteHawk — Penetration Testing, Vulnerability Assessment, pen testing, red teaming, CIS benchmark across MENA.",    hero: {
       titleLines: [
         "Offensive Security",
         "That Proves Exploitability —",
@@ -189,10 +188,9 @@ export const PLATFORM_CONFIG: Record<PlatformType, PlatformPageConfig> = {
   },
   defensive: {
     title: "Defensive Security",
-    metaTitle: "Defensive Security | WhiteHawk Platform",
+    metaTitle: "Cyber Defense Platform: SOC & Threat Hunting | WhiteHawk",
     metaDescription:
-      "WhiteHawk's defensive security module combines 24/7 SOC operations with AI-driven correlation, automated containment, and continuous threat hunting to reduce mean-time-to-respond without flooding your team with low-fidelity noise — cyber defense at MENA scale.",
-    hero: {
+"Cyber defense from WhiteHawk — 24/7 SOC, SIEM, cyber threat intelligence, Threat Hunting, automated containment. Built for MENA enterprises.",    hero: {
       titleLines: [
         "Cyber Defense",
         "That Never Sleeps",
@@ -300,10 +298,9 @@ export const PLATFORM_CONFIG: Record<PlatformType, PlatformPageConfig> = {
   },
   grc: {
     title: "GRC",
-    metaTitle: "GRC | WhiteHawk Platform",
+    metaTitle: "GRC Compliance: SAMA, NCA, CBE, ISO 27001 | WhiteHawk",
     metaDescription:
-      "WhiteHawk's GRC module maps controls to frameworks, collects evidence continuously, and produces audit-ready reports so compliance stays current across ISO 27001, NCA ECC/CCC/OTCC, HIPAA, GDPR, and more.",
-    hero: {
+"GRC compliance with continuous evidence — governance risk and compliance for SAMA, NCA, CBE, FRA 139, ISO 27001, PCI-DSS. WhiteHawk.",    hero: {
       titleLines: ["GRC Compliance", "Without the Audit-Season Panic"],
       subtitle:"GRC compliance is where most security programs lose money — manual evidence collection, last-minute audit prep, and policy documents nobody reads. WhiteHawk's GRC compliance module continuously maps governance risk and compliance controls to the frameworks your regulator audits against, so the evidence is already there when the auditor walks in.",
       ctaLabel: "Get Demo",
@@ -415,10 +412,9 @@ export const PLATFORM_CONFIG: Record<PlatformType, PlatformPageConfig> = {
   },
   "asset-management": {
     title: "Asset Management",
-    metaTitle: "Asset Management | WhiteHawk Platform",
+    metaTitle: "Cybersecurity Asset Management & Discovery | WhiteHawk",
     metaDescription:
-      "WhiteHawk's asset management module discovers, classifies, and tracks your technology footprint across cloud, on-prem, and third parties — creating a continuously updated inventory that powers risk prioritization and compliance.",
-    hero: {
+"Asset Management by WhiteHawk — automated discovery for IT, OT, cloud, SaaS, IoT. Asset management operation across MENA enterprises.",    hero: {
       titleLines: [
         "Asset Management",
         "That Closes Your Real Attack Surface",

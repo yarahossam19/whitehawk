@@ -1,7 +1,9 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import styles from "./CompanyHero.module.scss";
-import Aurora from "@/components/Aurora";
+
+const Aurora = dynamic(() => import("@/components/Aurora"), { ssr: false });
 
 export function CompanyHero() {
   return (

@@ -1,3 +1,4 @@
+import ReactDOM from "react-dom";
 import { HeroButtons } from "./_sections/HeroSection/HeroInteractive";
 import { HeroVideoIsland } from "./HeroVideoIsland";
 import styles from "./_sections/HeroSection/HeroSection.module.scss";
@@ -7,6 +8,16 @@ import styles from "./_sections/HeroSection/HeroSection.module.scss";
  * Buttons + diagram are small client islands.
  */
 export function HeroShell() {
+  // Push the hero video into the document's preload list so the browser
+  // starts fetching it alongside other critical resources, instead of
+  // waiting for the React island to mount and the <video> element to
+  // request its src.
+  ReactDOM.preload("/assets/videos/V-website%20Hero%202.webm", {
+    as: "video",
+    type: "video/webm",
+    fetchPriority: "high",
+  });
+
   return (
     <section className={styles.hero}>
       <div className={styles.heroContent}>
