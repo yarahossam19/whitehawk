@@ -47,6 +47,7 @@ export function HeroVideoIsland() {
       { root: null, rootMargin: "80px 0px 0px 0px", threshold: 0 }
     );
 
+    
     observer.observe(el);
     return () => {
       observer.disconnect();
