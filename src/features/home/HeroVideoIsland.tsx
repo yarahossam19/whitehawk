@@ -42,11 +42,25 @@ export function HeroVideoIsland() {
       tryPlay();
     };
     v.addEventListener("loadeddata", onReady);
+    v.addEventListener("canplay", onReady); // Fallback event
     // If the browser already buffered enough before this listener attached
     // (cached, fast network), kick off playback now.
     if (v.readyState >= 2) onReady();
-    return () => v.removeEventListener("loadeddata", onReady);
-  }, [tryPlay]);
+    
+    // Timeout fallback - make video visible after 2 seconds even if not fully loaded
+    const timeoutId = setTimeout(() => {
+      if (!videoReady) {
+        setVideoReady(true);
+        tryPlay();
+      }
+    }, 2000);
+    
+    return () => {
+      clearTimeout(timeoutId);
+      v.removeEventListener("loadeddata", onReady);
+      v.removeEventListener("canplay", onReady);
+    };
+  }, [tryPlay, videoReady]);
 
   // Pause when the hero scrolls out of the viewport to save battery; resume
   // when it scrolls back in. No longer responsible for attaching src.
