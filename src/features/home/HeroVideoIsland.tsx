@@ -17,6 +17,10 @@ function getReducedMotionSnapshot() {
   return window.matchMedia(MQ_QUERY).matches;
 }
 
+
+
+
+
 export function HeroVideoIsland() {
   const rootRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
