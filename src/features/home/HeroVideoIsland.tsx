@@ -1,78 +1,86 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import styles from "./_sections/HeroSection/HeroSection.module.scss";
 
 const VIDEO_SRC = "/assets/videos/V-website%20Hero%202.webm";
+
+const MQ_QUERY = "(prefers-reduced-motion: reduce)";
+
+function subscribeReducedMotion(cb: () => void) {
+  const mq = window.matchMedia(MQ_QUERY);
+  mq.addEventListener("change", cb);
+  return () => mq.removeEventListener("change", cb);
+}
+
+function getReducedMotionSnapshot() {
+  return window.matchMedia(MQ_QUERY).matches;
+}
 
 export function HeroVideoIsland() {
   const rootRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [videoReady, setVideoReady] = useState(false);
-  const [reducedMotion, setReducedMotion] = useState(() => {
-    if (typeof window === "undefined") return false;
-    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  });
-
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const onChange = () => setReducedMotion(mq.matches);
-    mq.addEventListener("change", onChange);
-    return () => mq.removeEventListener("change", onChange);
-  }, []);
+  // useSyncExternalStore: SSR-safe (server snapshot → false), subscribes to changes automatically
+  const reducedMotion = useSyncExternalStore(
+    subscribeReducedMotion,
+    getReducedMotionSnapshot,
+    () => false,
+  );
 
   const tryPlay = useCallback(() => {
-    videoRef.current?.play().catch(() => {
-      /* autoplay blocked — fine */
-    });
+    videoRef.current?.play().catch(() => {});
   }, []);
 
   const pauseVideo = useCallback(() => {
     videoRef.current?.pause();
   }, []);
 
-  // Kick off playback as soon as the browser has enough data. The video's
-  // `src` is set directly in JSX with `preload="auto"`, so the download
-  // starts at mount instead of waiting for IntersectionObserver.
+  // Reveal once the browser has enough data. Effect intentionally runs once —
+  // videoReady is NOT in the dep array so the cleanup never cancels the fallback timer.
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
-    const onReady = () => {
+
+    let revealed = false;
+    const reveal = () => {
+      if (revealed) return;
+      revealed = true;
+      clearTimeout(timer);
       setVideoReady(true);
       tryPlay();
     };
-    v.addEventListener("loadeddata", onReady);
-    v.addEventListener("canplay", onReady); // Fallback event
-    // If the browser already buffered enough before this listener attached
-    // (cached, fast network), kick off playback now.
-    if (v.readyState >= 2) onReady();
-    
-    // Timeout fallback - make video visible after 2 seconds even if not fully loaded
-    const timeoutId = setTimeout(() => {
-      if (!videoReady) {
-        setVideoReady(true);
-        tryPlay();
-      }
-    }, 2000);
-    
-    return () => {
-      clearTimeout(timeoutId);
-      v.removeEventListener("loadeddata", onReady);
-      v.removeEventListener("canplay", onReady);
-    };
-  }, [tryPlay, videoReady]);
 
-  // Pause when the hero scrolls out of the viewport to save battery; resume
-  // when it scrolls back in. No longer responsible for attaching src.
+    // Already buffered (cached page, fast network)
+    if (v.readyState >= 2) {
+      reveal();
+      return;
+    }
+
+    v.addEventListener("loadeddata", reveal, { once: true });
+    v.addEventListener("canplay", reveal, { once: true });
+    // Make container visible even if the video fails to load
+    v.addEventListener("error", reveal, { once: true });
+
+    // Hard fallback: show the container regardless after 3 s
+    const timer = setTimeout(reveal, 3000);
+
+    return () => {
+      clearTimeout(timer);
+      v.removeEventListener("loadeddata", reveal);
+      v.removeEventListener("canplay", reveal);
+      v.removeEventListener("error", reveal);
+    };
+  }, [tryPlay]); // stable ref — runs exactly once after mount
+
+  // Pause when scrolled out of view to save battery
   useEffect(() => {
     const el = rootRef.current;
     if (!el || reducedMotion) return;
 
     const observer = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        if (!entry) return;
-        if (entry.isIntersecting) tryPlay();
+      ([entry]) => {
+        if (entry?.isIntersecting) tryPlay();
         else pauseVideo();
       },
       { root: null, rootMargin: "80px 0px 0px 0px", threshold: 0 }
@@ -89,7 +97,7 @@ export function HeroVideoIsland() {
     <div ref={rootRef} className={styles.heroRight}>
       <div className={styles.heroVideoWrap} aria-hidden>
         <div className={styles.heroVideoStill} />
-        {reducedMotion ? null : (
+        {!reducedMotion && (
           <video
             ref={videoRef}
             className={`${styles.heroVideo} ${videoReady ? styles.heroVideoReady : ""}`}
