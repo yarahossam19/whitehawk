@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import styles from "./_sections/HeroSection/HeroSection.module.scss";
 
-const VIDEO_SRC = "/assets/videos/V-website%20Hero%202.webm";
+const VIDEO_SRC = "/assets/videos/VwebsiteHero2.webm";
 
 const MQ_QUERY = "(prefers-reduced-motion: reduce)";
 

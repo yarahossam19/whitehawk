@@ -12,7 +12,7 @@ export function HeroShell() {
   // starts fetching it alongside other critical resources, instead of
   // waiting for the React island to mount and the <video> element to
   // request its src.
-  ReactDOM.preload("/assets/videos/V-website%20Hero%202.webm", {
+  ReactDOM.preload("/assets/videos/VwebsiteHero2.webm", {
     as: "video",
     type: "video/webm",
     fetchPriority: "high",

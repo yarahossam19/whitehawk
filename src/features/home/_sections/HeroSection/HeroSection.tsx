@@ -61,7 +61,7 @@ function HeroRightVideo({
   prefersReducedMotion: boolean;
 }) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  const src = isActive && !prefersReducedMotion ? "/assets/videos/V-website%20Hero%202.webm" : undefined;
+  const src = isActive && !prefersReducedMotion ? "/assets/videos/VwebsiteHero2.webm" : undefined;
 
   useEffect(() => {
     const v = videoRef.current;
