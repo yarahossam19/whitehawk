@@ -17,15 +17,9 @@ function getReducedMotionSnapshot() {
   return window.matchMedia(MQ_QUERY).matches;
 }
 
-
-
-
-
 export function HeroVideoIsland() {
   const rootRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [videoReady, setVideoReady] = useState(false);
-  // useSyncExternalStore: SSR-safe (server snapshot → false), subscribes to changes automatically
   const reducedMotion = useSyncExternalStore(
     subscribeReducedMotion,
     getReducedMotionSnapshot,
@@ -39,43 +33,6 @@ export function HeroVideoIsland() {
   const pauseVideo = useCallback(() => {
     videoRef.current?.pause();
   }, []);
-
-  // Reveal once the browser has enough data. Effect intentionally runs once —
-  // videoReady is NOT in the dep array so the cleanup never cancels the fallback timer.
-  useEffect(() => {
-    const v = videoRef.current;
-    if (!v) return;
-
-    let revealed = false;
-    const reveal = () => {
-      if (revealed) return;
-      revealed = true;
-      clearTimeout(timer);
-      setVideoReady(true);
-      tryPlay();
-    };
-
-    // Already buffered (cached page, fast network)
-    if (v.readyState >= 2) {
-      reveal();
-      return;
-    }
-
-    v.addEventListener("loadeddata", reveal, { once: true });
-    v.addEventListener("canplay", reveal, { once: true });
-    // Make container visible even if the video fails to load
-    v.addEventListener("error", reveal, { once: true });
-
-    // Hard fallback: show the container regardless after 3 s
-    const timer = setTimeout(reveal, 3000);
-
-    return () => {
-      clearTimeout(timer);
-      v.removeEventListener("loadeddata", reveal);
-      v.removeEventListener("canplay", reveal);
-      v.removeEventListener("error", reveal);
-    };
-  }, [tryPlay]); // stable ref — runs exactly once after mount
 
   // Pause when scrolled out of view to save battery
   useEffect(() => {
@@ -104,7 +61,7 @@ export function HeroVideoIsland() {
         {!reducedMotion && (
           <video
             ref={videoRef}
-            className={`${styles.heroVideo} ${videoReady ? styles.heroVideoReady : ""}`}
+            className={styles.heroVideo}
             src={VIDEO_SRC}
             muted
             playsInline

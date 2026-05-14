@@ -237,15 +237,7 @@ height: auto;
   height: 100%;
   object-fit: cover;
   background: transparent;
-
   pointer-events: none;
-  opacity: 0;
-  transition: opacity 200ms ease;
-  will-change: opacity;
-}
-
-.heroVideoReady {
-  opacity: 0.9;
 }
 
 .cloudSvg {
