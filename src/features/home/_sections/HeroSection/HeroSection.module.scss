@@ -1,8 +1,9 @@
 .hero {
   position: relative;
-  background: linear-gradient(to bottom, #003859 97%, #ffffff 100%);
+  background: linear-gradient(to bottom, #063a57 97%, #ffffff 100%);
   min-height: min(891px, 92vh);
   overflow: hidden;
+  
 
   @media (max-width: 850px) {
     min-height: auto;
@@ -217,12 +218,12 @@ height: 360px;
     max-width:100%;
 height: auto;
   }
-  opacity: 0.9;
+  opacity: 0.93;
 
 
 
 
-  
+
 }
 
 .heroVideoStill {
