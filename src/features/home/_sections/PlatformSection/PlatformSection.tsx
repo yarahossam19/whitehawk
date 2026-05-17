@@ -39,7 +39,7 @@ A unified cybersecurity system for offensive testing, defensive monitoring, asse
               ))}
             </ul>
           </div>
-          <PrimaryButton title="Explore Our Platform" variant="secondary" href="#" className={styles.button}/>
+          <PrimaryButton title="Explore Our Platform" variant="secondary" href="#" className={styles.buttonDesktop} />
         </div>
         <div className={styles.right}>
           <div className={styles.dashboardFrame}>
@@ -55,6 +55,7 @@ A unified cybersecurity system for offensive testing, defensive monitoring, asse
             </div>
           </div>
         </div>
+        <PrimaryButton title="Explore Our Platform" variant="secondary" href="#" className={styles.buttonTablet} />
       </div>
     </section>
   );

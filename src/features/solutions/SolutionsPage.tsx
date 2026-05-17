@@ -25,6 +25,8 @@ export function SolutionsPage({ config }: SolutionsPageProps) {
         topTitle={config.whyMatters.topTitle}
         topDescription={config.whyMatters.topDescription}
         illustration={config.whyMatters.illustration}
+        tabletBackgroundSrc={config.whyMatters.tabletBackgroundSrc}
+        mobileBackgroundSrc={config.whyMatters.mobileBackgroundSrc}
         bottomTitle={config.whyMatters.bottomTitle}
         bottomDescription={config.whyMatters.bottomDescription}
         features={config.whyMatters.features}

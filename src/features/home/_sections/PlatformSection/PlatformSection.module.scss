@@ -116,6 +116,29 @@
 .right {
   flex: 0 1 584px;
   min-width: 0;
+  @media (max-width:1024px) {
+    flex:0 1;
+  }
+}
+
+.buttonDesktop {
+  width: 220px;
+
+  @media (max-width: 1024px) {
+    display: none;
+  }
+}
+
+.buttonTablet {
+  display: none;
+
+  @media (max-width: 1024px) {
+    display: flex;
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    box-sizing: border-box;
+  }
 }
 
 .dashboardFrame {
@@ -189,16 +212,5 @@
     font-family: Arial, sans-serif;
     font-size: 14px;
     color: var(--text-secondary, #52697a);
-  }
-}
-.button{
-  width:220px;
-  @media (max-width: 1024px) {
-    width: 100%;
-    min-width: 0;
-    max-width: none;
-    display: flex;
-    order:1;
-    box-sizing: border-box;
   }
 }

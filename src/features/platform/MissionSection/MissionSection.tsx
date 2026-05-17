@@ -1,43 +1,86 @@
 "use client";
 
+import Image, { type StaticImageData } from "next/image";
 import { useState } from "react";
 import type { MissionCard } from "../config";
 import styles from "./MissionSection.module.scss";
-
+import integrateIcon from "@/../public/assets/icons/Data.svg";
+import automateIcon from "@/../public/assets/icons/Robot.svg";
+import devicesIcon from "@/../public/assets/icons/Devices.svg";
 interface MissionSectionProps {
   cards: MissionCard[];
 }
 
 function SimulateIcon() {
   return (
-    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden>
-      <circle cx="16" cy="16" r="10" stroke="currentColor" strokeWidth="2" fill="none" />
-      <path d="M16 10v12M10 16h12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-    </svg>
+   <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
+  <path d="M32.0006 5.33398C17.3073 5.33398 5.33398 17.3073 5.33398 32.0006C5.33398 46.694 17.3073 58.6673 32.0006 58.6673C46.694 58.6673 58.6673 46.694 58.6673 32.0006C58.6673 17.3073 46.694 5.33398 32.0006 5.33398ZM34.6673 53.1473V45.334H29.334V53.1473C24.6406 52.5521 20.2782 50.4137 16.9329 47.0684C13.5876 43.7231 11.4492 39.3607 10.854 34.6673H18.6673V29.334H10.854C11.4492 24.6406 13.5876 20.2782 16.9329 16.9329C20.2782 13.5876 24.6406 11.4492 29.334 10.854V18.6673H34.6673V10.854C44.294 12.054 51.9473 19.7073 53.1473 29.334H45.334V34.6673H53.1473C52.5521 39.3607 50.4137 43.7231 47.0684 47.0684C43.7231 50.4137 39.3607 52.5521 34.6673 53.1473Z" fill="currentColor"/>
+</svg>
   );
 }
 
 function TrackIcon() {
   return (
-    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden>
-      <circle cx="16" cy="16" r="12" stroke="currentColor" strokeWidth="2" fill="none" />
-      <path d="M16 8v8l6 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
+  <g clipPath="url(#clip0_2310_1929)">
+    <mask id="mask0_2310_1929" style={{maskType: "luminance"}} maskUnits="userSpaceOnUse" x="0" y="0" width="64" height="64">
+      <path d="M64 0H0V64H64V0Z" fill="white"/>
+    </mask>
+    <g mask="url(#mask0_2310_1929)">
+      <path d="M31.9987 60.6666C16.1854 60.6666 3.33203 47.8132 3.33203 31.9999C3.33203 26.9866 4.63867 22.0534 7.14534 17.7067C7.70534 16.7467 8.90539 16.4266 9.86539 16.96L32.9854 30.2399C33.9454 30.7999 34.2654 31.9999 33.732 32.9599C33.172 33.9199 31.972 34.2402 31.012 33.7068L9.6787 21.4666C8.13203 24.7466 7.33203 28.3199 7.33203 31.9732C7.33203 45.5732 18.3987 56.6399 31.9987 56.6399C45.5987 56.6399 56.6654 45.5732 56.6654 31.9732C56.6654 18.3733 45.5987 7.30664 31.9987 7.30664C26.612 7.30664 21.4921 9.01333 17.1987 12.24C16.3187 12.9067 15.0653 12.72 14.3987 11.84C13.732 10.96 13.9187 9.70672 14.7987 9.04005C19.7853 5.30672 25.732 3.30664 31.9987 3.30664C47.812 3.30664 60.6654 16.16 60.6654 31.9732C60.6654 47.7866 47.812 60.6666 31.9987 60.6666Z" fill="currentColor"/>
+      <path d="M32 50C22.08 50 14 41.92 14 32C14 28.8 14.8533 25.6266 16.48 22.88C17.04 21.92 18.2666 21.6 19.2266 22.16C20.1866 22.72 20.5067 23.9467 19.9467 24.9067C18.6934 27.04 18.0267 29.4933 18.0267 32C18.0267 39.7333 24.32 46 32.0267 46C39.7333 46 46.0267 39.7333 46.0267 32C46.0267 24.2667 39.7333 18 32.0267 18C29.9467 18 27.9467 18.4533 26.0533 19.3333C25.04 19.7867 23.8666 19.36 23.3866 18.3734C22.9066 17.36 23.3333 16.1867 24.3467 15.7067C26.7467 14.5867 29.3333 14 32 14C41.92 14 50 22.08 50 32C50 41.92 41.92 50 32 50Z" fill="currentColor"/>
+    </g>
+  </g>
+  <defs>
+    <clipPath id="clip0_2310_1929">
+      <rect width="64" height="64" fill="white"/>
+    </clipPath>
+  </defs>
+</svg>
   );
 }
 
 function GenerateIcon() {
   return (
-    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden>
-      <path d="M8 12h16v12H8z" stroke="currentColor" strokeWidth="2" fill="none" />
-      <path d="M12 8v4M16 8v4M20 8v4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+  <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
+  <g clipPath="url(#clip0_2310_1950)">
+    <mask id="mask0_2310_1950" style={{maskType: "luminance"}} maskUnits="userSpaceOnUse" x="0" y="0" width="64" height="64">
+      <path d="M64 0H0V64H64V0Z" fill="white"/>
+    </mask>
+    <g mask="url(#mask0_2310_1950)">
+      <path d="M40.0006 60.6673H24.0007C9.52065 60.6673 3.33398 54.4806 3.33398 40.0006V24.0007C3.33398 9.52065 9.52065 3.33398 24.0007 3.33398H37.334C38.4273 3.33398 39.334 4.24065 39.334 5.33398C39.334 6.42732 38.4273 7.33398 37.334 7.33398H24.0007C11.7073 7.33398 7.33398 11.7073 7.33398 24.0007V40.0006C7.33398 52.294 11.7073 56.6673 24.0007 56.6673H40.0006C52.294 56.6673 56.6673 52.294 56.6673 40.0006V26.6673C56.6673 25.574 57.574 24.6673 58.6673 24.6673C59.7606 24.6673 60.6673 25.574 60.6673 26.6673V40.0006C60.6673 54.4806 54.4806 60.6673 40.0006 60.6673Z" fill="currentColor"/>
+      <path d="M58.6673 28.6673H48.0007C38.8807 28.6673 35.334 25.1206 35.334 16.0006V5.33395C35.334 4.53395 35.814 3.78729 36.5607 3.49395C37.3073 3.17395 38.1607 3.36062 38.7473 3.92062L60.0807 25.254C60.6407 25.814 60.8273 26.694 60.5073 27.4407C60.1873 28.1873 59.4673 28.6673 58.6673 28.6673ZM39.334 10.1606V16.0006C39.334 22.8806 41.1207 24.6673 48.0007 24.6673H53.8407L39.334 10.1606Z" fill="currentColor"/>
+    </g>
+  </g>
+  <defs>
+    <clipPath id="clip0_2310_1950">
+      <rect width="64" height="64" fill="white"/>
+    </clipPath>
+  </defs>
+</svg>
+  );
+}
+
+function DetectIcon() {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
+      <path d="M64 0H0V64H64V0Z" fill="currentColor" />
     </svg>
   );
+}
+
+
+function AssetIcon({ src }: { src: StaticImageData }) {
+  return <Image src={src} alt="" width={48} height={48} />;
 }
 
 function CardIcon({ icon }: { icon: MissionCard["icon"] }) {
   if (icon === "simulate") return <SimulateIcon />;
   if (icon === "track") return <TrackIcon />;
+  if (icon === "detect") return <DetectIcon />;
+  if (icon === "devices") return <AssetIcon src={devicesIcon} />;
+  if (icon === "integrate") return <AssetIcon src={integrateIcon} />;
+  if (icon === "automate") return <AssetIcon src={automateIcon} />;
   return <GenerateIcon />;
 }
 

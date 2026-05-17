@@ -8,7 +8,7 @@ export interface ChallengeItem {
 
   title: string;
   description: string;
-  icon: "target" | "lightning" | "lock" | "clock" | "stroke" | "documents" | "data";
+  icon: "target" | "lightning" | "lock" | "clock" | "stroke" | "documents" | "data" | "apiPause" | "accountTakeover" | "insiderRisk" | "cloudMisconfiguration"| "campaign" | "ransomware" |"exposure"|"systems" |"dataTheft" | "medical";
 }
 
 export interface WhyMattersFeatureConfig {
@@ -23,6 +23,10 @@ export interface WhyMattersSectionConfig {
   topDescription: string;
   /** Right-side illustration for this page — swap per solution. */
   illustration: WhyMattersIllustrationName;
+  /** Tablet background shown instead of the illustration on smaller screens. */
+  tabletBackgroundSrc: string;
+  /** Mobile background shown instead of the illustration on smaller screens. */
+  mobileBackgroundSrc: string;
   /** Dark bottom half. */
   bottomTitle: string;
   bottomDescription: string;
@@ -51,7 +55,7 @@ export interface SolutionsFaqsConfig {
 export interface SolutionItem {
   title: string;
   description: string;
-  icon: "dashboard" | "lightning" | "lock" | "report" | "data";
+  icon: "dashboard" | "lightning" | "lock" | "report" | "data"| "threat" | "fraud" | "compliance" | "cloud" | "infra" | "identity" | "medicalRecord" | "hipaa" | "medicalDevice";
 }
 
 export interface BenefitItem {
@@ -123,24 +127,24 @@ export const SOLUTIONS_CONFIG: Record<SolutionType, SolutionsPageConfig> = {
       challenge: {
         title: "Top Cybersecurity Risks Facing Fintech Companies",
         items: [
-          { title: "API Abuse", description: "Open banking and embedded finance APIs are the #1 attack vector for cybersecurity in fintech. Credential stuffing, broken authorization, and rate-limit bypass top OWASP's 2024 API security risks.", icon: "target" },
-          { title: "Account Takeover", description: "Synthetic identities, SIM-swap fraud, and credential reuse drive the bulk of fintech account compromise. Real-time behavioral analytics is the only effective defense.", icon: "stroke" },
+          { title: "API Abuse", description: "Open banking and embedded finance APIs are the #1 attack vector for cybersecurity in fintech. Credential stuffing, broken authorization, and rate-limit bypass top OWASP's 2024 API security risks.", icon: "apiPause" },
+          { title: "Account Takeover", description: "Synthetic identities, SIM-swap fraud, and credential reuse drive the bulk of fintech account compromise. Real-time behavioral analytics is the only effective defense.", icon: "accountTakeover" },
           {
             title: "Insider Risk",
             description: "Fintech teams move fast and grant broad access. Privileged-access misuse and developer credential leaks remain a top breach root cause across the sector.",
-            icon: "documents",
+            icon: "insiderRisk",
           },
-          { title: "Cloud Misconfiguration", description: "One exposed S3 bucket or unrotated key can leak millions of records. Continuous cloud-posture monitoring catches drift before it becomes a disclosure", icon: "clock" },
+          { title: "Cloud Misconfiguration", description: "One exposed S3 bucket or unrotated key can leak millions of records. Continuous cloud-posture monitoring catches drift before it becomes a disclosure", icon: "cloudMisconfiguration" },
     
         ],
       },
       solution: {
         title: "Cybersecurity Solutions for Fintech",
         items: [
-          { title: "Threat Detection & Transaction Monitoring", description: "Real-time anomaly detection across transaction streams, login flows, and API calls. Behavioral models trained on fintech cyber security patterns flag fraud, money-laundering signals, and account-takeover attempts before they complete", icon: "dashboard" },
-          { title: "Fraud Prevention & Payment Security", description: "Layered fraud controls: device fingerprinting, velocity rules, geolocation analysis, and risk-based authentication. PCI-DSS 4.0 aligned controls protect cardholder data through the full payment lifecycle", icon: "lightning" },
-          { title: "Financial Compliance & GRC", description: "Continuous control mapping for CBE, SAMA, FRA 139, PCI-DSS 4.0, PCI PIN Security, and SOC 2 — the regulatory baseline of cybersecurity in fintech across MENA", icon: "lock" },
-          { title: "Cloud, API & Digital Banking Security", description: "API security testing, cloud-posture monitoring, secrets-management hygiene, and runtime application self-protection — designed for the AWS, Azure, and Kubernetes stacks fintech engineering teams actually use today", icon: "data" },
+          { title: "Threat Detection & Transaction Monitoring", description: "Real-time anomaly detection across transaction streams, login flows, and API calls. Behavioral models trained on fintech cyber security patterns flag fraud, money-laundering signals, and account-takeover attempts before they complete", icon: "threat" },
+          { title: "Fraud Prevention & Payment Security", description: "Layered fraud controls: device fingerprinting, velocity rules, geolocation analysis, and risk-based authentication. PCI-DSS 4.0 aligned controls protect cardholder data through the full payment lifecycle", icon: "fraud" },
+          { title: "Financial Compliance & GRC", description: "Continuous control mapping for CBE, SAMA, FRA 139, PCI-DSS 4.0, PCI PIN Security, and SOC 2 — the regulatory baseline of cybersecurity in fintech across MENA", icon: "compliance" },
+          { title: "Cloud, API & Digital Banking Security", description: "API security testing, cloud-posture monitoring, secrets-management hygiene, and runtime application self-protection — designed for the AWS, Azure, and Kubernetes stacks fintech engineering teams actually use today", icon: "cloud" },
         ],
       },
     },
@@ -158,6 +162,8 @@ export const SOLUTIONS_CONFIG: Record<SolutionType, SolutionsPageConfig> = {
       topTitle: "Secure Financial Innovation with Advanced Cybersecurity in Fintech",
       topDescription:
 "Fintech cyber security is not a tax on innovation. Done right, it is what makes innovation defensible. WhiteHawk gives fintech founders and CISOs the controls, evidence, and 24/7 monitoring needed to ship new products without giving regulators or banking partners reasons to slow you down.",      illustration: "fintech",
+      tabletBackgroundSrc: "/assets/imgs/1-tablet.png",
+      mobileBackgroundSrc: "/assets/imgs/1-mobile.png",
       bottomTitle: "Why Cybersecurity Matters in Fintech",
       bottomDescription:
 "A single breach can end a fintech. Customer trust evaporates overnight, banking partners freeze settlement, and the regulator can suspend operating licenses. Fintech and cybersecurity are inseparable - the companies that scale are the ones that treat cybersecurity for fintech as a product feature, not a back-office cost.",      features: [
@@ -250,17 +256,17 @@ export const SOLUTIONS_CONFIG: Record<SolutionType, SolutionsPageConfig> = {
           {
             title: "Nation-State Campaigns",
             description: "Long-dwell intrusions targeting ministries, defense, and energy operators. Detection requires behavioral analytics and threat hunting, not signature-based tools — exactly what cyber security public sector teams now demand.",
-            icon: "target",
+            icon: "campaign",
           },
           {
             title: "Ransomware on Critical Services",
             description: "Hospitals, utilities, and municipal services are increasingly ransomware targets across the region. Recovery without backups can take weeks.",
-            icon: "stroke",
+            icon: "ransomware",
           },
           {
             title: "Citizen Data Exposure",
             description: "Misconfigured cloud storage and weak access controls have produced some of the largest public-sector data leaks in MENA in the last 24 months.",
-            icon: "documents",
+            icon: "exposure",
           },
          
         ],
@@ -271,22 +277,22 @@ export const SOLUTIONS_CONFIG: Record<SolutionType, SolutionsPageConfig> = {
           {
             title: "Threat Detection & National Security Monitoring",
             description: "24/7 SOC operations with regional coverage across Egypt, KSA, the UK, the US, and Libya. Behavioral analytics tuned to nation-state TTPs and threat-intel feeds focused on adversaries active in MENA's public sector.",
-            icon: "dashboard",
+            icon: "threat",
           },
           {
             title: "Critical Infrastructure & Public Network Protection",
             description: "OT and ICS security for utilities, transportation, and public-service operators. Network segmentation, secure remote access, and continuous monitoring of operational technology — the systems that fail most catastrophically when attacked.",
-            icon: "lightning",
+            icon: "infra",
           },
           {
             title: "Government Compliance, Governance & Risk Management",
             description: "Continuous control mapping for NCA ECC, NCA CCC, NCA OTCC, ISO/IEC 27001, and sovereign cloud requirements. Audit evidence collected continuously, not assembled in panic the week the assessor arrives.",
-            icon: "lock",
+            icon: "hipaa",
           },
           {
             title: "Identity, Access & Citizen Data Protection",
             description: "Privileged access management, multi-factor authentication, role-based access control, and data-loss prevention for citizen records. Zero-trust architectures designed for both employee and citizen-facing services.",
-            icon: "data",
+            icon: "identity",
           },
          
         ],
@@ -307,6 +313,8 @@ export const SOLUTIONS_CONFIG: Record<SolutionType, SolutionsPageConfig> = {
       topDescription:
         "Government cybersecurity has to balance two things that pull in opposite directions: open access for citizens and ironclad protection of sovereign data. WhiteHawk gives govt cyber security teams the platform and the expertise to do both — without the vendor sprawl that plagued public-sector IT historically",
       illustration: "government",
+      tabletBackgroundSrc: "/assets/imgs/2-tablet.png",
+      mobileBackgroundSrc: "/assets/imgs/2-mobile.png",
       bottomTitle: "Why Cybersecurity Matters in Government & Public Sector",
       bottomDescription:" A breach inside a government agency is not just an IT incident — it is a sovereign-trust event. Citizen records, regulatory data, defense communications, and critical-service availability are all at stake. Cybersecurity and government can no longer be separate procurement tracks; they have to be one continuously assessed program",      features: [
         {
@@ -390,19 +398,19 @@ export const SOLUTIONS_CONFIG: Record<SolutionType, SolutionsPageConfig> = {
             title: "Ransomware on Clinical Systems",
             description:
 "Hospital ransomware is growing fastest in MENA. Outage windows directly impact patient care and trigger mandatory regulatory reporting under regional health cybersecurity rules.",       
-     icon: "target",
+     icon: "systems",
       },
           {
             title: "Patient Data Theft",
             description:
 "Medical records sell for 10x more than payment cards on criminal marketplaces. Leaks trigger HIPAA, GDPR, and local-regulator penalties simultaneously.",
-            icon: "lightning",
+            icon: "dataTheft",
           },
           {
             title: "Medical Device Compromise",
             description:
 "IV pumps, imaging systems, and patient monitors are connected, often unpatched, and rarely covered by traditional endpoint protection — a core medical cybersecurity blind spot",           
- icon: "data",
+ icon: "medical",
           },
         ],
       },
@@ -412,22 +420,22 @@ export const SOLUTIONS_CONFIG: Record<SolutionType, SolutionsPageConfig> = {
           {
             title: "Threat Detection for Healthcare Systems",
             description: "24/7 SOC monitoring tuned to clinical workflows. Behavioral analytics distinguish nurse-station shift changes from credential misuse, and clinical-system alerts route to staff who understand both technology and patient impact.",
-            icon: "dashboard",
+            icon: "threat",
           },
           {
             title: "Patient Data Privacy & Medical Record Protection",
             description: "Encryption at rest and in transit, data-loss prevention across email and storage, role-based access for electronic health records, and audit logging detailed enough to satisfy HIPAA and regional data-protection regulators on demand.",
-            icon: "lightning",
+            icon: "medicalRecord",
           },
           {
             title: "HIPAA Compliance, Governance & Risk Management",
             description: "Continuous HIPAA control mapping, GDPR alignment for cross-border patient data, and ISO 27001 evidence — collected automatically through WhiteHawk's GRC module instead of manually reassembled at every audit cycle.",
-            icon: "lock",
+            icon: "hipaa",
           },
           {
             title: "Medical Device, Cloud & Hospital Network Security",
             description: "Network segmentation isolating connected medical devices from administrative networks, cloud-posture monitoring across Azure and AWS, and continuous vulnerability assessment for the hospital network's actual living asset inventory.",
-            icon: "data",
+            icon: "medicalDevice",
           },
          
         ],
@@ -448,6 +456,8 @@ export const SOLUTIONS_CONFIG: Record<SolutionType, SolutionsPageConfig> = {
       topDescription:
         "Healthcare cybersecurity has to protect three things at once: clinical operations that cannot stop, patient data that cannot leak, and connected devices that cannot be tampered with. WhiteHawk Healthcare Cybersecurity is the only platform that tackles all three under a single continuously assessed program.",
       illustration: "healthcare",
+      tabletBackgroundSrc: "/assets/imgs/3-tablet.png",
+      mobileBackgroundSrc: "/assets/imgs/3-mobile.png",
       bottomTitle: "Why Cybersecurity Matters in Healthcare Organizations",
       bottomDescription:
         "A ransomware event inside a hospital is not measured in dollars. It is measured in delayed surgeries, rerouted ambulances, and patient outcomes. Health cybersecurity has to meet clinical-quality standards — regulators across MENA, the EU, and the US now treat Healthcare Cybersecurity as a patient-safety obligation, not an IT checkbox.",

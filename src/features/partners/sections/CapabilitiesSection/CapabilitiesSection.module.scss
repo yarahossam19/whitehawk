@@ -198,7 +198,7 @@
   line-height: 26px;
   color: #52697a;
   margin: 0;
-  @media (max-width:760px) {
+  @media (max-width:780px) {
     flex: 1 1 100%;
   }
 }
@@ -222,7 +222,7 @@
   padding: 6px 12px 6px 8px;
   background: #e7f6ff;
   border-radius: 10px;
-  box-sizing: border-box;
+  box-sizing: border-box;width:100%;
 }
 
 .pillIcon {
@@ -250,10 +250,7 @@
 }
 
 @media (max-width: 768px) {
-  .panel {
-    flex-direction: column;
-    padding-bottom: 24px;
-  }
+
 
   .panelBody {
     max-width: none;

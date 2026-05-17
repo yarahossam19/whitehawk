@@ -195,33 +195,16 @@
     width: 100%;
     max-width: 448px;
     height: auto;
-    min-height: 420px;
+    min-height: 470px;
   }
 
   .cardMiddle,
   .cardBack {
-    left: 8px;
-    top: 10px;
-    width: calc(100% - 16px);
-    max-width: 426px;
-    height: auto;
-    min-height: 400px;
-  }
-
-  .cardBack {
-    left: 16px;
-    top: 20px;
-    width: calc(100% - 32px);
-    max-width: 404px;
-    min-height: 380px;
+    display: none;
   }
 
   .cardDeepest {
-    left: 22px;
-    top: 28px;
-    width: calc(100% - 44px);
-    max-width: 384px;
-    min-height: 360px;
+    display: none;
   }
 
   .clickHint {

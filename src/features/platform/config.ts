@@ -17,7 +17,7 @@ export interface SuccessStory {
 export interface MissionCard {
   title: string;
   description: string;
-  icon: "track" | "generate" | "simulate";
+  icon: "track" | "generate" | "simulate" | "detect" | "devices" | "integrate" | "automate";
 }
 
 export interface FaqEntry {
@@ -230,17 +230,18 @@ export const PLATFORM_CONFIG: Record<PlatformType, PlatformPageConfig> = {
         {
           title: "Detect Threats in Real-Time",
           description:
-"We use continuous monitoring to detect suspicious activities immediately, allowing your team to respond quickly and prevent damage",          icon: "simulate",
+            "We use continuous monitoring to detect suspicious activities immediately, allowing your team to respond quickly and prevent damage",
+          icon: "detect",
         },
         {
           title: "Integrate Threat Intelligence for Proactive Defense",
           description:
-"We integrate up-to-date threat feeds to ensure your organization is always prepared to face the latest attack vectors",          icon: "track",
+"We integrate up-to-date threat feeds to ensure your organization is always prepared to face the latest attack vectors",          icon: "integrate",
         },
         {
           title: "Automate Security Responses",
           description:
-"With SOC integration and automated playbooks, we streamline response times and reduce human error, ensuring a faster and more accurate reaction to threats",          icon: "generate",
+"With SOC integration and automated playbooks, we streamline response times and reduce human error, ensuring a faster and more accurate reaction to threats",          icon: "automate",
         },
       ],
     },
@@ -343,13 +344,13 @@ export const PLATFORM_CONFIG: Record<PlatformType, PlatformPageConfig> = {
           title: "Automate Compliance Monitoring and Reporting",
           description:
 "We automate the process of tracking and reporting compliance with key industry standards (e.g., NIST, ISO, PCI), saving you time and reducing human errors.",   
-       icon: "simulate",
+       icon: "automate",
         },
         {
           title: "Identify, Assess, and Mitigate Risks",
           description:
 "White Hawk continuously monitors and assesses risk across your organization, providing a comprehensive view and actionable steps to mitigate identified threats",
-          icon: "track",
+          icon: "integrate",
         },
         {
           title: "Provide Audit-Ready Documentation",
@@ -450,7 +451,7 @@ export const PLATFORM_CONFIG: Record<PlatformType, PlatformPageConfig> = {
           title: "Automate Asset Discovery and Classification",
           description:
             "White Hawk automatically identifies and categorizes assets as they come online, so you’re always aware of your network’s state in real-time",
-          icon: "track",
+          icon: "automate",
         },
         {
           title: "Monitor and Secure All Devices",

@@ -16,6 +16,8 @@ export interface WhyMattersSectionProps {
   topTitle: string;
   topDescription: string;
   illustration: WhyMattersIllustrationName;
+  tabletBackgroundSrc: string;
+  mobileBackgroundSrc: string;
 
   /** Bottom half — dark card. */
   bottomTitle: string;
@@ -27,6 +29,8 @@ export function WhyMattersSection({
   topTitle,
   topDescription,
   illustration,
+  tabletBackgroundSrc,
+  mobileBackgroundSrc,
   bottomTitle,
   bottomDescription,
   features,
@@ -35,7 +39,15 @@ export function WhyMattersSection({
     <section className={styles.section} aria-label="Solution overview">
       <div className={styles.container}>
         {/* --- Top half: light card --- */}
-        <div className={styles.topCard}>
+        <div
+          className={styles.topCard}
+          style={
+            {
+              "--why-matters-tablet-bg": `url(${tabletBackgroundSrc})`,
+              "--why-matters-mobile-bg": `url(${mobileBackgroundSrc})`,
+            } as React.CSSProperties
+          }
+        >
           <div className={styles.topCopy}>
             <h2 className={styles.topTitle}>{topTitle}</h2>
             <p className={styles.topDescription}>{topDescription}</p>
