@@ -17,7 +17,7 @@ export interface SuccessStory {
 export interface MissionCard {
   title: string;
   description: string;
-  icon: "track" | "generate" | "simulate" | "detect" | "devices" | "integrate" | "automate";
+  icon: "track" | "generate" | "simulate" | "detect" | "devices" | "integrate" | "automate" | "monitor";
 }
 
 export interface FaqEntry {
@@ -231,7 +231,7 @@ export const PLATFORM_CONFIG: Record<PlatformType, PlatformPageConfig> = {
           title: "Detect Threats in Real-Time",
           description:
             "We use continuous monitoring to detect suspicious activities immediately, allowing your team to respond quickly and prevent damage",
-          icon: "detect",
+          icon: "track",
         },
         {
           title: "Integrate Threat Intelligence for Proactive Defense",
@@ -445,7 +445,7 @@ export const PLATFORM_CONFIG: Record<PlatformType, PlatformPageConfig> = {
         {
           title: "Achieve Complete Visibility of All Assets",
           description:
-"We ensure full visibility across both IT and non-IT assets, giving you the ability to monitor everything connected to your network and improve security posture",          icon: "simulate",
+"We ensure full visibility across both IT and non-IT assets, giving you the ability to monitor everything connected to your network and improve security posture",          icon: "devices",
         },
         {
           title: "Automate Asset Discovery and Classification",
@@ -457,7 +457,7 @@ export const PLATFORM_CONFIG: Record<PlatformType, PlatformPageConfig> = {
           title: "Monitor and Secure All Devices",
           description:
             "From IT infrastructure to IoT devices, we continuously monitor assets to identify vulnerabilities and ensure compliance with security policies.",
-          icon: "generate",
+          icon: "monitor",
         },
       ],
     },

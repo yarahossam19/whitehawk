@@ -1,12 +1,8 @@
 "use client";
 
-import Image, { type StaticImageData } from "next/image";
 import { useState } from "react";
 import type { MissionCard } from "../config";
 import styles from "./MissionSection.module.scss";
-import integrateIcon from "@/../public/assets/icons/Data.svg";
-import automateIcon from "@/../public/assets/icons/Robot.svg";
-import devicesIcon from "@/../public/assets/icons/Devices.svg";
 interface MissionSectionProps {
   cards: MissionCard[];
 }
@@ -70,17 +66,82 @@ function DetectIcon() {
 }
 
 
-function AssetIcon({ src }: { src: StaticImageData }) {
-  return <Image src={src} alt="" width={48} height={48} />;
+function AssetIcon() {
+  return(<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none">
+<g clipPath="url(#clip0_4418_10001)">
+<path d="M17.0099 12.7298C17.6009 12.7298 18.0799 12.2507 18.0799 11.6598C18.0799 11.0688 17.6009 10.5898 17.0099 10.5898C16.419 10.5898 15.9399 11.0688 15.9399 11.6598C15.9399 12.2507 16.419 12.7298 17.0099 12.7298Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+<path d="M20 6V7.78998C19.75 7.75998 19.46 7.73999 19.15 7.73999H14.87C12.73 7.73999 12.02 8.45003 12.02 10.59V15.7H6C2.8 15.7 2 14.9 2 11.7V6C2 2.8 2.8 2 6 2H16C19.2 2 20 2.8 20 6Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+<path d="M9 15.6992V19.9992" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+<path d="M2 11.9004H12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+<path d="M5.94995 20H11.9999" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+<path d="M17.0101 12.7298C17.601 12.7298 18.08 12.2507 18.08 11.6598C18.08 11.0688 17.601 10.5898 17.0101 10.5898C16.4191 10.5898 15.9401 11.0688 15.9401 11.6598C15.9401 12.2507 16.4191 12.7298 17.0101 12.7298Z" stroke="currentColor" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+<path d="M20 7.79022C19.75 7.76022 19.46 7.74023 19.15 7.74023H14.87C12.73 7.74023 12.02 8.45027 12.02 10.5903V19.1503C12.02 21.2903 12.73 22.0002 14.87 22.0002H19.15C21.29 22.0002 22 21.2903 22 19.1503V10.5903C22 8.76027 21.48 7.98022 20 7.79022ZM17.01 10.5903C17.6 10.5903 18.08 11.0702 18.08 11.6602C18.08 12.2502 17.6 12.7302 17.01 12.7302C16.42 12.7302 15.94 12.2502 15.94 11.6602C15.94 11.0702 16.42 10.5903 17.01 10.5903ZM17.01 19.1503C15.83 19.1503 14.87 18.1903 14.87 17.0103C14.87 16.5203 15.04 16.0603 15.32 15.7003C15.71 15.2003 16.32 14.8702 17.01 14.8702C17.55 14.8702 18.04 15.0703 18.41 15.3903C18.86 15.7903 19.15 16.3703 19.15 17.0103C19.15 18.1903 18.19 19.1503 17.01 19.1503Z" stroke="currentColor" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+<path d="M19.15 17.0111C19.15 18.1911 18.19 19.1511 17.01 19.1511C15.83 19.1511 14.87 18.1911 14.87 17.0111C14.87 16.5211 15.04 16.0611 15.32 15.7011C15.71 15.2011 16.32 14.8711 17.01 14.8711C17.55 14.8711 18.04 15.0711 18.41 15.3911C18.86 15.7911 19.15 16.3711 19.15 17.0111Z" stroke="currentColor" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+<path d="M17.0101 12.7298C17.601 12.7298 18.08 12.2507 18.08 11.6598C18.08 11.0688 17.601 10.5898 17.0101 10.5898C16.4191 10.5898 15.9401 11.0688 15.9401 11.6598C15.9401 12.2507 16.4191 12.7298 17.0101 12.7298Z" stroke="currentColor" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+</g>
+<defs>
+<clipPath id="clip0_4418_10001">
+<rect width="24" height="24" fill="white"/>
+</clipPath>
+</defs>
+</svg>);
 }
-
+function AutomateIcon() {
+ return (<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none">
+<g clipPath="url(#clip0_4418_10213)">
+<path d="M11 18V21C11 21.5 10.6 22 10 22C9.4 22 9 21.5 9 21V18H11Z" stroke="currentColor" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+<path d="M15 18V21C15 21.5 14.6 22 14 22C13.4 22 13 21.5 13 21V18H15Z" stroke="currentColor" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+<path d="M17 11V16C17 17.1 16.1 18 15 18H9C7.9 18 7 17.1 7 16V11C7 9.9 7.9 9 9 9H15C16.1 9 17 9.9 17 11Z" stroke="currentColor" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+<path d="M5 11V15C5 15.6 4.6 16 4 16C3.4 16 3 15.6 3 15V11C3 10.4 3.4 10 4 10C4.6 10 5 10.4 5 11Z" stroke="currentColor" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+<path d="M21 11V15C21 15.6 20.6 16 20 16C19.4 16 19 15.6 19 15V11C19 10.4 19.4 10 20 10C20.6 10 21 10.4 21 11Z" stroke="currentColor" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+<path d="M13 18H11" stroke="currentColor" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+<path d="M9.6 7H14.4C15.3 7 16 6.25 16 5.28571C16 2.92857 14.2 1 12 1C9.8 1 8 2.92857 8 5.28571C8 6.25 8.7 7 9.6 7Z" stroke="currentColor" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+</g>
+<defs>
+<clipPath id="clip0_4418_10213">
+<rect width="24" height="24" fill="white"/>
+</clipPath>
+</defs>
+</svg>)
+}
+function IntegrateIcon() {
+  return (<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none">
+<g clipPath="url(#clip0_4418_9744)">
+<path d="M20 14C21.1046 14 22 13.1046 22 12C22 10.8954 21.1046 10 20 10C18.8954 10 18 10.8954 18 12C18 13.1046 18.8954 14 20 14Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+<path d="M20 6C21.1046 6 22 5.10457 22 4C22 2.89543 21.1046 2 20 2C18.8954 2 18 2.89543 18 4C18 5.10457 18.8954 6 20 6Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+<path d="M20 22C21.1046 22 22 21.1046 22 20C22 18.8954 21.1046 18 20 18C18.8954 18 18 18.8954 18 20C18 21.1046 18.8954 22 20 22Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+<path d="M4 14C5.10457 14 6 13.1046 6 12C6 10.8954 5.10457 10 4 10C2.89543 10 2 10.8954 2 12C2 13.1046 2.89543 14 4 14Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+<path d="M6 12H18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+<path d="M18 4H14C12 4 11 5 11 7V17C11 19 12 20 14 20H18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+</g>
+<defs>
+<clipPath id="clip0_4418_9744">
+<rect width="24" height="24" fill="white"/>
+</clipPath>
+</defs>
+</svg>)};
+function MonitorIcon() {
+  return(<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none">
+<g clipPath="url(#clip0_4418_10023)">
+<path d="M6.44 2H17.55C21.11 2 22 2.89 22 6.44V12.77C22 16.33 21.11 17.21 17.56 17.21H6.44C2.89 17.22 2 16.33 2 12.78V6.44C2 2.89 2.89 2 6.44 2Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+<path d="M12 17.2207V22.0007" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+<path d="M2 13H22" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+<path d="M7.5 22H16.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+</g>
+<defs>
+<clipPath id="clip0_4418_10023">
+<rect width="24" height="24" fill="white"/>
+</clipPath>
+</defs>
+</svg>)}
 function CardIcon({ icon }: { icon: MissionCard["icon"] }) {
   if (icon === "simulate") return <SimulateIcon />;
   if (icon === "track") return <TrackIcon />;
   if (icon === "detect") return <DetectIcon />;
-  if (icon === "devices") return <AssetIcon src={devicesIcon} />;
-  if (icon === "integrate") return <AssetIcon src={integrateIcon} />;
-  if (icon === "automate") return <AssetIcon src={automateIcon} />;
+  if (icon === "devices") return <AssetIcon />;
+  if (icon === "integrate") return <IntegrateIcon />;
+  if (icon === "automate") return <AutomateIcon />;
+  if (icon === "monitor") return <MonitorIcon />;
   return <GenerateIcon />;
 }
 
