@@ -28,8 +28,7 @@ export function HeroShell() {
            Four Tools With <span style={{ color: "#ABE0FF" }}> One</span>
           </h1>
           <p className={styles.heroSubtitle}>
-            WhiteHawk is the AI-powered cybersecurity system that unifies offensive testing, defensive monitoring, asset management, and GRC into one cybersecurity platform.
-          </p>
+WhiteHawk is the AI-powered cybersecurity system that unifies offensive testing, defensive monitoring, asset management, and GRC into one cybersecurity platform. Built by WhiteGuard for banks, fintechs, healthcare networks, and critical infrastructure across MENA.          </p>
           <HeroButtons />
         </div>
         <HeroVideoIsland />
