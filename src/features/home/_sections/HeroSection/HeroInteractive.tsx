@@ -5,6 +5,8 @@ import { useDemoModal } from "@/contexts/DemoModalContext";
 import { useFreeTrialModal } from "@/contexts/FreeTrialModalContext";
 import styles from "./HeroSection.module.scss";
 
+
+
 export function HeroButtons() {
   const { openDemoModal } = useDemoModal();
   const { openFreeTrialModal } = useFreeTrialModal();
