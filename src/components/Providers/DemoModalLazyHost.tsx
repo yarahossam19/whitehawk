@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { useDemoModal } from "@/contexts/DemoModalContext";
+import { usePrimeReactCSSLoader } from "@/hooks/usePrimeReactCSSLoader";
 
 const RequestDemoModal = dynamic(() => import("@/components/RequestDemoModal/RequestDemoModal").then(m => ({ default: m.RequestDemoModal })), {
   ssr: false,
@@ -17,6 +18,7 @@ const RequestDemoModal = dynamic(() => import("@/components/RequestDemoModal/Req
 export function DemoModalLazyHost() {
   const { isOpen } = useDemoModal();
   const [everOpened, setEverOpened] = useState(false);
+  usePrimeReactCSSLoader();
 
   useEffect(() => {
     if (isOpen) setEverOpened(true);

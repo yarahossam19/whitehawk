@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { useFreeTrialModal } from "@/contexts/FreeTrialModalContext";
+import { usePrimeReactCSSLoader } from "@/hooks/usePrimeReactCSSLoader";
 
 const FreeTrialModal = dynamic(() => import("@/components/FreeTrialModal/FreeTrialModal").then(m => ({ default: m.FreeTrialModal })), {
   ssr: false,
@@ -12,6 +13,7 @@ const FreeTrialModal = dynamic(() => import("@/components/FreeTrialModal/FreeTri
 export function FreeTrialModalLazyHost() {
   const { isOpen } = useFreeTrialModal();
   const [everOpened, setEverOpened] = useState(false);
+  usePrimeReactCSSLoader();
 
   useEffect(() => {
     if (isOpen) setEverOpened(true);
