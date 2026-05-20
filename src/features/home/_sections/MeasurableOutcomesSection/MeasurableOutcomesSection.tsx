@@ -15,8 +15,8 @@ type Outcome = {
 const OUTCOMES: Outcome[] = [
   {
     id: "incident-response-1",
-    stat: "40%",
-    label: "Faster Incident Response",
+    stat: "30%",
+    label: "Lower Total Cost",
     bgImage: "/assets/imgs/section-bg3.png",
     bgAlt: "",
   },
