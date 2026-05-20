@@ -9,7 +9,23 @@ export function suppressRscErrors(): void {
   if (typeof window === "undefined") return;
   if (process.env.NODE_ENV !== "production") return;
 
-  // Intercept fetch to suppress RSC 404 errors
+  // Override console.error to suppress RSC 404 errors
+  const originalError = console.error;
+  
+  console.error = function (...args: any[]) {
+    const message = args[0]?.toString?.() ?? "";
+    const isRscError = message.includes("?_rsc=") && message.includes("404");
+    
+    if (isRscError) {
+      // Silently suppress RSC 404 errors
+      return;
+    }
+    
+    // Pass through all other errors
+    originalError.apply(console, args);
+  };
+
+  // Also intercept fetch to suppress RSC 404 errors
   const originalFetch = window.fetch.bind(window);
   
   window.fetch = ((input: RequestInfo | URL, init?: RequestInit) => {
