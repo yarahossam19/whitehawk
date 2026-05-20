@@ -23,7 +23,7 @@ const CARDS: Card[] = [
     title: "24/7 Monitoring",
     description:
       "SOC-as-a-Service running around the clock from regional centers in Egypt, KSA, UK, US, and Libya.",
-    image: "/assets/imgs/leading-orgs/image1.png",
+    image: "/assets/imgs/leading-orgs/imagee1.png",
     imageAlt: "Dashboard mockup illustrating round-the-clock monitoring",
     wide: true,
   },
@@ -32,7 +32,7 @@ const CARDS: Card[] = [
     title: "Advanced Threat Detection",
     description:
       "WhiteHawk's AI engine processes telemetry under 200 ms and reduces MTTR by 40%, combining threat intelligence platform data and intrusion prevention system signals into one decision engine.",
-    image: "/assets/imgs/leading-orgs/image2.png",
+    image: "/assets/imgs/leading-orgs/imagee2.png",
     imageAlt: "Timeline showing WhiteHawk AI threat-detection pipeline",
   },
   {
@@ -40,7 +40,7 @@ const CARDS: Card[] = [
     title: "Fast Incident Response",
     description:
       "DFIR-backed containment, forensic reporting, and regulator-ready documentation produced the same week.",
-    image: "/assets/imgs/leading-orgs/image3.png",
+    image: "/assets/imgs/leading-orgs/imagee3.png",
     imageAlt: "Contain, Forensics, Report incident-response flow",
   },
   {
@@ -48,7 +48,7 @@ const CARDS: Card[] = [
     title: "Compliance-Ready",
     description:
       "SAMA, NCA, CBE, FRA 139, ISO 27001, PCI-DSS 4.0, HIPAA, GDPR — evidence collected continuously by the cybersecurity platform.",
-    image: "/assets/imgs/leading-orgs/image4.png",
+    image: "/assets/imgs/leading-orgs/imagee4.png",
     imageAlt: "Compliance certifications grid",
   },
   {
@@ -56,7 +56,7 @@ const CARDS: Card[] = [
     title: "Certified Experts",
     description:
       "OSCP, OSWE, OSEP, OSWP, CEH, CRTP, C|PENT, eCPPT, eCPTX, GPEN, GXPN, GCPN credentials.",
-    image: "/assets/imgs/leading-orgs/image5.png",
+    image: "/assets/imgs/leading-orgs/imagee5.png",
     imageAlt: "Cybersecurity certification badges",
   },
 ];

@@ -87,7 +87,8 @@
 .cardWide {
   /* Hero card spans both columns on desktop. */
   grid-column: 1 / -1;
-  min-height: 340px;
+  min-height: 290px;
+  padding-bottom: 0;
 
   @media (max-width: 1024px) {
     min-height: 320px;
@@ -96,6 +97,13 @@
   @media (max-width: 600px) {
     min-height: 280px;
   }
+  .cardImageWrap {
+  position: relative;
+  flex: 1 1 auto;
+  width: 90%;
+  margin: 0 auto;
+
+}
 }
 
 .cardCopy {
