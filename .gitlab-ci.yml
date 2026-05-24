@@ -1,0 +1,84 @@
+stages:
+  - build_push
+  - deploy
+
+variables:
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: ""
+  DOCKER_HOST: tcp://docker:2375
+  DOCKER_BUILDKIT: "1"
+
+  IMAGE_TAG: "$CI_COMMIT_SHORT_SHA"
+  CONTAINER_PORT: "3000"
+
+build_and_push_to_ecr:
+  stage: build_push
+  image: docker:27
+  services:
+    - name: docker:27-dind
+      command: ["--tls=false"]
+  before_script:
+    - apk add --no-cache aws-cli bash
+    - export ECR_REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
+    - export IMAGE_URI="${ECR_REGISTRY}/${ECR_REPOSITORY}"
+    - aws --version
+    - docker --version
+    - aws ecr get-login-password --region "$AWS_REGION" | docker login --username AWS --password-stdin "$ECR_REGISTRY"
+  script:
+    - docker build --pull -t "$IMAGE_URI:$IMAGE_TAG" -t "$IMAGE_URI:latest" .
+    - docker push "$IMAGE_URI:$IMAGE_TAG"
+    - docker push "$IMAGE_URI:latest"
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+
+deploy_to_ec2:
+  stage: deploy
+  image: alpine:3.20
+  needs:
+    - build_and_push_to_ecr
+  before_script:
+    - apk add --no-cache openssh-client bash
+    - eval "$(ssh-agent -s)"
+    - chmod 600 "$EC2_SSH_PRIVATE_KEY"
+    - ssh-add "$EC2_SSH_PRIVATE_KEY"
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan -H "$EC2_HOST" >> ~/.ssh/known_hosts
+  script:
+    - export ECR_REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
+    - export IMAGE_URI="${ECR_REGISTRY}/${ECR_REPOSITORY}"
+
+    # Prepare app directory on EC2
+    - ssh "$EC2_USER@$EC2_HOST" "mkdir -p '$APP_ENV_DIR'"
+
+    # Copy runtime environment file to EC2 if APP_ENV_FILE is configured as a GitLab File variable
+    - |
+      if [ -n "${APP_ENV_FILE:-}" ] && [ -f "$APP_ENV_FILE" ]; then
+        scp "$APP_ENV_FILE" "$EC2_USER@$EC2_HOST:$APP_ENV_DIR/.env"
+      else
+        ssh "$EC2_USER@$EC2_HOST" "touch '$APP_ENV_DIR/.env'"
+      fi
+
+    # Deploy immutable image tag to EC2
+    - |
+      ssh "$EC2_USER@$EC2_HOST" << EOF
+        set -e
+
+        aws ecr get-login-password --region "${AWS_REGION}" | docker login --username AWS --password-stdin "${ECR_REGISTRY}"
+
+        docker pull "${IMAGE_URI}:${IMAGE_TAG}"
+
+        docker stop "${CONTAINER_NAME}" || true
+        docker rm "${CONTAINER_NAME}" || true
+
+        docker run -d \
+          --name "${CONTAINER_NAME}" \
+          --restart unless-stopped \
+          --env-file "${APP_ENV_DIR}/.env" \
+          -p "${HOST_PORT}:${CONTAINER_PORT}" \
+          "${IMAGE_URI}:${IMAGE_TAG}"
+
+        docker image prune -f
+      EOF
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
