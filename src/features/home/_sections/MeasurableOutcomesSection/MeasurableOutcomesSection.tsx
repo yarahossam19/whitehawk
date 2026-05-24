@@ -16,21 +16,21 @@ const OUTCOMES: Outcome[] = [
   {
     id: "incident-response-1",
     stat: "30%",
-    label: "Lower Total Cost",
+    label: "lower total cost",
     bgImage: "/assets/imgs/section-bg3.png",
     bgAlt: "",
   },
   {
     id: "mena-enterprises",
     stat: "64+",
-    label: "MENA Enterprises",
+    label: "Organizations Across MENA",
     bgImage: "/assets/imgs/section-bg2.png",
     bgAlt: "",
   },
   {
     id: "incident-response-2",
     stat: "40%",
-    label: "Faster Incident Response",
+    label: "Faster Response Decisions",
     bgImage: "/assets/imgs/section-bg1.png",
     bgAlt: "",
   },
@@ -44,8 +44,7 @@ export function MeasurableOutcomesSection() {
           Measurable outcomes trusted across MENA
         </h2>
         <p className={styles.subtitle}>
-          White Hawk helps enterprises improve response speed, reduce security cost, and maintain
-          compliance evidence across regulated environments
+          White Hawk helps enterprises improve response speed, reduce security cost, and maintain compliance evidence across regulated environments
         </p>
 
         <ul className={styles.grid} role="list">

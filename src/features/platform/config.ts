@@ -64,12 +64,11 @@ export const PLATFORM_CONFIG: Record<PlatformType, PlatformPageConfig> = {
 "Offensive security from WhiteHawk — Penetration Testing, Vulnerability Assessment, pen testing, red teaming, CIS benchmark across MENA.",    hero: {
       titleLines: [
         "Offensive Security",
-        "That Proves Exploitability —",
-        "Not Just CVE Lists",
+        "That Proves Real Risk, Not Just CVE Lists",
+    
       ],
       subtitle:
-        "WhiteHawk's offensive security module simulates real-world attackers against your environment. Our offensive security team holds OSCP, OSWE, OSEP, OSWP, CEH, CRTP, C|PENT, and GPEN certifications and has run engagements against banks, fintechs, museums, and healthcare networks across MENA.",
-      ctaLabel: "Get Demo",
+"White Hawk’s offensive security module helps your team understand which weaknesses can actually be used against your environment — and what to fix first. It combines WhiteGuard’s hands-on offensive security testing expertise with platform-driven tracking, evidence, ticketing, and reporting across applications, infrastructure, cloud, and identity. Every vulnerability assessment, penetration testing engagement, configuration review, and automated.",      ctaLabel: "Get Demo",
     },
     activities: {
       sectionTitle: "Defensive Security Solutions",
@@ -78,28 +77,25 @@ export const PLATFORM_CONFIG: Record<PlatformType, PlatformPageConfig> = {
         {
           title: "Vulnerability Assessment",
           description:
-"Vulnerability Assessment maps every weakness across your attack surface - applications, infrastructure, cloud workloads, and identity layers - then proves which ones are actually exploitable in your specific environment, the foundation of any offensive security program."        },
-        {
+"Vulnerability assessment finds weaknesses across applications, infrastructure, cloud workloads, and identity layers, then vulnerability analysis ranks each finding by severity, exposure, asset context, and business impact so offensive security teams know what to fix first.",} ,       {
           title: "Penetration Testing",
           description:
-"Penetration Testing is authorized, hands-on simulation of a real attack against your systems. WhiteHawk pen testers chain vulnerabilities the way adversaries do, exposing the realistic blast radius of every weakness across your stack."        },
-        {
+"Penetration testing simulates real attack paths against approved targets; pen testing chains vulnerabilities the way adversaries do to expose what an attacker could reach and where offensive security controls need to be strengthened.",},        {
           title: "Security Configuration Review",
           description:
-"A security configuration review validates that your firewalls, cloud accounts, identity providers, and operating systems are hardened against known misconfigurations - the silent root cause behind most breaches uncovered by offensive security engagements today."        },
+"Review firewalls, cloud accounts, operating systems, identity providers, and critical platforms against secure configuration practices to uncover the misconfigurations offensive security assessments most often exploit before they create avoidable exposure on production systems."        },
         {
           title: "Automated Security Scans",
           description:
-"Continuous, automated security scans run inside the WhiteHawk platform around the clock. New assets, new code, and new exposures are flagged in real time and routed to the right team automatically."        },
+"Automated security scans and automated vulnerability scanning run continuously through White Hawk to detect newly introduced exposures, track recurring issues, and route findings to the right owners — feeding the broader offensive security workflow without manual follow-up.",},
         {
           title: "CIS Benchmark Assessment",
           description:
-"Our CIS benchmark assessment measures servers, workstations, and cloud workloads against the Center for Internet Security baseline - the same standard auditors use to score security maturity, integrated with our offensive security findings."        },
+"Assess servers, endpoints, and cloud workloads against CIS Benchmarks and CIS security benchmarks to understand hardening gaps, then connect baseline CIS compliance issues to broader offensive security findings inside one tracked remediation plan.",},
         {
           title: "Ticketing and Reporting",
           description:
-"Every Vulnerability Assessment finding becomes a ticket with an owner, severity, business impact, and step-by-step fix. Reports come in two layers: technical depth for engineers and an executive view for boards."        },
-      ],
+"Convert every offensive security finding into a remediation ticket with owners, priorities, evidence, and recommended fixes, then share technical reports with engineers and executive summaries with management — closing the loop on each engagement.",}      ],
     },
     mission: {
       cards: [
@@ -195,7 +191,7 @@ export const PLATFORM_CONFIG: Record<PlatformType, PlatformPageConfig> = {
         "Cyber Defense",
         "That Never Sleeps",
       ],
-      subtitle:"Cyber defense is no longer a periscope-up exercise. WhiteHawk's defensive module is the always-on cyber defense engine for organizations that cannot afford downtime. We ingest telemetry from your network, endpoints, cloud, and identity layer, correlate it in under 200 milliseconds, and contain confirmed threats before they spread - backed by a 24/7 SOC across Egypt, KSA, the UK, and the US.",
+      subtitle:"White Hawk’s cyber defense module gives security teams one place to monitor threats, investigate alerts, and coordinate response. Defensive Security Solutions connect telemetry, incidents, evidence, and SOC workflows — feeding cyber threat intelligence and threat hunting into a single investigation queue so analysts catch suspicious activity earlier, prioritize what matters, and respond before small issues become larger incidents inside a unified cyber defense workflow.",
       ctaLabel: "Get Demo",
     },
     activities: {
@@ -311,32 +307,32 @@ export const PLATFORM_CONFIG: Record<PlatformType, PlatformPageConfig> = {
       sectionSubtitle: "Comprehensive testing and assessment capabilities.",
       items: [
         {
-          title: "Data Collection",
+          title: "Data and Evidence Collection",
           description:
-"Data collection consolidates telemetry, control evidence, and policy artifacts from across your stack into one continuously updated source of truth - replacing the spreadsheets that audit season historically lives and dies inside."        },
+"Structured Data Collection brings control evidence, documents, screenshots, technical inputs, and compliance artifacts into one place. Instead of chasing files before every audit, teams keep evidence connected to the right controls and frameworks as part of continuous GRC compliance.",},
         {
           title: "Gap Assessment",
           description:
-"Gap assessment scores your current GRC compliance posture against the target framework - SAMA CSF, NCA ECC, ISO 27001, PCI-DSS 4.0 - and produces a prioritized remediation plan with assigned owners.",        },
+"A gap assessment scores your current compliance posture against selected frameworks such as SAMA CSF, NCA ECC, ISO/IEC 27001, PCI DSS 4.0, and other applicable standards. White Hawk helps identify missing controls, weak areas, and remediation priorities — feeding directly into your governance risk and compliance plan.",},
         {
           title: "Risk Management",
           description:
-"Quantified risk registers replace heat-map theater. Every risk is scored by likelihood, impact, and current control coverage - feeding the governance risk and compliance picture continuously, not annually."        },
+"Risk management in White Hawk is a living register that connects each risk to likelihood, impact, affected assets, existing controls, owners, and mitigation plans. Teams manage risk continuously as part of ongoing GRC compliance instead of treating it as a once-a-year exercise.",},
         {
           title: "Governance Management",
-          description:"Governance management keeps every policy version-controlled, mapped to the relevant control, owned by a named individual, and reviewed on a documented cadence - not buried in a shared drive nobody opens.",
-                },        {
+          description:"Governance Management keeps policies, procedures, controls, responsibilities, and review cycles organized in one place. White Hawk helps teams assign ownership, track approvals, manage policy versions, and make GRC governance work easier to follow and maintain."},
+        {
           title: "Compliance Management",
           description:
-"Compliance management tracks live GRC compliance posture across SAMA, NCA ECC and CCC, CBE, FRA 139, ISO/IEC 27001:2022, PCI-DSS 4.0, HIPAA, GDPR, Aramco CCC, DIFC, and ADGM - concurrently, not sequentially.",        },
+"Compliance management tracks requirements across regional and international frameworks, including SAMA, NCA, CBE, FRA 139, ISO/IEC 27001, PCI DSS, HIPAA, GDPR, Aramco CCC, DIFC, and ADGM. White Hawk helps teams monitor progress and manage multiple governance risk and compliance obligations from one place.",},
         {
           title: "Audit Management",
           description:
-"Audit management stops being a fire drill. Evidence is collected continuously, mapped to control IDs, timestamped, and exportable in the format your auditor requested - long before the audit window opens."      },
+"Audit Management in White Hawk prepares teams for audits with organized control evidence, ownership records, timestamps, remediation status, and supporting documentation, keeping GRC readiness work active throughout the year so audits stop being a fire drill.",},
 {
   title: "Ticketing and Reporting",
   description:
-"Every GRC compliance gap becomes a ticket with an owner, deadline, and remediation plan. Reports come in two layers: technical depth for engineers, executive view for boards and regulators on demand.",   }  ],
+"Ticketing and Reporting turns compliance gaps, risks, and audit findings into assigned tickets with deadlines, owners, priorities, and remediation steps. Reports for technical teams, management, auditors, and regulators are generated from live GRC compliance data at the level of detail each audience needs.",   }  ],
     },
     mission: {
       cards: [

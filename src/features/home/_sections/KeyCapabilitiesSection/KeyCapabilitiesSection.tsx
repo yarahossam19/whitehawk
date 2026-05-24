@@ -46,14 +46,12 @@ export function KeyCapabilitiesSection() {
   return (
     <section className={styles.section}>
       <div className={styles.container}>
-        <p className={styles.eyebrow}>KEY CAPABILITIES</p>
+        <p className={styles.eyebrow}>Key Capabilities</p>
         <h2 className={styles.title}>
           All-in-One platform to manage your cybersecurity
         </h2>
         <p className={styles.description}>
-          White Hawk combines everything you need to manage your security, from
-          vulnerability scanning to compliance checks, into one easy-to-use
-          platform.
+          White Hawk combines everything you need to manage your security, from vulnerability scanning to compliance checks, into one easy-to-use platform.
         </p>
         <div className={styles.cards}>
           {CAPABILITIES.map((cap) => (

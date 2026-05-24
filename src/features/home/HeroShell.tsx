@@ -23,12 +23,10 @@ export function HeroShell() {
       <div className={styles.heroContent}>
         <div className={styles.heroLeft}>
           <h1 className={styles.heroTitle}>
-            The Cybersecurity System That Replaces
-            <br />    
-           Four Tools With <span style={{ color: "#ABE0FF" }}> One</span>
+        One Cybersecurity System to Manage Your Entire Cybersecurity Program
           </h1>
           <p className={styles.heroSubtitle}>
-WhiteHawk is the AI-powered cybersecurity system that unifies offensive testing, defensive monitoring, asset management, and GRC into one cybersecurity platform. Built by WhiteGuard for banks, fintechs, healthcare networks, and critical infrastructure across MENA.          </p>
+White Hawk is the cybersecurity system that brings your security operations, compliance work, assets, and risk visibility into one cybersecurity platform — so your team can understand what matters, act faster, and manage cybersecurity with less complexity </p>
           <HeroButtons />
         </div>
         <HeroVideoIsland />

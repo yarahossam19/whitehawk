@@ -129,8 +129,7 @@ export function ChallengesSection() {
         </div>
         <h2 className={styles.title}>Built for real-world security challenges</h2>
         <p className={styles.subtitle}>
-          From preventing breaches to training your team, WhiteHawk adapts to your specific security
-          needs and industry requirements.
+          From preventing breaches to training your team, WhiteHawk adapts to your specific security needs and industry requirements.
         </p>
 
         <div className={styles.tabs} role="tablist" aria-label="Audience">

@@ -33,16 +33,14 @@ export function HeroSection() {
       <div className={styles.heroContent}>
         <div className={styles.heroLeft}>
           <h1 className={styles.heroTitle}>
-            Manage your entire cybersecurity program
-            <br />
-            in one platform
+            One Cybersecurity System to Manage Your Entire Cybersecurity Program
           </h1>
           <p className={styles.heroSubtitle}>
-            Automate vulnerability management, streamline compliance, and proactively detect threats across your organization – all in one integrated platform
+            White Hawk is the cybersecurity system that brings your security operations, compliance work, assets, and risk visibility into one cybersecurity platform — so your team can understand what matters, act faster, and manage cybersecurity with less complexity
           </p>
           <div className={styles.heroButtons}>
-            <PrimaryButton title="Get Demo" variant="primary" onClick={openDemoModal} className={styles.heroButton} />
-            <PrimaryButton title="Start free trial" variant="secondary" onClick={openFreeTrialModal} className={styles.heroButton} />
+            <PrimaryButton title="Get A Demo" variant="primary" onClick={openDemoModal} className={styles.heroButton} />
+            <PrimaryButton title="Schedule Demo" variant="secondary" onClick={openFreeTrialModal} className={styles.heroButton} />
           </div>
         </div>
         <div className={styles.heroRight}>

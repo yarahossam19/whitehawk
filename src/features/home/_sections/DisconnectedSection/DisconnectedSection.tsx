@@ -1,47 +1,48 @@
 import styles from "./DisconnectedSection.module.scss";
 import challenge1 from "@/../public/assets/icons/challenges/challenge16.svg";
-import challenge2 from "@/../public/assets/icons/challenges/challenge14.svg";
+import challenge2 from "@/../public/assets/icons/challenges/challenge18.svg";
 import challenge3 from "@/../public/assets/icons/challenges/challenge13.svg";
-import challenge4 from "@/../public/assets/icons/challenges/challenge12.svg";
+import challenge4 from "@/../public/assets/icons/challenges/challenge17.svg";
 import challenge5 from "@/../public/assets/icons/challenges/challenge11.svg";
 import challenge6 from "@/../public/assets/icons/challenges/challenge15.svg";
 
 
 const CARDS = [
   {
-    title: "Too many tools, no coordination",
+    title: "Too Many Tools, Not Enough Coordination",
     description:
-      "If you're using a bunch of different tools to manage your security, it's easy for things to slip through the cracks.",
+      "Security teams often run separate tools — SIEMs, scanners, threat intelligence platforms, and ticketing systems — for monitoring, testing, compliance, assets, and reporting. Without one connected cybersecurity system, important risks are missed, delayed, or handled without full context.",
     icon: challenge1,
   },
-  {
-    title: "Waiting for threats to happen",
+    {
+    title: "Alerts Without Clear Business Context",
     description:
-      "Reacting to threats after they've already caused damage is risky. Without proactive monitoring, you might miss early warning signs and be left playing catch-up.",
+      "Not every alert carries the same level of risk. A warning on a critical production system should not be treated the same as activity on a low-priority asset. Without context, teams waste time deciding what matters first.",
     icon: challenge2,
   },
   {
-    title: "Managing access feels complicated",
+    title: "Asset Visibility Is Never Complete",
     description:
-      "Keeping track of who has access to what can get messy, especially as your team grows.",
+      "You cannot secure what you cannot see. IT assets, cloud systems, endpoints, applications, and even non-IT assets can easily fall out of view when they are tracked across scattered sheets, tools, and teams",
     icon: challenge3,
   },
+
   {
-    title: "Compliance feels like a never-ending task",
+    title: "Compliance Work Feels Manual and Repetitive",
     description:
-      "Keeping up with compliance requirements is stressful, especially when they keep changing.",
+      "Compliance becomes harder when evidence, controls, tasks, and ownership are managed separately. Teams spend too much time collecting proof, updating files, and preparing for audits instead of improving the security program",
     icon: challenge4,
   },
   {
-    title: "Vulnerabilities are hard to keep track",
+    title: "Vulnerabilities Are Found, But Not Prioritized",
     description:
-      "When you've got vulnerabilities spread across different systems, it's hard to stay on top of them all.",
+      "Many organizations know they have vulnerabilities, but struggle to decide which ones should be fixed first. When vulnerability data is disconnected from asset value, intrusion prevention system signals, and business impact, remediation becomes slow and reactive.",
     icon: challenge5,
   },
   {
-    title: "Losing track of IT and non-IT assets",
+    title: "Security Workflows Are Hard to Control",
     description:
-      "If you're using a bunch of different tools to manage your security, it's easy for things to slip through the cracks.",
+      "When tasks move between SOC teams, GRC teams, IT teams, and management without a unified workflow, ownership becomes unclear. This slows response, weakens accountability, and makes cybersecurity harder to manage at scale",
     icon: challenge6,
   },
 ];
@@ -53,9 +54,9 @@ export function DisconnectedSection() {
     <section className={styles.section}>
       <div className={styles.container}>
         <div className={styles.header}>
-          <h2 className={styles.title}>Is your cybersecurity feeling disconnected?</h2>
+          <h2 className={styles.title}>Is Your Cybersecurity Feeling Disconnected?</h2>
           <p className={styles.subtitle}>
-            Modern businesses face sophisticated challenges that traditional security measures can&apos;t handle alone.
+            Modern security teams do not usually suffer from a lack of tools. They suffer because every tool, alert, asset, vulnerability, and compliance task lives outside any unified cybersecurity system
           </p>
         </div>
         <div className={styles.grid}>

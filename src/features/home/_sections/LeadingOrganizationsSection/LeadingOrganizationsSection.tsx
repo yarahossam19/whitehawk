@@ -29,33 +29,33 @@ const CARDS: Card[] = [
   },
   {
     id: "threat-detection",
-    title: "Advanced Threat Detection",
+    title: "AI-Assisted Threat Detection",
     description:
-      "WhiteHawk's AI engine processes telemetry under 200 ms and reduces MTTR by 40%, combining threat intelligence platform data and intrusion prevention system signals into one decision engine.",
+      "Correlate telemetry, threat intelligence platforms, intrusion prevention system signals, and asset context to spot suspicious activity earlier and prioritize the alerts that require attention first",
     image: "/assets/imgs/leading-orgs/imagee2.png",
     imageAlt: "Timeline showing WhiteHawk AI threat-detection pipeline",
   },
   {
     id: "incident-response",
-    title: "Fast Incident Response",
+    title: "Faster Incident Response",
     description:
-      "DFIR-backed containment, forensic reporting, and regulator-ready documentation produced the same week.",
+      "Move from detection to containment, investigation, evidence collection, and reporting with clear ownership, traceable steps, and fewer handoffs between teams",
     image: "/assets/imgs/leading-orgs/imagee3.png",
     imageAlt: "Contain, Forensics, Report incident-response flow",
   },
   {
     id: "compliance",
-    title: "Compliance-Ready",
+    title: "Compliance Evidence Built In",
     description:
-      "SAMA, NCA, CBE, FRA 139, ISO 27001, PCI-DSS 4.0, HIPAA, GDPR — evidence collected continuously by the cybersecurity platform.",
+      "Keep controls, evidence, tasks, audit trails, and reporting organized across frameworks such as SAMA, NCA, CBE, FRA 139, ISO 27001, PCI DSS, HIPAA, and GDPR",
     image: "/assets/imgs/leading-orgs/imagee4.png",
     imageAlt: "Compliance certifications grid",
   },
   {
     id: "experts",
-    title: "Certified Experts",
+    title: "Expert Support Behind the Platform",
     description:
-      "OSCP, OSWE, OSEP, OSWP, CEH, CRTP, C|PENT, eCPPT, eCPTX, GPEN, GXPN, GCPN credentials.",
+      "White Hawk is backed by WhiteGuard's cybersecurity practitioners across offensive security, defensive operations, incident response, and GRC, so teams get platform capability with real operational expertise",
     image: "/assets/imgs/leading-orgs/imagee5.png",
     imageAlt: "Cybersecurity certification badges",
   },
@@ -65,12 +65,9 @@ export function LeadingOrganizationsSection() {
   return (
     <section className={styles.section} aria-labelledby="leading-orgs-title">
       <div className={styles.container}>
-        <h2 id="leading-orgs-title" className={styles.title}>
-          Why Leading Organizations Choose This Cybersecurity System.
-        </h2>
+        <h2 id="leading-orgs-title" className={styles.title}>Why Leading Organizations Choose White Hawk</h2>
         <p className={styles.subtitle}>
-          Five decision points, structured as a scannable bento grid: operations, response,
-          expertise, compliance, and AI detection working as one system.
+          Five practical reasons teams use White Hawk as their cybersecurity system to connect security operations, detection, response, compliance, and expert support in one cybersecurity platform
         </p>
 
         <ul className={styles.grid} role="list">

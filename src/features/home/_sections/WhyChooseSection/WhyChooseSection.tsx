@@ -168,7 +168,7 @@ export function WhyChooseSection() {
           Why Choose White Hawk?
         </h2>
         <p className={styles.subtitle}>
-    Why this cybersecurity system replaces traditional tool sprawl: <span style={{fontWeight:700}}>30% lower total cost of ownership</span> versus traditional consultancies;<span style={{fontWeight:700}}> 40% reduction in mean-time-to-respond</span>; sub-200 millisecond telemetry processing; <span style={{fontWeight:700}}>64+ enterprises across MENA</span> running on WhiteGuard managed services; <span style={{fontWeight:700}}>built-in intrusion prevention system controls</span>; integrated threat intelligence platforms feeds; zero rip-and-replace required for existing tooling.
+    White Hawk is a cybersecurity system that unifies GRC, asset visibility, offensive and defensive operations, threat intelligence platforms, and response workflows into one cybersecurity platform. This helps teams understand risk faster, act with better context, and manage cybersecurity without replacing existing tools.
         </p>
 
         <div className={styles.trackWrap}>

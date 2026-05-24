@@ -187,7 +187,7 @@ function ClientFlipCard({
 export function ClientsSection() {
   return (
     <section className={styles.clientsSection}>
-      <h2 className={styles.title}>Trusted by Industry Leaders</h2>
+      <h2 className={styles.title}>Trusted by Leading Organizations Across MENA</h2>
       <div className={styles.grid}>
         {GROUPS.map((group) => (
           <ClientFlipCard

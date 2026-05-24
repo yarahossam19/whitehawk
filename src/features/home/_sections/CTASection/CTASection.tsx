@@ -13,19 +13,18 @@ export function CTASection() {
       <div className={styles.container}>
         <h2 className={styles.title}>Protect your business today.</h2>
         <p className={styles.subtitle}>
-          Don&apos;t wait for a threat to appear. Secure your future with
-          WhiteHawk&apos;s intelligent protection platform.
+          Don&apos;t wait for a threat to appear. Secure your future with WhiteHawk&apos;s intelligent protection platform.
         </p>
         <div className={styles.buttons}>
           <PrimaryButton
-            title="Start Free Trial"
+            title="Get A Demo"
             variant="primary"
              onClick={openDemoModal}
      
             className={styles.primaryBtn}
           />
           <PrimaryButton
-            title="Become A Partner"
+            title="Schedule Demo"
             variant="secondary"
                   onClick={openFreeTrialModal}
             className={styles.secondaryBtn}

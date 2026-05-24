@@ -20,9 +20,7 @@ export function TrustedBySection() {
   return (
     <section className={styles.section}>
       <div className={styles.container}>
-        <p className={styles.subtitle}>
-          Trusted by leading organizations for robust security and quality
-        </p>
+        <p className={styles.subtitle}>Aligned with Globally Recognized Security Standards</p>
         <div className={styles.logos} role="list">
           {CERTIFICATES.map(({ src, alt }) => (
             <div key={alt} className={styles.logoWrap} role="listitem">
