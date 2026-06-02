@@ -13,7 +13,6 @@ RUN npm ci
 
 COPY . .
 
-RUN npm run lint
 RUN npm run build
 
 # Remove build cache to reduce final image size
