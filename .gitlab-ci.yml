@@ -1,3 +1,16 @@
+stages:
+  - build_push
+  - deploy
+
+variables:
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: ""
+  DOCKER_HOST: tcp://docker:2375
+  DOCKER_BUILDKIT: "1"
+
+  IMAGE_TAG: "$CI_COMMIT_SHORT_SHA"
+  CONTAINER_PORT: "3000"
+
 build_and_push_to_ecr:
   stage: build_push
   image: docker:27
@@ -16,7 +29,7 @@ build_and_push_to_ecr:
     - docker push "$IMAGE_URI:$IMAGE_TAG"
     - docker push "$IMAGE_URI:latest"
   rules:
-    - if: '$CI_COMMIT_BRANCH'
+    - if: '$CI_COMMIT_BRANCH == "main"'
 
 deploy_to_ec2:
   stage: deploy
@@ -34,13 +47,19 @@ deploy_to_ec2:
   script:
     - export ECR_REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
     - export IMAGE_URI="${ECR_REGISTRY}/${ECR_REPOSITORY}"
+
+    # Prepare app directory on EC2
     - ssh "$EC2_USER@$EC2_HOST" "mkdir -p '$APP_ENV_DIR'"
+
+    # Copy runtime environment file to EC2 if APP_ENV_FILE is configured as a GitLab File variable
     - |
       if [ -n "${APP_ENV_FILE:-}" ] && [ -f "$APP_ENV_FILE" ]; then
         scp "$APP_ENV_FILE" "$EC2_USER@$EC2_HOST:$APP_ENV_DIR/.env"
       else
         ssh "$EC2_USER@$EC2_HOST" "touch '$APP_ENV_DIR/.env'"
       fi
+
+    # Deploy immutable image tag to EC2
     - |
       ssh "$EC2_USER@$EC2_HOST" << EOF
         set -e
