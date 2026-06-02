@@ -32,13 +32,13 @@
   }
 
   &.primary {
-    background-color: var(--primary-900);
+    background-color: #002439;
     color: white;
 
     &:hover:not(:disabled) {
       background-color: var(--button-hover-bg);
       box-shadow: 0 0 10px 0 var(--primary-light) inset, 0 0 20px 0 var(--primary-light) inset;
-      color: var(--primary-900);
+      color: #002439;
     }
 
     box-shadow:
