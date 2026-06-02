@@ -29,6 +29,10 @@ build_and_push_to_ecr:
     - docker push "$IMAGE_URI:$IMAGE_TAG"
     - docker push "$IMAGE_URI:latest"
   rules:
+    # Run build when a Merge Request is opened/updated
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+
+    # Run build after merge/push to main
     - if: '$CI_COMMIT_BRANCH == "main"'
 
 deploy_to_ec2:
@@ -81,4 +85,5 @@ deploy_to_ec2:
         docker image prune -f
       EOF
   rules:
+    # Deploy only after merge/push to main
     - if: '$CI_COMMIT_BRANCH == "main"'
