@@ -24,21 +24,24 @@ This project uses [`next/font`](https://nextjs.org/docs/app/building-your-applic
 
 The API route `POST /api/request-demo` sends an email to `DEMO_RECIPIENT_EMAIL`.
 
-You can configure **either** SMTP (Nodemailer) **or** Microsoft Graph:
+Provider order:
 
-- **SMTP (Nodemailer)**
-  - `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE` (`true` for SMTPS/465, `false` for STARTTLS/587)
-  - `SMTP_USER`, `SMTP_PASS`
-  - Optional: `SMTP_FROM`, `DEMO_RECIPIENT_EMAIL`
+1. `RESEND_API_KEY` - used first when available.
+2. Microsoft Graph - used when the `M365_*` variables below are configured.
+3. SMTP - used when `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, and `SMTP_PASS` are set.
 
-- **Microsoft Graph (recommended for Microsoft 365 tenants with SMTP AUTH disabled)**
-  - `M365_TENANT_ID`, `M365_CLIENT_ID`, `M365_CLIENT_SECRET`
-  - `M365_SENDER_EMAIL` (the mailbox to send as; the app must be permitted to send mail for it)
-  - Optional: `DEMO_RECIPIENT_EMAIL`
+Required/optional variables:
+
+- `RESEND_API_KEY` - Resend API key for the Edge route.
+- `MAIL_FROM` - optional Resend sender name/address, defaults to `WhiteHawk Website <onboarding@resend.dev>`.
+- `DEMO_RECIPIENT_EMAIL` - optional destination address, defaults to `yara.hossam@whiteguard.co.uk`.
+- `M365_TENANT_ID`, `M365_CLIENT_ID`, `M365_CLIENT_SECRET`
+- `M365_SENDER_EMAIL` - mailbox to send as; the app must be allowed to send as this mailbox.
+- `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASS`, and optional `SMTP_FROM`.
 
 Notes:
 
-- If your Microsoft 365 tenant blocks SMTP client auth, SMTP will fail with `535 5.7.139`.
+- In local development, SMTP is available as a fallback if the SMTP env vars are set.
 - Graph requires an Entra ID app registration with `Mail.Send` **application** permission and admin consent.
 
 ## Learn More

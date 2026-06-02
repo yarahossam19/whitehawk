@@ -1,10 +1,9 @@
 import { NextResponse } from "next/server";
 import { verifyCaptcha } from "@/lib/captcha";
 import { renderDemoEmail, renderDemoEmailText } from "@/lib/email-template";
+import { sendMail } from "@/lib/mailer";
 
-// Runs on Cloudflare Workers / Vercel Edge. Uses Resend's HTTP API instead
-// of SMTP, so it doesn't rely on raw TCP sockets (which Edge can't open).
-export const runtime = "edge";
+export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 type RequestDemoBody = {
@@ -66,20 +65,6 @@ export async function POST(req: Request) {
     return bad(captchaResult.reason);
   }
 
-  // --- Resend config -----------------------------------------------------
-  const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) {
-    console.error("[request-demo] RESEND_API_KEY missing.");
-    return bad("Mailer is not configured. Please contact the site admin.", 500);
-  }
-
-  // Sender. While testing, Resend's sandbox sender `onboarding@resend.dev`
-  // works without verifying a domain (and can only deliver to your own
-  // verified email). For production, verify your domain in Resend and set
-  // MAIL_FROM to "WhiteHawk <demo@your-verified-domain>".
-  const from =
-    process.env.MAIL_FROM ||
-    "WhiteHawk Website <onboarding@resend.dev>";
   const recipient =
     process.env.DEMO_RECIPIENT_EMAIL || "yara.hossam@whiteguard.co.uk";
 
@@ -112,33 +97,19 @@ export async function POST(req: Request) {
   });
 
   try {
-    const resp = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from,
-        to: [recipient],
-        reply_to: email,
-        subject: `New Demo Request — ${company}`,
-        html,
-        text,
-      }),
+    await sendMail({
+      to: recipient,
+      subject: `New Demo Request — ${company}`,
+      html,
+      text,
+      replyTo: email,
+      from:
+        process.env.MAIL_FROM ||
+        process.env.SMTP_FROM ||
+        "WhiteHawk Website <info@whiteguard.co.uk>",
     });
-
-    if (!resp.ok) {
-      const errText = await resp.text();
-      console.error(
-        "[request-demo] Resend failed:",
-        resp.status,
-        errText.slice(0, 500)
-      );
-      return bad("Failed to send the email. Please try again later.", 502);
-    }
   } catch (err) {
-    console.error("[request-demo] Resend network error:", err);
+    console.error("[request-demo] Mail send failed:", err);
     return bad("Failed to send the email. Please try again later.", 502);
   }
 

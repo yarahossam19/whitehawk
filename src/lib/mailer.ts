@@ -1,10 +1,17 @@
+import nodemailer from "nodemailer";
+
 export type SendMailArgs = {
   to: string;
   subject: string;
   html: string;
   text?: string;
   replyTo?: string;
+  from?: string;
 };
+
+export function isResendMailerConfigured(): boolean {
+  return Boolean(process.env.RESEND_API_KEY);
+}
 
 export function isGraphMailerConfigured(): boolean {
   return Boolean(
@@ -13,6 +20,45 @@ export function isGraphMailerConfigured(): boolean {
       process.env.M365_CLIENT_SECRET &&
       process.env.M365_SENDER_EMAIL
   );
+}
+
+export function isSmtpMailerConfigured(): boolean {
+  return Boolean(
+    process.env.SMTP_HOST &&
+      process.env.SMTP_PORT &&
+      process.env.SMTP_USER &&
+      process.env.SMTP_PASS
+  );
+}
+
+async function sendMailViaResend(args: SendMailArgs): Promise<void> {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    throw new Error("RESEND_API_KEY is required for Resend mail.");
+  }
+
+  const from = args.from || process.env.MAIL_FROM || "WhiteHawk Website <onboarding@resend.dev>";
+
+  const res = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      from,
+      to: [args.to],
+      reply_to: args.replyTo,
+      subject: args.subject,
+      html: args.html,
+      text: args.text,
+    }),
+  });
+
+  if (!res.ok) {
+    const text = await res.text().catch(() => "");
+    throw new Error(`Resend failed (HTTP ${res.status}): ${text || "<no body>"}`);
+  }
 }
 
 async function getGraphAccessToken(): Promise<string> {
@@ -111,11 +157,54 @@ async function sendMailViaGraph(args: SendMailArgs): Promise<void> {
   }
 }
 
+async function sendMailViaSmtp(args: SendMailArgs): Promise<void> {
+  const host = process.env.SMTP_HOST;
+  const portRaw = process.env.SMTP_PORT;
+  const user = process.env.SMTP_USER;
+  const password = process.env.SMTP_PASS;
+
+  if (!host || !portRaw || !user || !password) {
+    throw new Error("SMTP env vars missing.");
+  }
+
+  const from =
+    args.from ||
+    process.env.SMTP_FROM ||
+    process.env.MAIL_FROM ||
+    "WhiteHawk Website <info@whiteguard.co.uk>";
+
+  const transporter = nodemailer.createTransport({
+    host,
+    port: Number(portRaw),
+    secure: String(process.env.SMTP_SECURE).toLowerCase() === "true",
+    auth: {
+      user,
+      pass: password,
+    },
+  });
+
+  await transporter.sendMail({
+    from,
+    to: args.to,
+    subject: args.subject,
+    html: args.html,
+    text: args.text,
+    replyTo: args.replyTo,
+  });
+}
+
 export async function sendMail(args: SendMailArgs): Promise<void> {
+  if (isResendMailerConfigured()) {
+    return sendMailViaResend(args);
+  }
+
   if (isGraphMailerConfigured()) {
     return sendMailViaGraph(args);
   }
 
-  // Default to SMTP (handled by the caller) when Graph config is absent.
+  if (isSmtpMailerConfigured()) {
+    return sendMailViaSmtp(args);
+  }
+
   throw new Error("MAILER_NO_PROVIDER");
 }
