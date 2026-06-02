@@ -18,7 +18,10 @@ build_and_push_to_ecr:
     - name: docker:27-dind
       command: ["--tls=false"]
   before_script:
-    - apk add --no-cache aws-cli bash
+    - apk add --no-cache python3 py3-pip py3-virtualenv bash
+    - python3 -m venv /tmp/awscli
+    - /tmp/awscli/bin/pip install --no-cache-dir awscli
+    - export PATH="/tmp/awscli/bin:$PATH"
     - export ECR_REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
     - export IMAGE_URI="${ECR_REGISTRY}/${ECR_REPOSITORY}"
     - aws --version
@@ -29,11 +32,7 @@ build_and_push_to_ecr:
     - docker push "$IMAGE_URI:$IMAGE_TAG"
     - docker push "$IMAGE_URI:latest"
   rules:
-    # Run build when a Merge Request is opened/updated
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
-
-    # Run build after merge/push to main
-    - if: '$CI_COMMIT_BRANCH == "main"'
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"'
 
 deploy_to_ec2:
   stage: deploy
@@ -52,10 +51,8 @@ deploy_to_ec2:
     - export ECR_REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
     - export IMAGE_URI="${ECR_REGISTRY}/${ECR_REPOSITORY}"
 
-    # Prepare app directory on EC2
     - ssh "$EC2_USER@$EC2_HOST" "mkdir -p '$APP_ENV_DIR'"
 
-    # Copy runtime environment file to EC2 if APP_ENV_FILE is configured as a GitLab File variable
     - |
       if [ -n "${APP_ENV_FILE:-}" ] && [ -f "$APP_ENV_FILE" ]; then
         scp "$APP_ENV_FILE" "$EC2_USER@$EC2_HOST:$APP_ENV_DIR/.env"
@@ -63,7 +60,6 @@ deploy_to_ec2:
         ssh "$EC2_USER@$EC2_HOST" "touch '$APP_ENV_DIR/.env'"
       fi
 
-    # Deploy immutable image tag to EC2
     - |
       ssh "$EC2_USER@$EC2_HOST" << EOF
         set -e
@@ -85,5 +81,4 @@ deploy_to_ec2:
         docker image prune -f
       EOF
   rules:
-    # Deploy only after merge/push to main
-    - if: '$CI_COMMIT_BRANCH == "main"'
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"'
