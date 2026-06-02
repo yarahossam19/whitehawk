@@ -10,6 +10,7 @@ variables:
 
   IMAGE_TAG: "$CI_COMMIT_SHORT_SHA"
   CONTAINER_PORT: "3000"
+  
 
 build_and_push_to_ecr:
   stage: build_push
