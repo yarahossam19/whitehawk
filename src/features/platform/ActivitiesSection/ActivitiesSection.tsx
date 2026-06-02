@@ -67,13 +67,13 @@ export function ActivitiesSection({
                 <h3 className={styles.rowTitle}>{item.title}</h3>
                 <p className={styles.rowDescription}>{item.description}</p>
                 </div>
-                <Link
+                {/* <Link
                   href={learnMoreHref}
                   className={styles.learnMore}
                   aria-label={`Learn more about ${item.title}`}
                 >
                   Learn More
-                </Link>
+                </Link> */}
               </div>
               <div className={styles.media}>
                 <div className={styles.imageFrame}>

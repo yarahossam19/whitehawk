@@ -17,14 +17,14 @@ export function CTASection() {
         </p>
         <div className={styles.buttons}>
           <PrimaryButton
-            title="Get A Demo"
+            title="Schedule Demo"
             variant="primary"
              onClick={openDemoModal}
      
             className={styles.primaryBtn}
           />
           <PrimaryButton
-            title="Schedule Demo"
+            title="Become A Partner"
             variant="secondary"
                   onClick={openFreeTrialModal}
             className={styles.secondaryBtn}

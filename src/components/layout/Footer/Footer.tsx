@@ -52,13 +52,13 @@ export function Footer() {
               Empowering businesses with intelligent, continuous security monitoring. We are your trusted partner in the digital landscape.
             </p>
             <div className={styles.social}>
-              <a href="#" className={styles.socialLink} aria-label="X (Twitter)">
+              <a href="https://x.com/WHITEGUARDLTD" target="_blank" className={styles.socialLink} aria-label="X (Twitter)">
                 <XIcon />
               </a>
-              <a href="#" className={styles.socialLink} aria-label="LinkedIn">
+              <a href="https://www.linkedin.com/company/thewhiteguard/" target="_blank" className={styles.socialLink} aria-label="LinkedIn">
                 <LinkedInIcon />
               </a>
-              <a href="#" className={styles.socialLink} aria-label="Facebook">
+              <a href="https://www.facebook.com/WHITEGUARD.CO.UK" target="_blank" className={styles.socialLink} aria-label="Facebook">
                 <FacebookIcon />
               </a>
             </div>
