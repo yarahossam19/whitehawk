@@ -40,7 +40,7 @@ export function PlatformSection() {
               ))}
             </ul>
           </div>
-          <PrimaryButton title="Explore Our Platform" variant="secondary" href="/platform/offensive" className={styles.buttonDesktop} />
+          <PrimaryButton title="Explore Our Platform" variant="secondary" href="/platform" className={styles.buttonDesktop} />
         </div>
         <div className={styles.right}>
           <div className={styles.dashboardFrame}>
@@ -56,7 +56,7 @@ export function PlatformSection() {
             </div>
           </div>
         </div>
-        <PrimaryButton title="Explore Our Platform" variant="secondary" href="/platform/offensive" className={styles.buttonTablet} />
+        <PrimaryButton title="Explore Our Platform" variant="secondary" href="/platform" className={styles.buttonTablet} />
       </div>
     </section>
   );

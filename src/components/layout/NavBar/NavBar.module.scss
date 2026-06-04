@@ -130,6 +130,45 @@ font-family: Arial;
   position: relative;
 }
 
+.splitTrigger {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+
+  &:hover,
+  &.active {
+    background-color: var(--ui-colored-bg);
+  }
+}
+
+.splitTriggerLabel {
+  padding: 8px 4px 8px 16px;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+  color: black;
+  text-decoration: none;
+  font-family: Arial;
+
+  @media (max-width: 1180px) {
+    font-size: 16px;
+    padding: 8px 4px 8px 8px;
+  }
+}
+
+.splitTriggerChevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 10px 8px 2px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: black;
+  font-family: Arial;
+}
+
 .signInButton,
 .requestDemoButton {
   @media (max-width: 1180px) {

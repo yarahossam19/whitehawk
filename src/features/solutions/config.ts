@@ -125,7 +125,7 @@ export const SOLUTIONS_CONFIG: Record<SolutionType, SolutionsPageConfig> = {
     },
     challengeSolution: {
       challenge: {
-        title: "Top Cybersecurity Risks Facing Fintech Companies",
+        title: "Key Risks for Fintech Companies",
         items: [
           { title: "API Abuse", description: "Open banking and embedded finance APIs are the #1 attack vector for cybersecurity in fintech. Credential stuffing, broken authorization, and rate-limit bypass top OWASP's 2024 API security risks.", icon: "apiPause" },
           { title: "Account Takeover", description: "Synthetic identities, SIM-swap fraud, and credential reuse drive the bulk of fintech account compromise. Real-time behavioral analytics is the only effective defense.", icon: "accountTakeover" },
@@ -251,7 +251,7 @@ export const SOLUTIONS_CONFIG: Record<SolutionType, SolutionsPageConfig> = {
     },
     challengeSolution: {
       challenge: {
-        title: "Top Cybersecurity Risks Facing Government & Public Infrastructure",
+        title: "Top cybersecurity risks to Government",
         items: [
           {
             title: "Nation-State Campaigns",
@@ -392,7 +392,7 @@ export const SOLUTIONS_CONFIG: Record<SolutionType, SolutionsPageConfig> = {
     },
     challengeSolution: {
       challenge: {
-        title: "Top Cybersecurity Risks Facing Healthcare Providers",
+        title: "Key Cybersecurity Threats in Healthcare",
         items: [
           {
             title: "Ransomware on Clinical Systems",

@@ -212,18 +212,28 @@ export function NavBar() {
           </NavLink>
 
           <div className={styles.dropdownWrap}>
-            <button
-              type="button"
-              onClick={togglePlatform}
-              aria-expanded={platformOpen}
-              aria-haspopup="true"
-              aria-controls="platform-menu"
+            <div
               id="platform-trigger"
-              className={`${styles.dropdownTrigger} ${isPlatformActive || platformOpen ? styles.active : ""}`}
+              className={`${styles.splitTrigger} ${isPlatformActive || platformOpen ? styles.active : ""}`}
             >
-              Platform
-              <ChevronDown open={platformOpen} />
-            </button>
+              <Link
+                href="/platform"
+                className={styles.splitTriggerLabel}
+                onClick={closeAll}
+              >
+                Platform
+              </Link>
+              <button
+                type="button"
+                onClick={togglePlatform}
+                aria-expanded={platformOpen}
+                aria-haspopup="true"
+                aria-controls="platform-menu"
+                className={styles.splitTriggerChevron}
+              >
+                <ChevronDown open={platformOpen} />
+              </button>
+            </div>
             {platformOpen && (
               <div
                 id="platform-menu"
