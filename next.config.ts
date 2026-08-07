@@ -1,34 +1,22 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  compiler: {
-    removeConsole:
-      process.env.NODE_ENV === "production"
-        ? { exclude: ["error", "warn"] }
-        : false,
-  },
-  productionBrowserSourceMaps: false,
-  experimental: {
-    optimizePackageImports: ["lucide-react", "primereact"],
-    /** Inlines App Router CSS in production → fewer render-blocking `<link>` requests (Lighthouse). */
-    inlineCss: true,
-    webpackBuildWorker: true,
-  },
   images: {
-    formats: ["image/avif", "image/webp"],
-    /* Smaller widths first → mobile LCP images decode faster */
-    deviceSizes: [384, 640, 750, 828, 1080, 1200, 1920, 2048],
-    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    minimumCacheTTL: 60 * 60 * 24 * 365, // 1 year cache
-    dangerouslyAllowSVG: false,
+    // Blog post cover images are admin-supplied arbitrary URLs (validated as
+    // a URL string only, no fixed CDN/domain — see src/lib/posts.actions.ts).
+    // Allow any https host so next/image doesn't reject them at runtime.
+    remotePatterns: [{ protocol: "https", hostname: "**" }],
   },
-  poweredByHeader: false,
-  compress: true,
-  async rewrites() {
+  async headers() {
     return [
       {
-        source: "/partner-api/:path*",
-        destination: "https://partner.whiteguard.io/api/:path*",
+        // Files under public/ are served with `max-age=0` by default, so the
+        // 9 MB demo clip would be revalidated on every repeat visit. Nothing
+        // in public/videos is content-hashed, so this is a long max-age rather
+        // than `immutable`: replacing a clip means either a new filename or a
+        // week's tail of stale caches.
+        source: "/videos/:path*",
+        headers: [{ key: "Cache-Control", value: "public, max-age=604800" }],
       },
     ];
   },

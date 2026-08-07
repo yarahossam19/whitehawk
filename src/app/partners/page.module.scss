@@ -1,0 +1,281 @@
+@use "@/styles/tokens" as *;
+@use "@/styles/mixins" as *;
+@use "@/styles/color-mix" as *;
+
+// ---------- Hero ----------
+.hero {
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid $line;
+  background: linear-gradient(to bottom, $wash, white);
+}
+
+.heroWordmark {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0.7;
+}
+
+.heroInner {
+  @include container-x;
+  position: relative;
+  display: grid;
+  gap: 48px;
+  padding-block: 80px;
+
+  @include respond-to(md) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: center;
+  }
+}
+
+.eyebrow {
+  @include eyebrow;
+  margin-bottom: 12px;
+}
+
+.title {
+  font-size: 38px;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: $ink;
+
+  @include respond-to(md) {
+    font-size: 48px;
+  }
+}
+
+.lead {
+  margin-top: 20px;
+  max-width: 36rem;
+  font-size: 16px;
+  color: $slate;
+}
+
+.actions {
+  margin-top: 32px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.showcase {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  overflow: hidden;
+  border-radius: $radius-3xl;
+  border: 1px solid $line;
+  background: linear-gradient(to bottom right, $wash, white);
+  box-shadow: $shadow-elegant;
+}
+
+.showcaseInner {
+  position: absolute;
+  inset: 0;
+  padding: 32px;
+}
+
+.logoWall {
+  display: grid;
+  height: 100%;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 14%, black 86%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, black 14%, black 86%, transparent);
+}
+
+.logoColumn {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+}
+
+.logoColumnTrack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation-name: partnerLogoScroll;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation-play-state: paused;
+  }
+}
+
+.logoColumn:hover .logoColumnTrack {
+  animation-play-state: paused;
+}
+
+@keyframes partnerLogoScroll {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-50%);
+  }
+}
+
+.logoTile {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1 / 1;
+  padding: 12px;
+  border-radius: $radius-xl;
+  border: 1px solid $line;
+  background: white;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+
+  &:hover {
+    border-color: alpha($accent, 30%);
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+    transform: translateY(-2px);
+  }
+}
+
+.logoImg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+// ---------- Benefits ----------
+.benefitsGrid {
+  margin-top: 48px;
+  display: grid;
+  gap: 24px;
+
+  @include respond-to(md) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.iconBox {
+  display: flex;
+  height: 44px;
+  width: 44px;
+  align-items: center;
+  justify-content: center;
+  border-radius: $radius-lg;
+  background: $accent-100;
+  color: $accent-600;
+}
+
+.cardTitle {
+  margin-top: 16px;
+  font-weight: 700;
+  color: $ink;
+}
+
+.cardBody {
+  margin-top: 4px;
+  font-size: 13px;
+  color: $slate;
+}
+
+// ---------- Partner types ----------
+.typesGrid {
+  margin-top: 48px;
+  display: grid;
+  gap: 24px;
+
+  @include respond-to(md) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.typeBody {
+  margin-top: 8px;
+  font-size: 13.5px;
+  color: $slate;
+}
+
+.learnMoreBtn {
+  margin-top: 16px;
+  padding-inline: 0;
+}
+
+// ---------- How it works ----------
+.stepsGrid {
+  margin-top: 48px;
+  display: grid;
+  gap: 24px;
+
+  @include respond-to(md) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.stepWrap {
+  position: relative;
+}
+
+.stepCard {
+  text-align: center;
+}
+
+.stepLabel {
+  font-family: $font-mono;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: $slate;
+}
+
+.stepTitle {
+  margin-top: 8px;
+  font-size: 18px;
+  font-weight: 700;
+  color: $ink;
+}
+
+.stepDesc {
+  margin-top: 8px;
+  font-size: 13px;
+  color: $slate;
+}
+
+.stepArrow {
+  display: none;
+  position: absolute;
+  right: -18px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: $accent;
+
+  @include respond-to(md) {
+    display: block;
+  }
+}
+
+// ---------- Access partner platform ----------
+.accessCard {
+  margin-inline: auto;
+  max-width: 48rem;
+  text-align: center;
+}
+
+.accessTitle {
+  font-size: 22px;
+  font-weight: 800;
+  color: $ink;
+}
+
+.accessBody {
+  margin-top: 8px;
+  font-size: 14px;
+  color: $slate;
+}
+
+.accessActions {
+  margin-top: 24px;
+}
+

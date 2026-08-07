@@ -1,0 +1,409 @@
+@use "@/styles/tokens" as *;
+@use "@/styles/mixins" as *;
+@use "@/styles/color-mix" as *;
+
+// ---------------------------------------------------------------------------
+// Editorial hero
+// ---------------------------------------------------------------------------
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid $line;
+  background: #f4f7fc;
+}
+
+.dotGrid {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  opacity: 0.55;
+  background-image: radial-gradient(circle, rgba(11, 42, 91, 0.16) 1px, transparent 1.5px);
+  background-size: 24px 24px;
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 50%, black 55%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 50%, black 55%, transparent 100%);
+}
+
+.heroInner {
+  @include container-x;
+  position: relative;
+  padding-block: 80px;
+}
+
+.heroGrid {
+  display: grid;
+  gap: 32px;
+
+  @include respond-to(md) {
+    grid-template-columns: minmax(0, 180px) 1fr;
+  }
+}
+
+.heroStatDesktop {
+  display: none;
+
+  @include respond-to(md) {
+    display: block;
+  }
+}
+
+.eyebrow {
+  @include eyebrow;
+  margin-bottom: 12px;
+}
+
+.eyebrowMobile {
+  @include eyebrow;
+  margin-bottom: 12px;
+
+  @include respond-to(md) {
+    display: none;
+  }
+}
+
+.bigNumber {
+  font-family: $font-mono;
+  font-size: 110px;
+  font-weight: 900;
+  line-height: 1;
+  color: $navy;
+  font-variant-numeric: tabular-nums;
+}
+
+.bigNumberLabel {
+  margin-top: 8px;
+  font-family: $font-mono;
+  font-size: 12px;
+  color: $slate;
+}
+
+.heroCopy {
+  max-width: 48rem;
+}
+
+.title {
+  font-size: 38px;
+  font-weight: 800;
+  line-height: 1.03;
+  letter-spacing: -0.025em;
+  color: $navy;
+
+  @include respond-to(md) {
+    font-size: 54px;
+  }
+}
+
+.titleAccent {
+  color: $accent;
+}
+
+.subtitle {
+  margin-top: 24px;
+  max-width: 36rem;
+  font-size: 16px;
+  line-height: 1.625;
+  color: $slate;
+}
+
+// ---------------------------------------------------------------------------
+// Featured — pull-quote hero
+// ---------------------------------------------------------------------------
+
+.featuredGrid {
+  display: grid;
+  gap: 24px;
+
+  @include respond-to(md) {
+    grid-template-columns: 1.15fr 1fr;
+  }
+}
+
+.quoteCard {
+  position: relative;
+  overflow: hidden;
+  border-radius: $radius-2xl;
+  border: 1px solid $line;
+  background: $navy;
+  padding: 32px;
+  color: white;
+  box-shadow: $shadow-elegant;
+
+  @include respond-to(md) {
+    padding: 48px;
+  }
+}
+
+.quoteGlow {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(600px 300px at 100% 0%, rgba(37, 99, 235, 0.4), transparent 60%);
+}
+
+.quoteContent {
+  position: relative;
+}
+
+.badgeRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: $accent-100;
+}
+
+.badge {
+  border-radius: $radius-pill;
+  background: alpha(white, 10%);
+  padding: 4px 12px;
+}
+
+.quoteIcon {
+  margin-top: 24px;
+  color: alpha($accent-100, 40%);
+}
+
+.quoteText {
+  margin-top: 8px;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.375;
+  color: white;
+
+  @include respond-to(md) {
+    font-size: 32px;
+  }
+}
+
+.quoteFooter {
+  margin-top: 32px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-top: 1px solid alpha(white, 10%);
+  padding-top: 24px;
+}
+
+.avatar {
+  height: 44px;
+  width: 44px;
+  border-radius: $radius-pill;
+  background: linear-gradient(to bottom right, $accent, alpha(white, 40%));
+}
+
+.avatarName {
+  font-weight: 700;
+  color: white;
+}
+
+.avatarRole {
+  font-size: 12px;
+  color: #9bb4e6;
+}
+
+.miniStats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.miniStatCard {
+  border-radius: $radius-2xl;
+  border: 1px solid $line;
+  background: white;
+  padding: 24px;
+}
+
+.miniStatNumber {
+  font-family: $font-mono;
+  font-size: 38px;
+  font-weight: 900;
+  line-height: 1;
+  color: $navy;
+  font-variant-numeric: tabular-nums;
+}
+
+.miniStatLabel {
+  margin-top: 12px;
+  font-size: 11.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: $slate;
+}
+
+.miniStatCta {
+  grid-column: span 2 / span 2;
+}
+
+// ---------------------------------------------------------------------------
+// Grid — bento
+// ---------------------------------------------------------------------------
+
+.filterRow {
+  margin-bottom: 32px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.filterChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filterChip {
+  border-radius: $radius-pill;
+  border: 1px solid $line;
+  background: white;
+  padding: 6px 14px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: $ink;
+  transition: all 0.2s;
+
+  &:not(.filterChipActive):hover {
+    border-color: alpha($accent, 60%);
+  }
+}
+
+.filterChipActive {
+  border-color: $accent;
+  background: $accent;
+  color: white;
+}
+
+.tileHero {
+  @include respond-to(md) {
+    grid-column: span 3;
+    grid-row: span 2;
+  }
+}
+
+.tileSpan3 {
+  @include respond-to(md) {
+    grid-column: span 3;
+  }
+}
+
+.tileSpan2 {
+  @include respond-to(md) {
+    grid-column: span 2;
+  }
+}
+
+.tileTitle {
+  font-weight: 800;
+  line-height: 1.25;
+  font-size: 17px;
+}
+
+.tileTitleHero {
+  font-size: 26px;
+
+  @include respond-to(md) {
+    font-size: 32px;
+  }
+}
+
+.tileHeadline {
+  margin-top: 8px;
+  line-height: 1.375;
+  font-size: 13.5px;
+  color: $slate;
+}
+
+.tileHeadlineHero {
+  font-size: 16px;
+  color: #9bb4e6;
+}
+
+.tileFooter {
+  margin-top: 24px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  border-top: 1px solid $line;
+  padding-top: 16px;
+}
+
+.tileFooterHero {
+  border-top-color: alpha(white, 10%);
+}
+
+.tileMetric {
+  font-family: $font-mono;
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: $navy;
+}
+
+.tileMetricHero {
+  color: $accent-100;
+}
+
+.tileMetricLabel {
+  margin-top: 4px;
+  font-size: 10.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: $slate;
+}
+
+.tileMetricLabelHero {
+  color: #9bb4e6;
+}
+
+.tileReadMore {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: $accent;
+}
+
+.tileReadMoreHero {
+  color: $accent-100;
+}
+
+// ---------------------------------------------------------------------------
+// Stats band
+// ---------------------------------------------------------------------------
+
+.statsGrid {
+  display: grid;
+  gap: 32px;
+  text-align: center;
+
+  @include respond-to(md) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.statNumber {
+  font-family: $font-mono;
+  font-size: 54px;
+  font-weight: 900;
+  line-height: 1;
+  color: $ink;
+  font-variant-numeric: tabular-nums;
+}
+
+.statLabel {
+  margin-top: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: $slate;
+}

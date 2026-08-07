@@ -1,0 +1,43 @@
+/**
+ * Tailwind entry scoped to this folder only.
+ *
+ * Same arrangement as ticketing-offensive-demo/tailwind-entry.css, and for the
+ * same reason: the rest of the WhiteHawk site is SCSS Modules with Tailwind
+ * fully removed, but this demo is Tailwind-native, so it gets its own small
+ * contained pipeline rather than reintroducing Tailwind site-wide.
+ *
+ * Three things here are load-bearing — do not "simplify" them:
+ *
+ *  - `theme.css` stays in a NAMED LAYER. It defines `--font-sans`,
+ *    `--font-mono` and friends on `:root`, the same custom property names this
+ *    site sets in src/styles/globals.scss. Layered CSS always loses to
+ *    unlayered CSS, so keeping the theme in a layer is what lets the site's
+ *    Manrope stack survive on any page that renders this demo.
+ *  - `utilities.css` is deliberately NOT layered. globals.scss's reset is
+ *    unlayered and includes `*, *::before, *::after { border-width: 0 }` and
+ *    `button, input, … { margin: 0; padding: 0 }`. With the utilities in a
+ *    layer those two rules beat every `border`, `p-*` and `py-*` class in this
+ *    demo no matter how specific — measured: card borders vanished and the
+ *    search input lost its `pl-9`, dropping the magnifier on top of the
+ *    placeholder. Unlayered, the utilities are plain single-class selectors
+ *    that outrank element and `*` selectors normally. Generation is still
+ *    scoped by `source("./")`, and this file only loads on the route that
+ *    renders the demo, so no utility class escapes into the rest of the site.
+ *  - No `preflight.css`. Plain `@import "tailwindcss"` would pull Preflight in
+ *    as a global, UNSCOPED reset competing with the site's own on every page.
+ *    `source()` narrows which utilities get *generated*; it does nothing to
+ *    contain Preflight. The few Preflight rules this demo genuinely needs live
+ *    in demo-base.css, scoped to the demo root — imported before the utilities
+ *    so that utilities win ties.
+ *
+ * Imported once, from AssetInventoryDemo.tsx. Next.js code-splits per route,
+ * so only the Asset Management page pulls in this generated CSS.
+ *
+ * Unlike the ticketing demo, there is no companion theme.css: this demo
+ * hardcodes its palette in a local COLOR map and inline styles, so it defines
+ * no design tokens that could collide with the site's.
+ */
+@layer theme;
+@import "tailwindcss/theme.css" layer(theme);
+@import "./demo-base.css";
+@import "tailwindcss/utilities.css" source("./");

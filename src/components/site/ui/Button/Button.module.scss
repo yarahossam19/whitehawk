@@ -1,0 +1,84 @@
+@use "@/styles/tokens" as *;
+@use "@/styles/mixins" as *;
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 600;
+  border-radius: $radius-md;
+  border: 1px solid transparent;
+  transition: all 0.3s ease-out;
+  will-change: transform;
+
+  @include focus-ring;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.primary {
+  background: $navy;
+  color: white;
+  border-color: $navy;
+
+  &:hover {
+    background: $navy-700;
+    box-shadow: 0 12px 28px -12px rgba(11, 42, 91, 0.55);
+  }
+}
+
+.accent {
+  background: $accent;
+  color: white;
+  border-color: $accent;
+
+  &:hover {
+    background: $accent-600;
+    box-shadow: 0 12px 28px -12px rgba(37, 99, 235, 0.6);
+  }
+}
+
+.ghost {
+  background: white;
+  color: $ink;
+  border-color: $line;
+
+  &:hover {
+    border-color: $slate;
+    box-shadow: 0 8px 20px -14px rgba(15, 23, 42, 0.4);
+  }
+}
+
+.ghost-dark {
+  background: transparent;
+  color: white;
+  border-color: rgba(255, 255, 255, 0.25);
+
+  @include focus-ring($navy);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+.link {
+  border-color: transparent;
+  color: $accent;
+  padding-inline: 4px;
+
+  &:hover {
+    text-decoration: underline;
+    transform: none;
+  }
+}
+
+.sm { padding: 8px 14px; font-size: 13px; }
+.md { padding: 10px 20px; font-size: 14px; }
+.lg { padding: 12px 24px; font-size: 15px; }

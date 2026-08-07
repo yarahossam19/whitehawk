@@ -1,0 +1,245 @@
+/**
+ * Theme for the standalone Offensive/Defensive Ticketing demo, as embedded in
+ * the WhiteHawk site.
+ *
+ * FORKED from the original extraction: every shadcn/ui base token that
+ * collided by name with the WhiteHawk site's own design tokens (see
+ * src/styles/globals.scss's `:root` — --background, --primary, --accent,
+ * --card, --border, --ring, --foreground, --muted, --secondary,
+ * --destructive, --input, --sidebar, --radius, and their -foreground
+ * variants) has been renamed here to a `--tix-` prefixed name (e.g.
+ * --tix-primary, --tix-accent). Without this, a same-named property set
+ * anywhere in this demo's scope would win the cascade over the site's own
+ * value of that property everywhere else on the page — which is exactly
+ * what caused the site's own accent-blue (hover links/buttons/active
+ * statuses) to get repainted by the demo's neutral gray `--accent` once the
+ * demo was embedded directly into the Offensive/Defensive module pages
+ * (rather than toggled in/out of a page on its own). Demo-only token names
+ * that never existed on the site (--table-*, --kanban-*, --column-*, etc.)
+ * were left as-is.
+ *
+ * Still scoped to `body.ticketing-demo-active` (toggled by index.tsx via a
+ * mount/unmount effect) rather than bare `:root`, so the tokens only exist
+ * while a page actually renders the demo, and so PrimeReact's Dialog and
+ * Radix's Select/Popover/Tooltip content — which render via React portals
+ * appended directly to <body>, outside any wrapper <div>'s DOM subtree —
+ * still resolve them correctly.
+ */
+
+@import "primereact/resources/themes/lara-light-blue/theme.css";
+@import "primereact/resources/primereact.min.css";
+
+@theme inline {
+  --color-background: var(--tix-background);
+  --color-foreground: var(--tix-foreground);
+  --color-ring: var(--tix-ring);
+  --color-input: var(--tix-input);
+  --color-border: var(--tix-border);
+  --color-destructive: var(--tix-destructive);
+  --color-accent-foreground: var(--tix-accent-foreground);
+  --color-accent: var(--tix-accent);
+  --color-muted-foreground: var(--tix-muted-foreground);
+  --color-muted: var(--tix-muted);
+  --color-secondary-foreground: var(--tix-secondary-foreground);
+  --color-secondary: var(--tix-secondary);
+  --color-primary-foreground: var(--tix-primary-foreground);
+  --color-primary: var(--tix-primary);
+  --color-popover-foreground: var(--tix-popover-foreground);
+  --color-popover: var(--tix-popover);
+  --color-card-foreground: var(--tix-card-foreground);
+  --color-card: var(--tix-card);
+  --radius-sm: calc(var(--tix-radius) - 4px);
+  --radius-md: calc(var(--tix-radius) - 2px);
+  --radius-lg: var(--tix-radius);
+  --radius-xl: calc(var(--tix-radius) + 4px);
+}
+
+body.ticketing-demo-active {
+  /* shadcn/ui base tokens */
+  --tix-radius: 0.625rem;
+  --tix-card: oklch(1 0 0);
+  --tix-card-foreground: oklch(0.145 0 0);
+  --tix-card-bg: #ffffff;
+  --tix-card-color: #f3f4f6;
+  --tix-popover: oklch(1 0 0);
+  --tix-popover-foreground: oklch(0.145 0 0);
+  --tix-popover-bg: #ffffff;
+  --tix-primary: oklch(0.205 0 0);
+  --tix-primary-foreground: #262626;
+  --tix-secondary: oklch(0.97 0 0);
+  --tix-secondary-foreground: #8c8c8c;
+  --tix-accent: oklch(0.97 0 0);
+  --tix-accent-foreground: oklch(0.556 0 0);
+  --tix-muted: #d9d9d9;
+  --tix-muted-foreground: #262626;
+  --tix-destructive: oklch(0.577 0.245 27.325);
+  --tix-border: oklch(0.922 0 0);
+  --tix-input: oklch(0.922 0 0);
+  --tix-ring: oklch(89.755% 0.0001 271.152);
+  --tix-background: #f0f0f0;
+  --tix-foreground: #737373;
+
+  /* page/table/card surfaces */
+  --tix-sidebar: #ffffff;
+  --table-header-foreground: #0d0d0d;
+  --table-body-foreground: #262626;
+  --table-body-bg: #fefefe;
+  --table-border: #d9d9d9;
+  --table-avatar-border: #d9d9d9;
+  --table-active-tab-bg: #d9eeff;
+  --cancel-btn-bg: #fafafa;
+  --cancel-btn-bg-hover: #d5d5d5;
+  --disabled-btn-bg: #bfbfbf;
+  --ticket-sidebar-bg: #d9d9d9;
+  --ticket-sidebar-active-bg: #fafafa;
+
+  /* severity/status pills */
+  --table-low-bg: rgba(0, 154, 83, 0.2);
+  --table-low-foreground: #1ba967;
+  --table-medium-bg: rgba(255, 89, 0, 0.2);
+  --table-medium-foreground: #ff5900;
+  --table-high-bg: rgba(231, 69, 30, 0.3);
+  --table-high-foreground: #a32000;
+  --table-critical-bg: rgba(234, 35, 64, 0.2);
+  --table-critical-foreground: #b6041e;
+  --inactive-bg: rgba(89, 89, 89, 0.2);
+  --inactive-foreground: #595959;
+
+  /* search / filter */
+  --searchbar-bg: #d9d9d9;
+  --searchbar-border: #f0f0f0;
+  --filter-header-bg: #f0f0f0;
+  --filter-border: #bfbfbf;
+  --icon-active-bg: #d9eeff;
+  --tix-input-border: #e1e5eb;
+  --active-field-border: #73c3ff;
+  --active-field-foreground: #737373;
+
+  /* kanban */
+  --kanban-bg: #d9eeff;
+  --kanban-card-bg: #fafafa;
+  --kanban-card-border: #d9d9d9;
+  --avatar-bg: rgba(0, 0, 0, 0.08);
+  --avatar-color: var(--active-field-foreground);
+  --column-new-bg: #d9eeff;
+  --column-new-foreground: #0076b8;
+  --column-new-circle-bg: rgba(0, 143, 227, 0.2);
+  --column-in-progress-bg: #ffedd9;
+  --column-in-progress-foreground: #ec7805;
+  --column-in-progress-circle-bg: rgba(245, 133, 21, 0.2);
+  --column-pending-bg: rgba(231, 69, 30, 0.15);
+  --column-pending-circle-bg: rgba(231, 69, 30, 0.2);
+  --column-pending-foreground: #e7451e;
+  --column-escalated-bg: #f8d9ff;
+  --column-escalated-foreground: #7c49fa;
+  --column-escalated-circle-bg: rgba(124, 73, 250, 0.2);
+  --column-resolved-bg: #d9ffda;
+  --column-resolved-circle-bg: rgba(27, 169, 103, 0.2);
+  --column-resolved-foreground: #1ba967;
+  --column-closed-bg: #e5e5e5;
+  --column-closed-circle-bg: rgba(179, 179, 178, 0.2);
+  --column-closed-foreground: #595959;
+
+  /* tiptap tooltip primitive (DataTable header tooltips) */
+  --white: rgba(255, 255, 255, 1);
+  --tt-gray-light-600: rgba(83, 86, 90, 1);
+  --tt-gray-light-900: rgba(34, 35, 37, 1);
+  --tt-gray-light-a-400: rgba(40, 44, 51, 0.42);
+  --tt-gray-dark-a-400: rgba(244, 244, 255, 0.37);
+}
+
+body.ticketing-demo-active.dark {
+  --tix-card: oklch(0% 0 0);
+  --tix-card-foreground: oklch(0.985 0 0);
+  --tix-card-bg: #1a1a1a;
+  --tix-card-color: #262626;
+  --tix-popover: oklch(0.205 0 0);
+  --tix-popover-foreground: oklch(0.985 0 0);
+  --tix-popover-bg: #1a1a1a;
+  --tix-primary: oklch(0.922 0 0);
+  --tix-primary-foreground: #f0f0f0;
+  --tix-secondary: oklch(0.269 0 0);
+  --tix-secondary-foreground: #8c8c8c;
+  --tix-accent: oklch(0.269 0 0);
+  --tix-accent-foreground: oklch(0.708 0 0);
+  --tix-muted: #404040;
+  --tix-muted-foreground: #f0f0f0;
+  --tix-destructive: oklch(0.704 0.191 22.216);
+  --tix-border: oklch(1 0 0 / 10%);
+  --tix-input: oklch(1 0 0 / 15%);
+  --tix-ring: oklch(0.27 0 0);
+  --tix-background: #262626;
+  --tix-foreground: #8c8c8c;
+
+  --tix-sidebar: #1a1a1a;
+  --table-header-foreground: #fafafa;
+  --table-body-foreground: #f0f0f0;
+  --table-body-bg: #1a1a1a;
+  --table-border: #404040;
+  --table-avatar-border: #404040;
+  --table-active-tab-bg: #003f5f;
+  --cancel-btn-bg: #262626;
+  --cancel-btn-bg-hover: #404040;
+  --disabled-btn-bg: #595959;
+  --ticket-sidebar-bg: #404040;
+  --ticket-sidebar-active-bg: #1a1a1a;
+
+  --table-low-bg: rgba(0, 154, 83, 0.2);
+  --table-low-foreground: #1ba967;
+  --table-medium-bg: rgba(255, 89, 0, 0.2);
+  --table-medium-foreground: #ff5900;
+  --table-high-bg: rgba(147, 29, 0, 0.1);
+  --table-high-foreground: #e7451e;
+  --table-critical-bg: rgba(130, 0, 0, 0.1);
+  --table-critical-foreground: #ea2340;
+  --inactive-bg: rgba(89, 89, 89, 0.4);
+  --inactive-foreground: #bfbfbf;
+
+  --searchbar-bg: #404040;
+  --searchbar-border: #262626;
+  --filter-header-bg: #262626;
+  --filter-border: #595959;
+  --icon-active-bg: #002438;
+  --tix-input-border: #404040;
+  --active-field-border: #0076b8;
+  --active-field-foreground: #a6a6a6;
+
+  --kanban-bg: #003f5f;
+  --kanban-card-bg: #262626;
+  --kanban-card-border: #404040;
+  --column-new-bg: rgba(0, 143, 227, 0.1);
+  --column-new-foreground: #008fe3;
+  --column-new-circle-bg: rgba(0, 143, 227, 0.2);
+  --column-in-progress-bg: rgba(236, 120, 5, 0.1);
+  --column-in-progress-foreground: #ec7805;
+  --column-in-progress-circle-bg: rgba(245, 133, 21, 0.2);
+  --column-pending-bg: rgba(231, 69, 30, 0.15);
+  --column-pending-circle-bg: rgba(231, 69, 30, 0.2);
+  --column-pending-foreground: #e7451e;
+  --column-escalated-bg: rgba(124, 73, 250, 0.1);
+  --column-escalated-circle-bg: rgba(124, 73, 250, 0.2);
+  --column-escalated-foreground: #7c49fa;
+  --column-resolved-bg: rgba(27, 169, 103, 0.1);
+  --column-resolved-circle-bg: rgba(27, 169, 103, 0.2);
+  --column-resolved-foreground: #1ba967;
+  --column-closed-bg: rgba(229, 229, 229, 0.1);
+  --column-closed-circle-bg: rgba(229, 229, 229, 0.2);
+  --column-closed-foreground: #8f8f8f;
+}
+
+/* Ticket table: capitalize the first letter of each cell (display only).
+   Scoped to the DataTable's own ".table" wrapper, NOT a bare `table` tag
+   selector, so it can't affect unrelated tables elsewhere on your page. */
+.table tbody td {
+  text-transform: capitalize;
+}
+
+/* Radix Select / MultiSelect overlays render via portal to <body> and need
+   to sit above PrimeReact's Dialog overlay when a select is opened inside
+   one of the popups. */
+[data-radix-select-content] {
+  z-index: 9999 !important;
+}
+.select-menu {
+  z-index: 9999 !important;
+}

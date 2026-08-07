@@ -1,0 +1,82 @@
+@use "@/styles/tokens" as *;
+@use "@/styles/mixins" as *;
+@use "@/styles/color-mix" as *;
+
+// Moved verbatim from src/app/page.module.scss when the demo became a real
+// player — the facade is pixel-identical to the placeholder it replaced.
+.frame {
+  margin-top: 48px;
+  overflow: hidden;
+  border-radius: $radius-2xl;
+  border: 1px solid $line;
+  background: alpha($ink, 95%);
+  box-shadow: $shadow-elegant;
+}
+
+.aspect {
+  position: relative;
+  aspect-ratio: 16 / 9;
+}
+
+// 1920×1080 source, so the frame's 16/9 box never letterboxes.
+.video {
+  display: block;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  background: black;
+}
+
+.glow {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(600px 300px at 50% 40%, rgba(37, 99, 235, 0.4), transparent 60%);
+}
+
+// The whole frame is the click target, not just the 80px circle — the circle
+// stays the visual affordance.
+.playWrap {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: none;
+  border: 0;
+
+  @include focus-ring(alpha($ink, 95%));
+
+  &:hover .playButton {
+    background: alpha(white, 20%);
+  }
+}
+
+.playButton {
+  display: flex;
+  height: 80px;
+  width: 80px;
+  align-items: center;
+  justify-content: center;
+  border-radius: $radius-pill;
+  border: 1px solid alpha(white, 25%);
+  background: alpha(white, 10%);
+  backdrop-filter: blur(8px);
+  transition: background-color 0.15s;
+}
+
+.playIcon {
+  margin-left: 4px;
+  color: white;
+}
+
+.caption {
+  pointer-events: none;
+  position: absolute;
+  bottom: 16px;
+  left: 20px;
+  font-family: $font-mono;
+  font-size: 12px;
+  color: $accent-100;
+}

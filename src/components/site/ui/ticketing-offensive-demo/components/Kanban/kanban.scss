@@ -1,0 +1,175 @@
+.column-header {
+  display: flex;
+  // Was a 246.167px floor, which forced every column past the width of the
+  // frame it now lives in; the column itself owns the sizing (see
+  // .kanban .kanban-column below) and the header just fills it.
+  width: 100%;
+  min-width: 0;
+  height: 40px;
+  padding: 6px 16px;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  font-size: 16px;
+  border-radius: 8px;
+  font-weight: 600;
+
+  &__icon {
+    display: block;
+    flex-shrink: 0;
+  }
+
+  // The title is an <h2>, so it inherits the site's global heading rules
+  // (font-weight 800, `color: var(--ink)`, display font) plus the UA's 1.5em
+  // font-size — which rendered every column title oversized and ink-navy
+  // instead of tinted to match its own column. Reset it back to the header's
+  // own type and color.
+  .column-title {
+    margin: 0;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: normal;
+    line-height: 1.2;
+    color: inherit;
+    min-width: 0;
+  }
+
+  .count {
+    display: flex;
+    padding: 4px 6px;
+    align-items: flex-end;
+    gap: 8px;
+    border-radius: 300px;
+  }
+  &__new {
+    background-color: var(--column-new-bg);
+    color: var(--column-new-foreground);
+    .count {
+      background-color: var(--column-new-circle-bg);
+    }
+  }
+  &__in-progress {
+    background-color: var(--column-in-progress-bg);
+    color: var(--column-in-progress-foreground);
+    .count {
+      background-color: var(--column-in-progress-circle-bg);
+    }
+  }
+  &__closed {
+    background-color: var(--column-closed-bg);
+    color: var(--column-closed-foreground);
+    .count {
+      background-color: var(--column-closed-circle-bg);
+    }
+  }
+  &__escalated {
+    background-color: var(--column-escalated-bg);
+    color: var(--column-escalated-foreground);
+    .count {
+      background-color: var(--column-escalated-circle-bg);
+    }
+  }
+  &__resolved {
+    background-color: var(--column-resolved-bg);
+    color: var(--column-resolved-foreground);
+    .count {
+      background-color: var(--column-resolved-circle-bg);
+    }
+  }
+  &__pending {
+    background-color: var(--column-pending-bg);
+    color: var(--column-pending-foreground);
+    .count {
+      background-color: var(--column-pending-circle-bg);
+    }
+  }
+
+  /* API-driven colors (column.status.color / column.color / task.status.color fallback) */
+  &--themed {
+    .count {
+      background-color: var(--kanban-count-bg, rgba(0, 0, 0, 0.12));
+    }
+  }
+}
+.kanban {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: stretch;
+  gap: 12px;
+
+  // `vh` was the wrong unit here: the board is embedded in a card partway down
+  // a scrolling page, so 60.5vh sized it against the browser window rather
+  // than its own context — a tall desktop window left a mostly-empty board,
+  // and a short phone in landscape clamped it to ~180px of unusable space.
+  // A px band keyed to the breakpoint gives a stable, predictable board.
+  height: 520px;
+  max-height: 520px;
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  padding-bottom: 10px;
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  // Columns land squarely when swiped through on a phone, where only one is
+  // visible at a time.
+  scroll-snap-type: x proximity;
+  scrollbar-width: thin;
+
+  &:focus-visible {
+    outline: 2px solid var(--Colors-Primary-500, #008fe3);
+    outline-offset: 4px;
+    border-radius: 8px;
+  }
+
+  .kanban-column {
+    flex: 0 0 auto;
+    // Never wider than the board itself: the old 246px floor overflowed (and
+    // got clipped by the product-view frame) on a ~270px-wide phone slot.
+    width: clamp(240px, 28vw, 420px);
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    gap: 12px;
+    scroll-snap-align: start;
+
+    min-height: 0;
+  }
+
+  .kanban-column__body {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-right: 8px;
+  }
+}
+
+@media (max-width: 640px) {
+  .kanban {
+    height: 440px;
+    max-height: 440px;
+    gap: 10px;
+    // One column at a time, filling the frame — nothing readable survives two
+    // side-by-side columns at this width.
+    scroll-snap-type: x mandatory;
+
+    .kanban-column {
+      width: min(100%, 300px);
+    }
+  }
+
+  .column-header {
+    padding: 6px 12px;
+
+    .column-title {
+      font-size: 14px;
+    }
+  }
+}

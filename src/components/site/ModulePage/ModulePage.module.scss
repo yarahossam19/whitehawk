@@ -1,0 +1,722 @@
+@use "@/styles/tokens" as *;
+@use "@/styles/mixins" as *;
+@use "@/styles/color-mix" as *;
+
+.infoBar {
+  border-bottom: 1px solid $line;
+  background: $wash;
+  padding-block: 12px;
+  text-align: center;
+  font-size: 12.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: $slate;
+}
+
+// ---------- Capabilities ----------
+.capsHeader {
+  margin-bottom: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.pillarsCounter {
+  font-family: $font-mono;
+  font-size: 12px;
+  color: $slate;
+}
+
+// Sub-column grids (4 = 2 cols, 24 = 4 cols) so a short last row can be
+// centred instead of leaving an orphan card hanging on the left.
+.capsGrid {
+  display: grid;
+  gap: 20px;
+
+  @include respond-to(sm) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    > * {
+      grid-column-end: span 2;
+    }
+
+    // 1 card left over on the final row
+    > *:last-child:nth-child(2n + 1) {
+      grid-column-start: 2;
+    }
+  }
+
+  @include respond-to(lg) {
+    grid-template-columns: repeat(24, minmax(0, 1fr));
+
+    > * {
+      grid-column-end: span 6;
+    }
+
+    // clear the 2-column offset above before applying the 4-column ones
+    > *:last-child:nth-child(2n + 1) {
+      grid-column-start: auto;
+    }
+
+    // 1, 2 or 3 cards left over on the final row — offset the first of them
+    > *:nth-last-child(3):nth-child(4n + 1) {
+      grid-column-start: 4;
+    }
+    > *:nth-last-child(2):nth-child(4n + 1) {
+      grid-column-start: 7;
+    }
+    > *:last-child:nth-child(4n + 1) {
+      grid-column-start: 10;
+    }
+  }
+}
+
+.capCard {
+  position: relative;
+  overflow: hidden;
+  border-radius: $radius-2xl;
+  border: 1px solid $line;
+  background: white;
+  padding: 24px;
+  box-shadow: $shadow-elegant;
+  transition: all 0.3s;
+  transition-delay: var(--reveal-delay);
+
+  &:hover {
+    transform: translateY(-4px);
+    border-color: alpha($accent, 30%);
+    box-shadow: $shadow-glow;
+
+    .capIcon {
+      transform: scale(1.05);
+    }
+  }
+}
+
+.capIcon {
+  display: flex;
+  height: 48px;
+  width: 48px;
+  align-items: center;
+  justify-content: center;
+  border-radius: $radius-2xl;
+  background: $accent-100;
+  color: $accent-600;
+  transition: transform 0.3s;
+}
+
+.capTitle {
+  margin-top: 20px;
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.25;
+  color: $ink;
+}
+
+.capDesc {
+  margin-top: 8px;
+  font-size: 13.5px;
+  line-height: 1.625;
+  color: $slate;
+}
+
+// ---------- How it works ----------
+.flowWrap {
+  position: relative;
+  overflow: hidden;
+  margin-top: 56px;
+}
+
+// Static rail. Mobile: vertical, anchored at the node center (24px = half of
+// the 48px mobile node). Desktop: horizontal, anchored at the node center
+// (28px = half of the 56px desktop node). The 12.5% side insets assume
+// exactly 4 steps (the ModulePageConfig contract) — 12.5% = 100 / (2 × 4).
+.flowTrack {
+  position: absolute;
+  z-index: 0;
+  border-radius: $radius-pill;
+  background: alpha($ink, 10%);
+  left: 24px;
+  top: 24px;
+  bottom: 24px;
+  width: 2px;
+
+  @include respond-to(md) {
+    left: 12.5%;
+    right: 12.5%;
+    top: 28px;
+    bottom: auto;
+    width: auto;
+    height: 2px;
+  }
+}
+
+.flowBeamY,
+.flowBeamX {
+  position: absolute;
+  z-index: 0;
+  border-radius: inherit;
+}
+
+.flowBeamY {
+  left: 24px;
+  top: 24px;
+  bottom: 24px;
+  width: 2px;
+  background: linear-gradient(180deg, transparent, var(--module-color), transparent);
+
+  @include respond-to(md) {
+    display: none;
+  }
+}
+
+.flowBeamX {
+  display: none;
+
+  @include respond-to(md) {
+    display: block;
+    left: 12.5%;
+    right: 12.5%;
+    top: 28px;
+    bottom: auto;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--module-color), transparent);
+  }
+}
+
+.flowSteps {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 40px;
+
+  @include respond-to(md) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    align-items: start;
+    gap: 16px;
+  }
+}
+
+.flowStep {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+
+  @include respond-to(md) {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0;
+  }
+}
+
+.flowNode {
+  position: relative;
+  z-index: 1;
+  flex: none;
+  display: flex;
+  height: 48px;
+  width: 48px;
+  align-items: center;
+  justify-content: center;
+  border-radius: $radius-pill;
+  border: 2px solid var(--module-color);
+  background: white;
+  color: var(--module-color);
+  box-shadow: 0 0 0 6px alpha(var(--module-color), 12%), $shadow-elegant;
+
+  @include respond-to(md) {
+    height: 56px;
+    width: 56px;
+  }
+}
+
+.flowNodeNum {
+  font-family: $font-mono;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.flowStepBody {
+  padding-top: 2px;
+
+  @include respond-to(md) {
+    margin-top: 16px;
+    padding-top: 0;
+  }
+}
+
+.flowStepLabel {
+  @include eyebrow;
+  font-size: 10.5px;
+}
+
+.flowStepText {
+  margin-top: 4px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: alpha($ink, 85%);
+
+  @include respond-to(md) {
+    margin-top: 6px;
+    max-width: 220px;
+    margin-inline: auto;
+  }
+}
+
+// ---------- Product view ----------
+.productWindow {
+  margin-top: 48px;
+  overflow: hidden;
+  border-radius: $radius-2xl;
+  border: 1px solid $line;
+  background: $ink;
+  box-shadow: $shadow-elegant;
+}
+
+.chrome {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid alpha(white, 10%);
+  background: alpha($ink, 95%);
+  padding: 12px 16px;
+}
+
+.dot {
+  height: 10px;
+  width: 10px;
+  border-radius: $radius-pill;
+}
+
+.dotRed { background: #ff5f57; }
+.dotYellow { background: #febc2e; }
+.dotGreen { background: #28c840; }
+
+.urlLabel {
+  margin-left: 12px;
+  font-family: $font-mono;
+  font-size: 11px;
+  color: alpha(white, 40%);
+}
+
+.productBody {
+  position: relative;
+  display: grid;
+  gap: 16px;
+  padding: 24px;
+
+  @include respond-to(md) {
+    grid-template-columns: 240px 1fr;
+  }
+}
+
+// Real embedded product surface (e.g. the ticketing demo), in place of the
+// generic .productBody mockup above. Own light background since the fake
+// mockup's dark $ink chrome assumes a dark app UI, but the embedded demo is
+// a light-themed app — reads like a light app screenshot inside a dark
+// browser-chrome frame.
+//
+// No height clamp and no scroll of its own: the embedded demos are full
+// layouts, and capping this at a fixed height only produced a nested
+// scrollbar inside the card. Each demo keeps its own wide tables scrolling
+// within their own wrappers, so nothing escapes horizontally either.
+//
+// Gutter scales with the viewport: at 12px a phone keeps as much width as
+// possible for the demo's own table, 16px from md up gives the app-window
+// inset the frame implies. Deliberately not wider than 16px — the ticketing
+// demo's table is tuned to just fit the usable width of this frame on desktop
+// (see data-table.scss's `.table__th` min-width note), and every extra pixel
+// of gutter here comes straight out of that budget. `min-width: 0` lets the
+// grid/flex children shrink so their internal `overflow-x: auto` wrappers
+// actually engage rather than pushing the frame wide.
+.productViewSlot {
+  min-width: 0;
+  background: white;
+  padding: 12px;
+
+  @include respond-to(md) {
+    padding: 16px;
+  }
+}
+
+.sidebarList {
+  > * + * {
+    margin-top: 8px;
+  }
+}
+
+.sidebarItem {
+  border-radius: $radius-md;
+  padding: 8px 12px;
+  font-size: 12.5px;
+  color: alpha(white, 60%);
+}
+
+.sidebarItemActive {
+  background: alpha($accent, 20%);
+  font-weight: 600;
+  color: white;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.statCard {
+  border-radius: $radius-lg;
+  background: alpha(white, 5%);
+  padding: 12px;
+  transition-delay: var(--reveal-delay);
+}
+
+.statLabel {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: alpha(white, 40%);
+}
+
+.statValue {
+  margin-top: 4px;
+  font-size: 22px;
+  font-weight: 800;
+  color: white;
+}
+
+.eventPanel {
+  margin-top: 12px;
+  border-radius: $radius-lg;
+  background: alpha(white, 5%);
+  padding: 16px;
+}
+
+.eventLabel {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: alpha(white, 40%);
+}
+
+.barsRow {
+  margin-top: 12px;
+  display: flex;
+  height: 112px;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.bar {
+  flex: 1 1 0%;
+  border-radius: $radius-sm;
+  height: var(--bar-height);
+  background: var(--bar-color);
+}
+
+// ---------- Use cases ----------
+// ---------- Spotlight (optional flagship sub-product band) ----------
+// Same dark editorial treatment as the home page's problem band, so a
+// spotlighted sub-product reads as a break in the page rather than another
+// white card section.
+.spotlight {
+  position: relative;
+  overflow: hidden;
+  background: $navy;
+  color: white;
+}
+
+.spotlightGlow {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(900px 420px at 15% -10%, rgba(37, 99, 235, 0.32), transparent 60%);
+}
+
+.spotlightInner {
+  @include container-x;
+  position: relative;
+  padding-block: 80px;
+
+  @include respond-to(md) {
+    padding-block: 96px;
+  }
+}
+
+.spotlightHead {
+  max-width: 720px;
+}
+
+.spotlightBadge {
+  @include eyebrow;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border-radius: $radius-pill;
+  border: 1px solid alpha(white, 18%);
+  background: alpha(white, 7%);
+  padding: 6px 12px;
+  color: white;
+}
+
+.spotlightTitle {
+  margin-top: 20px;
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: white;
+
+  @include respond-to(md) {
+    font-size: 40px;
+  }
+}
+
+.spotlightBody {
+  margin-top: 18px;
+  font-size: 15px;
+  line-height: 1.65;
+  color: #9bb4e6;
+}
+
+.spotlightSteps {
+  margin-top: 48px;
+  display: grid;
+  overflow: hidden;
+  border-radius: $radius-2xl;
+  border: 1px solid alpha(white, 12%);
+  list-style: none;
+
+  @include respond-to(sm) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  @include respond-to(lg) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+// Dividers are borders on the cells rather than a 1px grid gap showing a
+// parent fill: at fractional track widths those gap hairlines land on half
+// device-pixels and some of them disappear. The nth-child rules are written
+// against the column count, so any number of steps still divides correctly.
+.spotlightStep {
+  padding: 26px 24px 30px;
+  border-top: 1px solid alpha(white, 12%);
+  transition-delay: var(--reveal-delay);
+
+  &:first-child {
+    border-top: 0;
+  }
+
+  @include respond-to(sm) {
+    &:nth-child(-n + 2) {
+      border-top: 0;
+    }
+
+    &:not(:nth-child(2n + 1)) {
+      border-left: 1px solid alpha(white, 12%);
+    }
+  }
+
+  @include respond-to(lg) {
+    &:nth-child(-n + 4) {
+      border-top: 0;
+    }
+
+    &:nth-child(2n + 1) {
+      border-left: 0;
+    }
+
+    &:not(:nth-child(4n + 1)) {
+      border-left: 1px solid alpha(white, 12%);
+    }
+  }
+}
+
+.spotlightStepTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.spotlightStepIcon {
+  display: inline-flex;
+  height: 34px;
+  width: 34px;
+  align-items: center;
+  justify-content: center;
+  border-radius: $radius-lg;
+  background: alpha(white, 8%);
+  color: $accent-100;
+}
+
+.spotlightStepNum {
+  font-family: $font-mono;
+  font-size: 12px;
+  font-weight: 700;
+  color: alpha(white, 35%);
+}
+
+.spotlightStepTitle {
+  margin-top: 20px;
+  font-size: 15.5px;
+  font-weight: 800;
+  line-height: 1.3;
+  color: white;
+}
+
+.spotlightStepText {
+  margin-top: 8px;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #9bb4e6;
+}
+
+.spotlightNotes {
+  margin-top: 28px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 24px;
+  list-style: none;
+}
+
+.spotlightNote {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: alpha(white, 70%);
+}
+
+.spotlightNoteIcon {
+  flex: none;
+  margin-top: 2px;
+  color: $accent-100;
+}
+
+.useCasesGrid {
+  margin-top: 48px;
+  display: grid;
+  gap: 16px;
+
+  @include respond-to(md) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.useCaseCard {
+  position: relative;
+  overflow: hidden;
+  border-radius: $radius-2xl;
+  border: 1px solid $line;
+  background: white;
+  padding: 32px;
+  transition-delay: var(--reveal-delay);
+}
+
+.useCaseNum {
+  font-family: $font-mono;
+  font-size: 42px;
+  font-weight: 900;
+  line-height: 1;
+  color: alpha($accent, 20%);
+  font-variant-numeric: tabular-nums;
+}
+
+.useCaseTitle {
+  margin-top: 16px;
+  font-size: 18px;
+  font-weight: 800;
+  color: $ink;
+}
+
+.useCaseDesc {
+  margin-top: 8px;
+  font-size: 13.5px;
+  line-height: 1.625;
+  color: $slate;
+}
+
+.useCaseLink {
+  margin-top: 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  color: $accent;
+}
+
+// ---------- Integrations ----------
+.integrationsRow {
+  margin-top: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.integrationPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: $radius-pill;
+  border: 1px solid $line;
+  background: white;
+  // Tighter on the left so the logo sits the same distance from the edge as
+  // the label does on the right.
+  padding: 6px 16px 6px 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: $ink;
+  transition: color 0.15s, border-color 0.15s;
+
+  &:hover {
+    border-color: $accent;
+    color: $accent;
+  }
+}
+
+.integrationLogo {
+  height: 20px;
+  width: 20px;
+}
+
+// ---------- Standalone vs suite ----------
+.standaloneGrid {
+  display: grid;
+  gap: 24px;
+
+  @include respond-to(md) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.cardAccent {
+  border: 2px solid $accent;
+  box-shadow: $shadow-glow;
+}
+
+.cardHeading {
+  margin-top: 12px;
+  font-size: 20px;
+  font-weight: 700;
+  color: $ink;
+}
+
+.cardBody {
+  margin-top: 8px;
+  font-size: 14px;
+  color: $slate;
+}
+
+.cardCta {
+  margin-top: 20px;
+}

@@ -1,0 +1,51 @@
+@use "sass:map";
+
+// Mirrors Tailwind v4's default breakpoints (mobile-first, min-width) — the
+// only ones actually used repo-wide are sm/md/lg/xl; 2xl kept for parity.
+$breakpoints: (
+  sm: 640px,
+  md: 768px,
+  lg: 1024px,
+  xl: 1280px,
+  "2xl": 1536px,
+);
+
+@mixin respond-to($bp) {
+  @media (min-width: map.get($breakpoints, $bp)) {
+    @content;
+  }
+}
+
+// Replaces the repeated `focus-visible:outline-none focus-visible:ring-2
+// focus-visible:ring-accent focus-visible:ring-offset-2
+// focus-visible:ring-offset-<color>` pattern (Button/Card/BentoTile/...).
+@mixin focus-ring($offset-color: white) {
+  outline: none;
+
+  &:focus-visible {
+    box-shadow: 0 0 0 2px #{$offset-color}, 0 0 0 4px var(--accent);
+  }
+}
+
+// Replaces Tailwind v4's `has-[:focus-visible]:ring-2 ...` arbitrary variant
+// (Card/BentoTile — rings the whole card when a child gets keyboard focus).
+@mixin focus-ring-within($offset-color: white) {
+  &:has(:focus-visible) {
+    box-shadow: 0 0 0 2px #{$offset-color}, 0 0 0 4px var(--accent);
+  }
+}
+
+// Ports of the old @utility eyebrow / @utility container-x blocks.
+@mixin eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--slate);
+}
+
+@mixin container-x {
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: 24px;
+}

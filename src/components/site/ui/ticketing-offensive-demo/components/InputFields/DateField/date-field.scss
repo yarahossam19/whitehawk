@@ -1,0 +1,69 @@
+.date-field-input {
+  padding: 8px 8px;
+  border-radius: 8px;
+  border: 1px solid var(--input-border);
+  background-color: transparent;
+  font-size: 16px;
+  line-height: 24px;
+  width: 100%;
+  text-align: left;
+  justify-content: space-between;
+
+  &:focus,
+  &:active {
+    border-color: var(--active-field-border);
+    color: var(--active-field-foreground);
+    box-shadow: none;
+    outline: none;
+  }
+
+  &.error {
+    border-color: var(--colors-status-alerts-colors-soft-red, #ea2340);
+  }
+}
+
+.date-field-label {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 5px;
+  color: var(--active-field-foreground);
+
+  &.error {
+    color: var(--colors-status-alerts-colors-soft-red, #ea2340);
+  }
+}
+
+.date-field-subtext {
+  color: var(--Colors-Neutral-700, #595959);
+  font-size: 12px;
+  line-height: 18px;
+
+  &.error {
+    color: var(--colors-status-alerts-colors-soft-red, #ea2340);
+  }
+}
+
+.date-field-required {
+  color: var(--colors-status-alerts-colors-soft-red, #ea2340);
+  font-size: 14px;
+  font-weight: 500;
+}
+.date-field-calendar {
+  z-index: 1200 !important;
+  width: 300px;
+  min-width: 100%;
+  padding: 0;
+  border-radius: 8px;
+  background-color: var(--popover-bg, #fff);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+
+
+  .rdp {
+    width: 100%;
+
+  }
+}
+.rdp-root {
+  z-index: 1150 !important;
+}

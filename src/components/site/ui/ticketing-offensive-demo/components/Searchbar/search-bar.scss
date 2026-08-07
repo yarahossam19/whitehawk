@@ -1,0 +1,69 @@
+.search-bar {
+  position: relative;
+  flex: 1;
+  max-width: 400px;
+  border-radius: 8px;
+
+  @media (max-width: 1000px) {
+    width: 250px;
+  }
+
+  &__icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--tix-secondary-foreground);
+    pointer-events: none;
+    z-index: 1;
+
+    /* Ensure SVG stroke/fill are visible even if parent color inheritance is different */
+    svg {
+      stroke: currentColor;
+      fill: none;
+      width: 20px;
+      height: 20px;
+      display: block;
+    }
+  }
+
+  &__input {
+    width: 100%;
+    padding: 4px 16px 4px 40px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 27px;
+    background-color: var(--searchbar-bg);
+    border: 0.5px solid var(--searchbar-border);
+    transition: all 0.2s ease;
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(0, 143, 227, 0.1);
+      background-color: var(--searchbar-bg) !important;
+    }
+
+    &::placeholder {
+      color: var(--tix-secondary-foreground);
+    }
+  }
+
+  &__clear {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--Colors-Neutral-400, #9ca3af);
+    cursor: pointer;
+    padding: 2px;
+    border-radius: 4px;
+
+    &:hover {
+      color: var(--Colors-Neutral-600, #6b7280);
+      background-color: var(--Colors-Neutral-100, #f3f4f6);
+    }
+  }
+}

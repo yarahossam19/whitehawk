@@ -1,0 +1,418 @@
+@use "@/styles/tokens" as *;
+@use "@/styles/mixins" as *;
+@use "@/styles/color-mix" as *;
+
+// ---------- Mission hero ----------
+.hero {
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid $line;
+  background: linear-gradient(to bottom, $wash, white);
+}
+
+.heroWordmark {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0.7;
+}
+
+.heroInner {
+  @include container-x;
+  position: relative;
+  padding-block: 96px;
+  text-align: center;
+
+  @include respond-to(md) {
+    padding-block: 112px;
+  }
+}
+
+.heroEyebrow {
+  @include eyebrow;
+  margin-bottom: 12px;
+}
+
+.heroTitle {
+  margin-inline: auto;
+  max-width: 48rem;
+  font-size: 38px;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: $ink;
+
+  @include respond-to(md) {
+    font-size: 54px;
+  }
+}
+
+.heroAccent {
+  color: $accent;
+}
+
+.heroDescription {
+  margin-inline: auto;
+  margin-top: 24px;
+  max-width: 36rem;
+  font-size: 16px;
+  color: $slate;
+}
+
+// ---------- Origin story ----------
+.storyGrid {
+  display: grid;
+  gap: 48px;
+
+  @include respond-to(md) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: center;
+  }
+}
+
+.storyEyebrow {
+  @include eyebrow;
+  margin-bottom: 12px;
+}
+
+.storyTitle {
+  font-size: 28px;
+  font-weight: 800;
+  color: $ink;
+
+  @include respond-to(md) {
+    font-size: 34px;
+  }
+}
+
+.storyBody {
+  margin-top: 20px;
+  font-size: 15px;
+  line-height: 1.625;
+  color: $slate;
+
+  p + p {
+    margin-top: 16px;
+  }
+}
+
+.storyVisual {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: $radius-2xl;
+  border: 1px solid $line;
+  background: linear-gradient(to bottom right, $navy, $accent-600, $accent);
+  box-shadow: $shadow-elegant;
+}
+
+.storyVisualInner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+}
+
+.storyVisualLabel {
+  font-family: $font-mono;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: alpha(white, 70%);
+}
+
+.storyVisualYear {
+  margin-top: 8px;
+  font-size: 80px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.storyVisualLocations {
+  margin-top: 16px;
+  font-size: 13px;
+  color: alpha(white, 80%);
+}
+
+// ---------- Mission & Vision ----------
+// ---------- Shared tone system (Mission/Vision + Leadership) ----------
+.toneNavy {
+  --tone: #{$navy};
+  --tone-2: #{$navy-600};
+}
+
+.toneAccent {
+  --tone: #{$accent-600};
+  --tone-2: #{$accent};
+}
+
+.pillarsGrid {
+  display: grid;
+  gap: 24px;
+
+  @include respond-to(md) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.pillarCard {
+  position: relative;
+  overflow: hidden;
+  padding: 36px 32px 32px;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--tone), transparent);
+  }
+}
+
+// Doubled class beats Card's own `&:hover { border-color }` and the global
+// `.lift:hover` regardless of CSS-module chunk order — both are single-class
+// selectors (0,2,0); this is (0,3,0).
+.pillarCard.pillarCard:hover {
+  border-color: #{alpha($accent, 45%)};
+  box-shadow: $shadow-glow;
+}
+
+.pillarWatermark {
+  pointer-events: none;
+  position: absolute;
+  right: -16px;
+  bottom: -20px;
+  z-index: 0;
+  height: 140px;
+  width: 140px;
+  color: var(--tone);
+  opacity: 0.08;
+  transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+}
+
+.pillarCard:hover .pillarWatermark {
+  transform: scale(1.08) rotate(-4deg);
+  opacity: 0.14;
+}
+
+.pillarIcon {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  height: 52px;
+  width: 52px;
+  align-items: center;
+  justify-content: center;
+  border-radius: $radius-lg;
+  background: linear-gradient(135deg, var(--tone), var(--tone-2));
+  color: white;
+  box-shadow: 0 10px 22px -10px #{alpha($accent, 60%)};
+  transition: transform 0.3s ease-out;
+}
+
+.pillarCard:hover .pillarIcon {
+  transform: rotate(-6deg) scale(1.06);
+}
+
+.pillarEyebrow {
+  position: relative;
+  z-index: 10;
+  @include eyebrow;
+  margin-top: 22px;
+  color: var(--tone);
+}
+
+.pillarTitle {
+  position: relative;
+  z-index: 10;
+  margin-top: 8px;
+  font-size: 22px;
+  font-weight: 800;
+  color: $ink;
+}
+
+.pillarDescription {
+  position: relative;
+  z-index: 10;
+  margin-top: 16px;
+  font-size: 14.5px;
+  line-height: 1.625;
+  color: $slate;
+}
+
+// ---------- Leadership ----------
+.leadersGrid {
+  margin-top: 48px;
+  display: grid;
+  gap: 24px;
+
+  @include respond-to(md) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.leaderCard {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  gap: 20px;
+  padding: 28px;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    z-index: 0;
+    height: 140px;
+    width: 140px;
+    border-radius: 50%;
+    background: var(--tone);
+    opacity: 0.08;
+    filter: blur(6px);
+    pointer-events: none;
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+  }
+}
+
+.leaderCard.leaderCard:hover {
+  border-color: #{alpha($accent, 40%)};
+}
+
+.leaderCard:hover::after {
+  opacity: 0.14;
+  transform: scale(1.1);
+}
+
+.leaderAvatar {
+  position: relative;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  height: 88px;
+  width: 88px;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: $radius-pill;
+  background: linear-gradient(135deg, var(--tone), var(--tone-2));
+  box-shadow: 0 12px 24px -10px #{alpha($accent, 55%)};
+  transition: transform 0.3s ease-out;
+}
+
+.leaderCard:hover .leaderAvatar {
+  transform: scale(1.05);
+}
+
+.leaderAvatarPattern {
+  position: absolute;
+  inset: 0;
+  opacity: 0.18;
+  background-image: repeating-linear-gradient(135deg, white 0 1px, transparent 1px 9px);
+  mix-blend-mode: overlay;
+}
+
+.leaderAvatarRing {
+  position: absolute;
+  inset: 6px;
+  border-radius: inherit;
+  border: 1px solid #{alpha(white, 35%)};
+}
+
+.leaderAvatarInitials {
+  position: relative;
+  z-index: 10;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  color: white;
+}
+
+.leaderBody {
+  position: relative;
+  z-index: 10;
+}
+
+.leaderName {
+  margin-bottom: 8px;
+  font-weight: 700;
+  color: $ink;
+}
+
+.leaderBio {
+  margin-top: 12px;
+  font-size: 13.5px;
+  line-height: 1.625;
+  color: $slate;
+}
+
+// Neutralize the new decorative motion for reduced-motion users (globals.scss
+// already turns off .reveal/.lift, but can't reach these hashed module classes).
+@media (prefers-reduced-motion: reduce) {
+  .pillarWatermark,
+  .pillarIcon,
+  .leaderAvatar,
+  .leaderCard::after {
+    transition: none;
+  }
+}
+
+// ---------- Investors ----------
+.investorsGrid {
+  margin-inline: auto;
+  margin-top: 48px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 56rem;
+  gap: 16px;
+}
+
+.investorTile {
+  display: flex;
+  flex: 0 0 calc((100% - 16px) / 2);
+  height: 96px;
+  align-items: center;
+  justify-content: center;
+  border-radius: $radius-xl;
+  border: 1px solid $line;
+  background: white;
+  padding: 20px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  transition: all 0.3s ease-out;
+  transition-delay: var(--reveal-delay);
+
+  @include respond-to(sm) {
+    flex-basis: calc((100% - 32px) / 3);
+  }
+
+  @include respond-to(md) {
+    flex-basis: calc((100% - 48px) / 4);
+  }
+
+  &:hover {
+    transform: translateY(-4px);
+    border-color: alpha($accent, 40%);
+    box-shadow: 0 16px 32px -18px rgba(11, 42, 91, 0.28);
+  }
+}
+
+.investorLogo {
+  max-height: 40px;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  opacity: 0.7;
+  filter: grayscale(1);
+  transition: all 0.3s ease-out;
+}
+
+.investorTile:hover .investorLogo {
+  opacity: 1;
+  filter: grayscale(0);
+}
+

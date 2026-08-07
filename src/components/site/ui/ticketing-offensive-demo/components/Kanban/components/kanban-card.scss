@@ -1,0 +1,201 @@
+.kanban-card {
+  display: flex;
+  flex-direction: column;
+
+  // The card fills its column; the old 246px floor made it wider than the
+  // column on narrow layouts and pushed a horizontal scrollbar into every
+  // column body.
+  width: 100%;
+  min-width: 0;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background-color: var(--kanban-card-bg);
+  border: 1px solid var(--kanban-card-border);
+  text-align: left;
+  // Nothing inside is allowed to force the card wider than the column.
+  overflow-wrap: anywhere;
+  &__title {
+    // <h3>: overrides the site's global heading font/weight/tracking as well
+    // as the UA's own 1.17em font-size, which together rendered card titles
+    // heavier and larger than the design.
+    margin: 0;
+    font-family: inherit;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    letter-spacing: normal;
+    line-height: 1.3;
+    color: var(--active-field-foreground);
+  }
+  &__description {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    max-width: 220px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  &__header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 600;
+
+    > div {
+      min-width: 0;
+    }
+
+    svg {
+      flex-shrink: 0;
+    }
+  }
+  &__body {
+    margin-top: 8px;
+    padding: 12px 0;
+    border-top: 1px solid var(--kanban-card-border);
+    border-bottom: 1px solid var(--kanban-card-border);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    text-align: center;
+  }
+  &__badge-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    gap: 4px;
+    width: 100%;
+    min-width: 0;
+  }
+  // Was entirely unstyled — inherited the card's body size and sat at the same
+  // visual weight as the badge it labels.
+  &__badge-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--Colors-Neutral-500, #8c8c8c);
+  }
+  .status-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 2px 10px;
+    border-radius: 16px;
+    max-width: 100%;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: capitalize;
+    white-space: nowrap;
+    &::before {
+      content: "";
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    &__critical {
+      background-color: var(--table-critical-bg);
+      color: var(--table-critical-foreground);
+
+      &::before {
+        background-color: var(--table-critical-foreground);
+      }
+    }
+
+    &__high {
+      background-color: var(--table-high-bg);
+      color: var(--table-high-foreground);
+
+      &::before {
+        background-color: var(--table-high-foreground);
+      }
+    }
+
+    &__medium {
+      background-color: var(--table-medium-bg);
+      color: var(--table-medium-foreground);
+
+      &::before {
+        background-color: var(--table-medium-foreground);
+      }
+    }
+
+    &__low {
+      background-color: var(--table-low-bg);
+      color: var(--table-low-foreground);
+
+      &::before {
+        background-color: var(--table-low-foreground);
+      }
+    }
+  }
+
+  &__footer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap:10px;
+    align-items: center;
+    font-size: 14px;
+    padding-top: 8px;
+    border-top: 1px solid var(--kanban-card-border);
+    color: var(--active-field-foreground);
+  }
+  .footer-item {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+  }
+
+  &__assignees-list {
+    display: flex;
+    flex-direction: column;
+    max-height: 150px;
+    overflow-y: auto;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  &__assignee {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  &__assignee-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    background-color: var(--avatar-bg, rgba(0, 0, 0, 0.08));
+    color: var(--avatar-color, var(--active-field-foreground));
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__assignee-name {
+    font-size: 12px;
+    color: var(--active-field-foreground);
+  }
+}

@@ -1,0 +1,78 @@
+.offensive-page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px 0px;
+  // Deliberately no `min-height: 100vh` — this is embedded in a card on the
+  // module pages, where a viewport-height floor just padded the frame out and
+  // forced it to scroll internally. It sizes to its content instead.
+  min-width: 0;
+
+  .button-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .sync-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    color: #2563eb;
+    background-color: rgba(37, 99, 235, 0.07);
+    border: 1px solid rgba(37, 99, 235, 0.35);
+    transition: background-color 0.15s, border-color 0.15s;
+
+    &:hover:not(:disabled) {
+      background-color: rgba(37, 99, 235, 0.13);
+      border-color: rgba(37, 99, 235, 0.55);
+    }
+
+    &:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+  }
+  // `min(100%, 220px)` rather than a bare 220px floor: inside the module
+  // pages' product-view frame the available width drops to ~270px on a small
+  // phone, and a hard 220px track plus the 15px gap overflowed the frame
+  // (clipped, because .productWindow hides overflow). The min() collapses the
+  // floor to the container width instead, so the row degrades to one full-
+  // width card.
+  .cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+    gap: 15px;
+  }
+
+  // The demo's DataTable ships a 2rem bottom margin for standalone use; inside
+  // the framed product view that reads as lopsided padding against the slot's
+  // own even gutter.
+  .table {
+    margin-bottom: 0;
+  }
+}
+
+// Embedded-in-a-card sizing. The demo was authored as a full app page, so a
+// few of its defaults assume a viewport's worth of room; these trim them back
+// for the narrow, framed context without touching the standalone styles.
+@media (max-width: 640px) {
+  .offensive-page {
+    gap: 12px 0;
+
+    .table {
+      padding: 10px;
+      border-radius: 12px;
+      gap: 8px;
+    }
+
+    .cards-container {
+      gap: 10px;
+    }
+  }
+}

@@ -1,0 +1,22 @@
+@use "@/styles/tokens" as *;
+
+.toast {
+  background: $background;
+  color: $foreground;
+  border: 1px solid $border;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+}
+
+.description {
+  color: $muted-foreground;
+}
+
+.actionButton {
+  background: $primary;
+  color: $primary-foreground;
+}
+
+.cancelButton {
+  background: $muted;
+  color: $muted-foreground;
+}

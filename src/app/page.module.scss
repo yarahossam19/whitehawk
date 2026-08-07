@@ -1,0 +1,563 @@
+@use "@/styles/tokens" as *;
+@use "@/styles/mixins" as *;
+@use "@/styles/color-mix" as *;
+
+// ---------- Hero ----------
+.hero {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  min-height: 620px;
+  align-items: center;
+  overflow: hidden;
+  background: $navy;
+  color: white;
+}
+
+.heroWordmark {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.heroGlow {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(900px 460px at 50% 30%, rgba(37, 99, 235, 0.22), transparent 65%);
+}
+
+.heroInner {
+  @include container-x;
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-block: 96px;
+  text-align: center;
+
+  @include respond-to(md) {
+    padding-block: 112px;
+  }
+}
+
+.heroBadge {
+  margin-bottom: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: $radius-pill;
+  border: 1px solid alpha(white, 15%);
+  background: alpha(white, 5%);
+  padding: 4px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: $accent-100;
+  backdrop-filter: blur(4px);
+}
+
+.heroBadgeDot {
+  height: 6px;
+  width: 6px;
+  border-radius: $radius-pill;
+  background: $accent;
+}
+
+.heroTitle {
+  max-width: 48rem;
+  font-size: 34px;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  color: white;
+
+  @include respond-to(md) {
+    font-size: 52px;
+  }
+}
+
+.heroAccent {
+  color: $accent;
+}
+
+.heroFaint {
+  color: alpha(white, 60%);
+}
+
+.heroDescription {
+  margin-top: 20px;
+  max-width: 36rem;
+  font-size: 16px;
+  line-height: 1.625;
+  color: #9bb4e6;
+
+  @include respond-to(md) {
+    font-size: 17px;
+  }
+}
+
+.heroActions {
+  margin-top: 32px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+// ---------- Platform video / preview ----------
+// The demo player's frame, aspect box, glow, play button and caption moved to
+// HomeVideo when it stopped being a placeholder.
+
+// ---------- Problem ----------
+.problem {
+  position: relative;
+  overflow: hidden;
+  background: $navy;
+  color: white;
+}
+
+.problemGlow {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(900px 420px at 50% -10%, rgba(37, 99, 235, 0.28), transparent 60%);
+}
+
+.problemInner {
+  @include container-x;
+  position: relative;
+  padding-block: 80px;
+
+  @include respond-to(md) {
+    padding-block: 96px;
+  }
+}
+
+.problemIntro {
+  max-width: 48rem;
+}
+
+.problemEyebrow {
+  @include eyebrow;
+  margin-bottom: 12px;
+  color: #9bb4e6;
+}
+
+.problemTitle {
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 1.25;
+  color: white;
+
+  @include respond-to(md) {
+    font-size: 44px;
+  }
+}
+
+.problemAccent {
+  color: $accent;
+}
+
+.problemLead {
+  margin-top: 16px;
+  font-size: 15px;
+  line-height: 1.625;
+  color: #9bb4e6;
+}
+
+.problemGrid {
+  margin-top: 56px;
+  display: grid;
+  overflow: hidden;
+  border-radius: $radius-2xl;
+  border: 1px solid alpha(white, 10%);
+
+  @include respond-to(md) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+// Dividers are derived from position in the grid rather than passed in as a
+// class, so the cell count can change without touching the markup.
+.problemCell {
+  position: relative;
+  padding: 28px;
+  border-bottom: 1px solid alpha(white, 10%);
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  @include respond-to(md) {
+    padding: 32px;
+
+    // last row (accounts for an odd final cell spanning alone)
+    &:nth-last-child(-n + 2):nth-child(odd),
+    &:nth-last-child(-n + 2):nth-child(odd) ~ & {
+      border-bottom: 0;
+    }
+
+    &:nth-child(odd) {
+      border-right: 1px solid alpha(white, 10%);
+    }
+  }
+}
+
+.problemIconWrap {
+  margin-bottom: 24px;
+  display: inline-flex;
+  height: 40px;
+  width: 40px;
+  align-items: center;
+  justify-content: center;
+  border-radius: $radius-lg;
+  background: alpha(white, 5%);
+  color: $accent-100;
+}
+
+.problemStat {
+  font-family: $font-mono;
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+  font-variant-numeric: tabular-nums;
+  color: white;
+
+  @include respond-to(md) {
+    font-size: 32px;
+  }
+}
+
+.problemStatLabel {
+  margin-top: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.45;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #9bb4e6;
+}
+
+.problemText {
+  margin-top: 16px;
+  font-size: 14px;
+  line-height: 1.625;
+  color: #9bb4e6;
+}
+
+.problemFooter {
+  margin-top: 32px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 13px;
+  color: #9bb4e6;
+}
+
+.problemFooterLine {
+  height: 1px;
+  flex: 1 1 0%;
+  background: alpha(white, 10%);
+}
+
+.problemFooterText {
+  white-space: nowrap;
+  font-weight: 600;
+  color: white;
+}
+
+// ---------- Solutions ----------
+.solutionsGrid {
+  display: grid;
+  gap: 40px;
+
+  @include respond-to(md) {
+    grid-template-columns: minmax(0, 320px) 1fr;
+    gap: 64px;
+  }
+}
+
+.solutionsAside {
+  align-self: start;
+
+  @include respond-to(md) {
+    position: sticky;
+    top: 96px;
+  }
+}
+
+.solutionsEyebrow {
+  @include eyebrow;
+  margin-bottom: 12px;
+}
+
+.solutionsTitle {
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 1.25;
+  color: $ink;
+
+  @include respond-to(md) {
+    font-size: 42px;
+  }
+}
+
+.solutionsAccent {
+  color: $accent;
+}
+
+.solutionsLead {
+  margin-top: 16px;
+  max-width: 28rem;
+  font-size: 15px;
+  line-height: 1.625;
+  color: $slate;
+}
+
+.solutionsCta {
+  margin-top: 24px;
+}
+
+.solutionsList {
+  border-top: 1px solid $line;
+}
+
+.moduleRow {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: 20px;
+  overflow: hidden;
+  border-bottom: 1px solid $line;
+  padding-block: 28px;
+  transition: all 0.3s ease-out;
+  transition-delay: var(--reveal-delay);
+
+  &:hover {
+    background: $wash;
+  }
+
+  &:hover .moduleArrow {
+    transform: translate(2px, -2px);
+    color: $accent;
+  }
+
+  @include respond-to(md) {
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 32px;
+    padding-inline: 8px;
+  }
+}
+
+.moduleWatermark {
+  pointer-events: none;
+  position: absolute;
+  bottom: 0;
+  left: 24px;
+  z-index: 0;
+  height: 64px;
+  width: 64px;
+  color: $accent-600;
+  opacity: 0.1;
+
+  @include respond-to(md) {
+    height: 96px;
+    width: 96px;
+  }
+}
+
+.moduleIndex {
+  position: relative;
+  z-index: 10;
+  font-family: $font-mono;
+  font-size: 13px;
+  font-weight: 700;
+  color: alpha($slate, 60%);
+  font-variant-numeric: tabular-nums;
+}
+
+.moduleBody {
+  position: relative;
+  z-index: 10;
+}
+
+.moduleTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: $radius-pill;
+  background: $accent-100;
+  padding: 4px 10px;
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: $accent-600;
+}
+
+.moduleTitle {
+  margin-top: 12px;
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.25;
+  color: $ink;
+}
+
+.moduleBlurb {
+  margin-top: 6px;
+  max-width: 32rem;
+  font-size: 14px;
+  line-height: 1.625;
+  color: $slate;
+}
+
+.moduleMeta {
+  position: relative;
+  z-index: 10;
+  grid-column-start: 2;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  @include respond-to(md) {
+    grid-column-start: 3;
+  }
+}
+
+.moduleStatWrap {
+  text-align: right;
+}
+
+.moduleStat {
+  font-family: $font-mono;
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: $navy;
+}
+
+.moduleStatLabel {
+  margin-top: 4px;
+  font-size: 10.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: $slate;
+}
+
+.moduleArrow {
+  color: $slate;
+  transition: transform 0.15s, color 0.15s;
+}
+
+// ---------- Certifications ----------
+.certs {
+  border-block: 1px solid $line;
+  background: $wash;
+}
+
+.certsInner {
+  @include container-x;
+  padding-block: 56px;
+}
+
+// Heading beside the list only from lg. At md the aside would leave the
+// five-across strip ~83px per card, which the icon + label pair can't take.
+.certsGrid {
+  display: grid;
+  gap: 24px;
+
+  @include respond-to(lg) {
+    grid-template-columns: minmax(0, 240px) 1fr;
+    align-items: center;
+  }
+}
+
+.certsEyebrow {
+  @include eyebrow;
+  margin-bottom: 8px;
+}
+
+.certsHeading {
+  font-size: 22px;
+  font-weight: 800;
+  color: $ink;
+}
+
+// One card per certification, all five across from md up.
+.certsList {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+
+  @include respond-to(md) {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
+.certCard {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  border-radius: $radius-lg;
+  border: 1px solid $line;
+  background: white;
+  padding: 10px 11px;
+  transition: all 0.3s;
+
+  &:hover {
+    transform: translateY(-2px);
+    border-color: $accent;
+    box-shadow: 0 12px 24px -16px rgba(11, 42, 91, 0.3);
+  }
+}
+
+// Badges sit bare on the card — no tile, no crop. Each mark already carries
+// its own shape and background, so contain shows it whole.
+.certIconWrap {
+  display: grid;
+  height: 36px;
+  width: 36px;
+  flex-shrink: 0;
+  place-items: center;
+}
+
+.certIcon {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+
+.certName {
+  font-size: 13px;
+  font-weight: 800;
+  color: $ink;
+  line-height: 1.25;
+}
+
+.certDesc {
+  font-size: 10.5px;
+  color: $slate;
+}
+
+// ---------- Testimonials ----------
+.testimonialsHeader {
+  margin-bottom: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+// Quote cards themselves live in TestimonialCarousel.

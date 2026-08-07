@@ -1,0 +1,196 @@
+/* Ensure select dropdown overlays dialogs/popups */
+/* Raise Radix Select dropdown above PrimeReact Dialog (which commonly uses z-index ~1100+) */
+.select-portal-content {
+  z-index: 5000 !important;
+  max-height: 200px !important; /* ensure it stacks above dialog & overlay */
+  position: relative; /* keep stacking context simple */
+}
+
+/* Safety: when nested in containers that might clip overflow */
+.select-wrapper,
+.select-field {
+  overflow: visible !important;
+}
+
+/* Optional: if any ancestor applies transform creating a new stacking context, we can elevate via fixed positioning */
+/* Removed empty fallback ruleset to satisfy lint */
+.select-tooltip-trigger {
+  display: block;
+  width: 100%;
+}
+
+.select-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  contain: layout;
+}
+
+/* Base field */
+.select-field {
+  padding: 8px 16px 8px 8px;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 8px;
+  border: 1px solid var(--tix-input-border);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  box-shadow: none;
+  width: 100%;
+  background-color: transparent;
+
+  &:focus,
+  &:active,
+  &[data-state="open"] {
+    border-color: var(--active-field-border);
+    color: var(--active-field-foreground);
+    box-shadow: none;
+    outline: none;
+  }
+
+  &.error {
+    border-color: var(--colors-status-alerts-colors-soft-red, #ea2340);
+  }
+}
+
+/* Label + Error */
+.select-label {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 5px;
+  color: var(--active-field-foreground);
+
+  &.error {
+    color: var(--colors-status-alerts-colors-soft-red, #ea2340);
+  }
+}
+
+/* Helper text */
+.select-description {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+
+  &.error {
+    color: var(--colors-status-alerts-colors-soft-red, #ea2340);
+  }
+}
+
+.required-indicator {
+  color: var(--colors-status-alerts-colors-soft-red, #ea2340);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* ✅ Dropdown menu (fixed bug: must not affect layout) */
+.select-menu {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  background-color: var(--tix-popover);
+  border-radius: 8px;
+  border: 1px solid var(--tix-popover);
+  height: 200px !important;
+  min-height: 200px !important;
+  max-height: 200px !important;
+  overflow-y: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  /* prevent layout shift */
+  &[data-state="closed"] {
+    display: none !important;
+  }
+}
+
+/* Option styles */
+.select-option {
+  cursor: pointer;
+  padding: 8px 12px;
+  font-size: 14px;
+  line-height: 20px;
+
+  &:hover {
+    background-color: var(--tix-ring);
+  }
+}
+
+/* Badge-style severity indicator */
+.severity-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 999px;
+  padding: 2px 12px;
+  width: max-content;
+  text-transform: capitalize;
+  gap: 6px;
+
+  .severity-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  &.low {
+    background-color: var(--table-low-bg);
+    color: var(--table-low-foreground);
+    .severity-dot {
+      background-color: var(--table-low-foreground);
+    }
+  }
+
+  &.medium {
+    background-color: var(--table-medium-bg);
+    color: var(--table-medium-foreground);
+    .severity-dot {
+      background-color: var(--table-medium-foreground);
+    }
+  }
+
+  &.high {
+    background-color: var(--table-high-bg);
+    color: var(--table-high-foreground);
+    .severity-dot {
+      background-color: var(--table-high-foreground);
+    }
+  }
+
+  &.critical {
+    background-color: var(--table-critical-bg);
+    color: var(--table-critical-foreground);
+    .severity-dot {
+      background-color: var(--table-critical-foreground);
+    }
+  }
+}
+
+/* Optional hover animation */
+.select-option:hover .severity-badge {
+  opacity: 0.9;
+  transform: scale(1.02);
+}
+
+.status-color-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.status-color-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.status-color-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

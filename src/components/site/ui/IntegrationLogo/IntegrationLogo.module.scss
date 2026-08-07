@@ -1,0 +1,24 @@
+@use "@/styles/tokens" as *;
+
+.root {
+  display: flex;
+  height: 22px;
+  width: 22px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.monogram {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: linear-gradient(to bottom right, $navy, $accent-600);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: white;
+}

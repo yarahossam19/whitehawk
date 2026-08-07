@@ -1,0 +1,567 @@
+@use "@/styles/tokens" as *;
+@use "@/styles/mixins" as *;
+@use "@/styles/color-mix" as *;
+
+// ---------- 1 · Article header ----------
+.header {
+  border-bottom: 1px solid $line;
+  background: white;
+}
+
+.headerInner {
+  @include container-x;
+  padding-block: 40px;
+
+  @include respond-to(md) {
+    padding-block: 56px;
+  }
+}
+
+.breadcrumb {
+  font-size: 12.5px;
+  color: $slate;
+}
+
+.breadcrumbLink {
+  &:hover {
+    color: $accent;
+  }
+}
+
+.breadcrumbSep {
+  margin-inline: 6px;
+}
+
+.breadcrumbCurrent {
+  color: alpha($ink, 70%);
+}
+
+.metaBadges {
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.categoryBadge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: $radius-md;
+  border: 1px solid $line;
+  background: white;
+  padding: 4px 8px;
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: $slate;
+}
+
+.tagBadge {
+  border-radius: $radius-pill;
+  background: $wash;
+  padding: 4px 10px;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: $slate;
+}
+
+.title {
+  margin-top: 20px;
+  max-width: 56rem;
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: $navy;
+
+  @include respond-to(md) {
+    font-size: 52px;
+  }
+}
+
+.excerpt {
+  margin-top: 20px;
+  max-width: 48rem;
+  font-size: 16.5px;
+  line-height: 1.625;
+  color: $slate;
+}
+
+.byline {
+  margin-top: 32px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  border-top: 1px solid $line;
+  padding-top: 24px;
+}
+
+.bylineInfo {
+  min-width: 0;
+}
+
+.bylineName {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: $ink;
+}
+
+.bylineMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px 12px;
+  font-size: 12px;
+  color: $slate;
+}
+
+.bylineMetaItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.bylineShare {
+  margin-left: auto;
+}
+
+// ---------- 2 · Hero image ----------
+.coverSection {
+  background: $wash;
+}
+
+.coverInner {
+  @include container-x;
+  padding-block: 40px;
+
+  @include respond-to(md) {
+    padding-block: 48px;
+  }
+}
+
+.coverFrame {
+  position: relative;
+  overflow: hidden;
+  border-radius: $radius-2xl;
+  border: 1px solid $line;
+}
+
+.coverImage {
+  object-fit: cover;
+}
+
+.coverGradient {
+  position: absolute;
+  inset: 0;
+}
+
+// ---------- 3 · Body + TOC ----------
+.layoutGrid {
+  display: grid;
+  gap: 40px;
+
+  @include respond-to(md) {
+    grid-template-columns: minmax(0, 1fr) 240px;
+    gap: 56px;
+  }
+}
+
+.articleBody {
+  max-width: 720px;
+}
+
+.tocSidebar {
+  display: none;
+
+  @include respond-to(md) {
+    display: block;
+  }
+}
+
+.tocSidebarSticky {
+  position: sticky;
+  top: 96px;
+
+  > * + * {
+    margin-top: 24px;
+  }
+}
+
+.demoCard {
+  border-radius: $radius-2xl;
+  border: 1px solid $line;
+  background: white;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 10px 30px -20px rgba(11, 42, 91, 0.2);
+}
+
+.demoCardTitle {
+  font-size: 13px;
+  font-weight: 800;
+  color: $ink;
+}
+
+.demoCardText {
+  margin-top: 8px;
+  font-size: 12px;
+  line-height: 1.625;
+  color: $slate;
+}
+
+.demoCardButton {
+  margin-top: 16px;
+  width: 100%;
+}
+
+// ---------- Markdown body content ----------
+.mdList,
+.mdOrderedList {
+  margin-top: 20px;
+  padding-left: 24px;
+  font-size: 15.5px;
+  line-height: 1.625;
+  color: alpha($ink, 85%);
+
+  > li + li {
+    margin-top: 8px;
+  }
+}
+
+.mdList {
+  list-style: disc;
+}
+
+.mdOrderedList {
+  list-style: decimal;
+}
+
+.mdTableWrap {
+  margin-block: 24px;
+  overflow-x: auto;
+  border-radius: $radius-lg;
+  border: 1px solid $line;
+}
+
+.mdTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+
+.mdTableHeadRow {
+  background: $wash;
+}
+
+.mdTableHeadCell {
+  border-bottom: 1px solid $line;
+  padding: 10px 12px;
+  font-weight: 600;
+  color: $ink;
+}
+
+.mdTableHeadCellLeft {
+  text-align: left;
+}
+
+.mdTableHeadCellCenter {
+  text-align: center;
+}
+
+.mdTableRow {
+  border-top: 1px solid alpha($line, 70%);
+}
+
+.mdTableCell {
+  padding: 10px 12px;
+  color: alpha($ink, 85%);
+}
+
+.mdTableCellLeft {
+  text-align: left;
+  font-weight: 500;
+}
+
+.mdTableCellCenter {
+  text-align: center;
+}
+
+.mdH2 {
+  margin-top: 48px;
+  scroll-margin-top: 96px;
+  font-size: 24px;
+  font-weight: 800;
+  color: $ink;
+
+  @include respond-to(md) {
+    font-size: 28px;
+  }
+}
+
+.mdH3 {
+  margin-top: 40px;
+  scroll-margin-top: 96px;
+  font-size: 18px;
+  font-weight: 800;
+  color: $ink;
+}
+
+.mdBlockquote {
+  margin-block: 24px;
+  border-left: 3px solid $accent;
+  background: $wash;
+  padding: 16px 20px;
+  font-size: 16px;
+  font-style: italic;
+  line-height: 1.625;
+  color: alpha($ink, 85%);
+}
+
+.mdParagraph {
+  margin-top: 20px;
+  font-size: 16px;
+  line-height: 1.625;
+  color: alpha($ink, 85%);
+}
+
+.inlineCode {
+  border-radius: $radius;
+  background: $wash;
+  padding: 2px 6px;
+  font-family: $font-mono;
+  font-size: 13px;
+  color: $ink;
+}
+
+.mdLink {
+  color: $accent;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+// ---------- 4 · Author bio ----------
+.authorCard {
+  margin-inline: auto;
+  display: flex;
+  max-width: 48rem;
+  align-items: center;
+  gap: 20px;
+  border-radius: $radius-2xl;
+  border: 1px solid $line;
+  background: white;
+  padding: 24px;
+  box-shadow: 0 10px 30px -20px rgba(11, 42, 91, 0.2);
+}
+
+.authorCardInfo {
+  min-width: 0;
+}
+
+.authorCardName {
+  font-size: 13px;
+  font-weight: 800;
+  color: $ink;
+}
+
+.authorCardRole {
+  font-size: 12px;
+  color: $slate;
+}
+
+.authorCardBio {
+  margin-top: 8px;
+  font-size: 13.5px;
+  line-height: 1.625;
+  color: $slate;
+}
+
+// ---------- Shared: badge + avatar ----------
+.vsBadge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: $radius-md;
+  background: $navy;
+  padding: 4px 8px;
+  font-size: 10.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: white;
+}
+
+.avatar {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: $radius-pill;
+  background: linear-gradient(to bottom right, $navy, $accent);
+  color: white;
+}
+
+// ---------- 6 · Related posts ----------
+.relatedHeader {
+  text-align: center;
+}
+
+.relatedEyebrow {
+  @include eyebrow;
+  margin-bottom: 8px;
+}
+
+.relatedTitle {
+  font-size: 26px;
+  font-weight: 800;
+  color: $ink;
+
+  @include respond-to(md) {
+    font-size: 32px;
+  }
+}
+
+.relatedGrid {
+  margin-top: 40px;
+  display: grid;
+  gap: 24px;
+
+  @include respond-to(sm) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @include respond-to(lg) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.relatedCard {
+  display: block;
+  overflow: hidden;
+  border-radius: $radius-2xl;
+  border: 1px solid $line;
+  background: white;
+  transition: transform 0.3s, box-shadow 0.3s;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -20px rgba(11, 42, 91, 0.35);
+  }
+
+  &:hover .relatedCardTitle {
+    color: $accent;
+  }
+}
+
+.relatedCardImageWrap {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
+.relatedCardImage {
+  object-fit: cover;
+}
+
+.relatedCardBody {
+  padding: 20px;
+}
+
+.relatedCardBadgeRow {
+  margin-bottom: 8px;
+}
+
+.relatedCardCategoryBadge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: $radius-md;
+  border: 1px solid $line;
+  background: alpha(white, 90%);
+  padding: 4px 8px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: $slate;
+}
+
+.relatedCardTitle {
+  font-weight: 700;
+  line-height: 1.25;
+  color: $ink;
+  transition: color 0.15s;
+}
+
+.relatedCardMeta {
+  margin-top: 12px;
+  font-size: 11.5px;
+  color: $slate;
+}
+
+.relatedCardReadMore {
+  margin-top: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: $accent;
+}
+
+// ---------- 7 · Newsletter ----------
+.newsletterCard {
+  margin-inline: auto;
+  max-width: 42rem;
+  border-radius: $radius-2xl;
+  border: 1px solid $line;
+  background: white;
+  padding: 40px;
+  text-align: center;
+  box-shadow: 0 10px 30px -20px rgba(11, 42, 91, 0.2);
+}
+
+.newsletterEyebrow {
+  @include eyebrow;
+  margin-bottom: 12px;
+}
+
+.newsletterTitle {
+  font-size: 26px;
+  font-weight: 800;
+  color: $ink;
+
+  @include respond-to(md) {
+    font-size: 30px;
+  }
+}
+
+.newsletterForm {
+  margin-inline: auto;
+  margin-top: 24px;
+  display: flex;
+  max-width: 28rem;
+  flex-direction: column;
+  gap: 8px;
+
+  @include respond-to(sm) {
+    flex-direction: row;
+  }
+}
+
+.newsletterInput {
+  flex: 1;
+  border-radius: $radius-md;
+  border: 1px solid $line;
+  background: white;
+  padding: 10px 12px;
+  font-size: 14px;
+  outline: none;
+
+  &:focus {
+    border-color: $accent;
+    box-shadow: 0 0 0 2px alpha($accent, 20%);
+  }
+}

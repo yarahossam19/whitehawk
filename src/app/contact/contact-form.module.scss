@@ -1,0 +1,98 @@
+@use "@/styles/tokens" as *;
+@use "@/styles/mixins" as *;
+@use "@/styles/color-mix" as *;
+
+.form {
+  border-radius: $radius-2xl;
+  border: 1px solid $line;
+  background: white;
+  padding: 32px;
+  box-shadow: 0 10px 30px -20px rgba(11, 42, 91, 0.2);
+
+  @include respond-to(md) {
+    padding: 40px;
+  }
+}
+
+.eyebrow {
+  @include eyebrow;
+  margin-bottom: 12px;
+}
+
+// ---------- Fields ----------
+.fieldsRow {
+  margin-top: 24px;
+  display: grid;
+  gap: 16px;
+
+  @include respond-to(sm) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.fieldMt {
+  margin-top: 16px;
+}
+
+.label {
+  margin-bottom: 6px;
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: $slate;
+}
+
+.input {
+  width: 100%;
+  border-radius: $radius-md;
+  border: 1px solid $line;
+  background: white;
+  padding: 10px 12px;
+  font-size: 14px;
+  outline: none;
+
+  &:focus {
+    border-color: $accent;
+    box-shadow: 0 0 0 2px alpha($accent, 20%);
+  }
+}
+
+.textarea {
+  width: 100%;
+  resize: vertical;
+  border-radius: $radius-md;
+  border: 1px solid $line;
+  background: white;
+  padding: 10px 12px;
+  font-size: 14px;
+  outline: none;
+
+  &:focus {
+    border-color: $accent;
+    box-shadow: 0 0 0 2px alpha($accent, 20%);
+  }
+}
+
+.charCount {
+  margin-top: 4px;
+  text-align: right;
+  font-size: 11px;
+  color: $slate;
+}
+
+// ---------- Footer ----------
+.footer {
+  margin-top: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.disclaimer {
+  font-size: 11.5px;
+  color: $slate;
+}

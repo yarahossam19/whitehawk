@@ -1,0 +1,255 @@
+// WhiteHawk design system — global tokens, resets and shared motion classes.
+// This is the one non-module stylesheet, imported once from src/app/layout.tsx.
+// It owns anything that must keep a literal, un-hashed class name (.reveal is
+// toggled by an IntersectionObserver querySelector in SiteLayout.tsx; .animate-*/
+// .lift/.text-gradient share one reduced-motion override below) or a single
+// shared definition (the @keyframes themselves, the base element resets).
+// Everything else is a per-component .module.scss — see src/styles/_mixins.scss
+// for the `eyebrow`/`container-x`/`focus-ring`/`respond-to` mixins those use.
+
+:root {
+  --radius: 10px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 24px;
+  --radius-3xl: 32px;
+  --radius-pill: 999px;
+
+  /* --font-manrope is emitted by next/font in src/app/layout.tsx and set on
+     <html>; it already carries a metric-matched local fallback, with the
+     generics behind it for the (build-time) case where the face is missing. */
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, Menlo, monospace;
+
+  /* Brand */
+  --navy: #0b2a5b;
+  --navy-700: #13316a;
+  --navy-600: #1e3a6b;
+  --accent-100: #dbe6fe;
+  --accent-600: #1d4fd7;
+  --ink: #0f172a;
+  --slate: #64748b;
+  --wash: #f5f7fa;
+  --line: #e3e8ef;
+  --success: #16a34a;
+  --warning: #d97706;
+  --danger: #dc2626;
+
+  /* shadcn semantic set (kept for src/components/ui/sonner.tsx) */
+  --background: #ffffff;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+  --primary: #0b2a5b;
+  --primary-foreground: #ffffff;
+  --secondary: #f5f7fa;
+  --secondary-foreground: #0f172a;
+  --muted: #f5f7fa;
+  --muted-foreground: #64748b;
+  --accent: #2563eb;
+  --accent-foreground: #ffffff;
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+  --border: #e3e8ef;
+  --input: #e3e8ef;
+  --ring: #2563eb;
+
+  --sidebar: #ffffff;
+  --sidebar-foreground: #0f172a;
+  --sidebar-primary: #0b2a5b;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f5f7fa;
+  --sidebar-accent-foreground: #0f172a;
+  --sidebar-border: #e3e8ef;
+  --sidebar-ring: #2563eb;
+
+  --shadow-elegant: 0 10px 30px -12px rgba(11, 42, 91, 0.18);
+  --shadow-glow: 0 0 60px -12px rgba(37, 99, 235, 0.55);
+}
+
+// Base reset — replaces Tailwind's Preflight, which used to normalize `a`
+// and `button` chrome. Without this, native browser defaults leak through:
+// underlined links and grey-bevelled buttons with their own background/
+// border/padding (hit once already — the header's dropdown triggers and
+// nav links picked up default browser styling site-wide after Tailwind was
+// removed). Any future native `<a>`/`<button>` must get its look entirely
+// from its own module.scss — none of it comes free anymore.
+*, *::before, *::after {
+  box-sizing: border-box;
+  border-width: 0;
+  border-style: solid;
+  border-color: var(--border);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+// Same footgun as above: Tailwind's Preflight used to strip default list
+// bullets/numbers and the UA margin/padding on every ul/ol. Every native
+// list on the site (Footer's columns, FAQ, blog markdown lists, TOC nav,
+// module steps) depends on this — without it they show real bullets/
+// numbers and 40px of indent.
+ol, ul, menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+button, input, optgroup, select, textarea {
+  font-family: inherit;
+  font-size: 100%;
+  font-weight: inherit;
+  line-height: inherit;
+  color: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+button, select {
+  text-transform: none;
+}
+
+button, [type="button"], [type="reset"], [type="submit"] {
+  appearance: button;
+  background-color: transparent;
+  background-image: none;
+}
+
+button, [role="button"] {
+  cursor: pointer;
+}
+
+// Known footgun: this global default means any heading placed on a dark
+// section MUST get an explicit color override in that component's own
+// module.scss, or it renders near-invisible (ink-on-navy). Hit once already
+// (src/app/page.tsx's Problem-section heading) — check every dark-bg section
+// migrated after this file lands.
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+/* ---------- Motion system ---------- */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translate3d(0, 24px, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-14px); }
+}
+@keyframes auroraShift {
+  0%   { transform: translate3d(-6%, -4%, 0) scale(1); }
+  50%  { transform: translate3d(6%, 4%, 0) scale(1.08); }
+  100% { transform: translate3d(-6%, -4%, 0) scale(1); }
+}
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.55; transform: scale(1.35); }
+}
+@keyframes scanSweep {
+  0%   { transform: translateX(-30%); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translateX(130%); opacity: 0; }
+}
+@keyframes scanSweepY {
+  0%   { transform: translateY(-30%); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translateY(130%); opacity: 0; }
+}
+@keyframes gridDrift {
+  from { background-position: 0 0; }
+  to   { background-position: 48px 48px; }
+}
+@keyframes textReveal {
+  from { opacity: 0; filter: blur(6px); transform: translate3d(0, 14px, 0); }
+  to   { opacity: 1; filter: blur(0);   transform: translate3d(0, 0, 0); }
+}
+
+.animate-fade-up   { animation: fadeUp .8s cubic-bezier(.2,.7,.2,1) both; }
+.animate-fade-in   { animation: fadeIn .9s ease both; }
+.animate-float     { animation: floatY 7s ease-in-out infinite; }
+.animate-aurora    { animation: auroraShift 18s ease-in-out infinite; }
+.animate-marquee   { animation: marquee 38s linear infinite; }
+.animate-pulse-dot { animation: pulseDot 2.2s ease-in-out infinite; }
+.animate-scan      { animation: scanSweep 9s cubic-bezier(.65,.05,.35,1) infinite; }
+.animate-scan-y    { animation: scanSweepY 9s cubic-bezier(.65,.05,.35,1) infinite; }
+.animate-grid      { animation: gridDrift 24s linear infinite; }
+.animate-text-reveal { animation: textReveal .7s cubic-bezier(.2,.7,.2,1) both; }
+
+.delay-100 { animation-delay: .1s; }
+.delay-200 { animation-delay: .2s; }
+.delay-300 { animation-delay: .3s; }
+.delay-400 { animation-delay: .4s; }
+.delay-500 { animation-delay: .5s; }
+
+/* Scroll reveal — toggled by IntersectionObserver in SiteLayout. Literal,
+   un-hashed class name required: components add "reveal" as a plain string
+   alongside their own module classes. */
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+  transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible { opacity: 1; transform: translate3d(0, 0, 0); }
+
+/* Lift interaction */
+.lift {
+  transition: transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s ease, border-color .35s ease;
+}
+.lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -20px rgba(11,42,91,0.25);
+}
+
+/* Gradient text sweep */
+.text-gradient {
+  background: linear-gradient(90deg, #ffffff 0%, #a9c4ff 45%, #ffffff 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 6s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-up, .animate-fade-in, .animate-float,
+  .animate-aurora, .animate-marquee, .animate-pulse-dot,
+  .animate-scan, .animate-scan-y, .animate-grid,
+  .animate-text-reveal, .text-gradient { animation: none !important; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .lift:hover { transform: none; }
+}

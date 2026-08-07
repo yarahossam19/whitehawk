@@ -1,0 +1,33 @@
+@use "@/styles/tokens" as *;
+@use "@/styles/mixins" as *;
+@use "@/styles/color-mix" as *;
+
+.tocEyebrow {
+  @include eyebrow;
+  margin-bottom: 12px;
+}
+
+// Note: the original <ul> carried Tailwind's `space-y-0`, which sets
+// `margin-top: 0` on every sibling after the first — a pure no-op, since
+// each item's spacing already comes from .tocLink's border + block padding
+// below. There's nothing to port for the list element itself, so no class
+// is applied to the <ul> in toc-nav.tsx.
+
+.tocLink {
+  display: block;
+  border-bottom: 1px solid alpha($line, 70%);
+  padding-block: 10px;
+  font-size: 12.5px;
+  line-height: 1.375;
+  color: $slate;
+  transition: color 0.15s;
+
+  &:hover {
+    color: $accent;
+  }
+}
+
+.tocLinkActive {
+  font-weight: 600;
+  color: $accent;
+}

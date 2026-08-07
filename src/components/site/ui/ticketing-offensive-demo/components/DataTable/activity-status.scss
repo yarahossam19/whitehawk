@@ -1,0 +1,47 @@
+.activity-status {
+  display: inline-flex;
+  padding: 2px 12px;
+  justify-content: center;
+  width: max-content;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  border-radius: 16px;
+  border: 1px solid transparent;
+  box-sizing: border-box;
+  line-height: 1.2;
+
+  &::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: currentColor;
+    flex-shrink: 0;
+  }
+
+  &--active,
+  &--online {
+    background: var(--table-low-bg);
+    color: var(--table-low-foreground);
+  }
+
+  &--inactive,
+  &--offline {
+    background: var(--inactive-bg);
+    color: var(--inactive-foreground);
+  }
+
+  &--unknown {
+    background: rgba(245, 158, 11, 0.1);
+    color: #b45309;
+  }
+
+  &--suspended {
+    background: var(--table-critical-bg);
+    color: var(--table-critical-foreground);
+  }
+}

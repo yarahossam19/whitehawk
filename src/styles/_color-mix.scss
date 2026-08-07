@@ -1,0 +1,8 @@
+// Replaces Tailwind's opacity-suffix shorthand (bg-accent-100/25, text-ink/85,
+// border-line/70, ...). Built on native CSS color-mix() rather than Sass's
+// color.mix(), because color.mix() is a compile-time function that can't
+// operate on var(--x) references — our colors are CSS custom properties, not
+// Sass color literals, so only a runtime CSS function can blend them.
+@function alpha($color, $pct) {
+  @return color-mix(in srgb, #{$color} #{$pct}, transparent);
+}

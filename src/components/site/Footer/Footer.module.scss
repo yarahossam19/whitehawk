@@ -1,0 +1,96 @@
+@use "@/styles/tokens" as *;
+@use "@/styles/mixins" as *;
+@use "@/styles/color-mix" as *;
+
+.root {
+  border-top: 1px solid $line;
+  background: white;
+}
+
+.inner {
+  @include container-x;
+  padding-block: 64px;
+}
+
+.grid {
+  display: grid;
+  gap: 40px;
+
+  @include respond-to(md) {
+    grid-template-columns: 1.6fr 1fr 1fr 1fr 1fr;
+  }
+}
+
+.blurb {
+  margin-top: 16px;
+  max-width: 20rem;
+  font-size: 13px;
+  color: $slate;
+}
+
+.social {
+  margin-top: 16px;
+  display: flex;
+  gap: 8px;
+}
+
+.socialIcon {
+  display: inline-flex;
+  height: 32px;
+  width: 32px;
+  align-items: center;
+  justify-content: center;
+  border-radius: $radius-md;
+  border: 1px solid $line;
+  font-size: 11px;
+  font-weight: 600;
+  color: $slate;
+}
+
+.colTitle {
+  @include eyebrow;
+}
+
+.colList {
+  margin-top: 16px;
+
+  > li + li {
+    margin-top: 8px;
+  }
+}
+
+.colLink {
+  font-size: 13.5px;
+  color: alpha($ink, 80%);
+
+  &:hover {
+    color: $accent;
+  }
+}
+
+.bottom {
+  margin-top: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  border-top: 1px solid $line;
+  padding-top: 24px;
+  font-size: 12px;
+  color: $slate;
+
+  @include respond-to(md) {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.bottomLinks {
+  display: flex;
+  gap: 20px;
+
+  a:hover {
+    color: $ink;
+  }
+}

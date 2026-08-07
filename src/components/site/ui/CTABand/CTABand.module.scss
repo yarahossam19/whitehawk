@@ -1,0 +1,61 @@
+@use "@/styles/tokens" as *;
+@use "@/styles/mixins" as *;
+
+.root {
+  position: relative;
+  overflow: hidden;
+  background: $navy;
+}
+
+.glow {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+}
+
+.inner {
+  @include container-x;
+  position: relative;
+  padding-block: 80px;
+  text-align: center;
+  color: white;
+
+  @include respond-to(md) {
+    padding-block: 96px;
+  }
+}
+
+.eyebrow {
+  @include eyebrow;
+  margin-bottom: 12px;
+  color: #9bb4e6;
+}
+
+.title {
+  margin-inline: auto;
+  max-width: 48rem;
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 1.25;
+  color: white;
+
+  @include respond-to(md) {
+    font-size: 42px;
+  }
+}
+
+.description {
+  margin-inline: auto;
+  margin-top: 16px;
+  max-width: 36rem;
+  font-size: 15px;
+  color: #9bb4e6;
+}
+
+.actions {
+  margin-top: 32px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}

@@ -1,0 +1,60 @@
+.delete-popup {
+  width: 40vw;
+  @media (max-width: 1000px) {
+    width: 60vw;
+  }
+   @media (max-width:600px) {
+    width:90vw;
+  }
+  @media (max-width: 400px) {
+    width: calc(100vw - 16px);
+  }
+}
+.p-dialog {
+  padding: 12px;
+  background-color: var(--tix-sidebar);
+
+  p {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 27px;
+  }
+  .p-dialog-header {
+    background-color: var(--tix-sidebar);
+    border: none !important;
+  }
+  .p-dialog-content {
+    background-color: var(--tix-sidebar);
+    color: var(--tix-foreground);
+  }
+}
+.p-dialog-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--active-field-foreground);
+}
+
+.buttons-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.delete-content {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 10px;
+  margin: 0px 0px 20px 0px;
+  h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0;
+  }
+  p {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+  }
+}

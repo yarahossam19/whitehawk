@@ -1,0 +1,1510 @@
+// `@use` rather than the trailing `@import` this file used to end with — Sass
+// deprecated @import and it warned on every build. @use still emits the loaded
+// stylesheet's CSS, and `.activity-status` shares no selectors with anything
+// below, so hoisting it to the top only changes rule order, not cascade
+// outcomes. @use must precede all rules, hence the position.
+@use "./activity-status.scss";
+
+.table {
+  border-radius: 16px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  padding: 16px;
+  background-color: var(--tix-sidebar);
+  border: 1px solid var(--table-border);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 2rem;
+
+  &__title {
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    margin: 0px;
+  }
+  &__tabs {
+    display: flex;
+    flex-shrink: 0;
+    padding-bottom: 8px;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &__tabs-buttons {
+    display: flex;
+    gap: 0;
+  }
+
+  &__tabs-dropdown {
+    display: none;
+    width: 100%;
+    position: relative;
+  }
+
+  &__tabs-dropdown-trigger {
+    width: 100%;
+    height: 40px;
+    padding: 0 12px;
+    border-radius: 10px;
+    border: 1px solid var(--tix-border, var(--table-border));
+    background: var(--tix-sidebar);
+    color: var(--active-field-foreground, var(--table-header-foreground));
+    font-size: 14px;
+    font-weight: 600;
+    outline: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+
+    &:hover {
+      background-color: var(--ticket-sidebar-active-bg, rgba(0, 118, 184, 0.08));
+    }
+
+    &:focus-visible {
+      border-color: var(--Colors-Primary-600, #0076b8);
+      box-shadow: 0 0 0 3px rgba(0, 118, 184, 0.18);
+    }
+  }
+
+  &__tabs-dropdown-label {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: left;
+  }
+
+  &__tabs-dropdown-chevron {
+    flex: 0 0 auto;
+    opacity: 0.75;
+    font-size: 12px;
+    line-height: 1;
+  }
+
+  &__tabs-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    width: 100%;
+    border: 1px solid var(--tix-border, var(--table-border));
+    border-radius: 10px;
+    background: var(--tix-sidebar);
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.14);
+    z-index: 60;
+    padding: 6px;
+    max-height: 240px;
+    overflow-y: auto;
+  }
+
+  &__tabs-dropdown-item {
+    width: 100%;
+    text-align: left;
+    border: none;
+    background: transparent;
+    color: var(--active-field-foreground);
+    border-radius: 8px;
+    padding: 10px 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+
+    &:hover,
+    &.hovered {
+      background: var(--ticket-sidebar-active-bg);
+    }
+
+    &.active {
+      background: var(--ticket-sidebar-active-bg);
+      color: var(--active-field-foreground);
+    }
+  }
+
+  &__tab {
+    padding: 5px;
+    background: transparent;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    border-bottom: 2px solid var(--table-border);
+
+    &:hover {
+      color: var(--table-header-foreground);
+    }
+
+    &.active {
+      color: var(--table-header-foreground);
+      border-bottom: 2px solid var(--table-header-foreground);
+
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: -9px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        height: 2px;
+      }
+    }
+  }
+
+  @media (max-width: 680px) {
+    &__tabs {
+      width: 100%;
+      padding-bottom: 0;
+    }
+
+    &__tabs-buttons {
+      display: none;
+    }
+
+    &__tabs-dropdown {
+      display: block;
+    }
+  }
+
+  &__header {
+    display: flex;
+    flex-shrink: 0;
+    flex-wrap: wrap !important;
+
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.5rem;
+  }
+
+  &__layout-reset {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: var(--Colors-Primary-500, #008fe3);
+    cursor: pointer;
+    transition: background 0.15s ease;
+
+    &:hover {
+      opacity: 0.85;
+    }
+
+    &-icon {
+      flex-shrink: 0;
+      opacity: 0.9;
+    }
+  }
+
+  &__container {
+    border: 2px solid var(--table-border);
+    border-radius: 16px;
+    padding: 16px;
+  }
+  &__main {
+    border: 1px solid var(--table-border);
+    overflow-x: auto;
+    overflow-y: hidden;
+    border-radius: 16px;
+    flex-shrink: 0;
+    display: flex;
+    flex-wrap: wrap;
+    // The table has a hard min-width (see `&__th` below), so this wrapper is
+    // the scroller on anything narrower than a laptop. Keep the gesture from
+    // chaining to the page, and make the scrollbar visible enough to read as
+    // an affordance on trackpad platforms that hide it by default.
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+
+    &:focus-visible {
+      outline: 2px solid var(--Colors-Primary-500, #008fe3);
+      outline-offset: 2px;
+    }
+  }
+
+  &__table {
+    border-collapse: collapse;
+    min-width: 100%;
+    width: max-content;
+  }
+
+  &__thead {
+    text-align: left;
+  }
+
+  &__th {
+    border-bottom: 1px solid var(--table-border);
+    border-right: 0.5px solid var(--table-border);
+    user-select: none;
+    cursor: default;
+    // 8 data columns + the 50px actions column have to fit the ~1080px of
+    // usable width the module pages' product-view frame gives us once its own
+    // gutter, the card padding and the borders are taken out; at the original
+    // 150px floor the table came out 1250px wide and scrolled sideways inside
+    // the card on every desktop. Headers wrap instead, which they are laid
+    // out to do. Narrower viewports still scroll within .table__main.
+    min-width: 124px;
+    padding: 0;
+
+    .header {
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      direction: ltr; /* drag handle stays visually on the left in RTL layouts */
+      flex-wrap: wrap;
+      gap: 0.2rem;
+      font-weight: 600;
+      font-size: 16px;
+      color: var(--table-header-foreground);
+      padding: 6px 4px;
+      height: 100%;
+      width: 100%;
+      box-sizing: border-box;
+      cursor: grab;
+    }
+
+    .header * {
+      cursor: grab;
+    }
+    // Wraps rather than ellipsizing: at the column floor above there isn't
+    // room for "Scanner Used" or "Scan End Date" on one line, and a truncated
+    // "Scanner…" is worse than a two-line header. The reserved 50px still
+    // leaves room for the drag handle and sort icons.
+    &__title {
+      // 30px, not 50px: the drag handle and sort glyph together need ~25px,
+      // and reserving 50 left "Assignee" too narrow to fit on one line, so it
+      // broke mid-word.
+      max-width: calc(100% - 30px);
+      white-space: normal;
+      overflow-wrap: break-word;
+      direction: ltr;
+      text-align: left;
+    }
+    .header--first {
+      padding: 6px 9px;
+    }
+
+    &:last-child {
+      border-right: none;
+    }
+
+    &--sticky-right {
+      position: sticky;
+      right: 0;
+      background: inherit;
+      z-index: 3;
+      box-shadow: -4px 0 6px rgba(0, 0, 0, 0.04);
+      overflow: visible;
+    }
+
+    &--select {
+      position: sticky;
+      left: 0;
+      z-index: 3;
+      width: 48px;
+      min-width: 48px;
+      max-width: 48px;
+      padding: 0;
+      background: inherit;
+      box-shadow: 4px 0 6px rgba(0, 0, 0, 0.04);
+      overflow: visible;
+      text-align: center;
+      background-color: var(--table-body-bg);
+    }
+  }
+
+  &__row {
+    &:hover {
+      background: #f9fafb;
+    }
+  }
+
+  &__cell {
+    vertical-align: middle;
+    border-top: 0.5px solid var(--table-border);
+    border-right: 0.5px solid var(--table-border);
+    border-bottom: 0.5px solid var(--table-border);
+    background: var(--table-body-bg);
+    padding: 6px 9px;
+    align-items: center;
+    align-self: stretch;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 150px;
+    cursor: pointer;
+
+    &--select {
+      position: sticky;
+      left: 0;
+      z-index: 2;
+      width: 48px;
+      min-width: 48px;
+      max-width: 48px;
+      padding: 0;
+      background: var(--table-body-bg);
+      box-shadow: 4px 0 6px rgba(0, 0, 0, 0.04);
+      overflow: visible;
+      cursor: default;
+
+      text-align: center;
+    }
+
+    &:last-child {
+      border-right: none;
+    }
+
+    &--sticky-right {
+      background: var(--table-body-bg);
+      overflow: visible;
+    }
+
+    .cell-content {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      word-break: break-all;
+      direction: ltr;
+      text-align: left;
+      /* Inherits capitalize from global `table tbody td`; explicit for nested wrappers */
+      text-transform: capitalize;
+    }
+  }
+
+  &__cell:has(.status) {
+    overflow: visible;
+    white-space: nowrap;
+  }
+
+  // The Status column renders `<span class="status status--{value}">`, but only
+  // the layout half of that pair existed — the cell came out as bare text next
+  // to the pill-styled CVSS column beside it. Same pill geometry as `.cvss` /
+  // `.level-badge`, with a leading dot so status reads as state rather than a
+  // severity score.
+  .status {
+    display: inline-flex;
+    position: relative;
+    overflow: visible;
+    white-space: nowrap;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 12px;
+    border-radius: 16px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.4;
+    text-transform: capitalize;
+    background: var(--inactive-bg);
+    color: var(--inactive-foreground);
+
+    &::before {
+      content: "";
+      flex-shrink: 0;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: currentColor;
+    }
+
+    &--new {
+      background: var(--column-new-circle-bg);
+      color: var(--column-new-foreground);
+    }
+
+    &--in-progress,
+    &--pending {
+      background: var(--column-in-progress-circle-bg);
+      color: var(--column-in-progress-foreground);
+    }
+
+    &--escalated {
+      background: var(--column-escalated-circle-bg);
+      color: var(--column-escalated-foreground);
+    }
+
+    &--resolved,
+    &--completed {
+      background: var(--column-resolved-circle-bg);
+      color: var(--column-resolved-foreground);
+    }
+
+    &--closed {
+      background: var(--column-closed-circle-bg);
+      color: var(--column-closed-foreground);
+    }
+
+    &--critical {
+      background: var(--table-critical-bg);
+      color: var(--table-critical-foreground);
+    }
+  }
+
+  &__cell--sticky-right .cell-content {
+    overflow: visible;
+  }
+
+  &__row:last-child &__cell {
+    border-bottom: none;
+  }
+
+  .pagination {
+    margin-top: 1rem;
+    flex-shrink: 0;
+    width: 100%;
+  }
+  .tags {
+    display: flex;
+    padding: 0 6px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 8px;
+    border: 1px solid var(--Colors-Neutral-100, #262626);
+    background: var(--inactive-bg);
+    color: var(--inactive-foreground);
+  }
+  .cvss {
+    display: inline-block;
+    display: flex;
+    padding: 2px 12px;
+    justify-content: center;
+    width: max-content;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    border-radius: 16px;
+
+    &--low {
+      background: var(--table-low-bg);
+      color: var(--table-low-foreground);
+    }
+    &--medium {
+      background: var(--table-medium-bg);
+      color: var(--table-medium-foreground);
+    }
+    &--high {
+      background: var(--table-high-bg);
+      color: var(--table-high-foreground);
+    }
+    &--critical {
+      background: var(--table-critical-bg);
+      color: var(--table-critical-foreground);
+    }
+  }
+
+  .level-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 12px;
+    border-radius: 16px;
+    font-size: 14px;
+    font-weight: 500;
+    width: max-content;
+
+    &::before {
+      content: "";
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: currentColor;
+      margin-right: 6px;
+    }
+
+    &--low {
+      background: var(--table-low-bg);
+      color: var(--table-low-foreground);
+    }
+    &--medium {
+      background: var(--table-medium-bg);
+      color: var(--table-medium-foreground);
+    }
+    &--high {
+      background: var(--table-high-bg);
+      color: var(--table-high-foreground);
+    }
+    &--critical {
+      background: var(--table-critical-bg);
+      color: var(--table-critical-foreground);
+    }
+  }
+
+  .assignee {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    &__avatar {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid var(--table-avatar-border);
+      object-fit: cover;
+    }
+
+    &__info {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+
+      &-name {
+        font-weight: 500;
+        font-size: 13px;
+      }
+
+      &-tier {
+        font-size: 12px;
+        color: var(--Colors-Neutral-500, #8c8c8c);
+      }
+    }
+  }
+}
+.data-table__th.draggable {
+  cursor: default;
+  user-select: none;
+  background: #f9fafb;
+  transition: background 0.2s ease;
+
+  .header {
+    cursor: grab;
+  }
+}
+
+.data-table__th.draggable:active {
+  cursor: default;
+  background: #e5e7eb;
+
+  .header {
+    cursor: grabbing;
+  }
+}
+
+.menu {
+  position: relative;
+  text-align: left;
+  &__button {
+    background: var(--table-body-bg);
+    border: 1px solid var(--table-border);
+    border-radius: 6px;
+    padding: 5px 8px;
+    cursor: pointer;
+
+    &:hover {
+      border-color: var(--Colors-Neutral-300, #9ca3af);
+    }
+  }
+
+  &__header {
+    padding: 0rem 0.5rem;
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  &__notice {
+    padding: 0.25rem 0.5rem;
+    color: var(--Colors-Error-500, #ef4444);
+    font-size: 12px;
+  }
+  &__items {
+    position: absolute;
+    margin-top: 0.5rem;
+    width: 300px;
+    background: var(--table-body-bg);
+    border: 1px solid var(--table-border);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    z-index: 50; /* match filter panel layering */
+    padding: 0.3rem 0.2rem;
+  }
+}
+@media (max-width: 580px) {
+  .menu__items--columns {
+    width: 180px !important;
+    min-width: 180px !important;
+  }
+}
+
+/* Column visibility dropdown alignment */
+.menu__items--columns.menu__items--rtl {
+  right: 0;
+  left: auto;
+  transform-origin: top right;
+}
+
+.menu__items--columns.menu__items--ltr {
+  left: 0;
+  right: auto;
+  transform-origin: top left;
+}
+
+@media (max-width: 480px) {
+  .menu__items--columns {
+    width: 150px !important;
+    min-width: 150px !important;
+  }
+}
+
+@media (max-width: 580px) {
+  .menu__items--columns {
+    left: 0;
+    right: auto;
+    width: 250px;
+    min-width: 250px;
+    transform-origin: top left;
+  }
+}
+
+@media (max-width: 480px) {
+  .menu__items--columns {
+    width: 150px !important;
+    min-width: 150px !important;
+    right: 20 !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .pagination {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+
+    &__controls {
+      width: 100%;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    &__navigation {
+      width: 100%;
+      justify-content: center;
+      gap: 4px;
+      flex-wrap: nowrap;
+      min-width: 0;
+    }
+
+    &__pages {
+      min-width: 0;
+      max-width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+
+    &__page-size {
+      width: 100%;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    &__select {
+      min-width: 90px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .pagination {
+    &__navigation {
+      gap: 2px;
+    }
+
+    &__nav-btn--edge {
+      display: none;
+    }
+
+    &__page,
+    &__nav-btn,
+    &__ellipsis {
+      width: 28px;
+      height: 28px;
+      font-size: 12px;
+    }
+
+    &__label,
+    &__select {
+      font-size: 12px;
+    }
+  }
+}
+
+.table__search {
+  width: min(100%, 400px) !important;
+  min-width: 220px;
+}
+
+.table__filter-wrap,
+.table__layout-reset-wrap,
+.table__column-visibility-wrap {
+  display: flex;
+  align-items: center;
+}
+
+.table__bulk-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.table-bulk-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.1s ease;
+
+  svg {
+    flex-shrink: 0;
+    stroke: currentColor;
+  }
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px color-mix(in srgb, currentColor 24%, transparent);
+  }
+
+  &--edit {
+    color: var(--column-new-foreground, var(--Colors-Neutral-700, #4b5563));
+    border-color: var(--table-border);
+
+    &:hover {
+      background: color-mix(in srgb, var(--Colors-Primary-500, #008fe3) 10%, transparent);
+      border-color: var(--Colors-Primary-500, #008fe3);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+  }
+
+  &--delete {
+    color: var(--table-critical-foreground, #4b5563);
+    border-color: var(--table-border);
+
+    &:hover {
+      background: color-mix(in srgb, var(--table-critical-foreground, #ef4444) 10%, transparent);
+      border-color: var(--table-critical-foreground, #ef4444);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+  }
+}
+
+/* Kanban ↔ Table toggle (Radix Tabs).
+ *
+ * These rules exist because the site's own reset in src/styles/globals.scss
+ * (`button, [type="button"] { background-color: transparent; }`) is UNLAYERED,
+ * while Tailwind's utilities live in `@layer utilities` — and unlayered CSS
+ * outranks every layer regardless of specificity. So the trigger's
+ * `data-[state=active]:bg-[var(--table-active-tab-bg)]` utility was being
+ * painted over with transparent, leaving the active view indistinguishable from
+ * the inactive one. Written here, in the demo's own unlayered stylesheet, so it
+ * beats the reset without touching the cascade for the rest of the site.
+ */
+.table [role="tablist"] {
+  gap: 4px;
+  padding: 3px;
+}
+
+.table [role="tab"] {
+  background-color: transparent;
+  color: var(--Colors-Neutral-500, #8c8c8c);
+  gap: 6px;
+
+  &[data-state="active"] {
+    background-color: var(--table-active-tab-bg);
+    color: var(--active-field-foreground);
+    font-weight: 700;
+  }
+}
+
+@media (max-width: 640px) {
+  /* Full width and split evenly, so the two labels aren't jammed against the
+     pill's edges at phone widths. */
+  .table__kanban-toolbar-toggle [role="tablist"] {
+    display: flex;
+    width: 100%;
+  }
+
+  .table__kanban-toolbar-toggle [role="tab"] {
+    flex: 1 1 0;
+    min-width: 0;
+    padding-inline: 8px;
+    font-size: 13px;
+  }
+}
+
+/* Kanban/table toggle toolbar responsive layout */
+.table__kanban-toolbar {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.table__kanban-toolbar-toggle {
+  display: flex;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.table__kanban-toolbar-search {
+  display: flex;
+  align-items: center;
+}
+
+.table__kanban-toolbar-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+/* >1440px: one row */
+@media (min-width: 1441px) {
+  .table__kanban-toolbar {
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .table__kanban-toolbar-toggle {
+    flex: 0 0 auto;
+  }
+
+  /* KanbanToggle component defaults to `w-full`; don't let it consume the whole row here */
+  .table__kanban-toolbar-toggle > .flex {
+    width: auto !important;
+    max-width: none !important;
+  }
+
+  /* toggle stays left; push the right-side group to the right */
+  .table__kanban-toolbar-search {
+    margin-left: auto;
+  }
+
+  .table__kanban-toolbar-search .table__search {
+    width: min(100%, 400px) !important;
+  }
+}
+
+/* ≤1440px: 2 rows (row1: toggle left + actions right, row2: search+filter left) */
+@media (max-width: 1440px) {
+  /* Force a real wrap so row2 happens even when there's room (e.g. exactly 1440px). */
+  .table__kanban-toolbar::before {
+    content: "";
+    flex-basis: 100%;
+    order: 3;
+  }
+
+  .table__kanban-toolbar-toggle {
+    order: 1;
+    flex: 1 1 auto;
+  }
+
+  .table__kanban-toolbar-actions {
+    order: 2;
+    margin-left: auto;
+    flex: 0 0 auto;
+  }
+
+  .table__kanban-toolbar-search {
+    order: 4;
+    flex: 0;
+  }
+
+  .table__kanban-toolbar-search .table__search {
+    width: min(100%, 520px) !important;
+    max-width: 520px;
+    min-width: 220px;
+  }
+
+  .table__kanban-toolbar-filter {
+    order: 5;
+    flex: 0 0 auto;
+  }
+}
+
+/* ≤580px: 3 rows (toggle full, search full, then reset+columns+filter) */
+@media (max-width: 580px) {
+  .table__kanban-toolbar::before {
+    display: none;
+  }
+
+  .table__kanban-toolbar-toggle {
+    flex-basis: 100%;
+    width: 100%;
+    order: 1;
+  }
+
+  .table__kanban-toolbar-search {
+    flex-basis: 100%;
+    width: 100%;
+    order: 2;
+  }
+
+  .table__kanban-toolbar-search .table__search {
+    width: 100% !important;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .table__kanban-toolbar-actions {
+    order: 3;
+    margin-left: 0;
+    justify-content: flex-start;
+  }
+
+  .table__kanban-toolbar-filter {
+    order: 4;
+  }
+}
+
+@media (max-width: 768px) {
+  .table {
+    &__header {
+      width: 100%;
+      justify-content: stretch;
+      gap: 8px;
+
+      > * {
+        min-width: 0;
+      }
+    }
+
+    &__search {
+      width: 100% !important;
+      min-width: 0;
+    }
+
+    &__layout-reset {
+      width: auto;
+      justify-content: flex-end;
+    }
+  }
+
+  .table__bulk-actions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+
+    button {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  .add-this-button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .cancel-save-buttons {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+
+    .btn-width {
+      width: 100%;
+      min-width: 0;
+    }
+  }
+}
+
+@media (max-width: 1440px) {
+  .table__header {
+    width: 100%;
+    justify-content: flex-end;
+    gap: 10px;
+
+    .table__layout-reset-wrap {
+      order: 1;
+      margin-left: auto;
+    }
+
+    .table__column-visibility-wrap {
+      order: 2;
+    }
+
+    .table__search {
+      order: 3;
+      width: 100% !important;
+      min-width: 0;
+      flex-basis: 100%;
+    }
+
+    .table__filter-wrap {
+      order: 4;
+    }
+
+    .table__bulk-actions {
+      order: 5;
+    }
+  }
+}
+
+@media (max-width: 1440px) {
+  /* DataTable filter dropdown: keep compact at this breakpoint */
+  .filter-panel__dropdown.table-filter-dropdown {
+    width: 250px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .table__bulk-actions,
+  .cancel-save-buttons {
+    grid-template-columns: 1fr;
+  }
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.45rem 0.5rem;
+  border-radius: 4px;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 100%;
+  text-align: left;
+  transition: background 0.2s ease;
+  &__label {
+    display: flex;
+    align-items: left;
+    gap: 0.4rem;
+  }
+
+  &__icon {
+    width: 24px;
+    height: 24px;
+    cursor: grab;
+  }
+  &__checkbox {
+    width: 16px;
+    height: 16px;
+    border: 1px solid var(--table-border);
+    border-radius: 4px;
+    background: var(--table-body-bg);
+    cursor: pointer;
+    position: relative;
+
+    &:hover {
+      border-color: var(--Colors-Neutral-300, #9ca3af);
+    }
+
+    &:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    &:checked {
+      background: var(--Colors-Primary-500, #008fe3) !important;
+      border-color: var(--Colors-Primary-500, #008fe3) !important;
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: 2px;
+        left: 5px;
+        width: 4px;
+        height: 8px;
+        border: solid #fff;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+      }
+    }
+  }
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+
+  &__info {
+    font-size: 0.875rem;
+    color: #6b7280;
+    flex-shrink: 0;
+  }
+
+  &__controls {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex: 1;
+    justify-content: center;
+  }
+
+  &__page-size {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  &__label {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+  }
+
+  &__select {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    padding: 0.375rem 0.75rem;
+    border: 1px solid var(--table-border);
+    border-radius: 6px;
+    font-size: 0.875rem;
+    background: var(--table-body-bg);
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+    }
+  }
+
+  &__navigation {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  &__nav-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--table-border);
+    border-radius: 6px;
+    background: var(--table-body-bg);
+    cursor: pointer;
+
+    &:hover:not(:disabled) {
+      background: var(--Colors-Neutral-100, #f3f4f6);
+      border-color: var(--Colors-Neutral-300, #9ca3af);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  &__pages {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin: 0 0.5rem;
+  }
+
+  &__page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--table-border);
+    border-radius: 6px;
+    background: var(--table-body-bg);
+    color: var(--Colors-Neutral-500, #8c8c8c);
+    font-size: 0.875rem;
+    cursor: pointer;
+
+    &:hover {
+      background: #f3f4f6;
+      border-color: #9ca3af;
+    }
+
+    &.active {
+      background: var(--Colors-Primary-500, #008fe3);
+      border-color: var(--Colors-Primary-500, #008fe3);
+      color: #fff;
+
+      &:hover {
+        background: var(--Colors-Primary-500, #008fe3);
+      }
+    }
+  }
+
+  &__ellipsis {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    color: #6b7280;
+    font-size: 0.875rem;
+  }
+}
+
+.table-selection-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  min-height: 36px;
+  box-sizing: border-box;
+
+  &--header {
+    padding: 6px 4px;
+  }
+}
+
+.table-checkbox {
+  width: 16px;
+  height: 16px;
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: var(--table-body-bg);
+  border: 1px solid var(--table-border);
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-grid;
+  place-content: center;
+  margin-right: 0; /* use flex gap for spacing */
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+
+  &:hover {
+    border-color: var(--Colors-Neutral-300, #9ca3af);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--Colors-Primary-500, #008fe3);
+    box-shadow: 0 0 0 3px rgba(0, 143, 227, 0.15);
+  }
+
+  &:checked {
+    background-color: var(--Colors-Primary-500, #008fe3);
+    border-color: var(--Colors-Primary-500, #008fe3);
+  }
+
+  &:checked::after {
+    content: "";
+    width: 4px;
+    height: 8px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    margin-top: -1px;
+  }
+}
+
+.table-checkbox--first-cell {
+  margin-right: 5px;
+}
+.add-this-button {
+  padding: 8px 0px !important;
+  min-height: 35px !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  gap: 4px !important;
+}
+.table-popover-content {
+  margin-top: 8px;
+  min-width: 200px !important;
+  background: var(--tix-sidebar);
+  border: 0.5px solid var(--table-border) !important;
+  color: var(--tix-foreground);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  z-index: 1000;
+
+  padding: 8px 0;
+  opacity: 0;
+  transform: translateY(-10px) scale(0.95);
+  animation: dropdownFadeIn 0.2s ease-out forwards;
+
+  .menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 10px 16px;
+    border: none;
+    background: none;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--active-field-foreground);
+    cursor: pointer;
+    transition:
+      background-color 0.2s ease,
+      transform 0.1s ease;
+
+    &:hover {
+      background-color: var(--tix-ring) !important;
+    }
+    span {
+      flex: 1;
+    }
+    .Delete {
+      color: #fe0101;
+    }
+  }
+}
+.cancel-save-buttons {
+  .btn-width {
+    min-width: 80px;
+    min-height: 40px;
+    height: 40px;
+  }
+}
+.menu {
+  position: relative;
+
+  &__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    border: 1px solid var(--table-border);
+    border-radius: 8px;
+    background: var(--table-body-bg);
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: var(--tix-ring);
+    }
+  }
+
+  &__items {
+    position: absolute;
+    right: 0;
+    margin-top: 8px;
+    min-width: 250px;
+    max-height: 300px;
+    overflow-y: auto;
+    background: var(--tix-sidebar);
+    border: 1px solid var(--table-border);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 8px;
+    z-index: 50;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    border-bottom: 1px solid var(--table-border);
+    margin-bottom: 8px;
+  }
+
+  &__reset-btn {
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--Colors-Primary-500, #008fe3);
+    background: transparent;
+    border: 1px solid var(--Colors-Primary-500, #008fe3);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: var(--Colors-Primary-500, #008fe3);
+      color: #fff;
+    }
+  }
+
+  &__notice {
+    padding: 8px;
+    font-size: 12px;
+    color: #ff6b6b;
+    text-align: center;
+  }
+
+  .menu-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+
+    &:hover {
+      background: var(--tix-ring);
+    }
+
+    &__label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 1;
+      font-size: 14px;
+      color: var(--tix-foreground);
+      cursor: pointer;
+    }
+
+    &__icon {
+      display: flex;
+      align-items: center;
+      color: var(--tix-muted-foreground);
+      cursor: grab;
+
+      &:active {
+        cursor: grabbing;
+      }
+    }
+  }
+}
+@media screen and (max-width: 768px) {
+  .pagination {
+    flex-direction: column;
+    gap: 10px;
+  }
+}

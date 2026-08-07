@@ -1,0 +1,38 @@
+@use "@/styles/tokens" as *;
+@use "@/styles/mixins" as *;
+
+.root {
+  max-width: 42rem;
+}
+
+.center {
+  text-align: center;
+  margin-inline: auto;
+}
+
+.left {
+  text-align: left;
+}
+
+.eyebrow {
+  @include eyebrow;
+  margin-bottom: 12px;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.25;
+  color: $ink;
+
+  @include respond-to(md) {
+    font-size: 36px;
+  }
+}
+
+.description {
+  margin-top: 16px;
+  font-size: 15.5px;
+  line-height: 1.625;
+  color: $slate;
+}

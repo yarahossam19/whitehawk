@@ -1,0 +1,233 @@
+@use "@/styles/tokens" as *;
+@use "@/styles/mixins" as *;
+@use "@/styles/color-mix" as *;
+
+// ---------- Loading / access denied ----------
+.loadingWrap {
+  @include container-x;
+  padding-block: 64px;
+  color: $slate;
+}
+
+.deniedWrap {
+  @include container-x;
+  padding-block: 96px;
+  text-align: center;
+}
+
+.deniedEyebrow {
+  @include eyebrow;
+  margin-bottom: 12px;
+}
+
+.deniedTitle {
+  font-size: 32px;
+  font-weight: 800;
+  color: $ink;
+}
+
+.deniedText {
+  margin-top: 12px;
+  color: $slate;
+}
+
+.deniedActions {
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+// ---------- Header ----------
+.headerRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.eyebrow {
+  @include eyebrow;
+  margin-bottom: 8px;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 800;
+  color: $ink;
+
+  @include respond-to(md) {
+    font-size: 40px;
+  }
+}
+
+.subtitle {
+  margin-top: 4px;
+  font-size: 14px;
+  color: $slate;
+}
+
+.headerActions {
+  display: flex;
+  gap: 8px;
+}
+
+// ---------- Table ----------
+.tableWrap {
+  margin-top: 40px;
+  overflow: hidden;
+  border-radius: $radius-2xl;
+  border: 1px solid $line;
+  background: white;
+}
+
+.tableHead {
+  display: grid;
+  grid-template-columns: 1fr 120px 140px 140px 120px;
+  gap: 16px;
+  border-bottom: 1px solid $line;
+  background: $wash;
+  padding: 12px 20px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: $slate;
+}
+
+.alignRight {
+  text-align: right;
+}
+
+.tableLoading {
+  padding: 32px;
+  text-align: center;
+  color: $slate;
+}
+
+.emptyState {
+  padding: 48px;
+  text-align: center;
+}
+
+.emptyTitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: $ink;
+}
+
+.emptyText {
+  margin-top: 8px;
+  font-size: 13px;
+  color: $slate;
+}
+
+.emptyButton {
+  margin-top: 20px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 120px 140px 140px 120px;
+  align-items: center;
+  gap: 16px;
+  border-bottom: 1px solid $line;
+  padding: 16px 20px;
+  transition: background-color 0.15s ease;
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &:hover {
+    background: #{alpha($wash, 50%)};
+  }
+}
+
+.titleCell {
+  min-width: 0;
+}
+
+.postTitle {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 600;
+  color: $ink;
+}
+
+.postSlug {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12px;
+  color: $slate;
+}
+
+.badgePublished {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: $radius-pill;
+  background: #dcfce7;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #15803d;
+}
+
+.badgeDraft {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: $radius-pill;
+  background: #fef3c7;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #b45309;
+}
+
+.cellText {
+  font-size: 13px;
+  color: $slate;
+}
+
+.rowActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.iconBtn {
+  display: grid;
+  height: 32px;
+  width: 32px;
+  place-items: center;
+  border-radius: $radius-md;
+  border: 1px solid $line;
+  color: $slate;
+  transition: color 0.15s ease, border-color 0.15s ease;
+
+  &:hover {
+    border-color: $accent;
+    color: $accent;
+  }
+}
+
+.iconBtnDanger {
+  display: grid;
+  height: 32px;
+  width: 32px;
+  place-items: center;
+  border-radius: $radius-md;
+  border: 1px solid $line;
+  color: $slate;
+  transition: color 0.15s ease, border-color 0.15s ease;
+
+  &:hover {
+    border-color: $danger;
+    color: $danger;
+  }
+}

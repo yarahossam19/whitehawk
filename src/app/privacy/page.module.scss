@@ -1,0 +1,296 @@
+@use "@/styles/tokens" as *;
+@use "@/styles/mixins" as *;
+@use "@/styles/color-mix" as *;
+
+// ---------- Hero ----------
+.hero {
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid $line;
+  background: linear-gradient(to bottom, $wash, white);
+}
+
+.heroInner {
+  @include container-x;
+  position: relative;
+  padding-block: 72px;
+  text-align: center;
+
+  @include respond-to(md) {
+    padding-block: 88px;
+  }
+}
+
+.heroEyebrow {
+  @include eyebrow;
+  margin-bottom: 12px;
+  color: $accent;
+}
+
+.heroTitle {
+  font-size: 38px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: $ink;
+
+  @include respond-to(md) {
+    font-size: 48px;
+  }
+}
+
+.heroMeta {
+  margin-top: 16px;
+  font-family: $font-mono;
+  font-size: 12.5px;
+  color: $slate;
+}
+
+// ---------- Layout ----------
+.layout {
+  display: grid;
+  gap: 40px;
+  align-items: start;
+
+  @include respond-to(lg) {
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: 64px;
+  }
+}
+
+// ---------- TOC ----------
+.toc {
+  display: none;
+
+  @include respond-to(lg) {
+    display: block;
+    position: sticky;
+    top: 96px;
+  }
+}
+
+.tocLabel {
+  @include eyebrow;
+  margin-bottom: 14px;
+}
+
+.tocList {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border-left: 2px solid $line;
+}
+
+.tocLink {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 7px 0 7px 16px;
+  margin-left: -2px;
+  border-left: 2px solid transparent;
+  font-size: 13px;
+  font-weight: 600;
+  color: $slate;
+  transition: color 0.15s ease-out, border-color 0.15s ease-out;
+
+  &:hover {
+    color: $accent;
+    border-left-color: $accent;
+  }
+}
+
+.tocNum {
+  font-family: $font-mono;
+  font-size: 10.5px;
+  color: $slate;
+  opacity: 0.6;
+}
+
+// ---------- Content ----------
+.content {
+  min-width: 0;
+  max-width: 46rem;
+}
+
+.block {
+  scroll-margin-top: 96px;
+
+  & + & {
+    margin-top: 56px;
+    padding-top: 56px;
+    border-top: 1px solid $line;
+  }
+
+  p {
+    margin-top: 14px;
+    font-size: 15px;
+    line-height: 1.7;
+    color: $slate;
+  }
+
+  a {
+    color: $accent;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+
+    &:hover {
+      color: $navy;
+    }
+  }
+
+  strong {
+    color: $ink;
+    font-weight: 700;
+  }
+}
+
+.blockHead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.blockIcon {
+  display: flex;
+  height: 34px;
+  width: 34px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: $radius-lg;
+  background: $accent-100;
+  color: $accent-600;
+}
+
+.blockKicker {
+  @include eyebrow;
+}
+
+.blockTitle {
+  margin-top: 12px;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: $ink;
+}
+
+.subTitle {
+  margin-top: 28px;
+  font-size: 15px;
+  font-weight: 700;
+  color: $ink;
+}
+
+.fieldList {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-left: 20px;
+  list-style: disc;
+
+  li {
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: $slate;
+  }
+}
+
+.callout {
+  margin-top: 20px;
+  border-radius: $radius-lg;
+  border: 1px solid #{alpha($accent, 25%)};
+  background: $accent-100;
+  padding: 16px 18px;
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: $navy-700;
+
+  strong {
+    color: $navy;
+  }
+}
+
+// ---------- Mini card grid (used for use-purposes / security / cookies / contact) ----------
+.cardGrid {
+  margin-top: 18px;
+  display: grid;
+  gap: 14px;
+
+  @include respond-to(sm) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.miniCard {
+  border-radius: $radius-lg;
+  border: 1px solid $line;
+  background: white;
+  padding: 16px 18px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+.miniCardTitle {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: $ink;
+}
+
+.miniCardBody {
+  margin-top: 6px !important;
+  font-size: 13px !important;
+  line-height: 1.6 !important;
+  color: $slate;
+}
+
+// ---------- Numbered rights list ----------
+.rightsList {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  counter-reset: right-counter;
+
+  li {
+    position: relative;
+    padding-left: 40px;
+    counter-increment: right-counter;
+
+    &::before {
+      content: counter(right-counter);
+      position: absolute;
+      left: 0;
+      top: 0;
+      display: flex;
+      height: 26px;
+      width: 26px;
+      align-items: center;
+      justify-content: center;
+      border-radius: $radius-pill;
+      background: linear-gradient(135deg, $navy, $accent-600);
+      color: white;
+      font-family: $font-mono;
+      font-size: 11.5px;
+      font-weight: 700;
+    }
+  }
+}
+
+.rightsTitle {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: $ink;
+}
+
+.rightsBody {
+  margin-top: 4px !important;
+  font-size: 13.5px !important;
+  color: $slate;
+}
+
+.backLink {
+  margin-top: 32px !important;
+
+  a {
+    font-weight: 600;
+  }
+}

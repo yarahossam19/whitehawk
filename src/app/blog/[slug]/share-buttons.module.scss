@@ -1,0 +1,38 @@
+@use "@/styles/tokens" as *;
+
+.wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: $slate;
+}
+
+.iconButton {
+  display: grid;
+  height: 40px;
+  width: 40px;
+  place-items: center;
+  border-radius: $radius-md;
+  border: 1px solid $line;
+  background: white;
+  color: $slate;
+  transition: color 0.15s, border-color 0.15s;
+
+  &:hover {
+    border-color: $accent;
+    color: $accent;
+  }
+}
+
+.copiedLabel {
+  font-size: 11px;
+  font-weight: 600;
+  color: $accent;
+}

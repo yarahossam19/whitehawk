@@ -1,0 +1,18 @@
+@use "@/styles/tokens" as *;
+@use "@/styles/mixins" as *;
+@use "@/styles/color-mix" as *;
+
+.root {
+  border-radius: $radius-2xl;
+  border: 1px solid $line;
+  background: white;
+  padding: 24px;
+  box-shadow: $shadow-elegant;
+
+  @include focus-ring;
+  @include focus-ring-within;
+
+  &:hover {
+    border-color: alpha($accent, 30%);
+  }
+}

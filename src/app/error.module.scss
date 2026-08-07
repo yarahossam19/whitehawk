@@ -1,0 +1,75 @@
+@use "@/styles/tokens" as *;
+@use "@/styles/color-mix" as *;
+
+.wrapper {
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  background: $background;
+  padding-inline: 16px;
+}
+
+.content {
+  max-width: 28rem;
+  text-align: center;
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  color: $foreground;
+}
+
+.description {
+  margin-top: 8px;
+  font-size: 0.875rem;
+  color: $muted-foreground;
+}
+
+.actions {
+  margin-top: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.primaryButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: $radius-md;
+  border: none;
+  background: $primary;
+  padding: 8px 16px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: $primary-foreground;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+
+  &:hover {
+    background: alpha($primary, 90%);
+  }
+}
+
+.secondaryButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: $radius-md;
+  border: 1px solid $input;
+  background: $background;
+  padding: 8px 16px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: $foreground;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+
+  &:hover {
+    background: $accent;
+  }
+}

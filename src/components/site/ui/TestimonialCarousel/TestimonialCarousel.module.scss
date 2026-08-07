@@ -1,0 +1,185 @@
+@use "@/styles/tokens" as *;
+@use "@/styles/mixins" as *;
+@use "@/styles/color-mix" as *;
+
+.root {
+  position: relative;
+}
+
+.track {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  // Room for the cards' shadow, which an overflow container would clip.
+  padding: 4px 4px 12px;
+  margin: -4px -4px -12px;
+  list-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  @include focus-ring(white);
+
+  @media (prefers-reduced-motion: reduce) {
+    scroll-behavior: auto;
+  }
+}
+
+.slide {
+  flex: 0 0 88%;
+  scroll-snap-align: start;
+
+  @include respond-to(sm) {
+    flex-basis: 70%;
+  }
+
+  @include respond-to(md) {
+    flex-basis: calc((100% - 20px) / 2);
+  }
+}
+
+// `figure` and `blockquote` keep their UA margins — globals.scss only resets
+// those on ul/ol and form controls — so both are zeroed explicitly here.
+.card {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  margin: 0;
+  border-radius: $radius-2xl;
+  border: 1px solid $line;
+  background: white;
+  padding: 28px;
+  box-shadow: $shadow-elegant;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+
+  &:hover {
+    border-color: alpha($accent, 30%);
+    transform: translateY(-2px);
+  }
+}
+
+.glyph {
+  color: alpha($accent, 45%);
+}
+
+.quote {
+  margin: 18px 0 0;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: $ink;
+
+  @include respond-to(md) {
+    font-size: 17px;
+  }
+}
+
+.footer {
+  // Pins attribution to the bottom so cards of unequal quote length align.
+  margin-top: auto;
+  padding-top: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  display: inline-flex;
+  height: 40px;
+  width: 40px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: $radius-pill;
+  background: linear-gradient(to bottom right, $accent, $navy);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: white;
+}
+
+.person {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+}
+
+.name {
+  font-size: 14px;
+  font-weight: 700;
+  color: $ink;
+}
+
+.role {
+  font-size: 12px;
+  color: $slate;
+}
+
+.controls {
+  margin-top: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.arrow {
+  display: inline-flex;
+  height: 34px;
+  width: 34px;
+  align-items: center;
+  justify-content: center;
+  border-radius: $radius-pill;
+  border: 1px solid $line;
+  background: white;
+  color: $ink;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+
+  @include focus-ring(white);
+
+  &:hover:not(:disabled) {
+    border-color: alpha($accent, 45%);
+    color: $accent;
+  }
+
+  &:disabled {
+    cursor: default;
+    opacity: 0.35;
+  }
+}
+
+.dots {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dot {
+  height: 8px;
+  width: 8px;
+  border-radius: $radius-pill;
+  border: 0;
+  background: alpha($ink, 20%);
+  cursor: pointer;
+  transition: width 0.25s ease, background-color 0.25s ease;
+
+  @include focus-ring(white);
+
+  &:hover {
+    background: alpha($ink, 35%);
+  }
+}
+
+.dotActive {
+  width: 22px;
+  background: $accent;
+
+  &:hover {
+    background: $accent;
+  }
+}

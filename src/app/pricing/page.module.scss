@@ -1,0 +1,443 @@
+@use "@/styles/tokens" as *;
+@use "@/styles/mixins" as *;
+@use "@/styles/color-mix" as *;
+
+// ---------- Hero ----------
+.hero {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(to bottom, $wash, white);
+}
+
+.heroWordmark {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0.7;
+}
+
+.heroInner {
+  @include container-x;
+  position: relative;
+  padding-block: 80px;
+  text-align: center;
+
+  @include respond-to(md) {
+    padding-block: 96px;
+  }
+}
+
+.heroEyebrow {
+  @include eyebrow;
+  margin-bottom: 12px;
+}
+
+.heroTitle {
+  margin-inline: auto;
+  max-width: 768px;
+  font-size: 38px;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: $ink;
+
+  @include respond-to(md) {
+    font-size: 54px;
+  }
+}
+
+.heroDescription {
+  margin-inline: auto;
+  margin-top: 20px;
+  max-width: 576px;
+  font-size: 16px;
+  color: $slate;
+}
+
+// ---------- Tier CTA block ----------
+.ctaBlock {
+  text-align: center;
+}
+
+.ctaNote {
+  margin-top: 12px;
+  font-size: 13px;
+  color: $slate;
+}
+
+// ---------- Tier cards ----------
+.tiersGrid {
+  margin-top: 48px;
+  display: grid;
+  align-items: start;
+  gap: 24px;
+
+  @include respond-to(md) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.tierCard {
+  position: relative;
+  border-radius: $radius-2xl;
+  border: 1px solid $line;
+  background: white;
+  padding: 32px;
+  transition: all 0.15s;
+  transition-delay: var(--reveal-delay);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+.tierCardHighlight {
+  border-color: $accent;
+  box-shadow: $shadow-glow, 0 0 0 1px alpha($accent, 20%);
+}
+
+.tierBadge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.tierSymbol {
+  font-family: $font-mono;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: $slate;
+}
+
+.tierName {
+  margin-top: 8px;
+  font-size: 24px;
+  font-weight: 800;
+  color: $ink;
+}
+
+.tierTagline {
+  margin-top: 4px;
+  font-size: 14px;
+  color: $slate;
+}
+
+.tierScale {
+  margin-top: 16px;
+  border-radius: $radius-md;
+  background: $wash;
+  padding: 8px 12px;
+  font-family: $font-mono;
+  font-size: 12px;
+  color: $ink;
+}
+
+.tierButton {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.tierIncludesLabel {
+  @include eyebrow;
+  margin-top: 24px;
+}
+
+.tierList {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tierLocked {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13.5px;
+  color: alpha($slate, 70%);
+}
+
+.tierLockedIcon {
+  margin-top: 3px;
+  font-size: 13px;
+}
+
+// ---------- Trust bar ----------
+.trustBar {
+  border-block: 1px solid $line;
+  background: $wash;
+  padding-block: 32px;
+}
+
+.trustInner {
+  @include container-x;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  column-gap: 40px;
+  row-gap: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: $slate;
+}
+
+.trustItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition-delay: var(--reveal-delay);
+}
+
+// ---------- Comparison table ----------
+.compareBlock {
+  margin-top: 48px;
+}
+
+// Horizontally scrollable rather than squeezed: four columns of plan data
+// cannot compress below ~680px without the feature labels breaking mid-word,
+// so below that the matrix scrolls sideways inside its own rounded frame with
+// the feature column pinned. `overflow-y: hidden` (not `visible`) is required
+// for the rounded corners to keep clipping the header row's wash fill.
+.compareWrap {
+  overflow-x: auto;
+  overflow-y: hidden;
+  border-radius: $radius-xl;
+  border: 1px solid $line;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+
+  // Keyboard users get the region focusable (tabIndex on the element); make
+  // that visible instead of relying on the UA's default on a plain div.
+  &:focus-visible {
+    outline: 2px solid $accent;
+    outline-offset: 2px;
+  }
+}
+
+.compareHint {
+  margin-top: 10px;
+  font-size: 12px;
+  color: $slate;
+  text-align: center;
+
+  @include respond-to(lg) {
+    display: none;
+  }
+}
+
+.compareTable {
+  width: 100%;
+  // Row separators live on `tr`, which the separated-borders model (the CSS
+  // default) discards outright — the matrix rendered with no dividers at all
+  // until this landed.
+  border-collapse: collapse;
+  min-width: 680px;
+  font-size: 13.5px;
+}
+
+.compareHeadRow {
+  background: $wash;
+  text-align: left;
+}
+
+// The feature-name column stays put while the plan columns scroll under it.
+// Needs an opaque fill per row type (the scrolling cells would otherwise show
+// through) and a hairline shadow standing in for a border, which `collapse`
+// would scroll away with the content.
+@mixin sticky-feature-col($bg) {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  // Capped so the pinned column never swallows a phone viewport, floored so
+  // feature names don't break mid-word.
+  min-width: 190px;
+  max-width: 280px;
+  background: $bg;
+  box-shadow: 1px 0 0 $line;
+}
+
+.compareHeadCell {
+  @include sticky-feature-col($wash);
+  padding: 16px;
+  font-weight: 600;
+  color: $ink;
+}
+
+.compareHeadCellCenter {
+  padding: 16px;
+  text-align: center;
+  font-weight: 600;
+  color: $ink;
+}
+
+.popularTag {
+  margin-left: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: $accent;
+}
+
+.compareCatRow {
+  // Opaque: this row spans all four columns and sits under the sticky feature
+  // column, so a translucent fill would let scrolled cells bleed through.
+  background: color-mix(in srgb, #{$wash} 60%, white);
+}
+
+.compareCatCell {
+  padding: 8px 16px;
+  font-family: $font-mono;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: $slate;
+}
+
+// The category cell spans all four columns, so sticking the *cell* does
+// nothing (it never leaves the viewport). Sticking its inner span keeps the
+// label alongside the pinned feature column while the plan columns scroll.
+.compareCatLabel {
+  position: sticky;
+  left: 16px;
+  display: inline-block;
+}
+
+.compareRow {
+  border-top: 1px solid $line;
+}
+
+.compareCell {
+  @include sticky-feature-col(white);
+  padding: 16px;
+  color: $ink;
+}
+
+.compareCellCenter {
+  padding: 16px;
+  text-align: center;
+  color: alpha($ink, 80%);
+}
+
+.compareFooterRow {
+  border-top: 1px solid $line;
+  background: color-mix(in srgb, #{$wash} 40%, white);
+}
+
+.compareFooterLabel {
+  @include sticky-feature-col(color-mix(in srgb, #{$wash} 40%, white));
+  padding: 16px;
+  font-weight: 600;
+  color: $ink;
+}
+
+.compareFooterCell {
+  padding: 16px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+// ---------- ROI band ----------
+.roi {
+  position: relative;
+  overflow: hidden;
+  background: $navy;
+  color: white;
+}
+
+.roiInner {
+  @include container-x;
+  padding-block: 80px;
+  text-align: center;
+
+  @include respond-to(md) {
+    padding-block: 96px;
+  }
+}
+
+.roiEyebrow {
+  @include eyebrow;
+  margin-bottom: 12px;
+  color: #9bb4e6;
+}
+
+.roiTitle {
+  margin-inline: auto;
+  max-width: 672px;
+  font-size: 30px;
+  font-weight: 800;
+  color: white;
+
+  @include respond-to(md) {
+    font-size: 38px;
+  }
+}
+
+.statsGrid {
+  margin-top: 48px;
+  display: grid;
+  gap: 32px;
+
+  @include respond-to(md) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.statItem {
+  transition-delay: var(--reveal-delay);
+}
+
+.statNumber {
+  font-size: 54px;
+  font-weight: 800;
+  line-height: 1;
+  color: white;
+}
+
+.statLabel {
+  margin-top: 8px;
+  font-size: 13px;
+  color: #9bb4e6;
+}
+
+.roiCard {
+  margin-inline: auto;
+  margin-top: 48px;
+  max-width: 672px;
+  background: $navy-700;
+  text-align: left;
+  color: white;
+}
+
+.roiQuote {
+  font-size: 15px;
+  line-height: 1.625;
+  color: #dbe6fe;
+}
+
+.roiAuthor {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.roiAvatar {
+  height: 36px;
+  width: 36px;
+  border-radius: $radius-pill;
+  background: linear-gradient(to bottom right, $accent, alpha(white, 40%));
+}
+
+.roiAuthorName {
+  font-size: 13px;
+  font-weight: 700;
+  color: white;
+}
+
+.roiAuthorTitle {
+  font-size: 11.5px;
+  color: #9bb4e6;
+}
+

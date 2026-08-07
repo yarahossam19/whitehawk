@@ -1,0 +1,300 @@
+.multi-select-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  contain: layout;
+  gap: 0.3rem;
+}
+
+// Dropdown is portaled to body. Modal dialogs set body.pointer-events:none so clicks would
+// otherwise pass through this panel onto the Radix overlay and dismiss the dialog — opt back into hit-testing.
+.p-multiselect-panel {
+  z-index: 9999 !important;
+  position: fixed !important;
+  pointer-events: auto !important;
+}
+
+.multi-select-field {
+  width: 100%;
+  border-radius: 8px !important;
+  color: var(--active-field-foreground);
+
+  border: 1px solid var(--tix-input-border) !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  line-height: 24px !important;
+  transition:
+    border-color 0.15s ease,
+    color 0.15s ease;
+
+  /* keep control height bounded */
+  max-height: 45px;
+
+
+  &.p-multiselect.p-component {
+    padding: 0;
+  }
+
+  .p-multiselect-label {
+    padding: 8px 16px 8px 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: inherit;
+    flex-wrap: wrap;
+    max-width: 100%;
+    max-height: 50px; /* chips area height */
+    overflow-y: hidden;
+    overflow-x: hidden;
+    align-content: flex-start;
+  }
+
+  .p-multiselect-trigger {
+    display: flex;
+    align-items: center;
+    padding-right: 8px;
+  }
+
+  .p-multiselect-token {
+    border-radius: 999px;
+    padding: 2px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    background: var(--ticket-sidebar-bg);
+    color: var(--active-field-foreground);
+  }
+
+  &:focus-within,
+  &:hover,
+  &.p-focus {
+    border-color: var(--active-field-border) !important;
+    color: var(--active-field-foreground) !important;
+    box-shadow: none !important;
+    outline: none !important;
+  }
+
+  &.error {
+    border-color: var(--colors-status-alerts-colors-soft-red, #ea2340) !important;
+  }
+}
+
+.multi-select-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--active-field-foreground);
+  &.error {
+    color: var(--colors-status-alerts-colors-soft-red, #ea2340);
+  }
+}
+
+.multi-select-description {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+  &.error {
+    color: var(--colors-status-alerts-colors-soft-red, #ea2340);
+  }
+}
+
+.multi-required-indicator {
+  color: var(--colors-status-alerts-colors-soft-red, #ea2340);
+  font-size: 14px;
+  font-weight: 500;
+}
+/* Dropdown panel to mirror select menu look */
+.p-multiselect-panel {
+  z-index: 9999 !important;
+  pointer-events: auto !important;
+  background-color: var(--tix-popover);
+  border: 1px solid var(--tix-popover);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-height: 280px; /* allow scroll when many options */
+  overflow-y: auto;
+  overscroll-behavior: contain;
+
+  .p-multiselect-header {
+    position: relative;
+    background-color: var(--tix-popover);
+    border-bottom: none;
+    padding: 8px 10px 0;
+    flex-wrap: wrap;
+    gap: 0;
+  }
+
+  .multi-select-panel-header {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .multi-select-panel-header__search-row {
+    position: relative;
+    width: 100%;
+    margin-bottom: 4px;
+
+    .p-multiselect-filter-container {
+      position: relative;
+      width: 100%;
+      padding: 0;
+
+      .p-multiselect-filter,
+      .p-inputtext {
+        width: 100%;
+        padding: 8px 40px !important;
+        border: 1px solid var(--tix-input-border);
+        border-radius: 6px;
+        background: var(--tix-background);
+        color: var(--tix-foreground);
+        font-size: 14px;
+        box-shadow: none;
+
+        &:focus {
+          outline: none;
+          border-color: var(--active-field-border);
+          box-shadow: 0 0 0 2px rgba(0, 143, 227, 0.12);
+        }
+      }
+
+      .p-multiselect-filter-icon {
+        position: absolute;
+        left: 12px;
+        right: auto !important;
+        top: 50%;
+        margin-top: 0 !important;
+        transform: translateY(-50%);
+        color: var(--tix-secondary-foreground);
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: none;
+
+        svg {
+          width: 20px;
+          height: 20px;
+          display: block;
+        }
+      }
+    }
+
+    .p-multiselect-close {
+      position: absolute;
+      top: 50%;
+      right: 4px;
+      transform: translateY(-50%);
+      z-index: 2;
+      width: 28px;
+      height: 28px;
+      margin: 0 !important;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      border: none;
+      border-radius: 4px;
+      background: transparent;
+      color: var(--tix-secondary-foreground);
+      cursor: pointer;
+      transition:
+        background-color 0.15s ease,
+        color 0.15s ease;
+
+      &:enabled:hover {
+        background: var(--tix-ring);
+        color: var(--tix-foreground);
+      }
+
+      .p-multiselect-close-icon,
+      svg {
+        width: 16px;
+        height: 16px;
+        display: block;
+      }
+    }
+  }
+
+  .multi-select-panel-header__select-all {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 0;
+
+    &:hover {
+      background-color: var(--tix-ring);
+    }
+
+    .p-multiselect-select-all,
+    .p-checkbox {
+      display: inline-flex;
+      align-items: center;
+      margin: 0;
+      flex-shrink: 0;
+    }
+  }
+
+  .multi-select-panel-header__select-all-label {
+    margin-left: 5px;
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--tix-foreground);
+  }
+
+  .p-multiselect-items {
+    border: none;
+    padding: 0 2px 4px;
+    color: var(--tix-foreground);
+    max-height: 240px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+  }
+
+  .p-multiselect-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    font-size: 14px;
+    line-height: 20px;
+    cursor: pointer;
+
+    .p-multiselect-checkbox,
+    .p-checkbox {
+      display: inline-flex;
+      align-items: center;
+      margin: 0;
+      flex-shrink: 0;
+    }
+
+    span {
+      margin-left: 5px;
+      color: var(--tix-foreground);
+    }
+
+    &.p-highlight,
+    &:hover,
+    &:focus {
+      background-color: var(--tix-ring) !important;
+    }
+  }
+}
+.p-multiselect-panel
+  .p-multiselect-items
+  .p-multiselect-item:not(.p-highlight):not(.p-disabled).p-focus {
+  background-color: var(--tix-ring) !important;
+}
+.p-multiselect-panel .p-multiselect-header {
+  font-size: 14px;
+  line-height: 20px;
+}
+.p-checkbox-input{
+  border: 1px solid var(--tix-input-border) !important;
+  background-color: transparent !important;
+  border-radius: 2px !important;
+}

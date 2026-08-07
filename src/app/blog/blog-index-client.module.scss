@@ -1,0 +1,479 @@
+@use "@/styles/tokens" as *;
+@use "@/styles/mixins" as *;
+@use "@/styles/color-mix" as *;
+
+// ---------------------------------------------------------------------------
+// Small pieces — cover art placeholder, category/vs badges
+// ---------------------------------------------------------------------------
+
+.coverArt {
+  position: absolute;
+  inset: 0;
+}
+
+.coverArtGlow {
+  position: absolute;
+  inset: 0;
+  opacity: 0.4;
+}
+
+.coverArtGrid {
+  position: absolute;
+  inset: 0;
+  mix-blend-mode: overlay;
+  opacity: 0.25;
+}
+
+.vsBadge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: $radius-md;
+  background: $navy;
+  padding: 4px 8px;
+  font-size: 10.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: white;
+}
+
+.categoryChip {
+  display: inline-flex;
+  align-items: center;
+  border-radius: $radius-md;
+  border: 1px solid $line;
+  background: #{alpha(white, 90%)};
+  padding: 4px 8px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: $slate;
+}
+
+// ---------------------------------------------------------------------------
+// 1 · Header + search
+// ---------------------------------------------------------------------------
+
+.header {
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid $line;
+  background: #f4f7fc;
+}
+
+.headerDots {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  opacity: 0.5;
+  background-image: radial-gradient(circle, rgba(11, 42, 91, 0.16) 1px, transparent 1.5px);
+  background-size: 24px 24px;
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 50%, black 55%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 50%, black 55%, transparent 100%);
+}
+
+.headerInner {
+  @include container-x;
+  position: relative;
+  padding-block: 64px;
+
+  @include respond-to(md) {
+    padding-block: 80px;
+  }
+}
+
+.eyebrow {
+  @include eyebrow;
+  margin-bottom: 12px;
+}
+
+.title {
+  max-width: 896px;
+  font-size: 38px;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: $navy;
+
+  @include respond-to(md) {
+    font-size: 56px;
+  }
+}
+
+.titleAccent {
+  color: $accent;
+}
+
+.subtitle {
+  margin-top: 20px;
+  max-width: 672px;
+  font-size: 15.5px;
+  line-height: 1.625;
+  color: $slate;
+}
+
+.searchBox {
+  margin-top: 32px;
+  display: flex;
+  max-width: 448px;
+  align-items: center;
+  gap: 8px;
+  border-radius: $radius-lg;
+  border: 1px solid $line;
+  background: white;
+  padding: 10px 12px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+
+  &:focus-within {
+    border-color: $accent;
+    box-shadow: 0 0 0 2px #{alpha($accent, 20%)};
+  }
+}
+
+.searchIcon {
+  flex-shrink: 0;
+  color: $slate;
+}
+
+.searchInput {
+  width: 100%;
+  background: transparent;
+  font-size: 14px;
+  outline: none;
+
+  &::placeholder {
+    color: $slate;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// 2 · Featured comparison post
+// ---------------------------------------------------------------------------
+
+.featured {
+  background: $wash;
+}
+
+.featuredInner {
+  @include container-x;
+  padding-block: 56px;
+
+  @include respond-to(md) {
+    padding-block: 64px;
+  }
+}
+
+.featuredCard {
+  display: grid;
+  gap: 32px;
+  border-radius: $radius-2xl;
+  border: 1px solid $line;
+  background: white;
+  padding: 20px;
+  transition: all 0.3s;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -20px rgba(11, 42, 91, 0.35);
+
+    .featuredTitle {
+      color: $accent;
+    }
+  }
+
+  @include respond-to(md) {
+    grid-template-columns: 1.15fr 1fr;
+    gap: 40px;
+    padding: 24px;
+  }
+}
+
+.featuredMedia {
+  position: relative;
+  aspect-ratio: 16 / 11;
+  overflow: hidden;
+  border-radius: $radius-xl;
+
+  @include respond-to(md) {
+    aspect-ratio: auto;
+  }
+}
+
+.featuredImage {
+  object-fit: cover;
+}
+
+.featuredContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
+}
+
+.featuredBadges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.featuredLabel {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: $accent;
+}
+
+.featuredTitle {
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1.15;
+  color: $ink;
+  transition: color 0.3s;
+
+  @include respond-to(md) {
+    font-size: 34px;
+  }
+}
+
+.featuredExcerpt {
+  font-size: 15px;
+  line-height: 1.625;
+  color: $slate;
+}
+
+.featuredMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: 16px;
+  row-gap: 4px;
+  font-size: 12.5px;
+  color: $slate;
+}
+
+.featuredAuthor {
+  font-weight: 600;
+  color: $ink;
+}
+
+.readTime {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.featuredCtaText {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: $accent;
+}
+
+// ---------------------------------------------------------------------------
+// 3 · Category filter + post grid
+// ---------------------------------------------------------------------------
+
+.filterRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.categoryButton {
+  border-radius: $radius-md;
+  border: 1px solid $line;
+  background: white;
+  color: $ink;
+  padding: 8px 14px;
+  font-size: 12.5px;
+  font-weight: 600;
+  transition: color 0.15s, border-color 0.15s, background-color 0.15s;
+
+  &:not(.categoryButtonActive):hover {
+    border-color: $slate;
+    color: $accent;
+  }
+
+  &.categoryButtonActive {
+    border-color: $navy;
+    background: $navy;
+    color: white;
+  }
+}
+
+.resultCount {
+  font-size: 12.5px;
+  color: $slate;
+}
+
+.emptyState {
+  margin-top: 40px;
+  border-radius: $radius-2xl;
+  border: 1px dashed $line;
+  background: $wash;
+  padding: 48px;
+  text-align: center;
+  color: $slate;
+}
+
+.grid {
+  margin-top: 40px;
+  display: grid;
+  gap: 24px;
+
+  @include respond-to(sm) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @include respond-to(lg) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.card {
+  display: block;
+  overflow: hidden;
+  border-radius: $radius-2xl;
+  border: 1px solid $line;
+  background: white;
+  transition: all 0.3s;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -20px rgba(11, 42, 91, 0.35);
+
+    .cardImage {
+      transform: scale(1.03);
+    }
+
+    .cardTitle {
+      color: $accent;
+    }
+  }
+}
+
+.cardMedia {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+}
+
+.cardImage {
+  object-fit: cover;
+  transition: transform 0.5s;
+}
+
+.cardBody {
+  padding: 20px;
+}
+
+.cardCategoryRow {
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cardTitle {
+  font-size: 16.5px;
+  font-weight: 800;
+  line-height: 1.25;
+  color: $ink;
+  transition: color 0.3s;
+}
+
+.cardExcerpt {
+  margin-top: 8px;
+  display: -webkit-box;
+  overflow: hidden;
+  font-size: 13px;
+  color: $slate;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.cardMeta {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11.5px;
+  color: $slate;
+}
+
+.loadMoreWrap {
+  margin-top: 40px;
+  text-align: center;
+}
+
+// ---------------------------------------------------------------------------
+// 4 · Newsletter
+// ---------------------------------------------------------------------------
+
+.newsletterCard {
+  margin-inline: auto;
+  max-width: 672px;
+  border-radius: $radius-2xl;
+  border: 1px solid $line;
+  background: white;
+  padding: 40px;
+  text-align: center;
+  box-shadow: 0 10px 30px -20px rgba(11, 42, 91, 0.2);
+}
+
+.newsletterTitle {
+  font-size: 26px;
+  font-weight: 800;
+  color: $ink;
+
+  @include respond-to(md) {
+    font-size: 30px;
+  }
+}
+
+.newsletterBody {
+  margin-top: 12px;
+  font-size: 14.5px;
+  color: $slate;
+}
+
+.newsletterForm {
+  margin-inline: auto;
+  margin-top: 24px;
+  display: flex;
+  max-width: 448px;
+  flex-direction: column;
+  gap: 8px;
+
+  @include respond-to(sm) {
+    flex-direction: row;
+  }
+}
+
+.newsletterInput {
+  flex: 1 1 0%;
+  border-radius: $radius-md;
+  border: 1px solid $line;
+  background: white;
+  padding: 10px 12px;
+  font-size: 14px;
+  outline: none;
+
+  &:focus {
+    border-color: $accent;
+    box-shadow: 0 0 0 2px #{alpha($accent, 20%)};
+  }
+}

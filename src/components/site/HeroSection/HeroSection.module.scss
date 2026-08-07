@@ -1,0 +1,263 @@
+@use "@/styles/tokens" as *;
+@use "@/styles/mixins" as *;
+@use "@/styles/color-mix" as *;
+
+// ---------- Shared ----------
+.inner {
+  @include container-x;
+  position: relative;
+  display: grid;
+  gap: 48px;
+  padding-block: 80px;
+
+  @include respond-to(md) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding-block: 96px;
+  }
+
+  @include respond-to(lg) {
+    padding-block: 112px;
+  }
+}
+
+.textCol {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.actions {
+  margin-top: 32px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.visualVault {
+  position: relative;
+  margin-inline: auto;
+  display: flex;
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  max-width: 440px;
+  align-items: center;
+
+  @include respond-to(md) {
+    max-width: 500px;
+  }
+}
+
+.visual3d {
+  position: relative;
+  height: 380px;
+
+  @include respond-to(md) {
+    height: 500px;
+  }
+}
+
+.vaultDoor {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.particles {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+}
+
+// ---------- Light theme (module pages) ----------
+.light {
+  position: relative;
+  overflow: hidden;
+  min-height: 560px;
+  background: #f4f7fc;
+  color: $navy;
+}
+
+.dotGrid {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  opacity: 0.55;
+  background-image: radial-gradient(circle, rgba(11, 42, 91, 0.18) 1px, transparent 1.5px);
+  background-size: 24px 24px;
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 50%, black 55%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 50%, black 55%, transparent 100%);
+}
+
+.scanBeam {
+  pointer-events: none;
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  width: 18%;
+}
+
+.scanBeamDefault {
+  background: linear-gradient(90deg, transparent 0%, rgba(37, 99, 235, 0.08) 40%, rgba(37, 99, 235, 0.22) 50%, rgba(37, 99, 235, 0.08) 60%, transparent 100%);
+}
+
+.scanBeamOffensive {
+  background: linear-gradient(90deg, transparent 0%, rgba(244, 63, 94, 0.08) 40%, rgba(244, 63, 94, 0.22) 50%, rgba(244, 63, 94, 0.08) 60%, transparent 100%);
+}
+
+.glow {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(700px 340px at 82% 18%, rgba(37, 99, 235, 0.1), transparent 65%);
+}
+
+.hairline {
+  pointer-events: none;
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, alpha($navy, 15%), transparent);
+}
+
+.eyebrowPill {
+  margin-bottom: 16px;
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  gap: 8px;
+  border-radius: $radius-pill;
+  border: 1px solid alpha($navy, 15%);
+  background: alpha(white, 70%);
+  padding: 4px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: $navy;
+  backdrop-filter: blur(4px);
+}
+
+.eyebrowDot {
+  height: 6px;
+  width: 6px;
+  border-radius: $radius-pill;
+  background: $accent;
+}
+
+.title {
+  font-size: 38px;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: $navy;
+
+  @include respond-to(md) {
+    font-size: 54px;
+  }
+}
+
+.description {
+  margin-top: 20px;
+  max-width: 36rem;
+  font-size: 16px;
+  line-height: 1.625;
+  color: $slate;
+
+  @include respond-to(md) {
+    font-size: 17px;
+  }
+}
+
+// ---------- Dark theme (home) ----------
+.dark {
+  position: relative;
+  overflow: hidden;
+  min-height: 560px;
+  background: $navy;
+  color: white;
+}
+
+.aurora {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(1100px 520px at 78% 22%, rgba(37, 99, 235, 0.55), transparent 60%),
+    radial-gradient(820px 420px at 8% 88%, rgba(29, 79, 215, 0.45), transparent 62%),
+    radial-gradient(600px 300px at 50% 50%, rgba(11, 42, 91, 0.6), transparent 70%);
+}
+
+.floatBlobs {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+}
+
+.floatBlobLeft {
+  position: absolute;
+  left: -64px;
+  top: 64px;
+  height: 224px;
+  width: 224px;
+  border-radius: $radius-pill;
+  background: alpha($accent, 25%);
+  filter: blur(64px);
+}
+
+.floatBlobRight {
+  position: absolute;
+  right: 40px;
+  bottom: 32px;
+  height: 288px;
+  width: 288px;
+  border-radius: $radius-pill;
+  background: alpha(#5b8def, 20%);
+  filter: blur(64px);
+  animation-delay: 1.5s;
+}
+
+.eyebrowPillDark {
+  margin-bottom: 16px;
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  gap: 8px;
+  border-radius: $radius-pill;
+  border: 1px solid alpha(white, 15%);
+  background: alpha(white, 5%);
+  padding: 4px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: $accent-100;
+  backdrop-filter: blur(4px);
+}
+
+.titleDark {
+  font-size: 38px;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: white;
+
+  @include respond-to(md) {
+    font-size: 54px;
+  }
+}
+
+.descriptionDark {
+  margin-top: 20px;
+  max-width: 36rem;
+  font-size: 16px;
+  line-height: 1.625;
+  color: #9bb4e6;
+
+  @include respond-to(md) {
+    font-size: 17px;
+  }
+}

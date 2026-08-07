@@ -1,0 +1,107 @@
+.input-text {
+  padding: 8px 16px 8px 8px;
+  justify-content: space-between;
+  align-items: center;
+  align-self: stretch;
+  border-radius: 8px;
+  border: 1px solid var(--tix-input-border);
+  font-size: 16px;
+  font-style: normal;
+
+  font-weight: 400;
+  line-height: 24px;
+  width: 100%;
+  background-color: transparent;
+  &.placeholder {
+    color: var(--Colors-Neutral-400, #a6a6a6);
+  }
+
+  &:focus,
+  &:active {
+    border-color: var(--active-field-border);
+    color: var(--active-field-foreground);
+    box-shadow: none;
+    outline: none;
+  }
+
+  &::selection {
+    background-color: transparent;
+    color: var(--tix-primary-foreground);
+  }
+
+  &.error {
+    border-color: var(--colors-status-alerts-colors-soft-red, #ea2340);
+  }
+}
+/* Ensure phone input inner input inherits text styles and is full width when wrapped */
+.input-text input[type="tel"],
+.input-text input {
+  border: none !important;
+  background: transparent !important;
+  width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  font-size: 16px;
+  line-height: 24px;
+}
+.input-label {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 21px;
+  color: var(--active-field-foreground);
+
+  &.error {
+    color: var(--colors-status-alerts-colors-soft-red, #ea2340);
+  }
+}
+.input-description {
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px;
+  &.error {
+    color: var(--colors-status-alerts-colors-soft-red, #ea2340);
+  }
+}
+.required-indicator {
+  color: var(--colors-status-alerts-colors-soft-red, #ea2340);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 21px;
+}
+.icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border: 1.5px solid var(--Colors-Neutral-100, #f0f0f0);
+
+  border-radius: 8px;
+  transition: background 0.2s ease;
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  &.delete {
+    color: var(--colors-status-alerts-colors-soft-red, #ea2340);
+
+    &:hover {
+      background: rgba(234, 35, 64, 0.08);
+    }
+  }
+
+  &.add {
+    color: var(--Colors-Primary-Blue, #1b6ef3);
+
+    &:hover {
+      background: rgba(27, 110, 243, 0.08);
+    }
+  }
+}

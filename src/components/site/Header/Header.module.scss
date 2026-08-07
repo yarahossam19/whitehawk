@@ -1,0 +1,470 @@
+@use "@/styles/tokens" as *;
+@use "@/styles/mixins" as *;
+@use "@/styles/color-mix" as *;
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  border-bottom: 1px solid transparent;
+  background: alpha(white, 85%);
+  backdrop-filter: blur(12px);
+  transition: box-shadow 0.3s;
+}
+
+.scrolled {
+  border-color: $line;
+  box-shadow: 0 4px 20px -8px rgba(11, 42, 91, 0.12);
+}
+
+.inner {
+  @include container-x;
+  display: flex;
+  height: 64px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+// ---------- Logo ----------
+.logo {
+  display: inline-flex;
+  align-items: center;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.logoImg {
+  height: 18px;
+  width: auto;
+
+  @include respond-to(md) {
+    height: 20px;
+  }
+}
+
+.logoImgLight {
+  filter: brightness(0) invert(1);
+}
+
+// ---------- Desktop nav ----------
+.nav {
+  display: none;
+  align-items: center;
+  gap: 24px;
+
+  @include respond-to(lg) {
+    display: flex;
+  }
+
+  @include respond-to(xl) {
+    gap: 32px;
+  }
+}
+
+.navLink {
+  position: relative;
+  border-radius: $radius-sm;
+  padding-block: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: alpha($ink, 80%);
+  transition: color 0.15s;
+
+  text-decoration: none !important;
+  @include focus-ring;
+
+  &:hover {
+    color: $accent;
+  }
+}
+
+.navLinkActive {
+  color: $accent;
+}
+
+.navLinkUnderline {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 2px;
+  transform: scaleX(0);
+  transform-origin: left;
+  border-radius: $radius-pill;
+  background: $accent;
+  transition: transform 0.3s ease-out;
+}
+
+.navLink:hover .navLinkUnderline {
+  transform: scaleX(1);
+}
+
+.navLinkUnderlineActive {
+  transform: scaleX(1);
+}
+
+// ---------- Desktop dropdown menu ----------
+.menuWrap {
+  position: relative;
+}
+
+.menuTrigger {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border-radius: $radius-sm;
+  padding-block: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: alpha($ink, 80%);
+  transition: color 0.15s;
+
+  @include focus-ring;
+
+  &:hover {
+    color: $accent;
+  }
+}
+
+.menuChevron {
+  transition: transform 0.3s;
+}
+
+.menuChevronOpen {
+  transform: rotate(180deg);
+}
+
+.menuUnderline {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 2px;
+  transform: scaleX(0);
+  transform-origin: left;
+  border-radius: $radius-pill;
+  background: $accent;
+  transition: transform 0.3s ease-out;
+}
+
+.menuTrigger:hover .menuUnderline {
+  transform: scaleX(1);
+}
+
+.menuUnderlineOpen {
+  transform: scaleX(1);
+}
+
+.menuPanelWrap {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  z-index: 50;
+  width: 340px;
+  padding-top: 8px;
+  transition: all 0.2s ease-out;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-6px);
+}
+
+.menuPanelWrapOpen {
+  pointer-events: auto;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.menuPanel {
+  border-radius: $radius-xl;
+  border: 1px solid $line;
+  background: white;
+  padding: 8px;
+  box-shadow: 0 20px 50px -20px rgba(11, 42, 91, 0.25);
+}
+
+.menuItem {
+  display: flex;
+  gap: 12px;
+  border-radius: $radius-lg;
+  padding: 12px;
+  transition: background-color 0.15s;
+  text-decoration: none !important;
+
+  @include focus-ring;
+
+  &:hover {
+    background: $wash;
+
+    .menuItemIcon {
+      transform: scale(1.05);
+    }
+    .menuItemLabel {
+      color: $accent;
+    }
+  }
+}
+
+.menuItemIcon {
+  margin-top: 2px;
+  display: flex;
+  height: 36px;
+  width: 36px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: $radius-lg;
+  background: $accent-100;
+  color: $accent-600;
+  transition: transform 0.2s;
+}
+
+.menuItemBody {
+  min-width: 0;
+}
+
+.menuItemLabel {
+  display: block;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: $ink;
+}
+
+.menuItemDescription {
+  margin-top: 2px;
+  display: block;
+  font-size: 12px;
+  line-height: 1.375;
+  color: $slate;
+}
+
+// ---------- Auth / CTA ----------
+.actions {
+  display: none;
+  align-items: center;
+  gap: 16px;
+
+  @include respond-to(lg) {
+    display: flex;
+  }
+}
+
+.signIn {
+  border-radius: $radius-sm;
+  font-size: 13px;
+  font-weight: 500;
+  color: $slate;
+  transition: color 0.15s;
+
+  @include focus-ring;
+
+  &:hover {
+    color: $ink;
+  }
+}
+
+.cta {
+  border-radius: $radius-md;
+  background: $accent;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: white;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s;
+
+  @include focus-ring;
+
+  &:hover {
+    transform: translateY(-2px);
+    background: $accent-600;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+}
+
+// ---------- Mobile toggle ----------
+.menuToggle {
+  position: relative;
+  display: grid;
+  height: 40px;
+  width: 40px;
+  place-items: center;
+  border-radius: $radius-md;
+  border: 1px solid $line;
+  transition: background-color 0.15s;
+
+  @include focus-ring;
+
+  &:hover {
+    background: $wash;
+  }
+
+  @include respond-to(lg) {
+    display: none;
+  }
+}
+
+.menuIcon {
+  position: absolute;
+  transition: all 0.2s;
+}
+
+.menuIconHidden {
+  opacity: 0;
+}
+
+.menuIconVisible {
+  opacity: 1;
+}
+
+// ---------- Mobile panel ----------
+.mobilePanel {
+  display: grid;
+  grid-template-rows: 0fr;
+  overflow: hidden;
+  border-color: $line;
+  background: white;
+  transition: grid-template-rows 0.3s ease-out;
+
+  @include respond-to(lg) {
+    display: none;
+  }
+}
+
+.mobilePanelOpen {
+  grid-template-rows: 1fr;
+  border-top: 1px solid $line;
+}
+
+.mobilePanelInner {
+  min-height: 0;
+}
+
+.mobileList {
+  @include container-x;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-block: 12px;
+}
+
+.mobileLink {
+  border-radius: $radius-md;
+  padding: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: $ink;
+  transition: background-color 0.15s;
+
+  @include focus-ring;
+
+  &:hover {
+    background: $wash;
+  }
+}
+
+.mobileMenuGroup {
+  border-radius: $radius-md;
+}
+
+.mobileMenuButton {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: $radius-md;
+  padding: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: $ink;
+  transition: background-color 0.15s;
+
+  @include focus-ring;
+
+  &:hover {
+    background: $wash;
+  }
+}
+
+.mobileChevron {
+  transition: transform 0.3s;
+}
+
+.mobileChevronOpen {
+  transform: rotate(180deg);
+}
+
+.mobileSubPanel {
+  display: grid;
+  grid-template-rows: 0fr;
+  overflow: hidden;
+  transition: grid-template-rows 0.3s ease-out;
+}
+
+.mobileSubPanelOpen {
+  grid-template-rows: 1fr;
+}
+
+.mobileSubPanelInner {
+  min-height: 0;
+}
+
+.mobileSubList {
+  margin-bottom: 4px;
+  margin-left: 12px;
+  border-left: 1px solid $line;
+  padding-left: 12px;
+}
+
+.mobileSubLink {
+  display: block;
+  border-radius: $radius-md;
+  padding: 6px 8px;
+  font-size: 13.5px;
+  color: alpha($ink, 85%);
+  transition: all 0.15s;
+
+  @include focus-ring;
+
+  &:hover {
+    background: $wash;
+    color: $accent;
+  }
+}
+
+.mobileSignIn {
+  margin-top: 8px;
+  border-radius: $radius-md;
+  border: 1px solid $line;
+  padding: 8px 12px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: $ink;
+  transition: background-color 0.15s;
+
+  @include focus-ring;
+
+  &:hover {
+    background: $wash;
+  }
+}
+
+.mobileCta {
+  border-radius: $radius-md;
+  background: $accent;
+  padding: 8px 12px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: white;
+  transition: background-color 0.15s;
+
+  @include focus-ring;
+
+  &:hover {
+    background: $accent-600;
+  }
+}

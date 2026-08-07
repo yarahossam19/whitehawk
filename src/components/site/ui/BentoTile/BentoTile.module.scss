@@ -1,0 +1,86 @@
+@use "@/styles/tokens" as *;
+@use "@/styles/mixins" as *;
+@use "@/styles/color-mix" as *;
+
+.root {
+  position: relative;
+  overflow: hidden;
+  border-radius: $radius-2xl;
+  border: 1px solid transparent;
+  padding: 24px;
+
+  @include focus-ring;
+  @include focus-ring-within;
+}
+
+.canvas {
+  background: white;
+  border-color: $line;
+  color: $ink;
+}
+
+.ink {
+  background: $navy;
+  border-color: $navy;
+  color: white;
+}
+
+.accent {
+  background: $accent;
+  border-color: $accent;
+  color: white;
+}
+
+.glass {
+  background: alpha(white, 70%);
+  backdrop-filter: blur(8px);
+  border-color: alpha($line, 60%);
+  color: $ink;
+}
+
+.hoverable {
+  box-shadow: $shadow-elegant;
+  transition: all 0.3s;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $shadow-glow;
+  }
+}
+
+.header {
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.eyebrowLight {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: $slate;
+}
+
+.eyebrowDark {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: alpha(white, 70%);
+}
+
+.indexLight {
+  font-family: $font-mono;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  color: alpha($slate, 70%);
+}
+
+.indexDark {
+  font-family: $font-mono;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  color: alpha(white, 50%);
+}

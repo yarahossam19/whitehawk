@@ -1,0 +1,51 @@
+@use "@/styles/tokens" as *;
+@use "@/styles/mixins" as *;
+
+.root {
+  border-top: 1px solid $line;
+  border-bottom: 1px solid $line;
+  background: $wash;
+  padding-block: 40px;
+}
+
+.inner {
+  @include container-x;
+}
+
+.label {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: $slate;
+}
+
+.track {
+  position: relative;
+  margin-top: 28px;
+  overflow: hidden;
+}
+
+.row {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  gap: 40px;
+}
+
+.logo {
+  height: 32px;
+  width: auto;
+  max-width: 120px;
+  flex-shrink: 0;
+  object-fit: contain;
+  opacity: 0.6;
+  filter: grayscale(1);
+  transition: all 0.3s ease;
+
+  &:hover {
+    opacity: 1;
+    filter: grayscale(0);
+  }
+}

@@ -1,0 +1,40 @@
+/**
+ * The handful of Preflight rules this demo actually depends on, scoped to the
+ * demo's own root so nothing leaks to the rest of the site (we deliberately
+ * never import Tailwind's Preflight — see tailwind-entry.css).
+ *
+ * Specificity is deliberate: `.asset-inventory-demo :where(...)` scores as a
+ * single class, which is
+ *   - HIGHER than the site's element-level resets in globals.scss (`h1..h6`,
+ *     `table`), so those stop leaking into the demo, and
+ *   - EQUAL to a Tailwind utility, so any utility the demo puts on the same
+ *     element still wins on source order — this file is imported before
+ *     utilities.css.
+ * Using `:where()` keeps the element part of the selector at zero specificity;
+ * writing `.asset-inventory-demo h2` instead would outrank `.mb-3` and quietly
+ * break margin utilities on headings.
+ */
+
+/* globals.scss styles h1–h6 (font-weight: 800, letter-spacing, display font)
+   and no Preflight means UA margins survive — which stacked the big stat
+   numbers away from their unit labels. */
+.asset-inventory-demo :where(h1, h2, h3, h4, h5, h6) {
+  margin: 0;
+  font-weight: inherit;
+  letter-spacing: normal;
+  color: inherit;
+}
+
+.asset-inventory-demo :where(p) {
+  margin: 0;
+}
+
+.asset-inventory-demo :where(table) {
+  border-collapse: collapse;
+}
+
+/* Preflight normally makes replaced elements block-level; the severity dots
+   and avatars here assume it. */
+.asset-inventory-demo :where(img, svg) {
+  display: block;
+}

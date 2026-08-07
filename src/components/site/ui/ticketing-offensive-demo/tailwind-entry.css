@@ -1,0 +1,36 @@
+/**
+ * Tailwind entry scoped to this folder only.
+ *
+ * The rest of the WhiteHawk site is styled with hand-written SCSS Modules —
+ * Tailwind was fully removed. This demo is Tailwind-native, so it gets its
+ * own small, contained Tailwind pipeline instead of reintroducing Tailwind
+ * site-wide.
+ *
+ * IMPORTANT: importing plain "tailwindcss" (as opposed to what's done below)
+ * bundles Tailwind's Preflight reset as a global, UNSCOPED layer — `source()`
+ * only narrows which utility classes get *generated*, it does nothing to
+ * contain Preflight's `* { margin:0; padding:0; border:0 }`, `h1-h6 {
+ * font-weight:inherit }`, etc., which then compete globally with this site's
+ * own reset in src/styles/globals.scss on every other page. Hit exactly this
+ * regression once already. Fix: import `theme` and `utilities` separately
+ * and skip `preflight.css` entirely — Tailwind v4's supported way to opt out
+ * of Preflight while keeping the token scale + utility generation.
+ *
+ *  - `theme.css` (Tailwind's, not this folder's) supplies the default
+ *    spacing/radius/font-size scale etc. that utilities like `p-4`/
+ *    `rounded-md`/`text-sm` need — no Preflight in this file.
+ *  - `source("./")` on the utilities import scopes utility-class
+ *    *generation* to files under this folder only.
+ *  - This file is imported once, from this folder's index.tsx. Next.js code-
+ *    splits per route, so only pages that actually render the demo
+ *    (Offensive/Defensive "Product view") pull in this generated CSS.
+ *  - ./theme.css (this folder's — design tokens + PrimeReact CSS) is
+ *    imported last so its `@theme inline` mapping and
+ *    `body.ticketing-demo-active` token scope apply to the utilities
+ *    generated above.
+ */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities) source("./");
+@import "tw-animate-css";
+@import "./theme.css";

@@ -1,0 +1,28 @@
+@use "@/styles/tokens" as *;
+@use "@/styles/mixins" as *;
+
+.wrap {
+  @include container-x;
+  padding-block: 96px;
+  text-align: center;
+}
+
+.eyebrow {
+  @include eyebrow;
+  margin-bottom: 12px;
+}
+
+.title {
+  font-size: 38px;
+  font-weight: 800;
+  color: $ink;
+}
+
+.subtitle {
+  margin-top: 12px;
+  color: $slate;
+}
+
+.cta {
+  margin-top: 24px;
+}
