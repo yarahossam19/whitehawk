@@ -1,7 +1,7 @@
 # =========================
 # Stage 1: Builder
 # =========================
-FROM node:20-alpine AS builder
+FROM node:22-alpine AS builder
 
 WORKDIR /app
 
@@ -13,23 +13,37 @@ RUN npm ci
 
 COPY . .
 
-# Public variables required at Next.js build time
+# =========================
+# Build Arguments
+# =========================
 ARG NEXT_PUBLIC_SITE_URL
 ARG NEXT_PUBLIC_API_BASE_URL
+ARG NEXT_PUBLIC_SUPABASE_URL
+ARG NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
+ARG NEXT_PUBLIC_SUPABASE_PROJECT_ID
 
+# =========================
+# Environment Variables
+# =========================
 ENV NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL
 ENV NEXT_PUBLIC_API_BASE_URL=$NEXT_PUBLIC_API_BASE_URL
+ENV NEXT_PUBLIC_SUPABASE_URL=$NEXT_PUBLIC_SUPABASE_URL
+ENV NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=$NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
+ENV NEXT_PUBLIC_SUPABASE_PROJECT_ID=$NEXT_PUBLIC_SUPABASE_PROJECT_ID
+
+# (اختياري للتأكد أثناء أول Build)
+# RUN echo "SUPABASE_URL=$NEXT_PUBLIC_SUPABASE_URL"
 
 RUN npm run build
 
-# Remove build cache to reduce final image size
+# Remove build cache
 RUN rm -rf .next/cache
 
 
 # =========================
 # Stage 2: Runner
 # =========================
-FROM node:20-alpine AS runner
+FROM node:22-alpine AS runner
 
 WORKDIR /app
 
@@ -39,16 +53,19 @@ ENV PORT=3000
 ENV HOSTNAME=0.0.0.0
 
 RUN addgroup --system --gid 1001 nodejs \
-    && adduser --system --uid 1001 nextjs
+ && adduser --system --uid 1001 nextjs
 
 COPY package.json package-lock.json ./
 
 RUN npm ci --omit=dev \
-    && npm cache clean --force
+ && npm cache clean --force
 
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/next.config.ts ./next.config.ts
+
+# لو عندك ملفات تانية مطلوبة وقت التشغيل
+COPY --from=builder /app/package.json ./package.json
 
 USER nextjs
 
