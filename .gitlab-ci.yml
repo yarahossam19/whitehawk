@@ -10,87 +10,225 @@ variables:
 
   IMAGE_TAG: "$CI_COMMIT_SHORT_SHA"
   CONTAINER_PORT: "3000"
-  
+
+
+# =========================================================
+# Build and Push Docker Image to AWS ECR
+# =========================================================
 
 build_and_push_to_ecr:
   stage: build_push
+
   image: docker:27
+
   services:
     - name: docker:27-dind
       command: ["--tls=false"]
+
   before_script:
     - apk add --no-cache bash docker-credential-ecr-login
+
     - export AWS_DEFAULT_REGION="${AWS_REGION}"
+
     - export ECR_REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
+
     - export IMAGE_URI="${ECR_REGISTRY}/${ECR_REPOSITORY}"
+
     - docker --version
+
     - mkdir -p ~/.docker
+
     - echo "{\"credHelpers\":{\"${ECR_REGISTRY}\":\"ecr-login\"}}" > ~/.docker/config.json
+
     - cat ~/.docker/config.json
+
   script:
-    # Build-time vars are needed so /blog can prerender with real posts. They
-    # must exist as GitLab CI/CD project variables; when unset they resolve to
-    # empty strings and /blog prerenders empty (ISR fills it in after deploy).
+
+    # -----------------------------------------------------
+    # Validate required Supabase build variables
+    # -----------------------------------------------------
+
+    - |
+      echo "Checking Supabase build variables..."
+
+      test -n "${NEXT_PUBLIC_SUPABASE_URL:-}" || {
+        echo "ERROR: NEXT_PUBLIC_SUPABASE_URL is missing"
+        exit 1
+      }
+
+      test -n "${NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY:-}" || {
+        echo "ERROR: NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY is missing"
+        exit 1
+      }
+
+      test -n "${NEXT_PUBLIC_SUPABASE_PROJECT_ID:-}" || {
+        echo "ERROR: NEXT_PUBLIC_SUPABASE_PROJECT_ID is missing"
+        exit 1
+      }
+
+      test -n "${SUPABASE_URL:-}" || {
+        echo "ERROR: SUPABASE_URL is missing"
+        exit 1
+      }
+
+      test -n "${SUPABASE_PUBLISHABLE_KEY:-}" || {
+        echo "ERROR: SUPABASE_PUBLISHABLE_KEY is missing"
+        exit 1
+      }
+
+      test -n "${SUPABASE_PROJECT_ID:-}" || {
+        echo "ERROR: SUPABASE_PROJECT_ID is missing"
+        exit 1
+      }
+
+      echo "Supabase build variables are available."
+
+    # -----------------------------------------------------
+    # Build Docker Image
+    # -----------------------------------------------------
+
     - |
       docker build --pull \
-        --build-arg NEXT_PUBLIC_SITE_URL="${NEXT_PUBLIC_SITE_URL}" \
-        --build-arg NEXT_PUBLIC_API_BASE_URL="${NEXT_PUBLIC_API_BASE_URL}" \
-        --build-arg NEXT_PUBLIC_SUPABASE_URL="${NEXT_PUBLIC_SUPABASE_URL}" \
-        --build-arg NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY="${NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY}" \
-        --build-arg NEXT_PUBLIC_SUPABASE_PROJECT_ID="${NEXT_PUBLIC_SUPABASE_PROJECT_ID}" \
-        --build-arg SUPABASE_URL="${SUPABASE_URL}" \
-        --build-arg SUPABASE_PUBLISHABLE_KEY="${SUPABASE_PUBLISHABLE_KEY}" \
-        -t "$IMAGE_URI:$IMAGE_TAG" -t "$IMAGE_URI:latest" .
+        --build-arg NEXT_PUBLIC_SITE_URL="${NEXT_PUBLIC_SITE_URL:-}" \
+        --build-arg NEXT_PUBLIC_API_BASE_URL="${NEXT_PUBLIC_API_BASE_URL:-}" \
+        --build-arg NEXT_PUBLIC_SUPABASE_URL="$NEXT_PUBLIC_SUPABASE_URL" \
+        --build-arg NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY="$NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY" \
+        --build-arg NEXT_PUBLIC_SUPABASE_PROJECT_ID="$NEXT_PUBLIC_SUPABASE_PROJECT_ID" \
+        --build-arg SUPABASE_URL="$SUPABASE_URL" \
+        --build-arg SUPABASE_PUBLISHABLE_KEY="$SUPABASE_PUBLISHABLE_KEY" \
+        --build-arg SUPABASE_PROJECT_ID="$SUPABASE_PROJECT_ID" \
+        -t "$IMAGE_URI:$IMAGE_TAG" \
+        -t "$IMAGE_URI:latest" \
+        .
+
+    # -----------------------------------------------------
+    # Push Docker Image to ECR
+    # -----------------------------------------------------
+
     - docker push "$IMAGE_URI:$IMAGE_TAG"
+
     - docker push "$IMAGE_URI:latest"
+
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"'
 
+
+# =========================================================
+# Deploy to EC2
+# =========================================================
+
 deploy_to_ec2:
   stage: deploy
+
   image: alpine:3.20
+
   needs:
     - build_and_push_to_ecr
+
   before_script:
     - apk add --no-cache openssh-client bash docker-credential-ecr-login
+
     - eval "$(ssh-agent -s)"
+
     - chmod 600 "$EC2_SSH_PRIVATE_KEY"
+
     - ssh-add "$EC2_SSH_PRIVATE_KEY"
+
     - mkdir -p ~/.ssh
+
     - chmod 700 ~/.ssh
+
     - ssh-keyscan -H "$EC2_HOST" >> ~/.ssh/known_hosts
+
   script:
+
     - export AWS_DEFAULT_REGION="${AWS_REGION}"
+
     - export ECR_REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
+
     - export IMAGE_URI="${ECR_REGISTRY}/${ECR_REPOSITORY}"
 
-    # Generate ECR login password from GitLab runner without installing AWS CLI
-    - export ECR_PASSWORD="$(echo "$ECR_REGISTRY" | docker-credential-ecr-login get | sed -n 's/.*"Secret":"\([^"]*\)".*/\1/p')"
-    - test -n "$ECR_PASSWORD"
+    # -----------------------------------------------------
+    # Generate ECR Login Password
+    # -----------------------------------------------------
 
-    # Prepare app directory on EC2
-    - ssh "$EC2_USER@$EC2_HOST" "mkdir -p '$APP_ENV_DIR'"
+    - |
+      export ECR_PASSWORD="$(
+        echo "$ECR_REGISTRY" |
+        docker-credential-ecr-login get |
+        sed -n 's/.*"Secret":"\([^"]*\)".*/\1/p'
+      )"
 
-    # Copy runtime environment file to EC2 if APP_ENV_FILE exists
+      test -n "$ECR_PASSWORD"
+
+      echo "$ECR_PASSWORD" > /tmp/ecr_password
+
+    # -----------------------------------------------------
+    # Prepare Application Directory on EC2
+    # -----------------------------------------------------
+
+    - |
+      ssh "$EC2_USER@$EC2_HOST" \
+        "mkdir -p '$APP_ENV_DIR'"
+
+    # -----------------------------------------------------
+    # Copy Runtime Environment File
+    # -----------------------------------------------------
+
     - |
       if [ -n "${APP_ENV_FILE:-}" ] && [ -f "$APP_ENV_FILE" ]; then
-        scp "$APP_ENV_FILE" "$EC2_USER@$EC2_HOST:$APP_ENV_DIR/.env"
+
+        echo "Copying runtime environment file..."
+
+        scp "$APP_ENV_FILE" \
+          "$EC2_USER@$EC2_HOST:$APP_ENV_DIR/.env"
+
       else
-        ssh "$EC2_USER@$EC2_HOST" "touch '$APP_ENV_DIR/.env'"
+
+        echo "APP_ENV_FILE not found. Creating empty .env file..."
+
+        ssh "$EC2_USER@$EC2_HOST" \
+          "touch '$APP_ENV_DIR/.env'"
+
       fi
 
-    # Login EC2 Docker to ECR without AWS CLI on EC2
-    - echo "$ECR_PASSWORD" | ssh "$EC2_USER@$EC2_HOST" "docker login --username AWS --password-stdin '$ECR_REGISTRY'"
+    # -----------------------------------------------------
+    # Login EC2 Docker to AWS ECR
+    # -----------------------------------------------------
 
-    # Deploy image to EC2
+    - |
+      cat /tmp/ecr_password |
+      ssh "$EC2_USER@$EC2_HOST" \
+        "docker login \
+        --username AWS \
+        --password-stdin \
+        '$ECR_REGISTRY'"
+
+    # -----------------------------------------------------
+    # Deploy Container
+    # -----------------------------------------------------
+
     - |
       ssh "$EC2_USER@$EC2_HOST" << EOF
+
         set -e
+
+        echo "Pulling Docker image..."
 
         docker pull "${IMAGE_URI}:${IMAGE_TAG}"
 
+
+        echo "Stopping existing container..."
+
         docker stop "${CONTAINER_NAME}" || true
+
+
+        echo "Removing existing container..."
+
         docker rm "${CONTAINER_NAME}" || true
+
+
+        echo "Starting new container..."
 
         docker run -d \
           --name "${CONTAINER_NAME}" \
@@ -99,7 +237,15 @@ deploy_to_ec2:
           -p "${HOST_PORT}:${CONTAINER_PORT}" \
           "${IMAGE_URI}:${IMAGE_TAG}"
 
+
+        echo "Cleaning unused images..."
+
         docker image prune -f
+
+
+        echo "Deployment completed."
+
       EOF
+
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"'
