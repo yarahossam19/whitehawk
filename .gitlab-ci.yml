@@ -28,7 +28,19 @@ build_and_push_to_ecr:
     - echo "{\"credHelpers\":{\"${ECR_REGISTRY}\":\"ecr-login\"}}" > ~/.docker/config.json
     - cat ~/.docker/config.json
   script:
-    - docker build --pull -t "$IMAGE_URI:$IMAGE_TAG" -t "$IMAGE_URI:latest" .
+    # Build-time vars are needed so /blog can prerender with real posts. They
+    # must exist as GitLab CI/CD project variables; when unset they resolve to
+    # empty strings and /blog prerenders empty (ISR fills it in after deploy).
+    - |
+      docker build --pull \
+        --build-arg NEXT_PUBLIC_SITE_URL="${NEXT_PUBLIC_SITE_URL}" \
+        --build-arg NEXT_PUBLIC_API_BASE_URL="${NEXT_PUBLIC_API_BASE_URL}" \
+        --build-arg NEXT_PUBLIC_SUPABASE_URL="${NEXT_PUBLIC_SUPABASE_URL}" \
+        --build-arg NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY="${NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY}" \
+        --build-arg NEXT_PUBLIC_SUPABASE_PROJECT_ID="${NEXT_PUBLIC_SUPABASE_PROJECT_ID}" \
+        --build-arg SUPABASE_URL="${SUPABASE_URL}" \
+        --build-arg SUPABASE_PUBLISHABLE_KEY="${SUPABASE_PUBLISHABLE_KEY}" \
+        -t "$IMAGE_URI:$IMAGE_TAG" -t "$IMAGE_URI:latest" .
     - docker push "$IMAGE_URI:$IMAGE_TAG"
     - docker push "$IMAGE_URI:latest"
   rules:

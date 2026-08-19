@@ -82,6 +82,202 @@
   color: $slate;
 }
 
+// ---------- Stepper ----------
+.stepper {
+  margin-top: 20px;
+  display: grid;
+  gap: 8px;
+  list-style: none;
+
+  @include respond-to(sm) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+}
+
+.stepItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-top: 2px solid $line;
+  padding-top: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: $slate;
+  transition: border-color 0.15s;
+}
+
+.stepItemActive {
+  border-top-color: $accent;
+  color: $ink;
+}
+
+.stepItemDone {
+  border-top-color: $accent;
+}
+
+.stepDot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+  border-radius: $radius-pill;
+  background: $wash;
+  border: 1px solid $line;
+  font-size: 11px;
+  font-weight: 700;
+  color: $slate;
+
+  .stepItemActive &,
+  .stepItemDone & {
+    background: $accent;
+    border-color: $accent;
+    color: white;
+  }
+}
+
+.stepLabel {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.step {
+  margin-top: 20px;
+
+  // Step 1 opens with a `.fieldsRow` that carries its own top margin; zero it
+  // out so every step starts the same distance below the stepper.
+  > *:first-child {
+    margin-top: 0;
+  }
+}
+
+// ---------- Segmented control ----------
+.segmented {
+  display: flex;
+  gap: 4px;
+  border-radius: $radius-lg;
+  background: $wash;
+  padding: 4px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.segment {
+  flex: 1 1 0%;
+  border-radius: $radius-md;
+  padding: 10px 12px;
+  transition: all 0.15s;
+
+  @include focus-ring;
+}
+
+.segmentActive {
+  background: white;
+  color: $ink;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.segmentInactive {
+  color: $slate;
+}
+
+// ---------- Review list ----------
+.review {
+  border-radius: $radius-lg;
+  border: 1px solid $line;
+  background: $wash;
+  padding: 4px 16px;
+}
+
+.reviewRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  padding-block: 10px;
+
+  & + & {
+    border-top: 1px solid $line;
+  }
+}
+
+.reviewLabel {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: $slate;
+}
+
+.reviewValue {
+  font-size: 14px;
+  font-weight: 600;
+  color: $ink;
+  overflow-wrap: anywhere;
+  text-align: right;
+}
+
+// ---------- Captcha ----------
+.captchaRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.captchaImg {
+  border-radius: $radius-md;
+  border: 1px solid $line;
+  height: auto;
+  max-width: 100%;
+}
+
+.captchaPlaceholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 240px;
+  height: 64px;
+  border-radius: $radius-md;
+  border: 1px dashed $line;
+  background: $wash;
+  font-size: 12px;
+  color: $slate;
+}
+
+.captchaRefresh {
+  border-radius: $radius-md;
+  border: 1px solid $line;
+  background: white;
+  padding: 8px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  color: $slate;
+  transition: all 0.15s;
+
+  @include focus-ring;
+
+  &:hover:not(:disabled) {
+    border-color: $accent;
+    color: $accent;
+  }
+
+  &:disabled {
+    opacity: 0.55;
+  }
+}
+
+.captchaInput {
+  max-width: 240px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
 // ---------- Footer ----------
 .footer {
   margin-top: 24px;
@@ -92,7 +288,15 @@
   gap: 12px;
 }
 
+.stepNav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
 .disclaimer {
+  flex: 1 1 16rem;
   font-size: 11.5px;
   color: $slate;
 }

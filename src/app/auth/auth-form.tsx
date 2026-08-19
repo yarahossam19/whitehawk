@@ -11,7 +11,9 @@ export function AuthForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirect = searchParams.get("redirect");
-  const [mode, setMode] = useState<"signin" | "signup">("signin");
+  // Sign-up disabled — see the note in the card below. `mode` had only one
+  // reachable value, so it and its ternaries are removed rather than frozen.
+  // const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
@@ -26,6 +28,9 @@ export function AuthForm() {
     e.preventDefault();
     setBusy(true);
     try {
+      /* Sign-up branch disabled alongside the tab switcher — see the note in
+         the card below.
+
       if (mode === "signup") {
         const { error } = await supabase.auth.signUp({
           email,
@@ -35,12 +40,12 @@ export function AuthForm() {
         if (error) throw error;
         toast.success("Account created. You can sign in now.");
         setMode("signin");
-      } else {
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
-        if (error) throw error;
-        toast.success("Signed in");
-        router.push(redirect || "/admin/blog");
-      }
+      } else { ... }
+      */
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) throw error;
+      toast.success("Signed in");
+      router.push(redirect || "/admin/blog");
     } catch (err: any) {
       toast.error(err?.message ?? "Something went wrong");
     } finally {
@@ -55,14 +60,20 @@ export function AuthForm() {
         <div className={styles.textCol}>
           <div className={styles.eyebrow}>Team access</div>
           <h1 className={styles.title}>
-            {mode === "signin" ? "Welcome back." : "Create your admin account."}
+            Welcome back.
           </h1>
           <p className={styles.description}>
             This is the internal sign-in for the WhiteHawk team — publish articles, review
-            contact messages, manage content. The first person to register becomes the admin.
+            contact messages, manage content. Accounts are provisioned by an existing admin.
           </p>
         </div>
         <div className={styles.card}>
+          {/* Sign-up is disabled: the blog admin is invite-only, so /auth offers
+              sign-in only. With a single mode the tab switcher has nothing to
+              switch between, so it's commented out rather than rendered as a
+              lone tab. Restore this block (and the signUp branch in `submit`,
+              plus the `mode`-dependent copy) to re-enable self-registration.
+
           <div className={styles.tabs}>
             {(["signin", "signup"] as const).map((m) => (
               <button
@@ -74,6 +85,8 @@ export function AuthForm() {
               </button>
             ))}
           </div>
+          */}
+          <h1 style={{ marginBottom: "1rem" ,fontWeight: "bold",display: "flex",alignSelf: "center"}}> Sign In</h1>
           <form onSubmit={submit} className={styles.form}>
             <div>
               <label className={styles.label}>
@@ -94,7 +107,7 @@ export function AuthForm() {
               </label>
               <input
                 type="password"
-                autoComplete={mode === "signin" ? "current-password" : "new-password"}
+                autoComplete="current-password"
                 required
                 minLength={6}
                 value={password}
@@ -103,7 +116,7 @@ export function AuthForm() {
               />
             </div>
             <Button variant="accent" size="lg" className={styles.submitButton} type="submit" disabled={busy}>
-              {busy ? "…" : mode === "signin" ? "Sign in" : "Create account"}
+              {busy ? "…" : "Sign in"}
             </Button>
             <p className={styles.disclaimer}>
               By continuing, you agree to WhiteHawk's Terms and Privacy.

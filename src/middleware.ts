@@ -31,5 +31,8 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml).*)"],
+  // `api` is excluded so route handlers (the demo form, captcha) don't pay a
+  // Supabase round-trip per request — and don't 500 here when the Supabase
+  // env vars are absent, since those routes never touch Supabase.
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml).*)"],
 };

@@ -20,9 +20,23 @@ export type Post = {
 };
 
 function publicClient() {
-  const url = process.env.SUPABASE_URL!;
-  const key = process.env.SUPABASE_PUBLISHABLE_KEY!;
-  return createClient<Database>(url, key, {
+  // Falls back to the NEXT_PUBLIC_* pair so a build that only receives the
+  // prefixed vars (e.g. Docker build args) still resolves a client instead of
+  // failing deep inside supabase-js with an opaque "supabaseUrl is required".
+  const url = process.env.SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key =
+    process.env.SUPABASE_PUBLISHABLE_KEY ?? process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
+
+  const missing = [
+    !url && "SUPABASE_URL (or NEXT_PUBLIC_SUPABASE_URL)",
+    !key && "SUPABASE_PUBLISHABLE_KEY (or NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY)",
+  ].filter(Boolean);
+
+  if (missing.length > 0) {
+    throw new Error(`Missing Supabase environment variable(s): ${missing.join(", ")}`);
+  }
+
+  return createClient<Database>(url!, key!, {
     auth: { persistSession: false, autoRefreshToken: false },
   });
 }

@@ -1,0 +1,251 @@
+@use "@/styles/tokens" as *;
+@use "@/styles/mixins" as *;
+@use "@/styles/color-mix" as *;
+
+.wrap {
+  position: relative;
+  display: block;
+}
+
+// ---------- Closed control ----------
+// Matches the plain `.input` treatment used across the site's forms so a
+// Select and a text field sit on the same visual baseline.
+.trigger {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border-radius: $radius-md;
+  border: 1px solid $line;
+  background: white;
+  padding: 10px 12px;
+  font-size: 14px;
+  text-align: left;
+  color: $ink;
+  outline: none;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
+
+  &:hover:not(:disabled) {
+    border-color: alpha($accent, 45%);
+  }
+
+  &:focus,
+  &[data-open] {
+    border-color: $accent;
+    box-shadow: 0 0 0 2px alpha($accent, 20%);
+  }
+
+  &:disabled {
+    background: $wash;
+    color: $slate;
+    cursor: not-allowed;
+  }
+
+  &::placeholder {
+    color: $slate;
+  }
+}
+
+.value {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.placeholder {
+  color: $slate;
+}
+
+.chevron {
+  width: 12px;
+  height: 8px;
+  flex: 0 0 12px;
+  color: $slate;
+  transition: transform 0.18s ease;
+
+  .trigger[data-open] &,
+  .chevronBtn[data-open] & {
+    transform: rotate(180deg);
+  }
+}
+
+// Combobox uses a real <input>, so the chevron is a sibling button.
+.chevronBtn {
+  position: absolute;
+  inset-block: 1px;
+  right: 1px;
+  display: flex;
+  width: 34px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0 $radius-md $radius-md 0;
+  background: transparent;
+  color: $slate;
+
+  @include focus-ring;
+
+  &:hover {
+    color: $accent;
+  }
+}
+
+// Leave room for the chevron button so long labels don't run under it.
+.wrap:has(.chevronBtn) .trigger {
+  padding-right: 38px;
+}
+
+// ---------- Popup panel ----------
+// Portaled by Headless UI's `anchor`, so this is positioned at the document
+// level — hence the explicit z-index and width vars rather than `100%`.
+//
+// Height: `anchor` makes Headless UI write `max-height` as an INLINE style
+// (`min(var(--anchor-max-height, 100vh), <available>px)`), which would beat any
+// max-height set here. So cap the list by feeding it `--anchor-max-height`
+// instead — that also lets it shrink further when the viewport is tight.
+.panel {
+  --anchor-max-height: 18rem;
+
+  z-index: 60;
+  min-width: 12rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border-radius: $radius-lg;
+  border: 1px solid $line;
+  background: white;
+  padding: 6px;
+  box-shadow:
+    0 12px 32px -12px rgba(11, 42, 91, 0.28),
+    0 2px 6px -2px rgba(11, 42, 91, 0.12);
+
+  // Keep the list readable while it animates in.
+  transform-origin: top;
+  animation: selectPanelIn 0.14s ease-out;
+
+  &:focus {
+    outline: none;
+  }
+
+  // Slim, unobtrusive scrollbar for the long lists (e.g. countries).
+  scrollbar-width: thin;
+  scrollbar-color: alpha($slate, 35%) transparent;
+
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border: 3px solid transparent;
+    border-radius: $radius-pill;
+    background-clip: content-box;
+    background-color: alpha($slate, 32%);
+
+    &:hover {
+      background-color: alpha($slate, 55%);
+    }
+  }
+}
+
+// Width: Headless UI exposes the anchor's size as a CSS var, but which var
+// depends on the trigger it measured. For a Combobox that's the text input
+// (`--input-width`); for a Listbox it's the button (`--button-width`). They are
+// NOT interchangeable here — the Combobox's ComboboxButton is just the 34px
+// chevron, so using `--button-width` there would size the panel to the icon.
+.panelCombobox {
+  width: var(--input-width, 16rem);
+}
+
+.panelListbox {
+  width: var(--button-width, 16rem);
+}
+
+@keyframes selectPanelIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel {
+    animation: none;
+  }
+
+  .chevron {
+    transition: none;
+  }
+}
+
+// ---------- Options ----------
+.option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border-radius: $radius-md;
+  padding: 9px 10px;
+  font-size: 14px;
+  line-height: 1.35;
+  color: $ink;
+  cursor: pointer;
+  user-select: none;
+
+  & + & {
+    margin-top: 2px;
+  }
+
+  // `data-focus` is the keyboard/pointer active option; using it for hover too
+  // keeps mouse and keyboard highlighting identical.
+  &[data-focus] {
+    background: $accent;
+    color: white;
+  }
+
+  &[data-selected] {
+    font-weight: 600;
+
+    &:not([data-focus]) {
+      background: alpha($accent, 8%);
+      color: $accent;
+    }
+  }
+
+  &[data-disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.optionLabel {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.check {
+  width: 14px;
+  height: 14px;
+  flex: 0 0 14px;
+  opacity: 0;
+  color: currentColor;
+
+  .option[data-selected] & {
+    opacity: 1;
+  }
+}
+
+.empty {
+  padding: 12px 10px;
+  font-size: 13px;
+  color: $slate;
+  text-align: center;
+}
