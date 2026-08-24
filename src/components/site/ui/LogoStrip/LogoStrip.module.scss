@@ -25,27 +25,45 @@
   position: relative;
   margin-top: 28px;
   overflow: hidden;
+
+  // Let a visitor stop the row to actually read a mark. `.row` carries the
+  // global `.animate-marquee` utility, so pausing it here keeps the effect
+  // scoped to this strip.
+  &:hover .row,
+  &:focus-within .row {
+    animation-play-state: paused;
+  }
 }
 
 .row {
   display: flex;
   width: max-content;
   align-items: center;
-  gap: 40px;
+  gap: 48px;
+
+  @include respond-to(md) {
+    gap: 64px;
+  }
 }
 
 .logo {
-  height: 32px;
+  height: 44px;
   width: auto;
-  max-width: 120px;
+  max-width: 170px;
   flex-shrink: 0;
   object-fit: contain;
-  opacity: 0.6;
+  opacity: 0.75;
   filter: grayscale(1);
-  transition: all 0.3s ease;
+  transition: opacity 0.3s ease, filter 0.3s ease, transform 0.3s ease;
+
+  @include respond-to(md) {
+    height: 60px;
+    max-width: 220px;
+  }
 
   &:hover {
     opacity: 1;
     filter: grayscale(0);
+    transform: scale(1.06);
   }
 }

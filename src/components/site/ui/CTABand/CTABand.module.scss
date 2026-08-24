@@ -33,7 +33,9 @@
 
 .title {
   margin-inline: auto;
-  max-width: 48rem;
+  // Wide enough to keep a two-sentence headline on one line at the md font
+  // size; still inside container-x's 1152px content box.
+  max-width: 64rem;
   font-size: 30px;
   font-weight: 800;
   line-height: 1.25;

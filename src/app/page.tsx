@@ -61,17 +61,17 @@ const modules = [
     title: "Audit ready, on demand",
     blurb: "Controls-as-queries, continuous evidence, one-click audit packs across every framework.",
     stat: "92%",
-    statLabel: "less prep time",
+    statLabel: "Less Prep Time",
   },
   {
     key: "asset",
     to: "/platform/asset-management",
     icon: Boxes,
     tag: "Assets",
-    title: "One graph. Every asset.",
-    blurb: "Nine categories, real-time ownership tracking, impact analysis in one traversal.",
-    stat: "9",
-    statLabel: "asset categories",
+    title: "Discover, Manage, and Track every Asset.",
+    blurb: "100+ Asset Types, real-time ownership tracking, impact analysis in one traversal.",
+    stat: "100+",
+    statLabel: "Asset Types",
   },
 ];
 
@@ -162,18 +162,18 @@ export default function HomePage() {
         <HeroWordmark className={styles.heroWordmark} />
         <div aria-hidden className={styles.heroGlow} />
         <div className={styles.heroInner}>
-          <div className={styles.heroBadge}>
-            <span className={`${styles.heroBadgeDot} animate-pulse-dot`} />
+          {/* <div className={styles.heroBadge}> */}
+            {/* <span className={`${styles.heroBadgeDot} animate-pulse-dot`} />
             ISO 27001 · SOC 2 certified 
-          </div>
+          </div> */}
           
           <h1 className={`${styles.heroTitle} animate-text-reveal`}>
-            Manage  <span className={styles.heroAccent}>Your Entire Cybersecurity Program.</span>.{" "}
-            <span className={styles.heroFaint}>One Intelligent Platform.</span>
+            One Intelligent Platform <span className={styles.heroFaint}> <br/>to Manage</span>
+            <br />
+            <span className={styles.heroAccent}>Your Entire Cybersecurity Program.</span>
           </h1>
           <p className={styles.heroDescription}>
-           White Hawk unifies offensive security, defensive operations, GRC, and asset management in one intelligent platform—eliminating fragmented tools and giving you complete control over your cybersecurity program.
-          </p>
+White Hawk unifies every critical cybersecurity function—from offensive security and defensive operations to GRC and asset management—into one intelligent platform, giving you unified visibility, streamlined operations, and complete control over your cybersecurity program.          </p>
           <div className={styles.heroActions}>
             <Button as="link" to="/contact" variant="accent" size="lg">
               Book a Demo
@@ -192,7 +192,7 @@ export default function HomePage() {
         <SectionHeader
           eyebrow="See it in action"
           title="Every signal, every workflow — in one console"
-          description="From an internal red team engagement to a SOC 2 evidence pack, WhiteHawk keeps everything and everyone in the same place."
+          description="From the first gap assessment to a fully prepared compliance evidence pack, White Hawk brings your teams, workflows, and evidence together in one intelligent platform."
         />
         <HomeVideo />
       </Section>

@@ -69,8 +69,8 @@
 }
 
 .heroTitle {
-  max-width: 48rem;
-  font-size: 34px;
+  max-width: 55rem;
+  font-size: 25px;
   font-weight: 800;
   line-height: 1.1;
   letter-spacing: -0.025em;
@@ -91,8 +91,8 @@
 
 .heroDescription {
   margin-top: 20px;
-  max-width: 36rem;
-  font-size: 16px;
+  max-width: 47rem;
+  font-size: 18px;
   line-height: 1.625;
   color: #9bb4e6;
 
@@ -139,7 +139,9 @@
 }
 
 .problemIntro {
-  max-width: 48rem;
+  // Sized to the widest child (the title); `.problemTitle` / `.problemLead`
+  // set their own caps, so this must not clamp below them.
+  max-width: 58rem;
 }
 
 .problemEyebrow {
@@ -149,6 +151,7 @@
 }
 
 .problemTitle {
+  max-width: 58rem;
   font-size: 30px;
   font-weight: 800;
   line-height: 1.25;
@@ -165,6 +168,7 @@
 
 .problemLead {
   margin-top: 16px;
+  max-width: 48rem;
   font-size: 15px;
   line-height: 1.625;
   color: #9bb4e6;

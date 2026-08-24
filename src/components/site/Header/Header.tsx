@@ -182,7 +182,7 @@ export function Header() {
           )}
         </nav>
         <div className={styles.actions}>
-          <Link href="/auth" className={styles.signIn}>
+          <Link href="https://app.whitehawk.io/" target="_blank" className={styles.signIn}>
             Sign in
           </Link>
           <Link href="/contact" className={styles.cta}>

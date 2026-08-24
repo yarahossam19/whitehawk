@@ -57,7 +57,8 @@ export function LogoStrip({ label = "Trusted by leading organizations" }: { labe
                   aria-hidden
                   // Intrinsic size up front so the marquee row doesn't reflow
                   // as each mark arrives; CSS still constrains the painted box
-                  // to 32px tall / 120px wide.
+                  // (44px tall on mobile, 60px from md up — the source marks
+                  // are 96px tall, so they stay sharp at that size).
                   width={dim?.width}
                   height={dim?.height}
                   // The row is duplicated to loop seamlessly, so the second
