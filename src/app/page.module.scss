@@ -482,7 +482,9 @@
   gap: 24px;
 
   @include respond-to(lg) {
-    grid-template-columns: minmax(0, 240px) 1fr;
+    // The aside takes exactly the width of its one-line heading; the cards
+    // get the rest and hug their own content within it.
+    grid-template-columns: max-content minmax(0, 1fr);
     align-items: center;
   }
 }
@@ -496,27 +498,41 @@
   font-size: 22px;
   font-weight: 800;
   color: $ink;
+
+  // Only once there's a column to hold it — below lg the heading sits full
+  // width above the strip, where a 37-character line would overflow narrow
+  // viewports.
+  @include respond-to(lg) {
+    white-space: nowrap;
+  }
 }
 
-// One card per certification, all five across from md up.
+// One card per certification, all five the same width and grouped next to the
+// heading rather than pushed out to the section edge. `1fr` columns split the
+// row evenly while `width: max-content` collapses the grid onto its widest
+// card, so they end up equal AND content-sized instead of one or the other.
 .certsList {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
 
   @include respond-to(md) {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(5, 1fr);
+    width: max-content;
+    max-width: 100%;
+    justify-self: start;
+    gap: 8px;
   }
 }
 
 .certCard {
   display: flex;
   align-items: center;
-  gap: 9px;
+  gap: 8px;
   border-radius: $radius-lg;
   border: 1px solid $line;
   background: white;
-  padding: 10px 11px;
+  padding: 8px 10px;
   transition: all 0.3s;
 
   &:hover {
@@ -530,8 +546,8 @@
 // its own shape and background, so contain shows it whole.
 .certIconWrap {
   display: grid;
-  height: 36px;
-  width: 36px;
+  height: 40px;
+  width: 40px;
   flex-shrink: 0;
   place-items: center;
 }
@@ -542,16 +558,20 @@
   object-fit: contain;
 }
 
+// Both labels stay on one line — "ISO 27001" broke across two and made that
+// card (and so every card, since they share a width) taller than the rest.
 .certName {
   font-size: 13px;
   font-weight: 800;
   color: $ink;
   line-height: 1.25;
+  white-space: nowrap;
 }
 
 .certDesc {
   font-size: 10.5px;
   color: $slate;
+  white-space: nowrap;
 }
 
 // ---------- Testimonials ----------

@@ -25,7 +25,7 @@ import styles from "./page.module.scss";
 
 export const metadata: Metadata = pageMetadata({
   path: "/platform",
-  title: "Platform — WhiteHawk",
+  title: "Platform — White Hawk",
   description:
     "One security platform, four modules. Offensive, defensive, GRC and asset management sharing one data model, one workflow engine, one console.",
 });
@@ -182,7 +182,7 @@ export default function PlatformPage() {
       <Section  bg="white" >
         <SectionHeader
           eyebrow="Workflow"
-          title="How work moves through WhiteHawk"
+          title="How work moves through White Hawk"
         />
         <div className={styles.stepsGrid}>
           {steps.map((s, i) => (
@@ -305,7 +305,7 @@ export default function PlatformPage() {
               Every tenant is <span className={styles.tenancyAccent}>completely isolated</span>.
             </h2>
             <p className={styles.tenancyLead}>
-              WhiteHawk is multitenant by architecture, not by convention. Your data never
+              White Hawk is multitenant by architecture, not by convention. Your data never
               shares compute, storage or an encryption key with anyone else's — isolation is
               enforced at the infrastructure layer, not just the application layer.
             </p>
@@ -379,7 +379,7 @@ export default function PlatformPage() {
         <SectionHeader
           eyebrow="Integrations"
           title="Connects to the stack you already run"
-          description="Every connector WhiteHawk ships, grouped the way the product groups them."
+          description="Every connector White Hawk ships, grouped the way the product groups them."
         />
         <div className={styles.integrationsList}>
           {integrationRows.map((row, i) => (

@@ -16,9 +16,9 @@ import styles from "./page.module.scss";
 
 export const metadata: Metadata = pageMetadata({
   path: "/company",
-  title: "Company — WhiteHawk",
+  title: "Company — White Hawk",
   description:
-    "WhiteHawk is on a mission to unify the security program. Meet the team, our investors, and the story behind the platform.",
+    "White Hawk is on a mission to unify the security program. Meet the team, our investors, and the story behind the platform.",
 });
 
 const pillars = [
@@ -60,7 +60,7 @@ const leaders = [
 ];
 
 const faqs = [
-  { q: "Where is WhiteHawk based?", a: "We operate across Egypt, Saudi Arabia and the United States, serving customers in the region and beyond." },
+  { q: "Where is White Hawk based?", a: "We operate across Egypt, Saudi Arabia and the United States, serving customers in the region and beyond." },
   { q: "Are you hiring?", a: "Yes — engineering, security research and go-to-market roles. See the careers page." },
   { q: "Who are your investors?", a: "We're backed by tier-1 cybersecurity VCs and strategic angels from the industry." },
 ];
@@ -89,7 +89,7 @@ export default function CompanyPage() {
       <section className={styles.hero}>
         <HeroWordmark tone="dark" className={styles.heroWordmark} />
         <div className={styles.heroInner}>
-          <div className={styles.heroEyebrow}>About WhiteHawk</div>
+          <div className={styles.heroEyebrow}>About White Hawk</div>
           <h1 className={styles.heroTitle}>
             Security programs deserve <span className={styles.heroAccent}>one system</span>, not ten.
           </h1>
@@ -107,14 +107,14 @@ export default function CompanyPage() {
           <div>
             <div className={styles.storyEyebrow}>Our story</div>
             <h2 className={styles.storyTitle}>
-              We started WhiteHawk after seeing strong security teams struggle with fragmented tools, disconnected workflows, and limited visibility across their cybersecurity programs.
+              We started White Hawk after seeing strong security teams struggle with fragmented tools, disconnected workflows, and limited visibility across their cybersecurity programs.
             </h2>
             <div className={styles.storyBody}>
               <p>
                 Through years of building and managing security programs, our founders saw the same challenge across different industries: organizations had capable teams and multiple technologies, but no single system connecting their assets, findings, controls, risks, and operations.
               </p>
               <p>
-                WhiteHawk was built in response to those real customer needs. What began as a mission to simplify cybersecurity management evolved into one intelligent platform that brings offensive security, defensive operations, GRC, and asset management together.
+                White Hawk was built in response to those real customer needs. What began as a mission to simplify cybersecurity management evolved into one intelligent platform that brings offensive security, defensive operations, GRC, and asset management together.
               </p>
               <p>
                 Our goal is simple: give cybersecurity teams the visibility, coordination, and control they need to manage their entire program more effectively.
@@ -194,7 +194,7 @@ export default function CompanyPage() {
                   reserved the wrong space and the tiles shifted on decode. */}
               <Image
                 src={src}
-                alt={`WhiteHawk investor ${i + 1} logo`}
+                alt={`White Hawk investor ${i + 1} logo`}
                 width={LOGO_DIMENSIONS[src]?.width ?? 120}
                 height={LOGO_DIMENSIONS[src]?.height ?? 40}
                 className={styles.investorLogo}

@@ -16,7 +16,7 @@ import styles from "./page.module.scss";
 
 export const metadata: Metadata = pageMetadata({
   path: "/platform/grc",
-  title: "GRC System — WhiteHawk",
+  title: "GRC System — White Hawk",
   description:
     "Continuous GRC — controls mapped to SAMA CSF, NCA ECC, ISO/IEC 27001 and PCI DSS 4.0, with evidence collected as those controls operate.",
 });

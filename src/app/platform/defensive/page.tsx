@@ -21,7 +21,7 @@ import styles from "./page.module.scss";
 
 export const metadata: Metadata = pageMetadata({
   path: "/platform/defensive",
-  title: "Defensive Security — WhiteHawk",
+  title: "Defensive Security — White Hawk",
   description:
     "SOC alerts, threat intelligence, threat hunting and breach monitoring in one investigation queue — with automated containment that cuts mean-time-to-respond.",
 });
@@ -121,7 +121,7 @@ export default function DefensivePage() {
           "NVD CVE",
         ],
         faqs: [
-          { q: "Do you replace my SIEM?", a: "Either way works. WhiteHawk ingests SIEM, IDS and endpoint signals alongside your existing stack, or runs as the primary investigation queue itself." },
+          { q: "Do you replace my SIEM?", a: "Either way works. White Hawk ingests SIEM, IDS and endpoint signals alongside your existing stack, or runs as the primary investigation queue itself." },
           { q: "Is the SOC human-led or automated?", a: "Human-led, with AI-driven correlation and automated playbooks handling containment and noise so analysts spend their time on real incidents." },
           { q: "What does threat hunting cover?", a: "Hypothesis-driven hunts across SIEM logs and network traffic, using behavioral analytics, anomaly detection and TTPs from current ATT&CK observations." },
         ],

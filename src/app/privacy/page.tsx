@@ -19,9 +19,9 @@ import styles from "./page.module.scss";
 
 export const metadata: Metadata = pageMetadata({
   path: "/privacy",
-  title: "Privacy Policy — WhiteHawk",
+  title: "Privacy Policy — White Hawk",
   description:
-    "WhiteHawk Security Privacy Policy. Learn how we collect, use, and protect your personal and organizational data.",
+    "White Hawk Security Privacy Policy. Learn how we collect, use, and protect your personal and organizational data.",
 });
 
 const toc = [
@@ -39,7 +39,7 @@ const toc = [
 
 const rights = [
   { title: "Right of Access", body: "You may request a copy of the personal data we hold about you, including information about how it is processed and to whom it has been disclosed." },
-  { title: "Right to Rectification", body: "You may request correction of inaccurate or incomplete personal data. You can also update most account information directly through the WhiteHawk platform." },
+  { title: "Right to Rectification", body: "You may request correction of inaccurate or incomplete personal data. You can also update most account information directly through the White Hawk platform." },
   { title: "Right to Erasure (Right to Be Forgotten)", body: "You may request deletion of your personal data, subject to our legal obligations to retain certain records for compliance, tax, or contractual purposes." },
   { title: "Right to Data Portability", body: "You may request that your personal data be provided to you in a structured, commonly used, and machine-readable format." },
   { title: "Right to Restrict Processing", body: "You may request that we limit the processing of your personal data in certain circumstances, such as when you contest the accuracy of the data." },
@@ -119,7 +119,7 @@ export default function PrivacyPage() {
               </div>
               <h2 className={styles.blockTitle}>Introduction</h2>
               <p>
-                WhiteHawk Security ("WhiteHawk," "we," "us," or "our") is committed to protecting the privacy and security of your personal information. As a cybersecurity company, we hold ourselves to the highest standards of data protection — the same standards we help our clients achieve.
+                White Hawk Security ("White Hawk," "we," "us," or "our") is committed to protecting the privacy and security of your personal information. As a cybersecurity company, we hold ourselves to the highest standards of data protection — the same standards we help our clients achieve.
               </p>
               <p>
                 This Privacy Policy describes how we collect, use, disclose, and safeguard information when you visit our website, use our All-in-One cybersecurity platform, or interact with us through our marketing channels, including "Request a Demo" and "Start Free Trial" forms.
@@ -140,12 +140,12 @@ export default function PrivacyPage() {
                 <span className={styles.blockKicker}>Section 02</span>
               </div>
               <h2 className={styles.blockTitle}>Information We Collect</h2>
-              <p>We collect information through several channels, depending on your interaction with WhiteHawk:</p>
+              <p>We collect information through several channels, depending on your interaction with White Hawk:</p>
 
               <h3 className={styles.subTitle}>2.1 Information You Provide Directly</h3>
               <ul className={styles.fieldList}>
                 <li><strong>Contact & Account Information:</strong> When you submit a "Request a Demo" or "Start Free Trial" form, we collect your full name, business email address, phone number, company name, job title, and company size.</li>
-                <li><strong>Login Credentials:</strong> When you create a WhiteHawk platform account, we collect your email address and a securely hashed password. We also support single sign-on (SSO) authentication through third-party identity providers.</li>
+                <li><strong>Login Credentials:</strong> When you create a White Hawk platform account, we collect your email address and a securely hashed password. We also support single sign-on (SSO) authentication through third-party identity providers.</li>
                 <li><strong>Payment Information:</strong> For subscription and transaction processing, we collect billing details. Payment card information is processed by our PCI DSS-compliant payment processor and is never stored on our servers.</li>
                 <li><strong>Support Communications:</strong> Any information you provide when contacting our support team, including ticket content, email correspondence, and call recordings (with prior consent).</li>
               </ul>
@@ -158,7 +158,7 @@ export default function PrivacyPage() {
               </ul>
 
               <h3 className={styles.subTitle}>2.3 Client System & Infrastructure Data</h3>
-              <p>Given the nature of our cybersecurity services, WhiteHawk processes data related to your organization's IT infrastructure:</p>
+              <p>Given the nature of our cybersecurity services, White Hawk processes data related to your organization's IT infrastructure:</p>
               <ul className={styles.fieldList}>
                 <li><strong>Vulnerability Scan Data:</strong> Information gathered during offensive security assessments, including open ports, software versions, configuration details, and identified vulnerabilities.</li>
                 <li><strong>Asset Inventory Data:</strong> Hardware and software asset information, network topology data, and endpoint configurations collected through our Asset Management module.</li>
@@ -180,7 +180,7 @@ export default function PrivacyPage() {
               </div>
               <h2 className={styles.blockTitle}>How We Use Your Information</h2>
               <p>
-                WhiteHawk processes your information for the following purposes, each grounded in a lawful basis under applicable data protection regulations:
+                White Hawk processes your information for the following purposes, each grounded in a lawful basis under applicable data protection regulations:
               </p>
               <div className={styles.cardGrid}>
                 {usePurposes.map((p) => (
@@ -201,7 +201,7 @@ export default function PrivacyPage() {
               </div>
               <h2 className={styles.blockTitle}>Data Sharing & Third Parties</h2>
               <p>
-                WhiteHawk does not sell, rent, or trade your personal information or client system data. We share data only in the following limited circumstances:
+                White Hawk does not sell, rent, or trade your personal information or client system data. We share data only in the following limited circumstances:
               </p>
 
               <h3 className={styles.subTitle}>4.1 Infrastructure & Service Providers</h3>
@@ -211,7 +211,7 @@ export default function PrivacyPage() {
 
               <h3 className={styles.subTitle}>4.2 Technology Partners</h3>
               <p>
-                WhiteHawk integrates with technology partners such as <strong>Edraky</strong> and other cybersecurity ecosystem partners solely for the purpose of enhancing service delivery (e.g., threat intelligence feeds, vulnerability databases). Data shared with partners is limited to what is strictly necessary for service functionality.
+                White Hawk integrates with technology partners such as <strong>Edraky</strong> and other cybersecurity ecosystem partners solely for the purpose of enhancing service delivery (e.g., threat intelligence feeds, vulnerability databases). Data shared with partners is limited to what is strictly necessary for service functionality.
               </p>
 
               <h3 className={styles.subTitle}>4.3 Legal & Regulatory Disclosure</h3>
@@ -238,23 +238,23 @@ export default function PrivacyPage() {
               </div>
               <h2 className={styles.blockTitle}>International Data Transfers</h2>
               <p>
-                WhiteHawk operates globally and may transfer, store, and process your information in countries other than your country of residence. We are committed to ensuring that all international data transfers comply with applicable data protection laws.
+                White Hawk operates globally and may transfer, store, and process your information in countries other than your country of residence. We are committed to ensuring that all international data transfers comply with applicable data protection laws.
               </p>
 
               <h3 className={styles.subTitle}>GDPR Compliance (European Economic Area)</h3>
               <p>
-                For users and clients in the European Economic Area (EEA), United Kingdom, and Switzerland, WhiteHawk processes personal data in compliance with the General Data Protection Regulation (GDPR). We ensure lawful transfer of data outside the EEA through:
+                For users and clients in the European Economic Area (EEA), United Kingdom, and Switzerland, White Hawk processes personal data in compliance with the General Data Protection Regulation (GDPR). We ensure lawful transfer of data outside the EEA through:
               </p>
               <ul className={styles.fieldList}>
                 <li><strong>Standard Contractual Clauses (SCCs):</strong> We execute EU-approved Standard Contractual Clauses with all sub-processors and data recipients located outside the EEA.</li>
                 <li><strong>Adequacy Decisions:</strong> Where applicable, we transfer data to countries recognized by the European Commission as providing adequate data protection.</li>
-                <li><strong>Data Sovereignty Options:</strong> Enterprise clients may request data residency within specific geographic regions. WhiteHawk supports EU-based data hosting through our AWS and Azure infrastructure.</li>
+                <li><strong>Data Sovereignty Options:</strong> Enterprise clients may request data residency within specific geographic regions. White Hawk supports EU-based data hosting through our AWS and Azure infrastructure.</li>
               </ul>
 
               <h3 className={styles.subTitle}>Additional Regional Compliance</h3>
               <ul className={styles.fieldList}>
                 <li><strong>AICPA SOC 2 Type II:</strong> Our platform undergoes annual SOC 2 Type II audits, verifying that our security, availability, processing integrity, confidentiality, and privacy controls meet AICPA standards.</li>
-                <li><strong>ISO 27001:</strong> WhiteHawk maintains ISO 27001 certification for our information security management system (ISMS), ensuring systematic management of sensitive company and customer information.</li>
+                <li><strong>ISO 27001:</strong> White Hawk maintains ISO 27001 certification for our information security management system (ISMS), ensuring systematic management of sensitive company and customer information.</li>
                 <li><strong>PCI DSS:</strong> All payment processing is handled in accordance with PCI DSS requirements, ensuring the secure handling of cardholder data.</li>
               </ul>
             </section>
@@ -268,7 +268,7 @@ export default function PrivacyPage() {
               </div>
               <h2 className={styles.blockTitle}>Data Security & Retention</h2>
               <p>
-                As a cybersecurity company, data security is not merely a compliance requirement — it is foundational to our identity. WhiteHawk implements comprehensive, defense-in-depth security measures to protect the data entrusted to us.
+                As a cybersecurity company, data security is not merely a compliance requirement — it is foundational to our identity. White Hawk implements comprehensive, defense-in-depth security measures to protect the data entrusted to us.
               </p>
               <div className={styles.cardGrid}>
                 {security.map((s) => (
@@ -296,7 +296,7 @@ export default function PrivacyPage() {
               </div>
               <h2 className={styles.blockTitle}>Your Rights & Choices</h2>
               <p>
-                WhiteHawk respects your data privacy rights. Depending on your jurisdiction, you may have the following rights regarding your personal data:
+                White Hawk respects your data privacy rights. Depending on your jurisdiction, you may have the following rights regarding your personal data:
               </p>
               <ol className={styles.rightsList}>
                 {rights.map((r) => (
@@ -311,14 +311,14 @@ export default function PrivacyPage() {
               <p>You may opt out of receiving promotional emails at any time by:</p>
               <ul className={styles.fieldList}>
                 <li>Clicking the "Unsubscribe" link in any marketing email.</li>
-                <li>Updating your communication preferences in your WhiteHawk account settings.</li>
-                <li>Contacting us at <a href="mailto:privacy@whitehawk.com">privacy@whitehawk.com</a>.</li>
+                <li>Updating your communication preferences in your White Hawk account settings.</li>
+                <li>Contacting us at <a href="mailto:privacy@White Hawk.com">privacy@White Hawk.com</a>.</li>
               </ul>
               <p>
                 Please note that opting out of marketing communications does not affect service-related notifications, such as security alerts and compliance reports, which are essential to the delivery of our platform.
               </p>
               <p>
-                To exercise any of these rights, please contact our Data Protection Officer at <a href="mailto:dpo@whitehawk.com">dpo@whitehawk.com</a>. We will respond to verified requests within 30 days (or within the timeframe required by applicable law). We may request verification of your identity before processing your request to protect against unauthorized access.
+                To exercise any of these rights, please contact our Data Protection Officer at <a href="mailto:dpo@White Hawk.com">dpo@White Hawk.com</a>. We will respond to verified requests within 30 days (or within the timeframe required by applicable law). We may request verification of your identity before processing your request to protect against unauthorized access.
               </p>
             </section>
 
@@ -331,7 +331,7 @@ export default function PrivacyPage() {
               </div>
               <h2 className={styles.blockTitle}>Cookie Policy</h2>
               <p>
-                WhiteHawk uses cookies and similar tracking technologies to enhance your browsing experience, analyze site traffic, and personalize content.
+                White Hawk uses cookies and similar tracking technologies to enhance your browsing experience, analyze site traffic, and personalize content.
               </p>
               <div className={styles.cardGrid}>
                 {cookieTypes.map((c) => (
@@ -355,7 +355,7 @@ export default function PrivacyPage() {
               </div>
               <h2 className={styles.blockTitle}>Changes to This Policy</h2>
               <p>
-                WhiteHawk reserves the right to update this Privacy Policy at any time to reflect changes in our practices, technology, legal requirements, or business operations.
+                White Hawk reserves the right to update this Privacy Policy at any time to reflect changes in our practices, technology, legal requirements, or business operations.
               </p>
               <p>When we make material changes to this policy, we will:</p>
               <ul className={styles.fieldList}>
@@ -382,7 +382,7 @@ export default function PrivacyPage() {
                 <div className={styles.miniCard}>
                   <div className={styles.miniCardTitle}>Data Protection Officer</div>
                   <p className={styles.miniCardBody}>
-                    <a href="mailto:dpo@whitehawk.com">dpo@whitehawk.com</a>
+                    <a href="mailto:dpo@White Hawk.com">dpo@White Hawk.com</a>
                     <br />
                     Subject Line: Privacy Inquiry — [Your Name]
                   </p>
@@ -390,14 +390,14 @@ export default function PrivacyPage() {
                 <div className={styles.miniCard}>
                   <div className={styles.miniCardTitle}>General Privacy</div>
                   <p className={styles.miniCardBody}>
-                    <a href="mailto:privacy@whitehawk.com">privacy@whitehawk.com</a>
+                    <a href="mailto:privacy@White Hawk.com">privacy@White Hawk.com</a>
                     <br />
-                    Support: <a href="mailto:support@whitehawk.com">support@whitehawk.com</a>
+                    Support: <a href="mailto:support@White Hawk.com">support@White Hawk.com</a>
                   </p>
                 </div>
               </div>
               <p>
-                <strong>EU Representative:</strong> If you are located in the European Economic Area and wish to exercise your rights under the GDPR, you may also contact our designated EU representative at <a href="mailto:eu-representative@whitehawk.com">eu-representative@whitehawk.com</a>.
+                <strong>EU Representative:</strong> If you are located in the European Economic Area and wish to exercise your rights under the GDPR, you may also contact our designated EU representative at <a href="mailto:eu-representative@White Hawk.com">eu-representative@White Hawk.com</a>.
               </p>
               <p>
                 If you believe that your data protection rights have been violated, you have the right to lodge a complaint with a supervisory authority in the EU member state of your habitual residence, place of work, or place of the alleged infringement.

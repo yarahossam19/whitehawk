@@ -18,7 +18,7 @@ import styles from "./page.module.scss";
 
 export const metadata: Metadata = pageMetadata({
   path: "/platform/offensive",
-  title: "Offensive Security — WhiteHawk",
+  title: "Offensive Security — White Hawk",
   description:
     "Vulnerability assessment, penetration testing, configuration review and CIS benchmarking — continuous offensive testing with every finding tracked to a fix.",
 });

@@ -17,7 +17,7 @@ import styles from "./page.module.scss";
 
 export const metadata: Metadata = pageMetadata({
   path: "/pricing",
-  title: "Pricing — WhiteHawk",
+  title: "Pricing — White Hawk",
   description:
     "Transparent plans tailored to your program. Standard, Pro and Enterprise — book a demo for a personalized quote.",
 });
@@ -289,7 +289,7 @@ export default function PricingPage() {
         <div className={styles.roiInner}>
           <div className={`reveal ${styles.roiEyebrow}`}>Security ROI</div>
           <h2 className={`reveal ${styles.roiTitle}`}>
-            Teams on WhiteHawk ship faster and pay less
+            Teams on White Hawk ship faster and pay less
           </h2>
           <div className={styles.statsGrid}>
             {[
@@ -309,7 +309,7 @@ export default function PricingPage() {
           </div>
           <Card className={styles.roiCard}>
             <div className={styles.roiQuote}>
-              “Consolidating on WhiteHawk let us cut three vendors and reinvest the budget in
+              “Consolidating on White Hawk let us cut three vendors and reinvest the budget in
               headcount. Auditor called our evidence pack ‘the cleanest they'd seen this year’.”
             </div>
             <div className={styles.roiAuthor}>

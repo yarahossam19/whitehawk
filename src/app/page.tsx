@@ -27,9 +27,9 @@ import styles from "./page.module.scss";
 
 export const metadata: Metadata = pageMetadata({
   path: "/",
-  title: "WhiteHawk — One security platform, end to end",
+  title: "White Hawk — One security platform, end to end",
   description:
-    "Offensive, defensive, GRC and asset management, unified in a single platform. Run your whole security program on WhiteHawk.",
+    "Offensive, defensive, GRC and asset management, unified in a single platform. Run your whole security program on White Hawk.",
 });
 
 const modules = [
@@ -105,19 +105,19 @@ const problems = [
 const testimonials = [
   {
     quote:
-      "WhiteGuard transformed our security posture from reactive to proactive. Their SOC team detected a critical vulnerability that had gone unnoticed for months.",
+      "WHITEGUARD transformed our security posture from reactive to proactive. Their SOC team detected a critical vulnerability that had gone unnoticed for months.",
     name: "Mohamed Arafa",
     role: "IT Manager At Paxera",
   },
   {
     quote:
-      "The penetration testing uncovered vulnerabilities our previous vendor missed entirely. WhiteGuard's offensive team is world-class.",
+      "The penetration testing uncovered vulnerabilities our previous vendor missed entirely. WHITEGUARD's offensive team is world-class.",
     name: "Bahaa Ryad",
     role: "IT Manager Penetration testing At Enmaa",
   },
   {
     quote:
-      "WhiteGuard helped us optimize our security spending by offering efficient cybersecurity tools while focusing on risk mitigation. We have achieved a robust security posture at a predictable price point, proving that world-class defense doesn't have to come with an unsustainable budget.",
+      "WHITEGUARD helped us optimize our security spending by offering efficient cybersecurity tools while focusing on risk mitigation. We have achieved a robust security posture at a predictable price point, proving that world-class defense doesn't have to come with an unsustainable budget.",
     name: "Hazem Mohamed",
     role: "CIO, A.T Lease",
   },
@@ -125,7 +125,7 @@ const testimonials = [
   //   // Carried over as-is from the previous site, where this quote was duplicated
   //   // from Mohamed Arafa's — replace with Mohamed Youssef's own words.
   //   quote:
-  //     "WhiteGuard transformed our security posture from reactive to proactive. Their SOC team detected a critical vulnerability that had gone unnoticed for months.",
+  //     "WHITEGUARD transformed our security posture from reactive to proactive. Their SOC team detected a critical vulnerability that had gone unnoticed for months.",
   //   name: "Mohamed Youssef",
   //   role: "infrastructure manager At GIG",
   // },
@@ -236,7 +236,7 @@ White Hawk unifies every critical cybersecurity function—from offensive securi
           >
             <span className={styles.problemFooterLine} />
             <span className={styles.problemFooterText}>
-              WhiteHawk collapses all of it into one system.
+              White Hawk collapses all of it into one system.
             </span>
             <span className={styles.problemFooterLine} />
           </div>
@@ -316,8 +316,8 @@ White Hawk unifies every critical cybersecurity function—from offensive securi
                     <Image
                       src={c.src}
                       alt={c.n}
-                      width={36}
-                      height={36}
+                      width={40}
+                      height={40}
                       className={styles.certIcon}
                     />
                   </div>

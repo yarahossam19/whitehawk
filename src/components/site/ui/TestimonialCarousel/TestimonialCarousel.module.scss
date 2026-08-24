@@ -63,6 +63,10 @@
 }
 
 .glyph {
+  // lucide's Quote is the closing mark (ball on top, tail descending — a "9").
+  // Rotating it 180deg gives the opening mark ("6"), which is what belongs at
+  // the head of a pull quote.
+  transform: rotate(180deg);
   color: alpha($accent, 45%);
 }
 

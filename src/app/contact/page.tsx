@@ -9,13 +9,13 @@ import styles from "./page.module.scss";
 
 const highlights = [
   "Discuss what your business needs (and doesn't need)",
-  "Explore the full capabilities of the WhiteHawk platform",
+  "Explore the full capabilities of the White Hawk platform",
   "Tailor strategies to automate your security and compliance",
 ];
 
 export const metadata: Metadata = pageMetadata({
   path: "/contact",
-  title: "Contact us · Book a Demo — WhiteHawk",
+  title: "Contact us · Book a Demo — White Hawk",
   description:
     "Talk to a security engineer. Book a 30-minute working demo, ask about pricing, or start a partner conversation.",
 });
@@ -46,8 +46,8 @@ export default function ContactPage() {
 
           {/* Side info */}
           <div className={styles.sideInfo}>
-            <h2 className={styles.sideTitle}>Find out what WhiteHawk can do for your business.</h2>
-            <p className={styles.sideSubtitle}>Meet one-on-one with a WhiteHawk expert to:</p>
+            <h2 className={styles.sideTitle}>Find out what White Hawk can do for your business.</h2>
+            <p className={styles.sideSubtitle}>Meet one-on-one with a White Hawk expert to:</p>
             <ul className={styles.checklist}>
               {highlights.map((h) => (
                 <li key={h} className={styles.checklistItem}>
