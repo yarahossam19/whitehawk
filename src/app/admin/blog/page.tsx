@@ -7,7 +7,7 @@ import type { Post } from "@/lib/posts";
 import { SiteLayout } from "@/components/site/SiteLayout/SiteLayout";
 import { Button } from "@/components/site/ui/Button/Button";
 import { Section } from "@/components/site/ui/Section/Section";
-import { supabase } from "@/integrations/supabase/client";
+import { signOutAction } from "@/lib/auth.actions";
 import { toast } from "sonner";
 import { LogOut, Pencil, Plus, Trash2, Circle, CheckCircle2 } from "lucide-react";
 import styles from "./page.module.scss";
@@ -33,7 +33,7 @@ export default function AdminBlogPage() {
   });
 
   const signOut = async () => {
-    await supabase.auth.signOut();
+    await signOutAction();
     window.location.href = "/auth";
   };
 
@@ -52,8 +52,8 @@ export default function AdminBlogPage() {
           <div className={styles.deniedEyebrow}>Access denied</div>
           <h1 className={styles.deniedTitle}>Admin access required</h1>
           <p className={styles.deniedText}>
-            The first person to register for this project becomes admin automatically. You are signed in
-            but not the admin — ask them to grant you the role.
+            Your session has expired or the admin credentials for this server have changed. Sign in
+            again to continue.
           </p>
           <div className={styles.deniedActions}>
             <Button as="link" to="/" variant="ghost">Home</Button>

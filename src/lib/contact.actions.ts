@@ -1,8 +1,8 @@
 "use server";
 
-import { createClient } from "@supabase/supabase-js";
+import { randomUUID } from "node:crypto";
 import { z } from "zod";
-import type { Database } from "@/integrations/supabase/types";
+import { getDb, nowIso } from "./db";
 
 const contactSchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(120),
@@ -14,18 +14,21 @@ const contactSchema = z.object({
 
 export async function submitContactMessage(input: unknown) {
   const data = contactSchema.parse(input);
-  const supabase = createClient<Database>(
-    process.env.SUPABASE_URL!,
-    process.env.SUPABASE_PUBLISHABLE_KEY!,
-    { auth: { persistSession: false, autoRefreshToken: false } },
-  );
-  const { error } = await supabase.from("contact_messages").insert({
-    name: data.name,
-    email: data.email,
-    company: data.company || null,
-    message: data.message,
-    source: data.source || "contact",
-  });
-  if (error) throw new Error(error.message);
+
+  getDb()
+    .prepare(
+      `INSERT INTO contact_messages (id, name, email, company, message, source, created_at)
+       VALUES (?, ?, ?, ?, ?, ?, ?)`,
+    )
+    .run(
+      randomUUID(),
+      data.name,
+      data.email,
+      data.company || null,
+      data.message,
+      data.source || "contact",
+      nowIso(),
+    );
+
   return { ok: true as const };
 }

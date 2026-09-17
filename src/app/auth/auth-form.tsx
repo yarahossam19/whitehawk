@@ -2,7 +2,7 @@
 
 import { useEffect, useState, type FormEvent } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { supabase } from "@/integrations/supabase/client";
+import { currentAdminEmail, signInAction } from "@/lib/auth.actions";
 import { Button } from "@/components/site/ui/Button/Button";
 import { toast } from "sonner";
 import styles from "./auth-form.module.scss";
@@ -19,8 +19,8 @@ export function AuthForm() {
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
-      if (data.session) router.replace(redirect || "/admin/blog");
+    currentAdminEmail().then((email) => {
+      if (email) router.replace(redirect || "/admin/blog");
     });
   }, [router, redirect]);
 
@@ -28,26 +28,20 @@ export function AuthForm() {
     e.preventDefault();
     setBusy(true);
     try {
-      /* Sign-up branch disabled alongside the tab switcher — see the note in
-         the card below.
-
-      if (mode === "signup") {
-        const { error } = await supabase.auth.signUp({
-          email,
-          password,
-          options: { emailRedirectTo: `${window.location.origin}/auth` },
-        });
-        if (error) throw error;
-        toast.success("Account created. You can sign in now.");
-        setMode("signin");
-      } else { ... }
-      */
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
-      if (error) throw error;
+      // Sign-up was already disabled here when this ran on Supabase Auth, and
+      // there is now exactly one admin account defined by ADMIN_EMAIL /
+      // ADMIN_PASSWORD_HASH — so there is nothing to register.
+      const result = await signInAction({ email, password });
+      if (!result.ok) {
+        toast.error(result.error);
+        return;
+      }
       toast.success("Signed in");
-      router.push(redirect || "/admin/blog");
-    } catch (err: any) {
-      toast.error(err?.message ?? "Something went wrong");
+      // A full navigation, so the server re-reads the freshly set session
+      // cookie when it renders the admin layout.
+      window.location.href = redirect || "/admin/blog";
+    } catch {
+      toast.error("Something went wrong");
     } finally {
       setBusy(false);
     }

@@ -46,45 +46,6 @@ build_and_push_to_ecr:
   script:
 
     # -----------------------------------------------------
-    # Validate required Supabase build variables
-    # -----------------------------------------------------
-
-    - |
-      echo "Checking Supabase build variables..."
-
-      test -n "${NEXT_PUBLIC_SUPABASE_URL:-}" || {
-        echo "ERROR: NEXT_PUBLIC_SUPABASE_URL is missing"
-        exit 1
-      }
-
-      test -n "${NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY:-}" || {
-        echo "ERROR: NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY is missing"
-        exit 1
-      }
-
-      test -n "${NEXT_PUBLIC_SUPABASE_PROJECT_ID:-}" || {
-        echo "ERROR: NEXT_PUBLIC_SUPABASE_PROJECT_ID is missing"
-        exit 1
-      }
-
-      test -n "${SUPABASE_URL:-}" || {
-        echo "ERROR: SUPABASE_URL is missing"
-        exit 1
-      }
-
-      test -n "${SUPABASE_PUBLISHABLE_KEY:-}" || {
-        echo "ERROR: SUPABASE_PUBLISHABLE_KEY is missing"
-        exit 1
-      }
-
-      test -n "${SUPABASE_PROJECT_ID:-}" || {
-        echo "ERROR: SUPABASE_PROJECT_ID is missing"
-        exit 1
-      }
-
-      echo "Supabase build variables are available."
-
-    # -----------------------------------------------------
     # Build Docker Image
     # -----------------------------------------------------
 
@@ -92,12 +53,6 @@ build_and_push_to_ecr:
       docker build --pull \
         --build-arg NEXT_PUBLIC_SITE_URL="${NEXT_PUBLIC_SITE_URL:-}" \
         --build-arg NEXT_PUBLIC_API_BASE_URL="${NEXT_PUBLIC_API_BASE_URL:-}" \
-        --build-arg NEXT_PUBLIC_SUPABASE_URL="$NEXT_PUBLIC_SUPABASE_URL" \
-        --build-arg NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY="$NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY" \
-        --build-arg NEXT_PUBLIC_SUPABASE_PROJECT_ID="$NEXT_PUBLIC_SUPABASE_PROJECT_ID" \
-        --build-arg SUPABASE_URL="$SUPABASE_URL" \
-        --build-arg SUPABASE_PUBLISHABLE_KEY="$SUPABASE_PUBLISHABLE_KEY" \
-        --build-arg SUPABASE_PROJECT_ID="$SUPABASE_PROJECT_ID" \
         -t "$IMAGE_URI:$IMAGE_TAG" \
         -t "$IMAGE_URI:latest" \
         .
@@ -170,7 +125,13 @@ deploy_to_ec2:
 
     - |
       ssh "$EC2_USER@$EC2_HOST" \
-        "mkdir -p '$APP_ENV_DIR'"
+        "mkdir -p '$APP_ENV_DIR/data/uploads'"
+
+      # The container runs as uid 1001 (see Dockerfile), so the bind-mounted
+      # directory must be writable by it — otherwise SQLite cannot create the
+      # database file and every page 500s.
+      ssh "$EC2_USER@$EC2_HOST" \
+        "sudo chown -R 1001:1001 '$APP_ENV_DIR/data' || chown -R 1001:1001 '$APP_ENV_DIR/data'"
 
     # -----------------------------------------------------
     # Copy Runtime Environment File
@@ -235,6 +196,8 @@ deploy_to_ec2:
           --name "${CONTAINER_NAME}" \
           --restart unless-stopped \
           --env-file "${APP_ENV_DIR}/.env" \
+          -e DATA_DIR=/data \
+          -v "${APP_ENV_DIR}/data:/data" \
           -p "${HOST_PORT}:${CONTAINER_PORT}" \
           "${IMAGE_URI}:${IMAGE_TAG}"
 

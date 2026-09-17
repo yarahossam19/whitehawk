@@ -1,6 +1,5 @@
 import "server-only";
-import { createClient } from "@supabase/supabase-js";
-import type { Database } from "@/integrations/supabase/types";
+import { getDb } from "./db";
 
 export type Post = {
   id: string;
@@ -19,51 +18,77 @@ export type Post = {
   updated_at: string;
 };
 
-function publicClient() {
-  // Falls back to the NEXT_PUBLIC_* pair so a build that only receives the
-  // prefixed vars (e.g. Docker build args) still resolves a client instead of
-  // failing deep inside supabase-js with an opaque "supabaseUrl is required".
-  const url = process.env.SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key =
-    process.env.SUPABASE_PUBLISHABLE_KEY ?? process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
+// SQLite has no boolean and no array type, so `published` is stored as 0/1 and
+// `tags` as a JSON string. Every read goes through here so the rest of the app
+// keeps seeing the same shape it saw from Postgres.
+export type PostRow = {
+  id: string;
+  slug: string;
+  title: string;
+  excerpt: string;
+  body: string;
+  cover_url: string | null;
+  category: string;
+  tags: string;
+  author_name: string;
+  read_minutes: number;
+  published: number;
+  published_at: string | null;
+  created_at: string;
+  updated_at: string;
+};
 
-  const missing = [
-    !url && "SUPABASE_URL (or NEXT_PUBLIC_SUPABASE_URL)",
-    !key && "SUPABASE_PUBLISHABLE_KEY (or NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY)",
-  ].filter(Boolean);
-
-  if (missing.length > 0) {
-    throw new Error(`Missing Supabase environment variable(s): ${missing.join(", ")}`);
+export function rowToPost(row: PostRow): Post {
+  let tags: string[] = [];
+  try {
+    const parsed = JSON.parse(row.tags);
+    if (Array.isArray(parsed)) tags = parsed.filter((t): t is string => typeof t === "string");
+  } catch {
+    // A hand-edited row shouldn't take the blog down over its tag list.
   }
 
-  return createClient<Database>(url!, key!, {
-    auth: { persistSession: false, autoRefreshToken: false },
+  return {
+    ...row,
+    tags,
+    published: row.published === 1,
+  };
+}
+
+const LIST_COLUMNS =
+  "id, slug, title, excerpt, cover_url, category, tags, author_name, read_minutes, published_at";
+
+export type PostListItem = Omit<Post, "body" | "created_at" | "updated_at" | "published">;
+
+// -------- public: list published posts --------
+export async function listPublishedPosts(): Promise<PostListItem[]> {
+  const rows = getDb()
+    .prepare(
+      `SELECT ${LIST_COLUMNS} FROM posts
+       WHERE published = 1
+       ORDER BY published_at DESC`,
+    )
+    .all() as unknown as Array<Omit<PostRow, "body" | "created_at" | "updated_at" | "published">>;
+
+  return rows.map((row) => {
+    const { tags, ...rest } = row;
+    let parsedTags: string[] = [];
+    try {
+      const parsed = JSON.parse(tags);
+      if (Array.isArray(parsed)) {
+        parsedTags = parsed.filter((t): t is string => typeof t === "string");
+      }
+    } catch {
+      // as above
+    }
+    return { ...rest, tags: parsedTags };
   });
 }
 
-// -------- public: list published posts --------
-export async function listPublishedPosts() {
-  const supabase = publicClient();
-  const { data, error } = await supabase
-    .from("posts")
-    .select(
-      "id, slug, title, excerpt, cover_url, category, tags, author_name, read_minutes, published_at",
-    )
-    .eq("published", true)
-    .order("published_at", { ascending: false });
-  if (error) throw new Error(error.message);
-  return (data ?? []) as Array<Omit<Post, "body" | "created_at" | "updated_at" | "published">>;
-}
-
 // -------- public: read one published post by slug --------
-export async function getPublishedPostBySlug(slug: string) {
-  const supabase = publicClient();
-  const { data: row, error } = await supabase
-    .from("posts")
-    .select("*")
-    .eq("slug", slug)
-    .eq("published", true)
-    .maybeSingle();
-  if (error) throw new Error(error.message);
-  return (row as Post | null) ?? null;
+export async function getPublishedPostBySlug(slug: string): Promise<Post | null> {
+  const row = getDb()
+    .prepare("SELECT * FROM posts WHERE slug = ? AND published = 1")
+    .get(slug) as PostRow | undefined;
+
+  return row ? rowToPost(row) : null;
 }

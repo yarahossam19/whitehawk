@@ -10,11 +10,14 @@ lerna-debug.log*
 node_modules
 *.local
 
-# Env files hold live credentials (SMTP password, Supabase keys) — never commit.
+# Env files hold live credentials (SMTP password, admin password hash) — never commit.
 # See .env.example for the variable names.
 .env
 .env.*
 !.env.example
+
+# Local SQLite database and uploaded blog cover images (src/lib/db.ts).
+/data/
 
 # Next.js
 /.next/

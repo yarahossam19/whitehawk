@@ -2,7 +2,7 @@
 # Stage 1: Builder
 # =========================
 
-FROM node:22-alpine AS builder
+FROM node:24-alpine AS builder
 
 WORKDIR /app
 
@@ -21,16 +21,6 @@ COPY . .
 ARG NEXT_PUBLIC_SITE_URL
 ARG NEXT_PUBLIC_API_BASE_URL
 
-ARG NEXT_PUBLIC_SUPABASE_URL
-ARG NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
-ARG NEXT_PUBLIC_SUPABASE_PROJECT_ID
-# Non-prefixed pair used by server-only data access (src/lib/posts.ts).
-ARG SUPABASE_URL
-ARG SUPABASE_PUBLISHABLE_KEY
-
-ARG SUPABASE_URL
-ARG SUPABASE_PUBLISHABLE_KEY
-ARG SUPABASE_PROJECT_ID
 
 # =========================
 # Build Environment
@@ -38,14 +28,6 @@ ARG SUPABASE_PROJECT_ID
 
 ENV NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL}
 ENV NEXT_PUBLIC_API_BASE_URL=${NEXT_PUBLIC_API_BASE_URL}
-
-ENV NEXT_PUBLIC_SUPABASE_URL=${NEXT_PUBLIC_SUPABASE_URL}
-ENV NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=${NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY}
-ENV NEXT_PUBLIC_SUPABASE_PROJECT_ID=${NEXT_PUBLIC_SUPABASE_PROJECT_ID}
-
-ENV SUPABASE_URL=${SUPABASE_URL}
-ENV SUPABASE_PUBLISHABLE_KEY=${SUPABASE_PUBLISHABLE_KEY}
-ENV SUPABASE_PROJECT_ID=${SUPABASE_PROJECT_ID}
 
 # =========================
 # Build Next.js
@@ -61,7 +43,7 @@ RUN rm -rf .next/cache
 # Stage 2: Runner
 # =========================
 
-FROM node:22-alpine AS runner
+FROM node:24-alpine AS runner
 
 WORKDIR /app
 
@@ -82,6 +64,14 @@ COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/next.config.ts ./next.config.ts
 COPY --from=builder /app/package.json ./package.json
+
+# The SQLite database and the uploaded cover images live here. The deploy
+# bind-mounts a directory from the EC2 host over it, so the contents survive
+# redeploys — that host directory has to be owned by uid 1001 (see
+# .gitlab-ci.yml), otherwise the app cannot write to it.
+ENV DATA_DIR=/data
+RUN mkdir -p /data/uploads && chown -R nextjs:nodejs /data
+VOLUME ["/data"]
 
 USER nextjs
 

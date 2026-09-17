@@ -13,7 +13,6 @@ import {
   isCurrentUserAdmin,
 } from "@/lib/posts.actions";
 import type { Post } from "@/lib/posts";
-import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { ArrowLeft, Eye, ImageUp, Save } from "lucide-react";
 import styles from "./page.module.scss";
@@ -156,15 +155,20 @@ export default function EditPostPage() {
     }
     setUploading(true);
     try {
-      const ext = file.name.split(".").pop() || "jpg";
-      const path = `${crypto.randomUUID()}.${ext}`;
-      const { error } = await supabase.storage.from("post-covers").upload(path, file, {
-        cacheControl: "31536000",
-        upsert: false,
-      });
-      if (error) throw error;
-      const { data } = supabase.storage.from("post-covers").getPublicUrl(path);
-      setForm((s) => ({ ...s, cover_url: data.publicUrl }));
+      // Posted to a route handler rather than a Server Action: actions cap the
+      // request body at 1MB, below the 5MB allowed here.
+      const body = new FormData();
+      body.append("file", file);
+      const response = await fetch("/api/admin/upload-cover", { method: "POST", body });
+      const payload = (await response.json().catch(() => null)) as
+        | { url?: string; error?: string }
+        | null;
+
+      if (!response.ok || !payload?.url) {
+        throw new Error(payload?.error ?? "Failed to upload image");
+      }
+
+      setForm((s) => ({ ...s, cover_url: payload.url! }));
       toast.success("Cover image uploaded");
     } catch (err: any) {
       toast.error(err?.message ?? "Failed to upload image");

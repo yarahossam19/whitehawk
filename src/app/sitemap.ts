@@ -22,7 +22,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // discovery) and /auth is a utility page not meant for search discovery.
   ];
 
-  // Blog posts are sourced from Supabase (see src/lib/posts.ts). Best-effort
+  // Blog posts are sourced from the SQLite database (see src/lib/posts.ts). Best-effort
   // fetch of published posts to include individual post URLs; if the data
   // source is unreachable (e.g. missing env vars in a preview environment),
   // fall back gracefully to the static routes above instead of failing
