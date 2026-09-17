@@ -24,7 +24,15 @@ function requireEnv(name: string): string {
       `Missing environment variable ${name}. See .env.example — run \`npm run admin:password\` to generate the admin credentials.`,
     );
   }
-  return value;
+  // Local dev reads .env through dotenv, which strips surrounding quotes.
+  // Production runs `docker run --env-file`, which does not — a quoted value
+  // there arrives with the quotes attached and fails in a way that looks
+  // nothing like its cause. Accept both.
+  const trimmed = value.trim();
+  const quote = trimmed[0];
+  const isQuoted =
+    trimmed.length >= 2 && (quote === '"' || quote === "'") && trimmed.endsWith(quote);
+  return isQuoted ? trimmed.slice(1, -1) : trimmed;
 }
 
 // ---------- password hashing ----------
