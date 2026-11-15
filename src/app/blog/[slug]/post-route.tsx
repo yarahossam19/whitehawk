@@ -5,7 +5,7 @@ import type { Locale } from "@/lib/blog/doc";
 import { bodyToDoc } from "@/lib/blog/post-text";
 import { pageMetadata } from "@/lib/seo";
 import { SiteLayout } from "@/components/site/SiteLayout/SiteLayout";
-import { CTABand } from "@/components/site/ui/CTABand/CTABand";
+import { ArticleCta } from "@/components/blog-article/ArticleCta";
 import { ArticlePage } from "@/components/blog-article/ArticlePage";
 import { articlePath } from "@/components/blog-article/i18n";
 
@@ -64,11 +64,7 @@ export async function PostRoute({ slug, locale }: { slug: string; locale: Locale
           can be published without a publish date; the hero always shows one. */}
       <ArticlePage post={{ ...post, published_at: post.published_at ?? post.updated_at }} doc={doc} />
 
-      <CTABand
-        title="Bring the whole security program under one roof"
-        primary={{ label: "Book a Demo", to: "/contact" }}
-        secondary={{ label: "Explore platform", to: "/platform" }}
-      />
+      <ArticleCta />
     </SiteLayout>
   );
 }

@@ -27,7 +27,7 @@ The body editor looks like the published article: same fonts, spacing, boxes and
 
 | To add | Do this |
 |---|---|
-| A section | Click **H2** in the toolbar. Every H2 appears in the table of contents automatically. On the published page, each H2 section starts closed; readers open or close it by clicking the heading or its entry in the table of contents. Anything you write before the first H2 (intro, takeaways box) is always visible. |
+| A section | Click **H2** in the toolbar. Every H2 appears in the table of contents automatically. On computers every section is open, like the design. On phones and tablets (narrower than 1024px) each H2 section starts folded, and readers tap the heading or its entry in **Contents** to open or close it. Anything before the first H2 (intro, takeaways box) is always visible. |
 | A sub-section | Click **H3**. H3 headings don't appear in the table of contents. |
 | Bold, italic | Select text, then **B** or **I**. |
 | A link | Select text, click the link button, paste the address, then **Apply**. You can use `https://…`, a page on this site such as `/contact`, a section of the same article such as `#faq`, or `mailto:`. Leave the box empty and click Apply to remove a link. |
@@ -54,7 +54,7 @@ Click inside a block and its options appear in the grey bar above the text:
 
 ## 4. Check before publishing
 
-Click **Preview** to see the full article as readers will see it. Click **Editor** to go back; nothing is lost.
+Click **Preview** to see the full article at the same width and layout readers get, including the dark band under it. Click **Editor** to go back; nothing is lost.
 
 ## 5. Add the Arabic version
 

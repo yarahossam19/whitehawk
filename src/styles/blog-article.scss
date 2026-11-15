@@ -18,7 +18,7 @@
 //   - additions for things the reference has no example of: figure captions,
 //     block quotes (used by older posts) and a hero without a cover image;
 //   - requested on top of the reference: the excerpt in the hero (.wg-lede)
-//     and H2 sections that open and close (.wg-sec).
+//     and H2 sections that fold below 1024px (.wg-sec).
 // The reference's .odd/.even/.header table-row classes had no CSS, so the
 // renderer doesn't emit them.
 
@@ -118,49 +118,72 @@
     scroll-margin-top: 88px;
   }
 
-  // Not in the reference: each H2 opens and closes its section (renderDoc).
-  .wg-sec {
-    border-top: 1px solid var(--line);
-  }
-  .wg-sec:last-of-type { border-bottom: 1px solid var(--line); }
-  :not(.wg-sec) + .wg-sec { margin-top: 32px; }
-  .wg-toc + .wg-sec { margin-top: 0; }
-
+  // H2 sections (renderDoc wraps each in <details class="wg-sec">).
+  // Desktop (1024px+, where the sidebar contents list shows): always open
+  // and styled as the reference's plain headings, so the article reads as
+  // one page. Below 1024px: folded, opened and closed from the heading.
   .wg-sec > summary {
     list-style: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    border-radius: 4px;
   }
   .wg-sec > summary::-webkit-details-marker { display: none; }
-  .wg-sec > summary:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
 
-  // Same chevron as the mobile Contents box: down when closed, up when open.
-  .wg-sec > summary::after {
-    content: "";
-    flex: none;
-    width: 9px;
-    height: 9px;
-    border-right: 1.5px solid var(--navy);
-    border-bottom: 1.5px solid var(--navy);
-    transform: rotate(45deg);
-    margin-top: -5px;
-    margin-inline-end: 4px;
-  }
-  .wg-sec[open] > summary::after {
-    transform: rotate(-135deg);
-    margin-top: 5px;
+  @media (min-width: 1024px) {
+    // Shows the content even before SectionOpener sets [open] (browsers
+    // without ::details-content get it once the page's script has run).
+    .wg-sec::details-content {
+      content-visibility: visible;
+    }
+    .wg-sec > summary {
+      display: block;
+      cursor: text;
+    }
   }
 
-  .wg-sec > summary h2 {
-    margin: 0;
-    padding-block: 20px;
+  @media (max-width: 1023px) {
+    .wg-sec {
+      border-top: 1px solid var(--line);
+    }
+    .wg-sec:last-of-type { border-bottom: 1px solid var(--line); }
+    :not(.wg-sec) + .wg-sec { margin-top: 32px; }
+    .wg-toc + .wg-sec { margin-top: 0; }
+
+    .wg-sec > summary {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      border-radius: 4px;
+    }
+    .wg-sec > summary:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+
+    // Same chevron as the mobile Contents box: down when closed, up when open.
+    .wg-sec > summary::after {
+      content: "";
+      flex: none;
+      width: 9px;
+      height: 9px;
+      border-right: 1.5px solid var(--navy);
+      border-bottom: 1.5px solid var(--navy);
+      transform: rotate(45deg);
+      margin-top: -5px;
+      margin-inline-end: 4px;
+    }
+    .wg-sec[open] > summary::after {
+      transform: rotate(-135deg);
+      margin-top: 5px;
+    }
+
+    .wg-sec > summary h2 {
+      margin: 0;
+      padding-block: 20px;
+    }
+    .wg-sec-body { padding-bottom: 16px; }
   }
-  .wg-sec > summary:hover h2 { color: var(--blue); }
-  .wg-sec-body { padding-bottom: 16px; }
+
+  @media (hover: hover) and (max-width: 1023px) {
+    .wg-sec > summary:hover h2 { color: var(--blue); }
+  }
 
   .wg-post h3 {
     font-size: 18px;

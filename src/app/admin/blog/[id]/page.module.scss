@@ -88,13 +88,10 @@
 }
 
 // The live preview renders the real article component (reference design).
-.previewCard {
-  margin-top: 32px;
-  overflow: hidden;
-  border-radius: $radius-2xl;
-  border: 1px solid $line;
-  background: white;
-  padding-bottom: 24px;
+// While previewing, the article follows straight after the header row, with
+// the same top spacing it has on the public page.
+.previewing > * {
+  padding-bottom: 0 !important;
 }
 
 .contentGrid[hidden] {

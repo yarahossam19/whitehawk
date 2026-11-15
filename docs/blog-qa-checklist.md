@@ -77,20 +77,28 @@ Use this list to compare a published article with the reference file, `egypt-dat
 - [ ] Wide tables scroll sideways, and a shadow shows on the side with more content.
 - [ ] There's no horizontal scroll on the page itself.
 
-## Collapsible sections (not in the reference)
+## H2 sections
 
-- [ ] Every H2 section starts closed, with a chevron pointing down at the end of the heading (on the left in Arabic).
-- [ ] Clicking the heading opens the section and turns the chevron upward. Clicking it again closes it.
+**1024px and wider**
+- [ ] Every section is open, with plain headings like the reference: no chevrons and no divider lines.
+- [ ] Clicking a heading, or pressing Enter on it, doesn't fold the section.
+
+**Below 1024px** (not in the reference)
+- [ ] Every H2 section starts folded, with a chevron pointing down at the end of the heading (on the left in Arabic).
+- [ ] Tapping the heading opens the section and turns the chevron upward. Tapping it again folds it.
 - [ ] The intro and takeaways box above the first H2 are always visible.
 - [ ] Sections are separated by thin lines.
 - [ ] Opening a link like `/blog/<slug>#the-72-hour-breach-clock` opens that section and scrolls to it.
+
+**All widths**
 - [ ] Print preview shows every section open.
+- [ ] The editor's Preview has the same hero width and layout as the published page at the same window size.
 
 ## Table of contents
 
 - [ ] Every H2 appears in the list, using its short label when one is set.
-- [ ] Clicking a label opens its section and scrolls to the heading. The heading isn't hidden under the site header.
-- [ ] Clicking the same label again closes the section. This works in both the sidebar and the phone Contents box.
+- [ ] Clicking a label scrolls to its heading (opening the section first on phones). The heading isn't hidden under the site header.
+- [ ] Below 1024px, tapping the same label in the Contents box again folds the section.
 - [ ] While scrolling, the active link (navy, with an underline) follows the section on screen.
 - [ ] Arabic headings have non-empty ids (`#قانون-…`), and the links work.
 

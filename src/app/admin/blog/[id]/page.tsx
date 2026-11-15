@@ -18,6 +18,7 @@ import { bodyToDoc, readMinutes, splitTitle } from "@/lib/blog/post-text";
 import { BlogEditor } from "@/components/blog-editor/BlogEditor";
 import { uploadImage } from "@/components/blog-editor/upload";
 import { ArticlePage } from "@/components/blog-article/ArticlePage";
+import { ArticleCta } from "@/components/blog-article/ArticleCta";
 import { articlePath, dirOf } from "@/components/blog-article/i18n";
 import { toast } from "sonner";
 import { ArrowLeft, Eye, ImageUp, Save } from "lucide-react";
@@ -234,7 +235,7 @@ function EditPost() {
 
   return (
     <SiteLayout>
-      <Section>
+      <Section className={preview ? styles.previewing : undefined}>
         <div className={styles.headerRow}>
           <div className={styles.headerLeft}>
             <Button as="link" to="/admin/blog" variant="ghost" size="sm">
@@ -267,26 +268,6 @@ function EditPost() {
             </Button>
           </div>
         </div>
-
-        {preview ? (
-          <div className={styles.previewCard}>
-            <ArticlePage
-              post={{
-                locale: form.locale,
-                title: form.title || "Untitled",
-                title_lead: form.title_lead || null,
-                excerpt: form.excerpt,
-                eyebrow: form.eyebrow,
-                category: form.category,
-                // A draft has no publish date yet; show today's so the hero looks as it will.
-                published_at: publishedAt ?? new Date().toISOString(),
-                read_minutes: minutes,
-                cover_url: form.cover_url || null,
-              }}
-              doc={doc}
-            />
-          </div>
-        ) : null}
 
         <div className={styles.contentGrid} hidden={preview}>
           <div className={styles.editorCard}>
@@ -446,6 +427,30 @@ function EditPost() {
           </div>
         </div>
       </Section>
+
+      {/* Preview: the same components at the same full page width as the
+          public article (not inside the admin's 1200px column), so what's
+          shown here is what readers see. */}
+      {preview && (
+        <>
+          <ArticlePage
+            post={{
+              locale: form.locale,
+              title: form.title || "Untitled",
+              title_lead: form.title_lead || null,
+              excerpt: form.excerpt,
+              eyebrow: form.eyebrow,
+              category: form.category,
+              // A draft has no publish date yet; show today's so the hero looks as it will.
+              published_at: publishedAt ?? new Date().toISOString(),
+              read_minutes: minutes,
+              cover_url: form.cover_url || null,
+            }}
+            doc={doc}
+          />
+          <ArticleCta />
+        </>
+      )}
     </SiteLayout>
   );
 }
