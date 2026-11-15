@@ -7,10 +7,12 @@ import { Button } from "@/components/site/ui/Button/Button";
 import { Section } from "@/components/site/ui/Section/Section";
 import { CTABand } from "@/components/site/ui/CTABand/CTABand";
 import { ArrowUpRight, Search, Clock } from "lucide-react";
-import type { Post } from "@/lib/posts";
+import type { PostListItem } from "@/lib/posts";
+import type { Locale } from "@/lib/blog/doc";
+import { articlePath, dirOf } from "@/components/blog-article/i18n";
 import styles from "./blog-index-client.module.scss";
 
-type PostSummary = Omit<Post, "body" | "created_at" | "updated_at" | "published">;
+type PostSummary = PostListItem;
 
 const CATEGORIES = ["All", "Comparisons", "Product", "Threat intel", "Guides"] as const;
 const PAGE = 6;
@@ -63,7 +65,13 @@ function CategoryChip({ label }: { label: string }) {
   return <span className={styles.categoryChip}>{label}</span>;
 }
 
-export function BlogIndexClient({ posts }: { posts: PostSummary[] }) {
+/**
+ * The blog index. `locale` picks which language version the cards link to;
+ * the page itself stays English, and Arabic card text carries lang/dir so it
+ * reads right-to-left.
+ */
+export function BlogIndexClient({ posts, locale = "en" }: { posts: PostSummary[]; locale?: Locale }) {
+  const textProps = locale === "en" ? {} : { lang: locale, dir: dirOf(locale) };
   const [query, setQuery] = useState("");
   const [cat, setCat] = useState<(typeof CATEGORIES)[number]>("All");
   const [visible, setVisible] = useState(PAGE);
@@ -127,7 +135,7 @@ export function BlogIndexClient({ posts }: { posts: PostSummary[] }) {
       {featured && (
         <section className={styles.featured}>
           <div className={styles.featuredInner}>
-            <Link href={`/blog/${featured.slug}`} className={styles.featuredCard}>
+            <Link href={articlePath(featured.slug, locale)} className={styles.featuredCard}>
               <div className={styles.featuredMedia}>
                 {featured.cover_url ? (
                   <Image src={featured.cover_url} alt={featured.title} fill className={styles.featuredImage} />
@@ -141,8 +149,8 @@ export function BlogIndexClient({ posts }: { posts: PostSummary[] }) {
                   <CategoryChip label={featured.category} />
                   <span className={styles.featuredLabel}>Featured</span>
                 </div>
-                <h2 className={styles.featuredTitle}>{featured.title}</h2>
-                <p className={styles.featuredExcerpt}>{featured.excerpt}</p>
+                <h2 className={styles.featuredTitle} {...textProps}>{featured.title}</h2>
+                <p className={styles.featuredExcerpt} {...textProps}>{featured.excerpt}</p>
                 <div className={styles.featuredMeta}>
                   <span className={styles.featuredAuthor}>{featured.author_name}</span>
                   <span>·</span>
@@ -194,7 +202,7 @@ export function BlogIndexClient({ posts }: { posts: PostSummary[] }) {
         ) : (
           <div className={styles.grid}>
             {shown.map((p) => (
-              <Link key={p.id} href={`/blog/${p.slug}`} className={styles.card}>
+              <Link key={p.id} href={articlePath(p.slug, locale)} className={styles.card}>
                 <div className={styles.cardMedia}>
                   {p.cover_url ? (
                     <Image src={p.cover_url} alt={p.title} fill className={styles.cardImage} />
@@ -206,10 +214,10 @@ export function BlogIndexClient({ posts }: { posts: PostSummary[] }) {
                   <div className={styles.cardCategoryRow}>
                     {isComparison(p.category) ? <VsBadge /> : <CategoryChip label={p.category} />}
                   </div>
-                  <h3 className={styles.cardTitle}>
+                  <h3 className={styles.cardTitle} {...textProps}>
                     {p.title}
                   </h3>
-                  <p className={styles.cardExcerpt}>{p.excerpt}</p>
+                  <p className={styles.cardExcerpt} {...textProps}>{p.excerpt}</p>
                   <div className={styles.cardMeta}>
                     <span>{fmt(p.published_at)}</span>
                     <span>·</span>

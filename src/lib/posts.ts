@@ -1,16 +1,27 @@
 import "server-only";
 import { getDb } from "./db";
+import type { Locale } from "./blog/doc";
+import type { BodyFormat } from "./blog/post-text";
 
 export type Post = {
   id: string;
   slug: string;
+  /** An article and its translation share one slug and differ by locale. */
+  locale: Locale;
   title: string;
+  /** Optional override for where the hero title splits into lead + rest. */
+  title_lead: string | null;
+  /** The small label above the hero title; falls back to the category. */
+  eyebrow: string;
   excerpt: string;
+  /** Markdown (posts written before the visual editor) or document JSON. */
   body: string;
+  body_format: BodyFormat;
   cover_url: string | null;
   category: string;
   tags: string[];
   author_name: string;
+  /** Calculated from the body on every save. */
   read_minutes: number;
   published: boolean;
   published_at: string | null;
@@ -21,74 +32,63 @@ export type Post = {
 // SQLite has no boolean and no array type, so `published` is stored as 0/1 and
 // `tags` as a JSON string. Every read goes through here so the rest of the app
 // keeps seeing the same shape it saw from Postgres.
-export type PostRow = {
-  id: string;
-  slug: string;
-  title: string;
-  excerpt: string;
-  body: string;
-  cover_url: string | null;
-  category: string;
+export type PostRow = Omit<Post, "tags" | "published"> & {
   tags: string;
-  author_name: string;
-  read_minutes: number;
   published: number;
-  published_at: string | null;
-  created_at: string;
-  updated_at: string;
 };
 
-export function rowToPost(row: PostRow): Post {
-  let tags: string[] = [];
+function parseTags(raw: string): string[] {
   try {
-    const parsed = JSON.parse(row.tags);
-    if (Array.isArray(parsed)) tags = parsed.filter((t): t is string => typeof t === "string");
+    const parsed = JSON.parse(raw);
+    if (Array.isArray(parsed)) return parsed.filter((t): t is string => typeof t === "string");
   } catch {
     // A hand-edited row shouldn't take the blog down over its tag list.
   }
+  return [];
+}
 
+export function rowToPost(row: PostRow): Post {
   return {
     ...row,
-    tags,
+    tags: parseTags(row.tags),
     published: row.published === 1,
   };
 }
 
 const LIST_COLUMNS =
-  "id, slug, title, excerpt, cover_url, category, tags, author_name, read_minutes, published_at";
+  "id, slug, locale, title, title_lead, eyebrow, excerpt, body_format, cover_url, category, tags, author_name, read_minutes, published_at";
 
 export type PostListItem = Omit<Post, "body" | "created_at" | "updated_at" | "published">;
 
-// -------- public: list published posts --------
-export async function listPublishedPosts(): Promise<PostListItem[]> {
+// -------- public: list published posts in one language --------
+export async function listPublishedPosts(locale: Locale = "en"): Promise<PostListItem[]> {
   const rows = getDb()
     .prepare(
       `SELECT ${LIST_COLUMNS} FROM posts
-       WHERE published = 1
+       WHERE published = 1 AND locale = ?
        ORDER BY published_at DESC`,
     )
-    .all() as unknown as Array<Omit<PostRow, "body" | "created_at" | "updated_at" | "published">>;
+    .all(locale) as unknown as Array<Omit<PostListItem, "tags"> & { tags: string }>;
 
-  return rows.map((row) => {
-    const { tags, ...rest } = row;
-    let parsedTags: string[] = [];
-    try {
-      const parsed = JSON.parse(tags);
-      if (Array.isArray(parsed)) {
-        parsedTags = parsed.filter((t): t is string => typeof t === "string");
-      }
-    } catch {
-      // as above
-    }
-    return { ...rest, tags: parsedTags };
-  });
+  return rows.map((row) => ({ ...row, tags: parseTags(row.tags) }));
 }
 
 // -------- public: read one published post by slug --------
-export async function getPublishedPostBySlug(slug: string): Promise<Post | null> {
+export async function getPublishedPostBySlug(
+  slug: string,
+  locale: Locale = "en",
+): Promise<Post | null> {
   const row = getDb()
-    .prepare("SELECT * FROM posts WHERE slug = ? AND published = 1")
-    .get(slug) as PostRow | undefined;
+    .prepare("SELECT * FROM posts WHERE slug = ? AND locale = ? AND published = 1")
+    .get(slug, locale) as PostRow | undefined;
 
   return row ? rowToPost(row) : null;
+}
+
+// -------- public: is the same article published in another language? --------
+export async function hasPublishedTranslation(slug: string, locale: Locale): Promise<boolean> {
+  const row = getDb()
+    .prepare("SELECT 1 AS found FROM posts WHERE slug = ? AND locale = ? AND published = 1")
+    .get(slug, locale);
+  return Boolean(row);
 }

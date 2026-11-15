@@ -9,7 +9,7 @@ import { Button } from "@/components/site/ui/Button/Button";
 import { Section } from "@/components/site/ui/Section/Section";
 import { signOutAction } from "@/lib/auth.actions";
 import { toast } from "sonner";
-import { LogOut, Pencil, Plus, Trash2, Circle, CheckCircle2 } from "lucide-react";
+import { LogOut, Pencil, Plus, Trash2, Circle, CheckCircle2, Languages } from "lucide-react";
 import styles from "./page.module.scss";
 
 export default function AdminBlogPage() {
@@ -105,11 +105,31 @@ export default function AdminBlogPage() {
             </div>
           )}
 
-          {postsQ.data?.map((p: Post) => (
+          {postsQ.data?.map((p: Post) => {
+            // An article and its Arabic version share a slug.
+            const arabic =
+              p.locale === "en"
+                ? postsQ.data?.find((other) => other.locale === "ar" && other.slug === p.slug)
+                : undefined;
+            return (
             <div key={p.id} className={styles.row}>
               <div className={styles.titleCell}>
-                <div className={styles.postTitle}>{p.title}</div>
-                <div className={styles.postSlug}>/{p.slug}</div>
+                <div className={styles.postTitle} dir={p.locale === "ar" ? "rtl" : undefined}>
+                  {p.title}
+                </div>
+                <div className={styles.postSlug}>
+                  <span className={styles.langBadge}>{p.locale === "ar" ? "AR" : "EN"}</span>
+                  {p.locale === "ar" ? "/ar/blog/" : "/blog/"}
+                  {p.slug}
+                </div>
+                {p.locale === "en" && (
+                  <Link
+                    href={arabic ? `/admin/blog/${arabic.id}` : `/admin/blog/new?locale=ar&from=${p.id}`}
+                    className={styles.translationLink}
+                  >
+                    <Languages size={12} /> {arabic ? "Edit Arabic version" : "Add Arabic version"}
+                  </Link>
+                )}
               </div>
               <div>
                 {p.published ? (
@@ -145,7 +165,8 @@ export default function AdminBlogPage() {
                 </button>
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
       </Section>
     </SiteLayout>

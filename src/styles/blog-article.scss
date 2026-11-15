@@ -1,0 +1,642 @@
+// Article design from egypt-data-protection-law-blog.html.
+//
+// Global (un-hashed) because the class names are the reference's own and the
+// article body is rendered from stored content, not from module classes.
+// Everything is scoped under .wg-article (set by ArticlePage.tsx and the
+// editor), so none of it reaches the rest of the site.
+//
+// Changes from the reference, none of them visible in English:
+//   - physical left/right properties are logical (inline-start/end), so one
+//     stylesheet serves Arabic; the [dir="rtl"] block at the end mirrors the
+//     few things logical properties can't (gradient angles, chevrons);
+//   - the TOC sticks at 84px instead of 20px and headings get a scroll
+//     margin, because the site header is sticky and 64px tall;
+//   - resets for the site's globals.scss, which strips list bullets and gives
+//     every heading Manrope 800 with negative letter-spacing;
+//   - the base64 font is replaced by self-hosted next/font files
+//     (src/components/blog-article/fonts.ts).
+//   - additions for things the reference has no example of: figure captions,
+//     block quotes (used by older posts) and a hero without a cover image;
+//   - requested on top of the reference: the excerpt in the hero (.wg-lede)
+//     and H2 sections that open and close (.wg-sec).
+// The reference's .odd/.even/.header table-row classes had no CSS, so the
+// renderer doesn't emit them.
+
+.wg-article {
+  --navy: #003859;
+  --ink: #29343d;
+  --muted: #5f7182;
+  --blue: #0087d7;
+  --line: #e2e9ef;
+
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+  color: var(--ink);
+  background: #fff;
+  -webkit-font-smoothing: antialiased;
+
+  // globals.scss resets
+  h1,
+  h2,
+  h3 {
+    font-family: inherit;
+    letter-spacing: normal;
+  }
+
+  .container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+  @media (min-width: 576px) { .container { max-width: 540px; } }
+  @media (min-width: 768px) { .container { max-width: 720px; } }
+  @media (min-width: 992px) { .container { max-width: 960px; } }
+  @media (min-width: 1200px) { .container { max-width: 1140px; } }
+  @media (min-width: 1400px) { .container { max-width: 1320px; } }
+
+  .page { padding-top: 56px; }
+
+  .post {
+    display: grid;
+    grid-template-columns: 232px minmax(0, 1fr);
+    column-gap: 71px;
+    padding-bottom: 40px;
+  }
+
+  .side { min-width: 0; }
+
+  .toc {
+    position: sticky;
+    top: 84px; // reference: 20px, below a 64px sticky site header
+    margin-top: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .toc a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 13px;
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.35;
+    border-bottom: 1px solid transparent;
+    text-decoration: none;
+  }
+
+  .toc a::after {
+    content: "";
+    flex: none;
+    width: 7px;
+    height: 7px;
+    border-top: 1.5px solid currentColor;
+    border-right: 1.5px solid currentColor;
+    transform: rotate(45deg);
+    margin-inline-end: 4px;
+  }
+
+  .toc a.on {
+    color: var(--navy);
+    border-bottom-color: var(--navy);
+  }
+
+  .wg-post {
+    min-width: 0;
+    font-size: 16px;
+    line-height: 30px;
+  }
+
+  .wg-post p { margin: 0 0 16px; }
+
+  .wg-post h2 {
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--navy);
+    line-height: 1.35;
+    margin: 44px 0 12px;
+    scroll-margin-top: 88px;
+  }
+
+  // Not in the reference: each H2 opens and closes its section (renderDoc).
+  .wg-sec {
+    border-top: 1px solid var(--line);
+  }
+  .wg-sec:last-of-type { border-bottom: 1px solid var(--line); }
+  :not(.wg-sec) + .wg-sec { margin-top: 32px; }
+  .wg-toc + .wg-sec { margin-top: 0; }
+
+  .wg-sec > summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    border-radius: 4px;
+  }
+  .wg-sec > summary::-webkit-details-marker { display: none; }
+  .wg-sec > summary:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+
+  // Same chevron as the mobile Contents box: down when closed, up when open.
+  .wg-sec > summary::after {
+    content: "";
+    flex: none;
+    width: 9px;
+    height: 9px;
+    border-right: 1.5px solid var(--navy);
+    border-bottom: 1.5px solid var(--navy);
+    transform: rotate(45deg);
+    margin-top: -5px;
+    margin-inline-end: 4px;
+  }
+  .wg-sec[open] > summary::after {
+    transform: rotate(-135deg);
+    margin-top: 5px;
+  }
+
+  .wg-sec > summary h2 {
+    margin: 0;
+    padding-block: 20px;
+  }
+  .wg-sec > summary:hover h2 { color: var(--blue); }
+  .wg-sec-body { padding-bottom: 16px; }
+
+  .wg-post h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--navy);
+    line-height: 1.4;
+    margin: 28px 0 8px;
+    scroll-margin-top: 88px;
+  }
+
+  .wg-post ul,
+  .wg-post ol {
+    margin: 0 0 16px;
+    padding-inline-start: 24px;
+  }
+  .wg-post ul { list-style: disc; }
+  .wg-post ol { list-style: decimal; }
+
+  .wg-post li { margin: 0 0 6px; }
+
+  .wg-post a {
+    color: var(--blue);
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+
+  @media (max-width: 1023px) {
+    .page { padding-top: 16px; }
+    .post { grid-template-columns: minmax(0, 1fr); }
+    .side { display: none; }
+  }
+
+  @media (max-width: 640px) {
+    .wg-post { line-height: 28px; }
+    .wg-post h2 {
+      font-size: 21px;
+      line-height: 1.35;
+      margin-top: 36px;
+    }
+  }
+
+  // ---------- hero ----------
+
+  .wg-post-top { margin: 0 0 48px; }
+
+  .wg-post-top-in {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    align-items: center;
+    min-height: 450px;
+    border-radius: 16px;
+    overflow: hidden;
+    background: linear-gradient(115deg, #f7fbfe 0%, #eef5fa 50%, #e2eef7 100%);
+    box-shadow: inset 0 0 0 1px #dbe7f0;
+  }
+
+  .wg-post-top-in::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: radial-gradient(#c6dae9 1px, transparent 1.2px);
+    background-size: 22px 22px;
+    -webkit-mask-image: linear-gradient(90deg, transparent 35%, #000 100%);
+    mask-image: linear-gradient(90deg, transparent 35%, #000 100%);
+    opacity: 0.75;
+  }
+
+  // Addition: a post without a cover image keeps the panel, text only.
+  .wg-post-top-in--text {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+  }
+
+  .wg-post-top-text {
+    position: relative;
+    min-width: 0;
+    padding-block: 56px;
+    padding-inline: 64px 24px;
+  }
+
+  .wg-eyebrow {
+    margin: 0 0 18px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #0087d7;
+    line-height: 1;
+  }
+
+  .wg-post-top h1 {
+    margin: 0;
+    font-size: 42px;
+    line-height: 1.16;
+    letter-spacing: -0.015em;
+    color: #003859;
+    font-weight: 400;
+    text-wrap: balance;
+  }
+
+  .wg-post-top h1 span { display: block; }
+  .wg-post-top .wg-h1-lead { font-weight: 700; }
+  .wg-post-top .wg-h1-rest { color: #0a6fae; }
+
+  .wg-rule {
+    width: 72px;
+    height: 4px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, #0087d7, #79d9ff);
+    margin: 26px 0 18px;
+  }
+
+  // Not in the reference: the post's excerpt, between the rule and the date.
+  .wg-lede {
+    max-width: 560px;
+    margin: 0 0 16px;
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+
+  .wg-meta {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.4;
+    color: #5f7182;
+  }
+
+  .wg-meta span::before {
+    content: "";
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #9fb3c3;
+    margin: 0 12px;
+    vertical-align: middle;
+  }
+
+  // No date (a draft in the editor preview): no leading dot.
+  .wg-meta span:first-child::before { display: none; }
+
+  .wg-post-top-pic {
+    position: relative;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-block: 28px;
+    padding-inline: 0 36px;
+  }
+
+  .wg-post-top-pic img {
+    display: block;
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    mix-blend-mode: multiply;
+  }
+
+  @media (max-width: 1199px) {
+    .wg-post-top-in { min-height: 0; }
+    .wg-post-top-text {
+      padding-block: 40px;
+      padding-inline: 44px 20px;
+    }
+    .wg-post-top h1 { font-size: 34px; }
+    .wg-post-top-pic {
+      padding-block: 24px;
+      padding-inline: 0 24px;
+    }
+  }
+
+  @media (max-width: 991px) {
+    .wg-post-top-text {
+      padding-block: 36px;
+      padding-inline: 34px 16px;
+    }
+    .wg-post-top h1 { font-size: 28px; }
+  }
+
+  @media (max-width: 640px) {
+    .wg-post-top-in {
+      grid-template-columns: minmax(0, 1fr);
+      border-radius: 12px;
+    }
+    .wg-post-top-text { padding: 28px 22px 4px; }
+    .wg-post-top-in--text .wg-post-top-text { padding-bottom: 28px; }
+    .wg-post-top h1 { line-height: 1.22; }
+    .wg-lede { font-size: 15.5px; margin-bottom: 12px; }
+    .wg-rule {
+      width: 56px;
+      margin: 18px 0 14px;
+    }
+    .wg-post-top-pic { padding: 6px 18px 18px; }
+    .wg-post-top-pic img { max-width: 420px; }
+  }
+
+  // ---------- mobile table of contents ----------
+
+  .wg-toc { display: none; }
+
+  @media (max-width: 1023px) {
+    .wg-post-top { margin-bottom: 28px; }
+
+    .wg-toc {
+      display: block;
+      margin: 0 0 28px;
+      border: 1px solid #e2e9ef;
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    .wg-toc summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 13px 16px;
+      font-weight: 600;
+      font-size: 15px;
+      line-height: 1.4;
+      color: #003859;
+    }
+
+    .wg-toc summary::-webkit-details-marker { display: none; }
+
+    .wg-toc summary::after {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-right: 1.5px solid #003859;
+      border-bottom: 1.5px solid #003859;
+      transform: rotate(45deg);
+      margin-top: -4px;
+      margin-inline-end: 4px;
+    }
+
+    .wg-toc[open] summary::after {
+      transform: rotate(-135deg);
+      margin-top: 4px;
+    }
+
+    .wg-toc nav {
+      display: flex;
+      flex-direction: column;
+      padding: 4px 6px 8px;
+      border-top: 1px solid #e2e9ef;
+    }
+
+    .wg-toc nav a {
+      padding: 9px 10px;
+      font-size: 15px;
+      line-height: 1.4;
+      color: #5f7182;
+      text-decoration: none;
+    }
+  }
+
+  // ---------- tables ----------
+
+  .wg-post .table-wrap {
+    overflow-x: auto;
+    margin: 18px 0 22px;
+    border: 1px solid #e2e9ef;
+    border-radius: 10px;
+    background:
+      linear-gradient(90deg, #fff 30%, rgba(255, 255, 255, 0)) 0 0 / 40px 100% no-repeat local,
+      linear-gradient(270deg, #fff 30%, rgba(255, 255, 255, 0)) 100% 0 / 40px 100% no-repeat local,
+      radial-gradient(farthest-side at 0 50%, rgba(0, 56, 89, 0.18), rgba(0, 56, 89, 0)) 0 0 / 14px 100%
+        no-repeat scroll,
+      radial-gradient(farthest-side at 100% 50%, rgba(0, 56, 89, 0.18), rgba(0, 56, 89, 0)) 100% 0 / 14px
+        100% no-repeat scroll,
+      #fff;
+  }
+
+  .wg-post table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .wg-post th {
+    background: rgba(0, 72, 120, 0.05);
+    color: #003859;
+    font-weight: 600;
+  }
+
+  .wg-post th,
+  .wg-post td {
+    padding: 11px 14px;
+    border: 0;
+    border-bottom: 1px solid #e2e9ef;
+    vertical-align: top;
+    text-align: start;
+  }
+
+  .wg-post tr:last-child td { border-bottom: 0; }
+
+  @media (max-width: 640px) {
+    .wg-post table.wg-wide { min-width: 520px; }
+  }
+
+  // ---------- key takeaways ----------
+
+  .wg-keys {
+    margin: 28px 0 30px;
+    padding: 24px 28px 12px;
+    border-radius: 14px;
+    background: linear-gradient(115deg, #f7fbfe 0%, #eef5fa 100%);
+    box-shadow: inset 0 0 0 1px #dbe7f0;
+  }
+
+  .wg-keys-title {
+    margin: 0 0 14px !important;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #0087d7;
+    line-height: 1;
+  }
+
+  .wg-post .wg-keys ul {
+    list-style: none;
+    margin: 0 0 12px;
+    padding: 0;
+  }
+
+  .wg-post .wg-keys li {
+    position: relative;
+    margin: 0 0 8px;
+    padding-inline-start: 28px;
+    color: #29343d;
+  }
+
+  .wg-keys li::before {
+    content: "";
+    position: absolute;
+    inset-inline-start: 5px;
+    top: 8px;
+    width: 5px;
+    height: 10px;
+    border-right: 2px solid #0087d7;
+    border-bottom: 2px solid #0087d7;
+    transform: rotate(45deg);
+  }
+
+  // ---------- figures ----------
+
+  .wg-fig {
+    position: relative;
+    display: flex;
+    flex-direction: column; // addition, so a caption sits under the image
+    align-items: center;
+    justify-content: center;
+    margin: 26px 0 30px;
+    padding: 16px 28px;
+    border-radius: 14px;
+    overflow: hidden;
+    background: linear-gradient(115deg, #f7fbfe 0%, #eef5fa 50%, #e2eef7 100%);
+    box-shadow: inset 0 0 0 1px #dbe7f0;
+  }
+
+  .wg-fig::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: radial-gradient(#c6dae9 1px, transparent 1.2px);
+    background-size: 22px 22px;
+    -webkit-mask-image: linear-gradient(90deg, transparent 35%, #000 100%);
+    mask-image: linear-gradient(90deg, transparent 35%, #000 100%);
+    opacity: 0.75;
+  }
+
+  .wg-fig img {
+    position: relative;
+    display: block;
+    width: 100%;
+    max-width: 480px;
+    height: auto;
+    mix-blend-mode: multiply;
+  }
+
+  // Addition: the reference has no captioned figure.
+  .wg-fig figcaption {
+    position: relative;
+    max-width: 480px;
+    margin: 4px 0 2px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  @media (max-width: 640px) {
+    .wg-keys {
+      padding: 20px 18px 10px;
+      border-radius: 12px;
+    }
+    .wg-fig {
+      padding: 12px 14px;
+      border-radius: 12px;
+    }
+  }
+
+  // ---------- block quotes (addition, used by older posts) ----------
+
+  .wg-post blockquote {
+    margin: 22px 0;
+    padding-block: 2px;
+    padding-inline-start: 20px;
+    border-inline-start: 3px solid var(--blue);
+    color: var(--navy);
+  }
+
+  .wg-post blockquote p:last-child { margin-bottom: 0; }
+}
+
+// ---------- Arabic ----------
+
+.wg-article:lang(ar) {
+  // Plus Jakarta Sans has no Arabic; Latin words inside an Arabic article
+  // fall through to it (see fonts.ts).
+  font-family: var(--font-plex-arabic), var(--font-jakarta), system-ui, sans-serif;
+
+  // Uppercase and wide tracking have no meaning in Arabic script and pull
+  // joined letters apart.
+  .wg-eyebrow,
+  .wg-keys-title {
+    letter-spacing: 0;
+    text-transform: none;
+    font-size: 14px;
+    line-height: 1.3;
+  }
+
+  .wg-post-top h1 {
+    letter-spacing: 0;
+    line-height: 1.4;
+  }
+
+  // Arabic letterforms are taller, with dots above and below the line.
+  .wg-post { line-height: 32px; }
+  .wg-post h2 { line-height: 1.55; }
+  .wg-post h3 { line-height: 1.6; }
+
+  @media (max-width: 640px) {
+    .wg-post { line-height: 30px; }
+    .wg-post-top h1 { line-height: 1.45; }
+  }
+}
+
+.wg-article[dir="rtl"] {
+  // Light-to-dark runs toward the image, which sits on the left in RTL.
+  .wg-post-top-in,
+  .wg-fig {
+    background: linear-gradient(245deg, #f7fbfe 0%, #eef5fa 50%, #e2eef7 100%);
+  }
+  .wg-keys { background: linear-gradient(245deg, #f7fbfe 0%, #eef5fa 100%); }
+
+  .wg-post-top-in::before,
+  .wg-fig::before {
+    -webkit-mask-image: linear-gradient(270deg, transparent 35%, #000 100%);
+    mask-image: linear-gradient(270deg, transparent 35%, #000 100%);
+  }
+
+  .wg-rule { background: linear-gradient(270deg, #0087d7, #79d9ff); }
+
+  // The sidebar chevron points in the reading direction.
+  .toc a::after { transform: rotate(-135deg); }
+}

@@ -165,6 +165,33 @@
   color: $slate;
 }
 
+.langBadge {
+  display: inline-block;
+  margin-inline-end: 6px;
+  border-radius: 4px;
+  background: $wash;
+  border: 1px solid $line;
+  padding: 0 5px;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 16px;
+  color: $ink;
+}
+
+.translationLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: $accent;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 .badgePublished {
   display: inline-flex;
   align-items: center;

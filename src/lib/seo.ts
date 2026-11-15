@@ -15,6 +15,10 @@ interface PageMetadataInput {
   type?: "website" | "article";
   /** Absolute or root-relative image URL, e.g. a blog post's cover. */
   image?: string;
+  /** Open Graph locale; the site is English unless a page says otherwise. */
+  ogLocale?: "en_US" | "ar_EG";
+  /** hreflang alternates: language code → path, e.g. `{ en: "/blog/x", ar: "/ar/blog/x" }`. */
+  languages?: Record<string, string>;
 }
 
 /**
@@ -38,6 +42,8 @@ export function pageMetadata({
   ogDescription,
   type = "website",
   image = OG_IMAGE,
+  ogLocale = "en_US",
+  languages,
 }: PageMetadataInput): Metadata {
   const socialTitle = ogTitle ?? title;
   const socialDescription = ogDescription ?? description;
@@ -53,14 +59,14 @@ export function pageMetadata({
   return {
     title,
     description,
-    alternates: { canonical: path },
+    alternates: languages ? { canonical: path, languages } : { canonical: path },
     openGraph: {
       title: socialTitle,
       description: socialDescription,
       type,
       url: path,
       siteName: SITE_NAME,
-      locale: "en_US",
+      locale: ogLocale,
       images: [ogImage],
     },
     twitter: {

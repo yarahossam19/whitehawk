@@ -3,6 +3,10 @@ import { listPublishedPosts } from "@/lib/posts";
 
 const SITE_URL = "https://whitehawk.io";
 
+// Without this the sitemap is generated once at build time, and posts
+// published from the admin afterwards (in either language) never appear.
+export const revalidate = 3600;
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: `${SITE_URL}/`, changeFrequency: "weekly", priority: 1.0 },
@@ -18,6 +22,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${SITE_URL}/contact`, changeFrequency: "monthly", priority: 0.6 },
     { url: `${SITE_URL}/customers`, changeFrequency: "monthly", priority: 0.6 },
     { url: `${SITE_URL}/blog`, changeFrequency: "daily", priority: 0.6 },
+    { url: `${SITE_URL}/ar/blog`, changeFrequency: "daily", priority: 0.5 },
     // NOTE: /admin/* is intentionally excluded (noindex'd, not for search
     // discovery) and /auth is a utility page not meant for search discovery.
   ];
@@ -29,9 +34,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // sitemap generation.
   let blogPostRoutes: MetadataRoute.Sitemap = [];
   try {
-    const posts = await listPublishedPosts();
-    blogPostRoutes = posts.map((post) => ({
-      url: `${SITE_URL}/blog/${post.slug}`,
+    // English posts at /blog/<slug>, Arabic versions at /ar/blog/<slug>.
+    const [english, arabic] = await Promise.all([listPublishedPosts("en"), listPublishedPosts("ar")]);
+    blogPostRoutes = [...english, ...arabic].map((post) => ({
+      url: `${SITE_URL}${post.locale === "ar" ? "/ar" : ""}/blog/${post.slug}`,
       lastModified: post.published_at ? new Date(post.published_at) : undefined,
       changeFrequency: "monthly",
       priority: 0.6,

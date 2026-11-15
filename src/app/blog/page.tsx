@@ -9,6 +9,7 @@ export const metadata: Metadata = pageMetadata({
   title: "Blog — WhiteHawk vs alternatives, product & threat intel",
   description:
     "Comparison articles, product deep-dives, threat intel and guides from the WhiteHawk team.",
+  languages: { en: "/blog", ar: "/ar/blog", "x-default": "/blog" },
 });
 
 // Posts are edited via the admin CMS — revalidate periodically instead of

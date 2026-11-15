@@ -56,7 +56,7 @@ const cols = [
     links: [
       { to: "/contact", label: "Book a Demo" },
       { to: "/contact", label: "Talk to sales" },
-      { to: "/auth", label: "Sign in" },
+      { to: "https://app.whitehawk.io/", label: "Sign in" },
     ],
   },
 ] as const;
