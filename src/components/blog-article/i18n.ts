@@ -5,11 +5,13 @@ const STRINGS = {
   en: {
     contents: "Contents",
     keyTakeaways: "Key takeaways",
+    readArticle: "Read article",
     readTime: (minutes: number) => `${formatNumber(minutes, "en")} min read`,
   },
   ar: {
     contents: "المحتويات",
     keyTakeaways: "أهم النقاط",
+    readArticle: "اقرأ المقال",
     readTime: (minutes: number) =>
       `${formatNumber(minutes, "ar")} ${minutes >= 3 && minutes <= 10 ? "دقائق" : "دقيقة"} قراءة`,
   },

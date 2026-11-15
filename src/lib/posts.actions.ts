@@ -93,6 +93,35 @@ function toParams(data: z.infer<typeof upsertSchema>) {
   };
 }
 
+const FIELD_LABELS: Record<string, string> = {
+  slug: "Slug",
+  locale: "Language",
+  title: "Title",
+  title_lead: "Bold part of the title",
+  eyebrow: "Hero label",
+  excerpt: "Excerpt",
+  body: "Body",
+  cover_url: "Cover image",
+  category: "Category",
+  tags: "Tags",
+  author_name: "Author",
+};
+
+// A failed check becomes one sentence the editor can act on, instead of a
+// raw ZodError (a 500 with a wall of JSON).
+function parseInput<T extends z.ZodTypeAny>(schema: T, input: unknown): z.infer<T> {
+  const result = schema.safeParse(input);
+  if (result.success) return result.data;
+  const issue = result.error.issues[0];
+  const field = String(issue?.path[0] ?? "");
+  if (field === "body") {
+    const index = issue.path[2];
+    const where = typeof index === "number" ? ` (block ${index + 1})` : "";
+    throw new Error(`The article body has content that can't be saved${where}. Retype or remove that block and try again.`);
+  }
+  throw new Error(`${FIELD_LABELS[field] ?? field}: ${issue?.message ?? "invalid value"}`);
+}
+
 function slugTaken(slug: string, locale: Locale, exceptId?: string): boolean {
   const row = getDb()
     .prepare("SELECT id FROM posts WHERE slug = ? AND locale = ?")
@@ -116,7 +145,7 @@ function refreshPublicPages(slug: string) {
 
 // -------- admin: create --------
 export async function adminCreatePost(input: unknown): Promise<Post> {
-  const data = upsertSchema.omit({ id: true }).parse(input);
+  const data = parseInput(upsertSchema.omit({ id: true }), input);
   await requireAdmin();
 
   // Postgres raised a unique-violation here; SQLite would too, but with a
@@ -153,7 +182,7 @@ export async function adminCreatePost(input: unknown): Promise<Post> {
 
 // -------- admin: update --------
 export async function adminUpdatePost(input: unknown): Promise<Post> {
-  const data = upsertSchema.extend({ id: z.string().uuid() }).parse(input);
+  const data = parseInput(upsertSchema.extend({ id: z.string().uuid() }), input);
   const { id } = data;
   await requireAdmin();
 

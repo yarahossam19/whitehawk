@@ -153,7 +153,10 @@ function EditPost() {
         title_lead: form.title_lead.trim() ? form.title_lead.trim() : null,
         eyebrow: form.eyebrow,
         excerpt: form.excerpt,
-        body: doc,
+        // ProseMirror keeps node attributes in prototype-less objects, which a
+        // server action can't receive as data (they arrive as a function and
+        // fail validation). A JSON round trip turns them into plain objects.
+        body: JSON.parse(JSON.stringify(doc)) as DocNode,
         cover_url: form.cover_url ? form.cover_url : null,
         category: form.category,
         tags: form.tags
@@ -167,7 +170,14 @@ function EditPost() {
       return adminUpdatePost({ id, ...payload });
     },
     onSuccess: (row: Post) => {
-      toast.success(isNew ? "Article created" : "Saved");
+      if (row.published) {
+        toast.success(isNew ? "Article published" : "Saved and published");
+      } else {
+        // Drafts don't appear on the blog; say so, or it looks like a failed save.
+        toast.success("Saved as a draft", {
+          description: "Not on the blog yet. Tick “Published” and save to make it live.",
+        });
+      }
       setLegacyMarkdown(false);
       setPublishedAt(row.published_at);
       qc.invalidateQueries({ queryKey: ["admin-posts"] });

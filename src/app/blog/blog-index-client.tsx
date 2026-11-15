@@ -9,7 +9,10 @@ import { CTABand } from "@/components/site/ui/CTABand/CTABand";
 import { ArrowUpRight, Search, Clock } from "lucide-react";
 import type { PostListItem } from "@/lib/posts";
 import type { Locale } from "@/lib/blog/doc";
-import { articlePath, dirOf } from "@/components/blog-article/i18n";
+import { articlePath, dirOf, strings } from "@/components/blog-article/i18n";
+import { ArticleHero } from "@/components/blog-article/ArticleHero";
+import { articleFontVariables } from "@/components/blog-article/fonts";
+import "@/styles/blog-article.scss";
 import styles from "./blog-index-client.module.scss";
 
 type PostSummary = PostListItem;
@@ -76,10 +79,8 @@ export function BlogIndexClient({ posts, locale = "en" }: { posts: PostSummary[]
   const [cat, setCat] = useState<(typeof CATEGORIES)[number]>("All");
   const [visible, setVisible] = useState(PAGE);
 
-  // Featured = first comparison post, else first post
-  const featured = useMemo(() => {
-    return posts.find((p) => isComparison(p.category)) ?? posts[0] ?? null;
-  }, [posts]);
+  // Featured = the newest post (the list is ordered newest first), whatever its category.
+  const featured = posts[0] ?? null;
 
   const filtered = useMemo(() => {
     return posts
@@ -131,39 +132,33 @@ export function BlogIndexClient({ posts, locale = "en" }: { posts: PostSummary[]
         </div>
       </section>
 
-      {/* 2 · FEATURED COMPARISON POST */}
+      {/* 2 · FEATURED (newest) POST — the same hero as the top of the article,
+          with or without a cover image. */}
       {featured && (
         <section className={styles.featured}>
           <div className={styles.featuredInner}>
-            <Link href={articlePath(featured.slug, locale)} className={styles.featuredCard}>
-              <div className={styles.featuredMedia}>
-                {featured.cover_url ? (
-                  <Image src={featured.cover_url} alt={featured.title} fill className={styles.featuredImage} />
-                ) : (
-                  <CoverArt seed={featured.slug} />
-                )}
-              </div>
-              <div className={styles.featuredContent}>
-                <div className={styles.featuredBadges}>
-                  {isComparison(featured.category) ? <VsBadge /> : null}
-                  <CategoryChip label={featured.category} />
-                  <span className={styles.featuredLabel}>Featured</span>
-                </div>
-                <h2 className={styles.featuredTitle} {...textProps}>{featured.title}</h2>
-                <p className={styles.featuredExcerpt} {...textProps}>{featured.excerpt}</p>
-                <div className={styles.featuredMeta}>
-                  <span className={styles.featuredAuthor}>{featured.author_name}</span>
-                  <span>·</span>
-                  <span>{fmt(featured.published_at)}</span>
-                  <span>·</span>
-                  <span className={styles.readTime}><Clock size={12} /> {featured.read_minutes} min</span>
-                </div>
-                <div>
-                  <span className={styles.featuredCtaText}>
-                    Read comparison <ArrowUpRight size={14} />
+            <Link
+              href={articlePath(featured.slug, locale)}
+              className={`wg-article ${articleFontVariables} ${styles.featuredHero}`}
+              lang={locale}
+              dir={dirOf(locale)}
+            >
+              <ArticleHero
+                locale={locale}
+                title={featured.title}
+                titleLead={featured.title_lead}
+                excerpt={featured.excerpt}
+                eyebrow={featured.eyebrow || featured.category}
+                publishedAt={featured.published_at}
+                readMinutes={featured.read_minutes}
+                coverUrl={featured.cover_url}
+                headingLevel="h2"
+                footer={
+                  <span className="wg-hero-cta">
+                    {strings(locale).readArticle} <ArrowUpRight size={16} />
                   </span>
-                </div>
-              </div>
+                }
+              />
             </Link>
           </div>
         </section>
@@ -238,29 +233,7 @@ export function BlogIndexClient({ posts, locale = "en" }: { posts: PostSummary[]
         )}
       </Section>
 
-      {/* 4 · NEWSLETTER */}
-      <Section bg="wash">
-        <div className={styles.newsletterCard}>
-          <div className={styles.eyebrow}>Stay in the loop</div>
-          <h2 className={styles.newsletterTitle}>
-            One well-written email a month
-          </h2>
-          <p className={styles.newsletterBody}>
-            The best of the journal, no fluff. Unsubscribe anytime.
-          </p>
-          <form className={styles.newsletterForm} onSubmit={(e) => e.preventDefault()}>
-            <input
-              type="email"
-              required
-              placeholder="you@company.com"
-              className={styles.newsletterInput}
-            />
-            <Button variant="accent" type="submit">Subscribe</Button>
-          </form>
-        </div>
-      </Section>
-
-      {/* 5 · CTA */}
+      {/* 4 · CTA */}
       <CTABand
         title="See WhiteHawk running against your stack"
         primary={{ label: "Book a Demo", to: "/contact" }}

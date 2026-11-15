@@ -253,7 +253,7 @@
     line-height: 1;
   }
 
-  .wg-post-top h1 {
+  .wg-post-top .wg-title {
     margin: 0;
     font-size: 42px;
     line-height: 1.16;
@@ -263,7 +263,7 @@
     text-wrap: balance;
   }
 
-  .wg-post-top h1 span { display: block; }
+  .wg-post-top .wg-title span { display: block; }
   .wg-post-top .wg-h1-lead { font-weight: 700; }
   .wg-post-top .wg-h1-rest { color: #0a6fae; }
 
@@ -304,6 +304,17 @@
     vertical-align: middle;
   }
 
+  // Blog index only: the featured post's "Read article" line under the meta.
+  .wg-hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 22px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--blue);
+  }
+
   // No date (a draft in the editor preview): no leading dot.
   .wg-meta span:first-child::before { display: none; }
 
@@ -331,7 +342,7 @@
       padding-block: 40px;
       padding-inline: 44px 20px;
     }
-    .wg-post-top h1 { font-size: 34px; }
+    .wg-post-top .wg-title { font-size: 34px; }
     .wg-post-top-pic {
       padding-block: 24px;
       padding-inline: 0 24px;
@@ -343,7 +354,7 @@
       padding-block: 36px;
       padding-inline: 34px 16px;
     }
-    .wg-post-top h1 { font-size: 28px; }
+    .wg-post-top .wg-title { font-size: 28px; }
   }
 
   @media (max-width: 640px) {
@@ -353,7 +364,7 @@
     }
     .wg-post-top-text { padding: 28px 22px 4px; }
     .wg-post-top-in--text .wg-post-top-text { padding-bottom: 28px; }
-    .wg-post-top h1 { line-height: 1.22; }
+    .wg-post-top .wg-title { line-height: 1.22; }
     .wg-lede { font-size: 15.5px; margin-bottom: 12px; }
     .wg-rule {
       width: 56px;
@@ -605,7 +616,7 @@
     line-height: 1.3;
   }
 
-  .wg-post-top h1 {
+  .wg-post-top .wg-title {
     letter-spacing: 0;
     line-height: 1.4;
   }
@@ -617,7 +628,7 @@
 
   @media (max-width: 640px) {
     .wg-post { line-height: 30px; }
-    .wg-post-top h1 { line-height: 1.45; }
+    .wg-post-top .wg-title { line-height: 1.45; }
   }
 }
 
@@ -639,4 +650,5 @@
 
   // The sidebar chevron points in the reading direction.
   .toc a::after { transform: rotate(-135deg); }
+  .wg-hero-cta svg { transform: scaleX(-1); }
 }

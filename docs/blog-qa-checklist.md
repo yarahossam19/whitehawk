@@ -10,7 +10,7 @@ Use this list to compare a published article with the reference file, `egypt-dat
 **Expected differences (not bugs)**
 - The site header and footer surround the article.
 - The sidebar table of contents sticks 84px from the top instead of 20px, so it clears the 64px site header.
-- The author bio, CTA band, related posts and newsletter appear below the article.
+- The dark CTA band appears below the article. It's the only section there.
 
 ## Every width, both languages
 
@@ -43,6 +43,12 @@ Use this list to compare a published article with the reference file, `egypt-dat
 - [ ] The panel has a gradient and a dot pattern.
 - [ ] The image is centred, with a maximum width of 480px.
 - [ ] The caption, if there is one, is centred under the image in grey.
+
+## Blog index (/blog and /ar/blog)
+
+- [ ] The featured card at the top is the newest post, shown in the same hero as the top of the article.
+- [ ] A post with a cover shows it on the image side. A post without one shows a text-only hero, with no empty image box.
+- [ ] The card ends with "Read article" (Arabic: "اقرأ المقال") and links to the post. Hovering lifts it slightly.
 
 ## By width
 

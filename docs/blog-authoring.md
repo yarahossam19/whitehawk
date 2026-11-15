@@ -68,7 +68,7 @@ Notes for Arabic:
 - Dates and the read time are shown with Arabic numerals (١٦).
 - English words such as PDPC or GDPR are fine inside Arabic text.
 
-The sections below the article (author, call to action, related posts, newsletter) stay in English on Arabic pages. That's intended.
+The dark call-to-action band below the article stays in English on Arabic pages. That's intended.
 
 ## Posts written before the visual editor
 
